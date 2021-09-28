@@ -160,7 +160,6 @@ export const ProfileScreen = () => {
 
 const styles = StyleSheet.create({
   label: {
-    fontFamily: 'Montserrat-Medium',
     paddingTop: 24,
     paddingBottom: 8,
     paddingHorizontal: 16,
@@ -185,7 +184,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   text: {
-    fontFamily: 'Montserrat-Medium',
     fontSize: 14,
     fontWeight: '500',
     lineHeight: 16,

@@ -75,12 +75,10 @@ const styles = StyleSheet.create({
   },
   filterBtnRightText: {
     marginLeft: 6,
-    fontFamily: 'Montserrat-Medium',
     fontSize: 14,
   },
   filterBtnLeftText: {
     marginRight: 4,
-    fontFamily: 'Montserrat-Medium',
     fontSize: 14,
   },
 

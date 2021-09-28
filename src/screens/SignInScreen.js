@@ -210,7 +210,6 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 16,
     paddingHorizontal: 20,
-    fontFamily: 'Montserrat-Regular',
     fontSize: 14,
     backgroundColor: '#F3F3F3',
   },
@@ -234,17 +233,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   buttonText: {
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: 'Roboto-Medium',
     color: '#FFFFFF',
     textTransform: 'uppercase',
   },
   buttonPlainText: {
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: 'Roboto-Medium',
     color: '#185AB7',
     textTransform: 'uppercase',
   },
   textBtn: {
-    fontFamily: 'Montserrat-SemiBold',
+    fontFamily: 'Roboto-Medium',
     textAlign: 'right',
     color: '#185AB7',
   },
