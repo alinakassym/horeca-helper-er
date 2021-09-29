@@ -80,11 +80,12 @@ export const Navigator = () => {
     );
   };
   return (
-    <Stack.Navigator initialRouteName="App">
-      <Stack.Group
-        screenOptions={{
-          headerShown: false,
-        }}>
+    <Stack.Navigator
+      initialRouteName="App"
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Group>
         <Stack.Screen name="Tab" component={TabStack} />
       </Stack.Group>
       <Stack.Group>

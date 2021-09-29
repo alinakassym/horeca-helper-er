@@ -6,7 +6,10 @@ import {SignUpScreen} from './SignUpScreen';
 const RootStack = createStackNavigator();
 
 export const RootStackScreen = () => (
-  <RootStack.Navigator headerMode="none">
+  <RootStack.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}>
     <RootStack.Screen name="SignInScreen" component={SignInScreen} />
     <RootStack.Screen name="SignUpScreen" component={SignUpScreen} />
   </RootStack.Navigator>
