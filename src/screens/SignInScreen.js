@@ -14,7 +14,26 @@ import {globalStyles} from '../styles/globalStyles';
 import {IconApple} from '../assets/icons/social/IconApple';
 import {IconGoogle} from '../assets/icons/social/IconGoogle';
 
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+
+GoogleSignin.configure({
+  webClientId:
+    '158883235177-48hs8qg06g7nlsb5n40k640eqjk1kqpl.apps.googleusercontent.com',
+  androidClientId:
+    '158883235177-1dn4n5nqd4i1upipkn2l8pip7qvg195v.apps.googleusercontent.com',
+  offlineAccess: true,
+});
+
 export const SignInScreen = () => {
+  const [user, setUser] = React.useState({
+    userGoogleInfo: {},
+    loaded: false,
+  });
+
   const [data, setData] = React.useState({
     username: '',
     password: '',
@@ -22,7 +41,33 @@ export const SignInScreen = () => {
     secureTextEntry: true,
     isValidUser: true,
     isValidPassword: true,
+    userGoogleInfo: {},
+    loaded: false,
   });
+
+  const googleSignIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      setData({
+        ...data,
+        userGoogleInfo: userInfo,
+        loaded: true,
+      });
+      console.log(userInfo);
+    } catch (error) {
+      console.log(error);
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
 
   const {signIn} = React.useContext(AuthContext);
 
@@ -146,32 +191,31 @@ export const SignInScreen = () => {
               </View>
             </TouchableOpacity>
 
-            <View style={[styles.cardRow]}>
-              <Text style={[globalStyles.text, {marginTop: '16%'}]}>
-                Or sign in with
-              </Text>
-            </View>
-
             <View
               style={{
                 display: 'flex',
                 flex: 1,
                 marginTop: 20,
                 marginBottom: 40,
-                flexDirection: 'row',
+                flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
               <View>
-                <TouchableOpacity style={[styles.socialIcon]}>
-                  <IconApple />
-                </TouchableOpacity>
+                <GoogleSigninButton
+                  style={{width: 280, height: 48}}
+                  size={GoogleSigninButton.Size.Wide}
+                  color={GoogleSigninButton.Color.Dark}
+                  onPress={googleSignIn}
+                />
               </View>
-              <View>
-                <TouchableOpacity style={styles.socialIcon}>
-                  <IconGoogle />
-                </TouchableOpacity>
-              </View>
+              {data.loaded ? (
+                <View>
+                  <Text>{data.userGoogleInfo.user.name}</Text>
+                </View>
+              ) : (
+                <Text>Not Signed</Text>
+              )}
             </View>
           </View>
         </View>
