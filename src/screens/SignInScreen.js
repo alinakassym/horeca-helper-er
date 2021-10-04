@@ -10,9 +10,7 @@ import {
 } from 'react-native';
 import Users from '../model/users';
 import {AuthContext} from '../store/context';
-import {globalStyles} from '../styles/globalStyles';
-import {IconApple} from '../assets/icons/social/IconApple';
-import {IconGoogle} from '../assets/icons/social/IconGoogle';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   GoogleSignin,
@@ -29,11 +27,6 @@ GoogleSignin.configure({
 });
 
 export const SignInScreen = () => {
-  const [user, setUser] = React.useState({
-    userGoogleInfo: {},
-    loaded: false,
-  });
-
   const [data, setData] = React.useState({
     username: '',
     password: '',
@@ -45,6 +38,16 @@ export const SignInScreen = () => {
     loaded: false,
   });
 
+  const {signIn} = React.useContext(AuthContext);
+
+  const storeData = async item => {
+    try {
+      await AsyncStorage.setItem('userInfo', JSON.stringify(item));
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
   const googleSignIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -54,7 +57,24 @@ export const SignInScreen = () => {
         userGoogleInfo: userInfo,
         loaded: true,
       });
-      console.log(userInfo);
+
+      if (userInfo.idToken) {
+        const foundUser = [
+          {
+            email: userInfo.user.email,
+            id: userInfo.user.id,
+            password: userInfo.user.id,
+            userToken: userInfo.idToken,
+            username: userInfo.user.email,
+            familyName: userInfo.user.familyName,
+            givenName: userInfo.user.givenName,
+            name: `${userInfo.user.givenName} ${userInfo.user.familyName}`,
+            photo: userInfo.user.photo,
+          },
+        ];
+        await storeData(foundUser[0]);
+        signIn(foundUser);
+      }
     } catch (error) {
       console.log(error);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -68,8 +88,6 @@ export const SignInScreen = () => {
       }
     }
   };
-
-  const {signIn} = React.useContext(AuthContext);
 
   const textInputChange = val => {
     if (val.trim().length >= 4) {
@@ -121,10 +139,10 @@ export const SignInScreen = () => {
 
   const loginHandle = (userName, password) => {
     const foundUser = Users.filter(item => {
-      return userName == item.username && password == item.password;
+      return userName === item.username && password === item.password;
     });
 
-    if (data.username.length == 0 || data.password.length == 0) {
+    if (data.username.length === 0 || data.password.length === 0) {
       Alert.alert(
         'Wrong Input!',
         'Username or password field cannot be empty.',
@@ -133,12 +151,13 @@ export const SignInScreen = () => {
       return;
     }
 
-    if (foundUser.length == 0) {
+    if (foundUser.length === 0) {
       Alert.alert('Invalid User!', 'Username or password is incorrect.', [
         {text: 'Okay'},
       ]);
       return;
     }
+    storeData(foundUser[0]).then(() => {});
     signIn(foundUser);
   };
 
@@ -162,13 +181,13 @@ export const SignInScreen = () => {
                 style={styles.inputText}
                 placeholder="Password"
                 placeholderTextColor="#767676"
-                secureTextEntry={data.secureTextEntry ? true : false}
+                secureTextEntry={!!data.secureTextEntry}
                 autoCapitalize="none"
                 onChangeText={val => handlePasswordChange(val)}
               />
             </View>
             <View style={styles.action}>
-              <TouchableOpacity style={{flex: 1, paddingHorizontal: 4}}>
+              <TouchableOpacity style={styles.btnRow}>
                 <Text style={styles.textBtn}>Forgot your password?</Text>
               </TouchableOpacity>
             </View>
@@ -181,41 +200,21 @@ export const SignInScreen = () => {
                 <Text style={styles.buttonText}>Sign in</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.action}
-              onPress={() => {
-                loginHandle(data.username, data.password);
-              }}>
+            <TouchableOpacity style={styles.action}>
               <View style={styles.buttonPlain}>
                 <Text style={styles.buttonPlainText}>Create Account</Text>
               </View>
             </TouchableOpacity>
 
-            <View
-              style={{
-                display: 'flex',
-                flex: 1,
-                marginTop: 20,
-                marginBottom: 40,
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
+            <View style={styles.socialsBlock}>
               <View>
                 <GoogleSigninButton
-                  style={{width: 280, height: 48}}
+                  style={styles.googleBtn}
                   size={GoogleSigninButton.Size.Wide}
                   color={GoogleSigninButton.Color.Dark}
                   onPress={googleSignIn}
                 />
               </View>
-              {data.loaded ? (
-                <View>
-                  <Text>{data.userGoogleInfo.user.name}</Text>
-                </View>
-              ) : (
-                <Text>Not Signed</Text>
-              )}
             </View>
           </View>
         </View>
@@ -256,7 +255,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontSize: 14,
     backgroundColor: '#F3F3F3',
+    color: '#000000',
   },
+  btnRow: {flex: 1, paddingHorizontal: 4},
   button: {
     flex: 1,
     alignItems: 'center',
@@ -304,5 +305,18 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'row',
+  },
+  socialsBlock: {
+    display: 'flex',
+    flex: 1,
+    marginTop: 20,
+    marginBottom: 40,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  googleBtn: {
+    width: 280,
+    height: 48,
   },
 });

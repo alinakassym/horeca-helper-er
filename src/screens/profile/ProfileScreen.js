@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, View, ScrollView, Image, StyleSheet, Switch} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native';
 import {globalStyles} from '../../styles/globalStyles';
 import {AuthContext} from '../../store/context';
 import {IconComment} from '../../assets/icons/main/IconComment';
@@ -9,12 +8,36 @@ import {IconPhone} from '../../assets/icons/main/IconPhone';
 import {IconMail} from '../../assets/icons/main/IconMail';
 import {IconPencil} from '../../assets/icons/main/IconPencil';
 import {IconCrown} from '../../assets/icons/main/IconCrown';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const ProfileScreen = () => {
-  const navigation = useNavigation();
-  const {signOut, toggleTheme} = React.useContext(AuthContext);
-  const img =
-    'https://images.generated.photos/6nIN56AWpT7A4UafqanZ48-M7f5ZwfvyQJpVR3qEDjE/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/MDc0MDk5LmpwZw.jpg';
+  const [user, setUser] = useState({});
+  const {signOut} = React.useContext(AuthContext);
+
+  const setUserState = data => {
+    setUser(data);
+  };
+
+  useEffect(() => {
+    AsyncStorage.getItem('userInfo').then(result => {
+      setUserState(JSON.parse(result));
+    });
+    return () => {
+      setUser({});
+    };
+  }, []);
+
+  const logOut = () => {
+    console.log('AuthContext', AuthContext);
+    try {
+      GoogleSignin.signOut().then(() => {});
+      signOut();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const coffee =
     'https://img.freepik.com/free-vector/coffee-shop-badge-vintage-style_1176-95.jpg?size=626&ext=jpg';
 
@@ -34,17 +57,17 @@ export const ProfileScreen = () => {
 
   return (
     <ScrollView style={globalStyles.container}>
-      <View style={{paddingTop: 16, alignItems: 'center'}}>
+      <View style={styles.profilePhoto}>
         <View style={styles.imageWrapper}>
-          <Image style={styles.image} source={{uri: img}} />
+          <Image style={styles.image} source={{uri: user.photo}} />
         </View>
       </View>
 
       {/*About*/}
       <Text style={styles.label}>About</Text>
       <View style={styles.block}>
-        <View style={[styles.row, {justifyContent: 'space-between'}]}>
-          <Text style={styles.text}>David Jones</Text>
+        <View style={[styles.row, styles.spaceBetween]}>
+          <Text style={styles.text}>{user.name}</Text>
           <TouchableOpacity>
             <IconPencil color={'#767676'} size={24} width={1.5} />
           </TouchableOpacity>
@@ -68,7 +91,7 @@ export const ProfileScreen = () => {
           <View style={styles.iconWrapper}>
             <IconMail color={'#767676'} size={24} width={1.5} />
           </View>
-          <Text style={styles.text}>davidjones@gmail.com</Text>
+          <Text style={styles.text}>{user.email}</Text>
         </View>
       </View>
 
@@ -93,7 +116,7 @@ export const ProfileScreen = () => {
       {/*Mode*/}
       <Text style={styles.label}>Mode</Text>
       <View style={styles.block}>
-        <View style={[styles.row, {justifyContent: 'space-between'}]}>
+        <View style={[styles.row, styles.spaceBetween]}>
           <Text style={styles.text}>Guest</Text>
           <View>
             <Switch
@@ -112,7 +135,7 @@ export const ProfileScreen = () => {
 
       {/*Name*/}
       <View style={styles.block}>
-        <View style={[styles.row, {justifyContent: 'space-between'}]}>
+        <View style={[styles.row, styles.spaceBetween]}>
           <Text style={styles.text}>Name is visible</Text>
           <View>
             <Switch
@@ -128,7 +151,7 @@ export const ProfileScreen = () => {
 
       {/*Notification*/}
       <View style={styles.block}>
-        <View style={[styles.row, {justifyContent: 'space-between'}]}>
+        <View style={[styles.row, styles.spaceBetween]}>
           <Text style={styles.text}>Notifications about new deals</Text>
           <View>
             <Switch
@@ -144,11 +167,11 @@ export const ProfileScreen = () => {
 
       {/*Sign Out*/}
       <Text style={styles.label}>Sign Out</Text>
-      <View style={[styles.block, {marginBottom: 48}]}>
+      <View style={styles.block}>
         <View style={styles.row}>
           <TouchableOpacity
             onPress={() => {
-              signOut();
+              logOut();
             }}>
             <Text style={styles.text}>Sign Out</Text>
           </TouchableOpacity>
@@ -196,6 +219,13 @@ const styles = StyleSheet.create({
   row: {
     paddingVertical: 8,
     flexDirection: 'row',
+    alignItems: 'center',
+  },
+  spaceBetween: {
+    justifyContent: 'space-between',
+  },
+  profilePhoto: {
+    paddingTop: 16,
     alignItems: 'center',
   },
   imageWrapper: {
