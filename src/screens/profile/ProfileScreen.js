@@ -88,13 +88,6 @@ export const ProfileScreen = () => {
 
         <View style={styles.row}>
           <View style={styles.iconWrapper}>
-            <IconComment color={'#767676'} size={24} width={1.5} />
-          </View>
-          <Text style={styles.text}>I like coffee & code </Text>
-        </View>
-
-        <View style={styles.row}>
-          <View style={styles.iconWrapper}>
             <IconPhone color={'#767676'} size={24} width={1.5} />
           </View>
           <Text style={styles.text}>+7 (777) 123 34 45</Text>
@@ -108,64 +101,12 @@ export const ProfileScreen = () => {
         </View>
       </View>
 
-      {/*Rewards*/}
-      <Text style={styles.label}>Rewards</Text>
-      <View style={styles.block}>
-        <View style={styles.row}>
-          <View style={styles.iconWrapperStatus}>
-            <IconCrown color={'#fff'} size={24} width={1.5} />
-          </View>
-          <Text style={styles.text}>Gold Member</Text>
-        </View>
-
-        <View style={styles.row}>
-          <View style={styles.iconWrapperStatus}>
-            <Image style={styles.image} source={{uri: coffee}} />
-          </View>
-          <Text style={styles.text}>Free coffee</Text>
-        </View>
-      </View>
-
-      {/*Mode*/}
-      <Text style={styles.label}>Mode</Text>
-      <View style={styles.block}>
-        <View style={[styles.row, styles.spaceBetween]}>
-          <Text style={styles.text}>Guest</Text>
-          <View>
-            <Switch
-              trackColor={{false: '#AAAAAA', true: '#4136F1'}}
-              thumbColor={isGuest ? '#f4f3f4' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleGuest}
-              value={isGuest}
-            />
-          </View>
-        </View>
-      </View>
-
       {/*Settings*/}
       <Text style={styles.label}>Settings</Text>
-
-      {/*Name*/}
-      <View style={styles.block}>
-        <View style={[styles.row, styles.spaceBetween]}>
-          <Text style={styles.text}>Name is visible</Text>
-          <View>
-            <Switch
-              trackColor={{false: '#AAAAAA', true: '#4136F1'}}
-              thumbColor={isName ? '#f4f3f4' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleName}
-              value={isName}
-            />
-          </View>
-        </View>
-      </View>
-
       {/*Notification*/}
       <View style={styles.block}>
         <View style={[styles.row, styles.spaceBetween]}>
-          <Text style={styles.text}>Notifications about new deals</Text>
+          <Text style={styles.text}>Push notifications</Text>
           <View>
             <Switch
               trackColor={{false: '#AAAAAA', true: '#4136F1'}}
@@ -175,6 +116,21 @@ export const ProfileScreen = () => {
               value={isNotification}
             />
           </View>
+        </View>
+      </View>
+
+      {/*Support*/}
+      <Text style={styles.label}>Support</Text>
+      {/*Contact*/}
+      <View style={styles.block}>
+        <View style={[styles.row, styles.spaceBetween]}>
+          <Text style={styles.text}>Contact support</Text>
+        </View>
+      </View>
+      {/*FAQ*/}
+      <View style={styles.block}>
+        <View style={[styles.row, styles.spaceBetween]}>
+          <Text style={styles.text}>FAQ</Text>
         </View>
       </View>
 
