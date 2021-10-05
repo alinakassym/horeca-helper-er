@@ -1,5 +1,5 @@
 import React from 'react';
-import {HomeScreen} from '../screens/home/HomeScreen';
+import {VacanciesScreen} from '../screens/vacancies/VacanciesScreen';
 import {WalletScreen} from '../screens/wallet/WalletScreen';
 import {RatingScreen} from '../screens/rating/RatingScreen';
 import {MessagesScreen} from '../screens/messages/MessagesScreen';
@@ -8,7 +8,7 @@ import {SignInScreen} from '../screens/SignInScreen';
 import {SignUpScreen} from '../screens/SignUpScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {IconHome} from '../assets/icons/tabs/IconHome';
+import {IconVacancies} from '../assets/icons/tabs/IconVacancies';
 import {IconRating} from '../assets/icons/tabs/IconRating';
 import {IconNotifications} from '../assets/icons/tabs/IconNotifications';
 import {IconProfile} from '../assets/icons/tabs/IconProfile';
@@ -36,12 +36,12 @@ export const Navigator = () => {
           },
         }}>
         <Tab.Screen
-          name="Home"
-          component={HomeScreen}
+          name="Vacancies"
+          component={VacanciesScreen}
           options={{
-            tabBarLabel: 'Home',
+            tabBarLabel: 'Vacancies',
             tabBarIcon: ({focused, color}) => {
-              return <IconHome color={color} size={28} width={1.5} />;
+              return <IconVacancies color={color} size={28} width={1.5} />;
             },
           }}
         />
