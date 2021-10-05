@@ -10,8 +10,21 @@ import {IconPencil} from '../../assets/icons/main/IconPencil';
 import {IconCrown} from '../../assets/icons/main/IconCrown';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getUsers} from '../../services/users'
 
 export const ProfileScreen = () => {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    getUsers()
+      .then(res => {
+        console.log('users', res.data.users);
+        setUsers(res.data.users);
+      })
+      .catch(err => {
+        console.error('localhost error');
+        console.log(err);
+      })
+  }, []);
   const [user, setUser] = useState({});
   const {signOut} = React.useContext(AuthContext);
 
@@ -67,7 +80,7 @@ export const ProfileScreen = () => {
       <Text style={styles.label}>About</Text>
       <View style={styles.block}>
         <View style={[styles.row, styles.spaceBetween]}>
-          <Text style={styles.text}>{user.name}</Text>
+          <Text style={styles.text}>{user.name} </Text>
           <TouchableOpacity>
             <IconPencil color={'#767676'} size={24} width={1.5} />
           </TouchableOpacity>
@@ -77,7 +90,7 @@ export const ProfileScreen = () => {
           <View style={styles.iconWrapper}>
             <IconComment color={'#767676'} size={24} width={1.5} />
           </View>
-          <Text style={styles.text}>I like coffee & code</Text>
+          <Text style={styles.text}>I like coffee & code </Text>
         </View>
 
         <View style={styles.row}>
