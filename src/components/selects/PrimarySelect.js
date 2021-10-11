@@ -1,25 +1,23 @@
 import React from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 
 const propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
-  onChangeText: PropTypes.func,
-};
+  items: PropTypes.array,
+  onChange: PropTypes.func,
+}
 
-class PrimaryInput extends React.PureComponent {
+
+class PrimarySelect extends React.PureComponent {
   render() {
-    const {label, value, onChangeText} = this.props;
+    const {label, value, items, onChange} = this.props;
     return (
       <View>
         <Text style={styles.label}>{label}</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeText}
-          value={value}/>
       </View>
-    );
+    )
   }
 }
 
@@ -42,6 +40,6 @@ const styles = StyleSheet.create({
   }
 });
 
-PrimaryInput.propTypes = propTypes;
+PrimarySelect.propTypes = propTypes;
 
-export default PrimaryInput;
+export default PrimarySelect;
