@@ -38,7 +38,7 @@ List of devices attached
 ```
 5. Forward requests from your device
 ```
-adb reverse tcp:8081 tcp:8081
+adb reverse tcp:8080 tcp:8080
 ```
 7. Run project
 ```
