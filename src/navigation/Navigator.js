@@ -1,5 +1,5 @@
 import React from 'react';
-import {VacanciesScreen} from '../screens/vacancies/VacanciesScreen';
+import {JobsScreen} from '../screens/jobs/JobsScreen';
 import {WalletScreen} from '../screens/wallet/WalletScreen';
 import {RatingScreen} from '../screens/rating/RatingScreen';
 import {MessagesScreen} from '../screens/messages/MessagesScreen';
@@ -23,6 +23,7 @@ export const Navigator = () => {
       <Tab.Navigator
         initialRouteName="Profile"
         screenOptions={{
+          headerShown: false,
           tabBarLabelStyle: {
             bottom: 12,
           },
@@ -36,10 +37,10 @@ export const Navigator = () => {
           },
         }}>
         <Tab.Screen
-          name="Vacancies"
-          component={VacanciesScreen}
+          name="Jobs"
+          component={JobsScreen}
           options={{
-            tabBarLabel: 'Vacancies',
+            tabBarLabel: 'Jobs',
             tabBarIcon: ({focused, color}) => {
               return <IconVacancies color={color} size={28} width={1.5} />;
             },
