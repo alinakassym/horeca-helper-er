@@ -17,8 +17,8 @@ export const ProfileScreen = () => {
   useEffect(() => {
     getUsers()
       .then(res => {
-        console.log('users', res.data.users);
-        setUsers(res.data.users);
+        console.log('users', res.data);
+        setUsers(res.data);
       })
       .catch(err => {
         console.error('localhost error');
