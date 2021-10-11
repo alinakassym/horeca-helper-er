@@ -1,5 +1,6 @@
 import React from 'react';
 import {JobsScreen} from '../screens/jobs/JobsScreen';
+import {JobsPostScreen} from '../screens/jobs/JobsPostScreen';
 import {WalletScreen} from '../screens/wallet/WalletScreen';
 import {RatingScreen} from '../screens/rating/RatingScreen';
 import {MessagesScreen} from '../screens/messages/MessagesScreen';
@@ -82,16 +83,18 @@ export const Navigator = () => {
   };
   return (
     <Stack.Navigator
-      initialRouteName="App"
-      screenOptions={{
+      initialRouteName="App">
+      <Stack.Group screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Group>
         <Stack.Screen name="Tab" component={TabStack} />
       </Stack.Group>
       <Stack.Group>
-        <Stack.Screen name="Screen1" component={SignInScreen} />
-        <Stack.Screen name="Screen2" component={SignUpScreen} />
+        <Stack.Screen
+          options={{
+            headerTitle: 'Post a job',
+          }}
+          name="JobsPostScreen" component={JobsPostScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );

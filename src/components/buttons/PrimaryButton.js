@@ -11,9 +11,9 @@ const propTypes = {
 
 class PrimaryButton extends React.PureComponent {
   render() {
-    const {label} = this.props;
+    const {label, onPress} = this.props;
     return (
-      <TouchableOpacity style={styles.btn}>
+      <TouchableOpacity onPress={onPress} style={styles.btn}>
         <Text style={styles.btnLabel}>{label}</Text>
       </TouchableOpacity>
     );

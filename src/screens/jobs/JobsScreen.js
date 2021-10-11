@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 
-export const JobsScreen = () => {
+export const JobsScreen = ({navigation}) => {
   return (
     <View style={globalStyles.container}>
       <View style={styles.topSection}>
@@ -11,7 +11,7 @@ export const JobsScreen = () => {
         <Text style={styles.title}>123</Text>
       </View>
       <View style={styles.section}>
-        <PrimaryButton label={'Post a job'} />
+        <PrimaryButton onPress={() => navigation.navigate('JobsPostScreen')} label={'Post a job'} />
       </View>
     </View>
   );
