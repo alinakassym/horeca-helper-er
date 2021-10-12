@@ -34,6 +34,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     fontFamily: 'Roboto-Regular',
+    fontSize: 16,
+    color: '#000000',
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#CCCCCC'
