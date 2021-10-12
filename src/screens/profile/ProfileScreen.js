@@ -12,7 +12,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getUsers} from '../../services/users'
 
-export const ProfileScreen = () => {
+export const ProfileScreen = ({navigation}) => {
   const [users, setUsers] = useState([]);
   useEffect(() => {
     getUsers()
@@ -81,7 +81,7 @@ export const ProfileScreen = () => {
       <View style={styles.block}>
         <View style={[styles.row, styles.spaceBetween]}>
           <Text style={styles.text}>{user.name} </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('ProfileEditScreen')}>
             <IconPencil color={'#767676'} size={24} width={1.5} />
           </TouchableOpacity>
         </View>

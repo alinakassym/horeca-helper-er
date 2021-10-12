@@ -5,6 +5,7 @@ import {WalletScreen} from '../screens/wallet/WalletScreen';
 import {RatingScreen} from '../screens/rating/RatingScreen';
 import {MessagesScreen} from '../screens/messages/MessagesScreen';
 import {ProfileScreen} from '../screens/profile/ProfileScreen';
+import {ProfileEditScreen} from '../screens/profile/ProfileEditScreen';
 import {SignInScreen} from '../screens/SignInScreen';
 import {SignUpScreen} from '../screens/SignUpScreen';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -95,6 +96,11 @@ export const Navigator = () => {
             headerTitle: 'Post a job',
           }}
           name="JobsPostScreen" component={JobsPostScreen} />
+        <Stack.Screen
+          options={{
+            headerTitle: 'Profile',
+          }}
+          name="ProfileEditScreen" component={ProfileEditScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
