@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Pressable, TouchableOpacity, Text, View, TextInput, Button, Modal, Alert, StyleSheet } from 'react-native';
-
+import {globalStyles} from '../../styles/globalStyles';
 export const ModalSelect = ({ label, value, valueKey, items, onChange, onCancel }) => {
   const [selected, setSelected] = useState(value[valueKey]);
   const [visible, setVisible] = useState(false);
@@ -13,9 +13,9 @@ export const ModalSelect = ({ label, value, valueKey, items, onChange, onCancel 
   return (
     <React.Fragment>
       <Pressable onPress={() => {setVisible(true)}}>
-        <Text style={styles.label}>{label}</Text>
+        <Text style={globalStyles.label}>{label}</Text>
         <Text
-          style={styles.input}>
+          style={globalStyles.select}>
           {value[valueKey]}
         </Text>
       </Pressable>
@@ -35,22 +35,6 @@ export const ModalSelect = ({ label, value, valueKey, items, onChange, onCancel 
 }
 
 const styles = StyleSheet.create({
-  label: {
-    marginBottom: 8,
-    fontFamily: 'Roboto-Medium',
-    fontSize: 16
-  },
-  input: {
-    marginBottom: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    fontFamily: 'Roboto-Regular',
-    fontSize: 16,
-    color: '#000000',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#CCCCCC'
-  },
   overlay: {
     flex: 1,
     justifyContent: 'center',

@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
+import {globalStyles} from '../../styles/globalStyles';
 import PropTypes from 'prop-types';
 
 const propTypes = {
@@ -13,34 +14,15 @@ class PrimaryInput extends React.PureComponent {
     const {label, value, onChangeText} = this.props;
     return (
       <View>
-        <Text style={styles.label}>{label}</Text>
+        <Text style={globalStyles.label}>{label}</Text>
         <TextInput
-          style={styles.input}
+          style={globalStyles.primaryInput}
           onChangeText={onChangeText}
           value={value}/>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  label: {
-    marginBottom: 8,
-    fontFamily: 'Roboto-Medium',
-    fontSize: 16
-  },
-  input: {
-    marginBottom: 16,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    fontFamily: 'Roboto-Regular',
-    fontSize: 16,
-    color: '#000000',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#CCCCCC'
-  }
-});
 
 PrimaryInput.propTypes = propTypes;
 
