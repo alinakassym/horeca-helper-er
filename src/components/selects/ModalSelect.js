@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable, Text, View, TextInput, Button, Modal, Alert, StyleSheet } from 'react-native';
+import { Pressable, TouchableOpacity, Text, View, TextInput, Button, Modal, Alert, StyleSheet } from 'react-native';
 
 export const ModalSelect = ({ label, value, valueKey, items, onChange, onCancel }) => {
   const [selected, setSelected] = useState(value[valueKey]);
@@ -20,15 +20,15 @@ export const ModalSelect = ({ label, value, valueKey, items, onChange, onCancel 
         </Text>
       </Pressable>
       <Modal visible={visible} animationType='slide' transparent={true}>
-        <View style={styles.overlay}>
+        <Pressable style={styles.overlay} onPress={() => setVisible(false)}>
           <View style={styles.wrap}>
             {items.map((item, index) => (
-              <Pressable style={styles.item} key={index} onPress={() => {saveHandler(item)}}>
+              <TouchableOpacity style={styles.item} key={index} onPress={() => {saveHandler(item)}}>
                 <Text>{item}</Text>
-              </Pressable>
+              </TouchableOpacity>
             ))}
           </View>
-        </View>
+        </Pressable>
       </Modal>
     </React.Fragment>
   )
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 16,
-    paddingVertical: 8,
+    paddingVertical: 12,
     paddingHorizontal: 16,
     fontFamily: 'Roboto-Regular',
     fontSize: 16,

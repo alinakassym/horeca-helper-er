@@ -5,22 +5,28 @@ import {ModalSelect} from '../../components/selects/ModalSelect';
 
 export const JobsPostScreen = () => {
   const genders = ['Female', 'Male'];
+  const sheduleTypes = ['Full-time', 'Part-time', 'Contract', 'Temporary', 'Volunteer', 'Internsheep'];
+  const experienceList = ['Less than six months', 'Six month', 'less than one year', '1 year', 'More than 1 year', '2 years', 'More than 2 years', 'More than 3 years'];
   const [job, onChange] = React.useState({
     title: 'Title',
     location: 'Location',
     ageFrom: 18,
     ageTo: 32,
     gender: 'Male',
-    experience: 0,
-    scedule: '',
+    experience: 'Six month',
+    scedule: 'Full-time',
     description: 'Description'
   });
   return (
     <View style={styles.container}>
       <PrimaryInput label={'Job title'} onChangeText={onChange} value={job.title}/>
       <PrimaryInput label={'Job location'} onChangeText={onChange} value={job.location}/>
-      <PrimaryInput label={'Description'} onChangeText={onChange} value={job.description}/>
       <ModalSelect label={'Gender'} onChange={onChange} value={job} valueKey={'gender'} items={genders}/>
+      <ModalSelect label={'Experience'} onChange={onChange} value={job} valueKey={'experience'} items={experienceList}/>
+
+      <ModalSelect label={'Schedule'} onChange={onChange} value={job} valueKey={'scedule'} items={sheduleTypes}/>
+      <PrimaryInput label={'Description'} onChangeText={onChange} value={job.description}/>
+
     </View>
   );
 }
