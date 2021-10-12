@@ -42,9 +42,16 @@ export const JobsPostScreen = () => {
       <View>
         <Text style={globalStyles.label}>Age</Text>
         <Text>From {job.ageFrom} to {job.ageTo}</Text>
-        <View style={{paddingHorizontal: 6}}>
+        <View style={styles.sliderWrapper}>
           <MultiSlider
-            sliderLength={dimensions.width - 42}
+            /*customLabel={(e) => {
+              return (<View><Text>{e.currentValue}</Text></View>)
+            }}*/
+            enableLabel={true}
+            isMarkersSeparated={true}
+            markerStyle={{backgroundColor: '#185AB7'}}
+            selectedStyle={{backgroundColor: '#185AB7'}}
+            sliderLength={dimensions.width - 80}
             values={values} showSteps={true} showStepLabels={true} min={18} max={70}
             onValuesChangeFinish={(values) => {onChange({...job, ageFrom: values[0], ageTo: values[1]})}}
             valueOne={job.ageFrom}
@@ -70,7 +77,9 @@ export const JobsPostScreen = () => {
         style={[globalStyles.primaryInput, styles.multiline]}
         onChangeText={(val) => {onChange({...job, description: val})}}
         value={job.description}/>
-      <PrimaryButton label={'Post'}  />
+      <View style={styles.btn}>
+        <PrimaryButton label={'Post'}  />
+      </View>
     </ScrollView>
   );
 }
@@ -78,6 +87,13 @@ export const JobsPostScreen = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 16
+  },
+  sliderWrapper: {
+    paddingTop: 38,
+    alignItems: 'center'
+  },
+  btn: {
+    marginBottom: 42
   },
   multiline: {
     height: 100,
