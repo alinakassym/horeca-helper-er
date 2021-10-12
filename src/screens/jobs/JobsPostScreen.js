@@ -1,18 +1,10 @@
 import React from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 import PrimaryInput from '../../components/inputs/PrimaryInput';
-import PrimarySelect from '../../components/selects/PrimarySelect';
+import {ModalSelect} from '../../components/selects/ModalSelect';
 
 export const JobsPostScreen = () => {
-  const genders = [
-    {
-      label: 'Female',
-      value: 'female'
-    }, {
-      label: 'Male',
-      value: 'male'
-    }
-  ]
+  const genders = ['Female', 'Male'];
   const [job, onChange] = React.useState({
     title: 'Title',
     location: 'Location',
@@ -28,7 +20,7 @@ export const JobsPostScreen = () => {
       <PrimaryInput label={'Job title'} onChangeText={onChange} value={job.title}/>
       <PrimaryInput label={'Job location'} onChangeText={onChange} value={job.location}/>
       <PrimaryInput label={'Description'} onChangeText={onChange} value={job.description}/>
-      <PrimarySelect label={'Gender'} items={genders} onChange={onChange} value={job.gender} />
+      <ModalSelect label={'Gender'} onChange={onChange} value={job} valueKey={'gender'} items={genders}/>
     </View>
   );
 }
