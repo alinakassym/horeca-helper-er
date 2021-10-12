@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text, Dimensions, TextInput, StyleSheet} from 'react-native';
-import PrimaryInput from '../../components/inputs/PrimaryInput';
+import {ScrollView, View, Text, Dimensions, TextInput, StyleSheet} from 'react-native';
+import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {ModalSelect} from '../../components/selects/ModalSelect';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {globalStyles} from '../../styles/globalStyles';
@@ -23,11 +23,25 @@ export const JobsPostScreen = () => {
   });
   const values = [18, 30]
   return (
-    <View style={styles.container}>
-      <PrimaryInput label={'Job title'} onChangeText={onChange} value={job.title}/>
-      <PrimaryInput label={'Job location'} onChangeText={onChange} value={job.location}/>
+    <ScrollView style={styles.container}>
+      {/*Job Title*/}
+      <Text style={globalStyles.label}>Job title</Text>
+      <TextInput
+        style={globalStyles.primaryInput}
+        onChangeText={(val) => {onChange({...job, title: val})}}
+        value={job.title}/>
+
+      {/*Job location*/}
+      <Text style={globalStyles.label}>Job location</Text>
+      <TextInput
+        style={globalStyles.primaryInput}
+        onChangeText={(val) => {onChange({...job, location: val})}}
+        value={job.location}/>
+
+      {/*Age*/}
       <View>
         <Text style={globalStyles.label}>Age</Text>
+        <Text>From {job.ageFrom} to {job.ageTo}</Text>
         <View style={{paddingHorizontal: 6}}>
           <MultiSlider
             sliderLength={dimensions.width - 42}
@@ -37,13 +51,27 @@ export const JobsPostScreen = () => {
             valueTwo={job.ageTo}/>
         </View>
       </View>
+
+      {/*Gender*/}
       <ModalSelect label={'Gender'} onChange={onChange} value={job} valueKey={'gender'} items={genders}/>
+
+      {/*Experience*/}
       <ModalSelect label={'Experience'} onChange={onChange} value={job} valueKey={'experience'} items={experienceList}/>
 
+      {/*Schedule*/}
       <ModalSelect label={'Schedule'} onChange={onChange} value={job} valueKey={'scedule'} items={sheduleTypes}/>
-      <PrimaryInput label={'Description'} onChangeText={onChange} value={job.description}/>
 
-    </View>
+      {/*Job location*/}
+      <Text style={globalStyles.label}>Description</Text>
+
+      {/*Descriiption*/}
+      <TextInput
+        multiline={true}
+        style={[globalStyles.primaryInput, styles.multiline]}
+        onChangeText={(val) => {onChange({...job, description: val})}}
+        value={job.description}/>
+      <PrimaryButton label={'Post'}  />
+    </ScrollView>
   );
 }
 
@@ -51,6 +79,10 @@ const styles = StyleSheet.create({
   container: {
     padding: 16
   },
+  multiline: {
+    height: 100,
+    textAlignVertical: 'top'
+  }
 });
 
 export default JobsPostScreen;
