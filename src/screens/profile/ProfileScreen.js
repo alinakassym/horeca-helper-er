@@ -25,16 +25,14 @@ export const ProfileScreen = ({navigation}) => {
         console.log(err);
       })
   }, []);
+
+
   const [user, setUser] = useState({});
   const {signOut} = React.useContext(AuthContext);
 
-  const setUserState = data => {
-    setUser(data);
-  };
-
   useEffect(() => {
     AsyncStorage.getItem('userInfo').then(result => {
-      setUserState(JSON.parse(result));
+      setUser(JSON.parse(result));
     });
     return () => {
       setUser({});
@@ -103,6 +101,7 @@ export const ProfileScreen = ({navigation}) => {
 
       {/*Settings*/}
       <Text style={styles.label}>Settings</Text>
+
       {/*Notification*/}
       <View style={styles.block}>
         <View style={[styles.row, styles.spaceBetween]}>
@@ -121,12 +120,14 @@ export const ProfileScreen = ({navigation}) => {
 
       {/*Support*/}
       <Text style={styles.label}>Support</Text>
+
       {/*Contact*/}
       <View style={styles.block}>
         <View style={[styles.row, styles.spaceBetween]}>
           <Text style={styles.text}>Contact support</Text>
         </View>
       </View>
+
       {/*FAQ*/}
       <View style={styles.block}>
         <View style={[styles.row, styles.spaceBetween]}>

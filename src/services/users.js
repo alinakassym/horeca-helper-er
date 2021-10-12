@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 // emulator
-const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2' : 'http://localhost';
+// const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2' : 'http://localhost';
 
 // android device
-//const baseUrl = 'http://localhost';
+const baseUrl = 'http://localhost';
 
 const port = '8080'
 
