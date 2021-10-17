@@ -98,7 +98,6 @@ const App = () => {
 
         try {
           await AsyncStorage.setItem('userToken', userToken);
-          await AsyncStorage.setItem('hhToken', hhToken);
         } catch (e) {
           console.log(e);
         }

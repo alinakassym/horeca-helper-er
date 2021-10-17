@@ -84,7 +84,10 @@ export const SignInScreen = () => {
               },
             ];
             await storeData(foundUser[0]);
-            signIn(foundUser);
+            AsyncStorage.setItem('hhToken', authData.hhToken)
+              .then(() => {
+                signIn(foundUser);
+              })
           })
           .catch(e => {
             console.log('SignInScreen', e)

@@ -10,9 +10,8 @@ const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2' : 'http://localhos
 
 const port = '3000';
 
-export const getCompanies = async (hhToken) => {
+export const getCompanies = async () => {
   const headers = await authHeaders;
-  console.log('headers', headers)
 
   const r = await axios.get('' +
     `${baseUrl}:${port}/er/companies`, {
@@ -22,26 +21,25 @@ export const getCompanies = async (hhToken) => {
   return r;
 };
 
-export const getCompany = async (hhToken) => {
+export const getCompany = async () => {
   const headers = await authHeaders;
-  console.log('companiesServiceheaders', headers)
+  console.log('CompaniesService headers:', headers)
 
   const r = await axios.get('' +
     `${baseUrl}:${port}/er/companies/me`, {
     headers: headers
   });
-  console.log('res', r.data)
+  console.log('Company Service getCompany result:', r.data)
   return r;
 };
 
-export const updateCompany = async (hhToken) => {
+export const updateCompany = async (data) => {
   const headers = await authHeaders;
-  console.log('headers', headers)
 
-  const r = await axios.get('' +
-    `${baseUrl}:${port}/er/companies/me`, {
+  const r = await axios.patch('' +
+    `${baseUrl}:${port}/er/companies/me`, data, {
     headers: headers
   });
-  console.log('res', r.data)
+  console.log('Company Service updateCompany result:', r.data)
   return r;
 };
