@@ -5,38 +5,30 @@ import {globalStyles} from '../../styles/globalStyles';
 import {AuthContext} from '../../store/context';
 import {IconComment} from '../../assets/icons/main/IconComment';
 import {IconPhone} from '../../assets/icons/main/IconPhone';
+import {IconAddress} from '../../assets/icons/main/IconAddress';
 import {IconMail} from '../../assets/icons/main/IconMail';
 import {IconPencil} from '../../assets/icons/main/IconPencil';
 import {IconCrown} from '../../assets/icons/main/IconCrown';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getUsers} from '../../services/users'
+import {getCompany} from '../../services/CompaniesService'
 
 export const ProfileScreen = ({navigation}) => {
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    getUsers()
+  const {signOut} = React.useContext(AuthContext);
+
+  const [company, setCompany] = useState({});
+
+  useEffect(async() => {
+    const hhToken = await AsyncStorage.getItem('hhToken');
+    getCompany(hhToken)
       .then(res => {
-        console.log('users', res.data);
-        setUsers(res.data);
+        console.log('getCompanies', res.data);
+        setCompany(res.data);
       })
       .catch(err => {
         console.error('localhost error');
         console.log(err);
       })
-  }, []);
-
-
-  const [user, setUser] = useState({});
-  const {signOut} = React.useContext(AuthContext);
-
-  useEffect(() => {
-    AsyncStorage.getItem('userInfo').then(result => {
-      setUser(JSON.parse(result));
-    });
-    return () => {
-      setUser({});
-    };
   }, []);
 
   const logOut = () => {
@@ -70,7 +62,7 @@ export const ProfileScreen = ({navigation}) => {
     <ScrollView style={globalStyles.container}>
       <View style={styles.profilePhoto}>
         <View style={styles.imageWrapper}>
-          <Image style={styles.image} source={{uri: user.photo}} />
+          <Image style={styles.image} source={{uri: company.photo}} />
         </View>
       </View>
 
@@ -78,10 +70,17 @@ export const ProfileScreen = ({navigation}) => {
       <Text style={styles.label}>About</Text>
       <View style={styles.block}>
         <View style={[styles.row, styles.spaceBetween]}>
-          <Text style={styles.text}>{user.name} </Text>
+          <Text style={styles.text}>{company.title || 'Is not entered'} </Text>
           <TouchableOpacity onPress={() => navigation.navigate('ProfileEditScreen')}>
             <IconPencil color={'#767676'} size={24} width={1.5} />
           </TouchableOpacity>
+        </View>
+
+        <View style={styles.row}>
+          <View style={styles.iconWrapper}>
+            <IconAddress color={'#767676'} size={24} width={1.5} />
+          </View>
+          <Text style={styles.text}>{company.address || 'Is not entered'}</Text>
         </View>
 
         <View style={styles.row}>
@@ -95,7 +94,7 @@ export const ProfileScreen = ({navigation}) => {
           <View style={styles.iconWrapper}>
             <IconMail color={'#767676'} size={24} width={1.5} />
           </View>
-          <Text style={styles.text}>{user.email}</Text>
+          <Text style={styles.text}>{company.email}</Text>
         </View>
       </View>
 
