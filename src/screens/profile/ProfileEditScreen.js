@@ -3,50 +3,60 @@ import {Text, View, TextInput, ScrollView, Image, StyleSheet, Switch} from 'reac
 import {globalStyles} from '../../styles/globalStyles';
 import {AuthContext} from '../../store/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import PrimaryButton from '../../components/buttons/PrimaryButton'
+import PrimaryButton from '../../components/buttons/PrimaryButton';
+import {getCompany, updateCompany} from '../../services/CompaniesService';
 
-export const ProfileEditScreen = () => {
-  const [user, setUser] = useState({});
+export const ProfileEditScreen = ({route, navigation}) => {
+  const { profileValue } = route.params.value;
+
+  console.log('ProfileEdit Screen params', route.params)
   const {signOut} = React.useContext(AuthContext);
 
-  useEffect(() => {
-    AsyncStorage.getItem('userInfo').then(result => {
-      const userData = JSON.parse(result);
-      console.log('userData', userData);
-      setUser(userData);
-    });
-    return () => {
-      setUser({});
-    };
-  }, []);
+  const [company, setCompany] = useState(route.params.value);
+
+  const save = () => {
+    updateCompany(company)
+      .then(() => {
+        navigation.navigate("Profile", {
+          value: company,
+        });
+      })
+  }
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.profilePhoto}>
         <View style={styles.imageWrapper}>
-          <Image style={styles.image} source={{uri: user.photo}} />
+          <Image style={styles.image} source={{uri: company.photo}} />
         </View>
       </View>
 
       <Text style={globalStyles.label}>Name</Text>
       <TextInput
         style={globalStyles.primaryInput}
-        onChangeText={(val) => {setUser({...user, name: val})}}
-        value={user.name}/>
+        onChangeText={(val) => {setCompany({...company, title: val})}}
+        value={company.title}/>
+
+      <Text style={globalStyles.label}>Address</Text>
+      <TextInput
+        style={globalStyles.primaryInput}
+        onChangeText={(val) => {setCompany({...company, address: val})}}
+        value={company.address}/>
 
       <Text style={globalStyles.label}>Phone</Text>
       <TextInput
         style={globalStyles.primaryInput}
-        onChangeText={(val) => {setUser({...user, phone: val})}}
-        value={user.phone}/>
+        onChangeText={(val) => {setCompany({...company, phone: val})}}
+        value={company.phone}/>
 
       <Text style={globalStyles.label}>E-mail</Text>
       <TextInput
         style={globalStyles.primaryInput}
-        onChangeText={(val) => {setUser({...user, email: val})}}
-        value={user.email}/>
+        onChangeText={(val) => {setCompany({...company, email: val})}}
+        value={company.email}/>
 
-      <PrimaryButton label={'Save'}/>
+
+      <PrimaryButton label={'Save'} onPress={() => save()}/>
     </ScrollView>
   );
 };

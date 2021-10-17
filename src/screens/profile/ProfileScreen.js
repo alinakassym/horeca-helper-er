@@ -10,26 +10,31 @@ import {IconMail} from '../../assets/icons/main/IconMail';
 import {IconPencil} from '../../assets/icons/main/IconPencil';
 import {IconCrown} from '../../assets/icons/main/IconCrown';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getCompany} from '../../services/CompaniesService'
+import {getCompany} from '../../services/CompaniesService';
 
 export const ProfileScreen = ({navigation}) => {
   const {signOut} = React.useContext(AuthContext);
 
   const [company, setCompany] = useState({});
 
-  useEffect(async() => {
-    const hhToken = await AsyncStorage.getItem('hhToken');
-    getCompany(hhToken)
-      .then(res => {
-        console.log('getCompanies', res.data);
-        setCompany(res.data);
-      })
-      .catch(err => {
-        console.error('localhost error');
-        console.log(err);
-      })
-  }, []);
+  useEffect(async () => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      // The screen is focused
+      getCompany()
+        .then(res => {
+          console.log('ProfileScreen companies/me:', res.data);
+          setCompany(res.data);
+        })
+        .catch(err => {
+          console.error('ProfileScreen error');
+          console.log(err);
+        })
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
+
 
   const logOut = () => {
     console.log('AuthContext', AuthContext);
@@ -71,7 +76,11 @@ export const ProfileScreen = ({navigation}) => {
       <View style={styles.block}>
         <View style={[styles.row, styles.spaceBetween]}>
           <Text style={styles.text}>{company.title || 'Is not entered'} </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('ProfileEditScreen')}>
+          <TouchableOpacity onPress={() => {
+            navigation.navigate("ProfileEditScreen", {
+              value: company,
+            });
+          }}>
             <IconPencil color={'#767676'} size={24} width={1.5} />
           </TouchableOpacity>
         </View>
