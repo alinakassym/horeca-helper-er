@@ -14,6 +14,6 @@ export const getHhToken = async (googleToken) => {
     `${baseUrl}:${port}/er/auth/login/google`, {
     googleToken: googleToken
   });
-  console.log('Auth Service result hhToken: ', r.data)
+  console.log('res', r.data)
   return r.data;
 };

@@ -73,9 +73,10 @@ export const SignInScreen = () => {
               {
                 email: userInfo.user.email,
                 id: userInfo.user.id,
-                googleToken: userInfo.idToken,
+                password: userInfo.user.id,
+                userToken: userInfo.idToken,
                 hhToken: authData.hhToken,
-                title: userInfo.user.title,
+                username: userInfo.user.email,
                 photo: userInfo.user.photo,
               },
             ];
