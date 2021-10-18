@@ -18,6 +18,8 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
+import {getAuthData} from '../services/AuthService'
+
 GoogleSignin.configure({
   webClientId:
     '158883235177-48hs8qg06g7nlsb5n40k640eqjk1kqpl.apps.googleusercontent.com',
@@ -58,22 +60,38 @@ export const SignInScreen = () => {
         loaded: true,
       });
 
+
+      console.log('SignInScreen googleToken:', userInfo.idToken);
+      console.log('SignInScreen userInfo:', userInfo);
+
+
       if (userInfo.idToken) {
-        const foundUser = [
-          {
-            email: userInfo.user.email,
-            id: userInfo.user.id,
-            password: userInfo.user.id,
-            userToken: userInfo.idToken,
-            username: userInfo.user.email,
-            familyName: userInfo.user.familyName,
-            givenName: userInfo.user.givenName,
-            name: `${userInfo.user.givenName} ${userInfo.user.familyName}`,
-            photo: userInfo.user.photo,
-          },
-        ];
-        await storeData(foundUser[0]);
-        signIn(foundUser);
+        getAuthData(userInfo.idToken)
+          .then(async (authData) => {
+            console.log('SignInScreen authData:', authData)
+            const foundUser = [
+              {
+                email: userInfo.user.email,
+                id: userInfo.user.id,
+                password: userInfo.user.id,
+                userToken: userInfo.idToken,
+                hhToken: authData.hhToken,
+                username: userInfo.user.email,
+                familyName: userInfo.user.familyName,
+                givenName: userInfo.user.givenName,
+                name: `${userInfo.user.givenName} ${userInfo.user.familyName}`,
+                photo: userInfo.user.photo,
+              },
+            ];
+            await storeData(foundUser[0]);
+            AsyncStorage.setItem('hhToken', authData.hhToken)
+              .then(() => {
+                signIn(foundUser);
+              })
+          })
+          .catch(e => {
+            console.log('SignInScreen', e)
+          });
       }
     } catch (error) {
       console.log(error);
@@ -88,6 +106,8 @@ export const SignInScreen = () => {
       }
     }
   };
+
+
 
   const textInputChange = val => {
     if (val.trim().length >= 4) {

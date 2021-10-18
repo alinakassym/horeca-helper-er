@@ -93,6 +93,7 @@ const App = () => {
         // setUserToken('fgkj');
         // setIsLoading(false);
         const userToken = String(foundUser[0].userToken);
+        const hhToken = String(foundUser[0].hhToken);
         const userName = foundUser[0].username;
 
         try {
@@ -100,7 +101,7 @@ const App = () => {
         } catch (e) {
           console.log(e);
         }
-        // console.log('user token: ', userToken);
+
         dispatch({type: 'LOGIN', id: userName, token: userToken});
       },
       signOut: async () => {
@@ -108,6 +109,7 @@ const App = () => {
         // setIsLoading(false);
         try {
           await AsyncStorage.removeItem('userToken');
+          await AsyncStorage.removeItem('hhToken');
         } catch (e) {
           console.log(e);
         }
@@ -134,7 +136,7 @@ const App = () => {
       } catch (e) {
         console.log(e);
       }
-      // console.log('user token: ', userToken);
+
       dispatch({type: 'RETRIEVE_TOKEN', token: userToken});
     }, 1000);
   }, []);
