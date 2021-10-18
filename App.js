@@ -22,8 +22,8 @@ const App = () => {
 
   const initialLoginState = {
     isLoading: true,
-    userName: null,
-    userToken: null,
+    userId: null,
+    hhToken: null,
   };
 
   const CustomDefaultTheme = {
@@ -55,28 +55,28 @@ const App = () => {
       case 'RETRIEVE_TOKEN':
         return {
           ...prevState,
-          userToken: action.token,
+          hhToken: action.token,
           isLoading: false,
         };
       case 'LOGIN':
         return {
           ...prevState,
-          userName: action.id,
-          userToken: action.token,
+          userId: action.id,
+          hhToken: action.token,
           isLoading: false,
         };
       case 'LOGOUT':
         return {
           ...prevState,
-          userName: null,
-          userToken: null,
+          userId: null,
+          hhToken: null,
           isLoading: false,
         };
       case 'REGISTER':
         return {
           ...prevState,
-          userName: action.id,
-          userToken: action.token,
+          userId: action.id,
+          hhToken: action.token,
           isLoading: false,
         };
     }
@@ -90,25 +90,19 @@ const App = () => {
   const authContext = React.useMemo(
     () => ({
       signIn: async foundUser => {
-        // setUserToken('fgkj');
-        // setIsLoading(false);
-        const userToken = String(foundUser[0].userToken);
         const hhToken = String(foundUser[0].hhToken);
-        const userName = foundUser[0].username;
+        const userId = foundUser[0].id;
 
         try {
-          await AsyncStorage.setItem('userToken', userToken);
+          await AsyncStorage.setItem('hhToken', hhToken);
         } catch (e) {
           console.log(e);
         }
 
-        dispatch({type: 'LOGIN', id: userName, token: userToken});
+        dispatch({type: 'LOGIN', id: userId, token: hhToken});
       },
       signOut: async () => {
-        // setUserToken(null);
-        // setIsLoading(false);
         try {
-          await AsyncStorage.removeItem('userToken');
           await AsyncStorage.removeItem('hhToken');
         } catch (e) {
           console.log(e);
@@ -116,8 +110,6 @@ const App = () => {
         dispatch({type: 'LOGOUT'});
       },
       signUp: () => {
-        // setUserToken('fgkj');
-        // setIsLoading(false);
       },
       toggleTheme: () => {
         setIsDarkTheme(isDarkTheme => !isDarkTheme);
@@ -128,16 +120,15 @@ const App = () => {
 
   useEffect(() => {
     setTimeout(async () => {
-      // setIsLoading(false);
-      let userToken;
-      userToken = null;
+      let hhToken;
+      hhToken = null;
       try {
-        userToken = await AsyncStorage.getItem('userToken');
+        hhToken = await AsyncStorage.getItem('hhToken');
       } catch (e) {
         console.log(e);
       }
 
-      dispatch({type: 'RETRIEVE_TOKEN', token: userToken});
+      dispatch({type: 'RETRIEVE_TOKEN', token: hhToken});
     }, 1000);
   }, []);
 
@@ -152,7 +143,7 @@ const App = () => {
     <PaperProvider theme={theme}>
       <AuthContext.Provider value={authContext}>
         <NavigationContainer theme={theme}>
-          {loginState.userToken !== null ? <Navigator /> : <RootStackScreen />}
+          {loginState.hhToken !== null ? <Navigator /> : <RootStackScreen />}
         </NavigationContainer>
       </AuthContext.Provider>
     </PaperProvider>

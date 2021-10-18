@@ -9,11 +9,11 @@ const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2' : 'http://localhos
 
 const port = '3000';
 
-export const getAuthData = async (googleToken) => {
+export const getHhToken = async (googleToken) => {
   const r = await axios.post('' +
     `${baseUrl}:${port}/er/auth/login/google`, {
     googleToken: googleToken
   });
-  console.log('res', r.data)
+  console.log('Auth Service result hhToken: ', r.data)
   return r.data;
 };

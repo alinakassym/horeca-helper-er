@@ -18,7 +18,7 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
-import {getAuthData} from '../services/AuthService'
+import {getHhToken} from '../services/AuthService'
 
 GoogleSignin.configure({
   webClientId:
@@ -66,20 +66,16 @@ export const SignInScreen = () => {
 
 
       if (userInfo.idToken) {
-        getAuthData(userInfo.idToken)
+        getHhToken(userInfo.idToken)
           .then(async (authData) => {
             console.log('SignInScreen authData:', authData)
             const foundUser = [
               {
                 email: userInfo.user.email,
                 id: userInfo.user.id,
-                password: userInfo.user.id,
-                userToken: userInfo.idToken,
+                googleToken: userInfo.idToken,
                 hhToken: authData.hhToken,
-                username: userInfo.user.email,
-                familyName: userInfo.user.familyName,
-                givenName: userInfo.user.givenName,
-                name: `${userInfo.user.givenName} ${userInfo.user.familyName}`,
+                title: userInfo.user.title,
                 photo: userInfo.user.photo,
               },
             ];
