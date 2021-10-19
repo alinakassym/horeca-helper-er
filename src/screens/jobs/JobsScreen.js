@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {ScrollView, View, Text, StyleSheet} from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {getJobs} from '../../services/JobsService';
@@ -15,7 +15,7 @@ export const JobsScreen = ({navigation}) => {
       const hhToken = await AsyncStorage.getItem('hhToken')
       getJobs(hhToken)
         .then(result => {
-          console.log('jobs: ', result.data);
+          // console.log('jobs: ', result.data);
           setJobs(result.data);
         })
         .catch(e => {
@@ -30,20 +30,19 @@ export const JobsScreen = ({navigation}) => {
   return (
     <View style={globalStyles.container}>
       <View style={styles.topSection}>
-        <Text style={styles.title}>Алматы</Text>
+        <Text style={styles.title}>Astana</Text>
         <Text style={styles.title}>123</Text>
       </View>
 
       {/*<Text>{jobs.toString()}</Text>*/}
-
-      <View style={styles.section}>
-        {jobs && jobs.map((item, index) => (
-          <JobCard key={index} item={item}/>
-        ))}
-      </View>
-      <View style={styles.section}>
-        <PrimaryButton onPress={() => navigation.navigate('JobsPostScreen')} label={'Post a job'} />
-      </View>
+      <ScrollView>
+        <View style={styles.section}>
+          {jobs && jobs.map((item, index) => (
+            <JobCard key={index} item={item} onPress={() => navigation.navigate('JobEditScreen', { id: item.id })}/>
+          ))}
+          <PrimaryButton onPress={() => navigation.navigate('JobsPostScreen')} label={'Post a job'} />
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -62,6 +61,8 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   section: {
-    padding: 14,
+    paddingTop: 14,
+    paddingLeft: 14,
+    paddingRight: 14
   }
 });

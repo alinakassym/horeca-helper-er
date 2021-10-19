@@ -1,6 +1,7 @@
 import React from 'react';
 import {JobsScreen} from '../screens/jobs/JobsScreen';
 import {JobsPostScreen} from '../screens/jobs/JobsPostScreen';
+import {JobEditScreen} from '../screens/jobs/JobEditScreen';
 import {WalletScreen} from '../screens/wallet/WalletScreen';
 import {RatingScreen} from '../screens/rating/RatingScreen';
 import {MessagesScreen} from '../screens/messages/MessagesScreen';
@@ -96,6 +97,11 @@ export const Navigator = () => {
             headerTitle: 'Post a job',
           }}
           name="JobsPostScreen" component={JobsPostScreen} />
+        <Stack.Screen
+          options={{
+            headerTitle: 'Edit job',
+          }}
+          name="JobEditScreen" component={JobEditScreen} />
         <Stack.Screen
           options={{
             headerTitle: 'Profile',
