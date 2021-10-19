@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Pressable, TouchableOpacity, Text, View, TextInput, Button, Modal, Alert, StyleSheet } from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
-export const ModalSelect = ({ label, value, valueKey, items, onChange, onCancel }) => {
+export const ModalSelect = ({ label, value, valueKey, items, itemTitle, onChange, onCancel }) => {
   const [selected, setSelected] = useState(value[valueKey]);
   const [visible, setVisible] = useState(false);
 
@@ -16,7 +16,7 @@ export const ModalSelect = ({ label, value, valueKey, items, onChange, onCancel 
         <Text style={globalStyles.label}>{label}</Text>
         <Text
           style={globalStyles.select}>
-          {value[valueKey]}
+          {value[valueKey][itemTitle]}
         </Text>
       </Pressable>
       <Modal visible={visible} animationType='slide' transparent={true}>
@@ -24,7 +24,7 @@ export const ModalSelect = ({ label, value, valueKey, items, onChange, onCancel 
           <View style={styles.wrap}>
             {items.map((item, index) => (
               <TouchableOpacity style={styles.item} key={index} onPress={() => {saveHandler(item)}}>
-                <Text>{item}</Text>
+                <Text>{item[itemTitle]}</Text>
               </TouchableOpacity>
             ))}
           </View>

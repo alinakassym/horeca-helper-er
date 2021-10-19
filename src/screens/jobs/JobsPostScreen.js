@@ -11,10 +11,10 @@ import {getCities, getGenders, getPositions, getSchedules} from '../../services/
 const dimensions = Dimensions.get('screen');
 
 export const JobsPostScreen = ({navigation}) => {
-  const [cities, setCities] = useState();
-  const [genders, setGenders] = useState();
-  const [positions, setPositions] = useState();
-  const [schedules, setSchedules] = useState();
+  const [cities, setCities] = useState([]);
+  const [genders, setGenders] = useState([]);
+  const [positions, setPositions] = useState([]);
+  const [schedules, setSchedules] = useState([]);
 
   useEffect(async () => {
     const unsubscribe = navigation.addListener('focus', async() => {
@@ -60,40 +60,47 @@ export const JobsPostScreen = ({navigation}) => {
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
   }, [navigation]);
-  const gendersList = ['Female', 'Male'];
-  const sheduleTypes = ['Full-time', 'Part-time', 'Contract', 'Temporary', 'Volunteer', 'Internsheep'];
-  const experienceList = ['Less than six months', 'Six month', 'less than one year', '1 year', 'More than 1 year', '2 years', 'More than 2 years', 'More than 3 years'];
+
   const [job, onChange] = React.useState({
-    title: 'Title',
+    position: {"id": 1, "title": "Waiter", "title_ru": "Официант"},
     location: 'Location',
-    ageFrom: 18,
-    ageTo: 32,
-    gender: 'Male',
-    experience: 'Six month',
-    scedule: 'Full-time',
-    description: 'Description'
+    ageMin: 18,
+    ageMax: 32,
+    gender: {"id": 1, "title": "Female", "title_ru": "Женский"},
+    experienceMin: 0,
+    experienceMax: 2,
+    schedule: {"id": 1, "title": "Full-time", "title_ru": "Полный день"},
+    description: ''
   });
   const values = [18, 30]
   return (
     <ScrollView style={styles.container}>
-      {/*Job Title*/}
-      <Text style={globalStyles.label}>Job title</Text>
-      <TextInput
-        style={globalStyles.primaryInput}
-        onChangeText={(val) => {onChange({...job, title: val})}}
-        value={job.title}/>
+      {/*Position*/}
+      <ModalSelect label={'Position'} onChange={onChange} value={job} valueKey={'position'} items={positions} itemTitle={'title'}/>
 
       {/*Job location*/}
-      <Text style={globalStyles.label}>Job location</Text>
-      <TextInput
-        style={globalStyles.primaryInput}
-        onChangeText={(val) => {onChange({...job, location: val})}}
-        value={job.location}/>
+      <ModalSelect label={'Location'} onChange={onChange} value={job} valueKey={'location'} items={cities} itemTitle={'title'}/>
 
       {/*Age*/}
       <View>
         <Text style={globalStyles.label}>Age</Text>
-        <Text>From {job.ageFrom} to {job.ageTo}</Text>
+        <View style={styles.row}>
+          <View style={styles.col}>
+            <Text>From</Text>
+            <TextInput keyboardType={'number-pad'}
+                       style={globalStyles.primaryInput}
+                       onChangeText={(val) => {onChange({...job, ageMin: val})}}
+                       value={job.ageMin.toString()} />
+          </View>
+          <View style={styles.col}>
+            <Text>To</Text>
+            <TextInput keyboardType={'number-pad'}
+                       style={globalStyles.primaryInput}
+                       onChangeText={(val) => {onChange({...job, ageMax: val})}}
+                       value={job.ageMax.toString()} />
+          </View>
+        </View>
+        <Text>From {job.ageMin} to {job.ageMax}</Text>
         <View style={styles.sliderWrapper}>
           <MultiSlider
             /*customLabel={(e) => {
@@ -105,25 +112,39 @@ export const JobsPostScreen = ({navigation}) => {
             selectedStyle={{backgroundColor: '#185AB7'}}
             sliderLength={dimensions.width - 80}
             values={values} showSteps={true} showStepLabels={true} min={18} max={70}
-            onValuesChangeFinish={(values) => {onChange({...job, ageFrom: values[0], ageTo: values[1]})}}
-            valueOne={job.ageFrom}
-            valueTwo={job.ageTo}/>
+            onValuesChangeFinish={(values) => {onChange({...job, ageMin: values[0], ageMax: values[1]})}}
+            valueOne={job.ageMin}
+            valueTwo={job.ageMax}/>
         </View>
       </View>
 
       {/*Gender*/}
-      <ModalSelect label={'Gender'} onChange={onChange} value={job} valueKey={'gender'} items={gendersList}/>
+      <ModalSelect label={'Gender'} onChange={onChange} value={job} valueKey={'gender'} items={genders} itemTitle={'title'}/>
 
       {/*Experience*/}
-      <ModalSelect label={'Experience'} onChange={onChange} value={job} valueKey={'experience'} items={experienceList}/>
+      <Text style={globalStyles.label}>Experience (years)</Text>
+      <View style={styles.row}>
+        <View style={styles.col}>
+          <Text>From</Text>
+          <TextInput keyboardType={'number-pad'}
+                     style={globalStyles.primaryInput}
+                     onChangeText={(val) => {onChange({...job, experienceMin: val})}}
+                     value={job.experienceMin.toString()} />
+        </View>
+        <View style={styles.col}>
+          <Text>To</Text>
+          <TextInput keyboardType={'number-pad'}
+                     style={globalStyles.primaryInput}
+                     onChangeText={(val) => {onChange({...job, experienceMax: val})}}
+                     value={job.experienceMax.toString()} />
+        </View>
+      </View>
 
       {/*Schedule*/}
-      <ModalSelect label={'Schedule'} onChange={onChange} value={job} valueKey={'scedule'} items={sheduleTypes}/>
+      <ModalSelect label={'Schedule'} onChange={onChange} value={job} valueKey={'schedule'} items={schedules} itemTitle={'title'}/>
 
-      {/*Job location*/}
+      {/*Description*/}
       <Text style={globalStyles.label}>Description</Text>
-
-      {/*Descriiption*/}
       <TextInput
         multiline={true}
         style={[globalStyles.primaryInput, styles.multiline]}
@@ -150,6 +171,17 @@ const styles = StyleSheet.create({
   multiline: {
     height: 100,
     textAlignVertical: 'top'
+  },
+  row: {
+    marginRight: -5,
+    marginLeft: -5,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  col: {
+    marginLeft: 5,
+    marginRight: 5,
+    flex: 1
   }
 });
 

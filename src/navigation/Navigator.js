@@ -23,7 +23,7 @@ export const Navigator = () => {
   const TabStack = () => {
     return (
       <Tab.Navigator
-        initialRouteName="Profile"
+        initialRouteName="Jobs"
         screenOptions={{
           headerShown: false,
           tabBarLabelStyle: {
