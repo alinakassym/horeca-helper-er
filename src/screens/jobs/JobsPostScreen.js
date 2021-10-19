@@ -7,6 +7,7 @@ import {globalStyles} from '../../styles/globalStyles';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getCities, getGenders, getPositions, getSchedules} from '../../services/DictionariesService';
+import {postJob} from '../../services/JobsService';
 
 const dimensions = Dimensions.get('screen');
 
@@ -63,16 +64,39 @@ export const JobsPostScreen = ({navigation}) => {
 
   const [job, onChange] = React.useState({
     position: {"id": 1, "title": "Waiter", "title_ru": "Официант"},
-    location: 'Location',
+    location: {"id": 1, "title": "Astana", "title_ru": "Астана"},
     ageMin: 18,
     ageMax: 32,
     gender: {"id": 1, "title": "Female", "title_ru": "Женский"},
     experienceMin: 0,
     experienceMax: 2,
     schedule: {"id": 1, "title": "Full-time", "title_ru": "Полный день"},
+    salaryMin: 100,
+    salaryMax: 500,
     description: ''
   });
-  const values = [18, 30]
+  const values = [18, 30];
+
+  const save = async () => {
+    const hhToken = await AsyncStorage.getItem('hhToken');
+    const jobItem = {
+      positionId: job.position.id,
+      description: job.description,
+      cityId: job.location.id,
+      ageMin: job.ageMin,
+      ageMax: job.ageMax,
+      genderId: job.gender.id,
+      experienceMin: job.experienceMin,
+      experienceMax: job.experienceMax,
+      scheduleId: job.schedule.id,
+      salaryMin: job.salaryMin,
+      salaryMax: job.salaryMax
+    }
+    postJob(jobItem, hhToken)
+      .then(() => {
+        navigation.navigate('Jobs');
+      })
+  }
   return (
     <ScrollView style={styles.container}>
       {/*Position*/}
@@ -143,6 +167,25 @@ export const JobsPostScreen = ({navigation}) => {
       {/*Schedule*/}
       <ModalSelect label={'Schedule'} onChange={onChange} value={job} valueKey={'schedule'} items={schedules} itemTitle={'title'}/>
 
+      {/*Salary*/}
+      <Text style={globalStyles.label}>Salary (USD)</Text>
+      <View style={styles.row}>
+        <View style={styles.col}>
+          <Text>From</Text>
+          <TextInput keyboardType={'number-pad'}
+                     style={globalStyles.primaryInput}
+                     onChangeText={(val) => {onChange({...job, salaryMin: val})}}
+                     value={job.salaryMin.toString()} />
+        </View>
+        <View style={styles.col}>
+          <Text>To</Text>
+          <TextInput keyboardType={'number-pad'}
+                     style={globalStyles.primaryInput}
+                     onChangeText={(val) => {onChange({...job, salaryMax: val})}}
+                     value={job.salaryMax.toString()} />
+        </View>
+      </View>
+
       {/*Description*/}
       <Text style={globalStyles.label}>Description</Text>
       <TextInput
@@ -151,7 +194,7 @@ export const JobsPostScreen = ({navigation}) => {
         onChangeText={(val) => {onChange({...job, description: val})}}
         value={job.description}/>
       <View style={styles.btn}>
-        <PrimaryButton label={'Post'}  />
+        <PrimaryButton label={'Post'} onPress={() => save()} />
       </View>
     </ScrollView>
   );
