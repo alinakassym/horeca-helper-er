@@ -14,10 +14,10 @@ export const ModalSelect = ({ label, value, valueKey, items, itemTitle, onChange
     <React.Fragment>
       <Pressable onPress={() => {setVisible(true)}}>
         <Text style={globalStyles.label}>{label}</Text>
-        <Text
-          style={globalStyles.select}>
-          {value[valueKey][itemTitle]}
-        </Text>
+        {value[valueKey]
+          ? <Text style={globalStyles.select}>{value[valueKey][itemTitle]}</Text>
+          : <Text style={globalStyles.select}></Text>}
+
       </Pressable>
       <Modal visible={visible} animationType='slide' transparent={true}>
         <Pressable style={styles.overlay} onPress={() => setVisible(false)}>
