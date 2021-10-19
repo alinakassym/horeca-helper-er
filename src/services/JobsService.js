@@ -13,7 +13,7 @@ export const getJobs = async (hhToken) => {
     `${baseUrl}:${port}/er/jobs`, {
     headers: {'Authorization': `Bearer ${hhToken || ''}`}
   });
-  console.log('getJobs result: ', r.data)
+  // console.log('getJobs result: ', r.data)
   return r;
 };
 

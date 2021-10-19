@@ -7,11 +7,12 @@ import {globalStyles} from '../../styles/globalStyles';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getCities, getGenders, getPositions, getSchedules} from '../../services/DictionariesService';
-import {postJob} from '../../services/JobsService';
+import {getJobById, updateJobById} from '../../services/JobsService';
 
 const dimensions = Dimensions.get('screen');
 
-export const JobsPostScreen = ({navigation}) => {
+export const JobEditScreen = ({route, navigation}) => {
+  const jobId = route.params ? route.params.id : null
   const [cities, setCities] = useState([]);
   const [genders, setGenders] = useState([]);
   const [positions, setPositions] = useState([]);
@@ -56,6 +57,14 @@ export const JobsPostScreen = ({navigation}) => {
         .catch(e => {
           console.log('getSchedules err:', e)
         })
+
+      console.log(
+        'jobId', jobId
+      )
+      getJobById(jobId, hhToken)
+        .then(data => {
+          onChange(data.data);
+        })
     });
 
     // Return the function to unsubscribe from the event so it gets removed on unmount
@@ -77,7 +86,7 @@ export const JobsPostScreen = ({navigation}) => {
   });
   const values = [18, 30];
 
-  const save = async () => {
+  const update = async () => {
     const hhToken = await AsyncStorage.getItem('hhToken');
     const jobItem = {
       positionId: job.position.id,
@@ -92,13 +101,14 @@ export const JobsPostScreen = ({navigation}) => {
       salaryMin: job.salaryMin,
       salaryMax: job.salaryMax
     }
-    postJob(jobItem, hhToken)
+    updateJobById(job.id, jobItem, hhToken)
       .then(() => {
         navigation.navigate('Jobs');
       })
   }
   return (
     <ScrollView style={styles.container}>
+      <Text>{job.id}</Text>
       {/*Position*/}
       <ModalSelect label={'Position'} onChange={onChange} value={job} valueKey={'position'} items={positions} itemTitle={'title'}/>
 
@@ -194,7 +204,7 @@ export const JobsPostScreen = ({navigation}) => {
         onChangeText={(val) => {onChange({...job, description: val})}}
         value={job.description}/>
       <View style={styles.btn}>
-        <PrimaryButton label={'Post'} onPress={() => save()} />
+        <PrimaryButton label={'Post'} onPress={() => update()} />
       </View>
     </ScrollView>
   );
@@ -228,4 +238,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default JobsPostScreen;
+export default JobEditScreen;
