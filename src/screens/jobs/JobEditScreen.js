@@ -130,7 +130,6 @@ export const JobEditScreen = ({route, navigation}) => {
   }
   return (
     <ScrollView style={styles.container}>
-      <Text>{job.id}</Text>
       {/*Position*/}
       <ModalSelect label={'Position'} onChange={onChange} value={job} valueKey={'position'} items={positions} itemTitle={'title'}/>
 
