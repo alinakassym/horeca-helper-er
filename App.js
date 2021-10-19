@@ -23,7 +23,7 @@ const App = () => {
   const initialLoginState = {
     isLoading: true,
     userName: null,
-    userToken: null,
+    hhToken: null,
   };
 
   const CustomDefaultTheme = {
@@ -105,8 +105,6 @@ const App = () => {
         dispatch({type: 'LOGIN', id: userName, token: userToken});
       },
       signOut: async () => {
-        // setUserToken(null);
-        // setIsLoading(false);
         try {
           await AsyncStorage.removeItem('userToken');
           await AsyncStorage.removeItem('hhToken');

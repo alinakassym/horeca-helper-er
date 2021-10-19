@@ -12,15 +12,18 @@ import {IconCrown} from '../../assets/icons/main/IconCrown';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {getCompany} from '../../services/CompaniesService';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export const ProfileScreen = ({navigation}) => {
   const {signOut} = React.useContext(AuthContext);
 
   const [company, setCompany] = useState({});
 
   useEffect(async () => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener('focus', async() => {
       // The screen is focused
-      getCompany()
+      const hhToken = await AsyncStorage.getItem('hhToken')
+      getCompany(hhToken)
         .then(res => {
           console.log('ProfileScreen companies/me:', res.data);
           setCompany(res.data);

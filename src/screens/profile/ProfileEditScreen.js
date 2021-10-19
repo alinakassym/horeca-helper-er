@@ -14,8 +14,9 @@ export const ProfileEditScreen = ({route, navigation}) => {
 
   const [company, setCompany] = useState(route.params.value);
 
-  const save = () => {
-    updateCompany(company)
+  const save = async () => {
+    const hhToken = await AsyncStorage.getItem('hhToken');
+    updateCompany(company, hhToken)
       .then(() => {
         navigation.navigate("Profile", {
           value: company,

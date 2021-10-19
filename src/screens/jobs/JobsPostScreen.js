@@ -1,14 +1,66 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, View, Text, Dimensions, TextInput, StyleSheet} from 'react-native';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {ModalSelect} from '../../components/selects/ModalSelect';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {globalStyles} from '../../styles/globalStyles';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getCities, getGenders, getPositions, getSchedules} from '../../services/DictionariesService';
+
 const dimensions = Dimensions.get('screen');
 
-export const JobsPostScreen = () => {
-  const genders = ['Female', 'Male'];
+export const JobsPostScreen = ({navigation}) => {
+  const [cities, setCities] = useState();
+  const [genders, setGenders] = useState();
+  const [positions, setPositions] = useState();
+  const [schedules, setSchedules] = useState();
+
+  useEffect(async () => {
+    const unsubscribe = navigation.addListener('focus', async() => {
+      // The screen is focused
+      const hhToken = await AsyncStorage.getItem('hhToken')
+      getCities(hhToken)
+        .then(citiesData => {
+          console.log('cities: ', citiesData);
+          setCities(citiesData);
+        })
+        .catch(e => {
+          console.log('getCities err:', e)
+        })
+
+      getGenders(hhToken)
+        .then(gendersData => {
+          console.log('genders: ', gendersData);
+          setGenders(gendersData);
+        })
+        .catch(e => {
+          console.log('getGenders err:', e)
+        })
+
+      getPositions(hhToken)
+        .then(positionsData => {
+          console.log('positions: ', positionsData);
+          setPositions(positionsData);
+        })
+        .catch(e => {
+          console.log('getPositions err:', e)
+        })
+
+      getSchedules(hhToken)
+        .then(schedulesData => {
+          console.log('schedules', schedulesData);
+          setSchedules(schedulesData);
+        })
+        .catch(e => {
+          console.log('getSchedules err:', e)
+        })
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
+  const gendersList = ['Female', 'Male'];
   const sheduleTypes = ['Full-time', 'Part-time', 'Contract', 'Temporary', 'Volunteer', 'Internsheep'];
   const experienceList = ['Less than six months', 'Six month', 'less than one year', '1 year', 'More than 1 year', '2 years', 'More than 2 years', 'More than 3 years'];
   const [job, onChange] = React.useState({
@@ -60,7 +112,7 @@ export const JobsPostScreen = () => {
       </View>
 
       {/*Gender*/}
-      <ModalSelect label={'Gender'} onChange={onChange} value={job} valueKey={'gender'} items={genders}/>
+      <ModalSelect label={'Gender'} onChange={onChange} value={job} valueKey={'gender'} items={gendersList}/>
 
       {/*Experience*/}
       <ModalSelect label={'Experience'} onChange={onChange} value={job} valueKey={'experience'} items={experienceList}/>
