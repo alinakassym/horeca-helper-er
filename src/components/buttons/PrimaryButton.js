@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const propTypes = {
   label: PropTypes.string,
   onPress: PropTypes.func,
-  color: PropTypes.color,
+  color: PropTypes.string,
 };
 
 class PrimaryButton extends React.PureComponent {
