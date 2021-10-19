@@ -40,7 +40,9 @@ export const JobsScreen = ({navigation}) => {
           {jobs && jobs.map((item, index) => (
             <JobCard key={index} item={item} onPress={() => navigation.navigate('JobEditScreen', { id: item.id })}/>
           ))}
-          <PrimaryButton onPress={() => navigation.navigate('JobsPostScreen')} label={'Post a job'} />
+          <View style={styles.btn}>
+            <PrimaryButton onPress={() => navigation.navigate('JobsPostScreen')} label={'Post a job'} />
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -64,5 +66,8 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     paddingLeft: 14,
     paddingRight: 14
+  },
+  btn: {
+    marginBottom: 16
   }
 });

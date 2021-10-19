@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, View, Text, Dimensions, TextInput, StyleSheet} from 'react-native';
+import {Alert, ScrollView, View, Text, Dimensions, TextInput, StyleSheet} from 'react-native';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {ModalSelect} from '../../components/selects/ModalSelect';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
@@ -7,7 +7,7 @@ import {globalStyles} from '../../styles/globalStyles';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getCities, getGenders, getPositions, getSchedules} from '../../services/DictionariesService';
-import {getJobById, updateJobById} from '../../services/JobsService';
+import {getJobById, updateJobById, deleteJobById} from '../../services/JobsService';
 
 const dimensions = Dimensions.get('screen');
 
@@ -106,9 +106,30 @@ export const JobEditScreen = ({route, navigation}) => {
         navigation.navigate('Jobs');
       })
   }
+  const removeJob = async () => {
+    const hhToken = await AsyncStorage.getItem('hhToken');
+    deleteJobById(job.id, hhToken)
+      .then(() => {
+        navigation.navigate('Jobs');
+      })
+  }
+
+  const confirmDeletion = () => {
+    Alert.alert(
+      "Delete Job",
+      "Are you sure you want to delete?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Delete", onPress: () => removeJob(), style: "destructive" }
+      ]
+    );
+  }
   return (
     <ScrollView style={styles.container}>
-      <Text>{job.id}</Text>
       {/*Position*/}
       <ModalSelect label={'Position'} onChange={onChange} value={job} valueKey={'position'} items={positions} itemTitle={'title'}/>
 
@@ -203,8 +224,11 @@ export const JobEditScreen = ({route, navigation}) => {
         style={[globalStyles.primaryInput, styles.multiline]}
         onChangeText={(val) => {onChange({...job, description: val})}}
         value={job.description}/>
-      <View style={styles.btn}>
-        <PrimaryButton label={'Post'} onPress={() => update()} />
+      <View style={styles.btnSection}>
+        <View style={styles.btn}>
+          <PrimaryButton label={'Save changes'} onPress={() => update()} />
+        </View>
+        <PrimaryButton label={'Delete job'} color={'#ea0000'} onPress={() => confirmDeletion()} />
       </View>
     </ScrollView>
   );
@@ -218,8 +242,11 @@ const styles = StyleSheet.create({
     paddingTop: 38,
     alignItems: 'center'
   },
-  btn: {
+  btnSection: {
     marginBottom: 42
+  },
+  btn: {
+    marginBottom: 16
   },
   multiline: {
     height: 100,

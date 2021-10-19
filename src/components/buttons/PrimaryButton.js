@@ -5,13 +5,15 @@ import PropTypes from 'prop-types';
 const propTypes = {
   label: PropTypes.string,
   onPress: PropTypes.func,
+  color: PropTypes.color,
 };
 
 class PrimaryButton extends React.PureComponent {
   render() {
-    const {label, onPress} = this.props;
+    const {label, color, onPress} = this.props;
+    const btnColor = color ? color : '#185AB7';
     return (
-      <TouchableOpacity onPress={onPress} style={styles.btn}>
+      <TouchableOpacity onPress={onPress} style={[styles.btn, {backgroundColor: btnColor}]}>
         <Text style={styles.btnLabel}>{label}</Text>
       </TouchableOpacity>
     );
@@ -23,7 +25,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderRadius: 8,
-    backgroundColor: '#185AB7',
     shadowColor: '#777777',
     shadowOffset: {
       width: 0,

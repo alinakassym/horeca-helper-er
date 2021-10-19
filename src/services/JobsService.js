@@ -44,3 +44,12 @@ export const postJob = async (data, hhToken) => {
   console.log('postJob result: ', r)
   return r;
 };
+
+export const deleteJobById = async (id, hhToken) => {
+  const r = await axios.delete(
+    `${baseUrl}:${port}/er/jobs/${id}`, {
+    headers: {'Authorization': `Bearer ${hhToken || ''}`}
+  });
+  console.log('deleteJobById result: ', r)
+  return r;
+};
