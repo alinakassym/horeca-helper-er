@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, ScrollView, View, Text, Dimensions, TextInput, StyleSheet} from 'react-native';
+import {ActivityIndicator, Alert, ScrollView, View, Text, Dimensions, TextInput, StyleSheet} from 'react-native';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {ModalSelect} from '../../components/selects/ModalSelect';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
@@ -13,6 +13,7 @@ const dimensions = Dimensions.get('screen');
 
 export const JobEditScreen = ({route, navigation}) => {
   const jobId = route.params ? route.params.id : null
+  const [loading, setLoading] = useState(true);
   const [cities, setCities] = useState([]);
   const [genders, setGenders] = useState([]);
   const [positions, setPositions] = useState([]);
@@ -64,6 +65,7 @@ export const JobEditScreen = ({route, navigation}) => {
       getJobById(jobId, hhToken)
         .then(data => {
           onChange(data.data);
+          setLoading(false)
         })
     });
 
@@ -126,6 +128,13 @@ export const JobEditScreen = ({route, navigation}) => {
         },
         { text: "Delete", onPress: () => removeJob(), style: "destructive" }
       ]
+    );
+  }
+  if (loading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" />
+      </View>
     );
   }
   return (

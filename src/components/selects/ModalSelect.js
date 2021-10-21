@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Pressable, TouchableOpacity, Text, View, TextInput, Button, Modal, Alert, StyleSheet } from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
-export const ModalSelect = ({ label, value, valueKey, items, itemTitle, onChange, onCancel }) => {
+export const ModalSelect = ({ label, value, valueKey, items, itemTitle, onChange, onCancel, placeholder }) => {
   const [selected, setSelected] = useState(value[valueKey]);
   const [visible, setVisible] = useState(false);
+
+  const placeholderText = placeholder ? placeholder : 'Select'
 
   const saveHandler = (selectedItem) => {
     value[valueKey] = selectedItem;
@@ -14,10 +16,10 @@ export const ModalSelect = ({ label, value, valueKey, items, itemTitle, onChange
     <React.Fragment>
       <Pressable onPress={() => {setVisible(true)}}>
         <Text style={globalStyles.label}>{label}</Text>
-        <Text
-          style={globalStyles.select}>
-          {value[valueKey][itemTitle]}
-        </Text>
+        {value[valueKey]
+          ? <Text style={globalStyles.select}>{value[valueKey][itemTitle]}</Text>
+          : <Text style={globalStyles.select}>{placeholderText}</Text>}
+
       </Pressable>
       <Modal visible={visible} animationType='slide' transparent={true}>
         <Pressable style={styles.overlay} onPress={() => setVisible(false)}>

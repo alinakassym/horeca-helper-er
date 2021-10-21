@@ -1,4 +1,4 @@
-package com.horecahelper;
+package kz.horecahelper.er;
 
 import com.facebook.react.ReactActivity;
 

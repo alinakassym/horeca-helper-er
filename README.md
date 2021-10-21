@@ -38,7 +38,7 @@ List of devices attached
 ```
 5. Forward requests from your device
 ```bash
-adb reverse tcp:8080 tcp:8080
+adb reverse tcp:3000 tcp:3000
 ```
 7. Run project
 ```bash
