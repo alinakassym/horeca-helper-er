@@ -1,16 +1,17 @@
 import axios from 'axios';
 
 // emulator
-const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2' : 'http://localhost';
+// const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
 
 // android device
-// const baseUrl = 'http://localhost';
+// const baseUrl = 'http://localhost:3000';
 
-const port = '3000';
+// cloud BE
+const baseUrl = 'https://horecahelper.kz/backend';
 
 export const getCities = async (hhToken) => {
   const r = await axios.get('' +
-    `${baseUrl}:${port}/er/dictionaries/cities`, {
+    `${baseUrl}/er/dictionaries/cities`, {
     headers: {'Authorization': `Bearer ${hhToken || ''}`}
   });
   console.log('getCities result:', r.data)
@@ -19,7 +20,7 @@ export const getCities = async (hhToken) => {
 
 export const getGenders = async (hhToken) => {
   const r = await axios.get('' +
-    `${baseUrl}:${port}/er/dictionaries/genders`, {
+    `${baseUrl}/er/dictionaries/genders`, {
     headers: {'Authorization': `Bearer ${hhToken || ''}`}
   });
   console.log('getGenders result:', r.data)
@@ -28,7 +29,7 @@ export const getGenders = async (hhToken) => {
 
 export const getPositions = async (hhToken) => {
   const r = await axios.get('' +
-    `${baseUrl}:${port}/er/dictionaries/positions`, {
+    `${baseUrl}/er/dictionaries/positions`, {
     headers: {'Authorization': `Bearer ${hhToken || ''}`}
   });
   console.log('getPositions result:', r.data)
@@ -37,7 +38,7 @@ export const getPositions = async (hhToken) => {
 
 export const getSchedules = async (hhToken) => {
   const r = await axios.get('' +
-    `${baseUrl}:${port}/er/dictionaries/schedules`, {
+    `${baseUrl}/er/dictionaries/schedules`, {
     headers: {'Authorization': `Bearer ${hhToken || ''}`}
   });
   console.log('getSchedules result:', r.data)
