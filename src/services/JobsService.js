@@ -1,16 +1,17 @@
 import axios from 'axios';
 
 // emulator
-const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2' : 'http://localhost';
+// const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
 
 // android device
-// const baseUrl = 'http://localhost';
+// const baseUrl = 'http://localhost:3000';
 
-const port = '3000';
+// cloud BE
+const baseUrl = 'https://horecahelper.kz/backend';
 
 export const getJobs = async (hhToken) => {
   const r = await axios.get('' +
-    `${baseUrl}:${port}/er/jobs/my`, {
+    `${baseUrl}/er/jobs/my`, {
     headers: {'Authorization': `Bearer ${hhToken || ''}`}
   });
   // console.log('getJobs result: ', r.data)
@@ -19,7 +20,7 @@ export const getJobs = async (hhToken) => {
 
 export const getJobById = async (id, hhToken) => {
   const r = await axios.get('' +
-    `${baseUrl}:${port}/er/jobs/${id}`, {
+    `${baseUrl}/er/jobs/${id}`, {
     headers: {'Authorization': `Bearer ${hhToken || ''}`}
   });
   console.log('getJobById result: ', r.data)
@@ -28,7 +29,7 @@ export const getJobById = async (id, hhToken) => {
 
 export const updateJobById = async (id, data, hhToken) => {
   const r = await axios.patch('' +
-    `${baseUrl}:${port}/er/jobs/${id}`, data, {
+    `${baseUrl}/er/jobs/${id}`, data, {
     headers: {'Authorization': `Bearer ${hhToken || ''}`}
   });
   console.log('updateJobById result: ', r.data)
@@ -38,7 +39,7 @@ export const updateJobById = async (id, data, hhToken) => {
 export const postJob = async (data, hhToken) => {
   console.log('job item : ', data);
   const r = await axios.post('' +
-    `${baseUrl}:${port}/er/jobs`, data, {
+    `${baseUrl}/er/jobs`, data, {
     headers: {'Authorization': `Bearer ${hhToken || ''}`}
   });
   console.log('postJob result: ', r)
@@ -47,7 +48,7 @@ export const postJob = async (data, hhToken) => {
 
 export const deleteJobById = async (id, hhToken) => {
   const r = await axios.delete(
-    `${baseUrl}:${port}/er/jobs/${id}`, {
+    `${baseUrl}/er/jobs/${id}`, {
     headers: {'Authorization': `Bearer ${hhToken || ''}`}
   });
   console.log('deleteJobById result: ', r)
