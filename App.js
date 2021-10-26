@@ -1,5 +1,8 @@
 import React, {useEffect} from 'react';
 import {View, ActivityIndicator} from 'react-native';
+// have to load 'react-native-gesture-handler' at the beginning
+// to avoid e.g. "unsupported top level event type onGuestureHandlerEvent" crashes
+import 'react-native-gesture-handler';
 import {AuthContext} from './src/store/context';
 import {RootStackScreen} from './src/screens/RootStackScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,6 +21,8 @@ import {
 } from 'react-native-paper';
 
 const App = () => {
+  // AsyncStorage.removeItem('userToken');
+
   const [isDarkTheme, setIsDarkTheme] = React.useState(false);
 
   const initialLoginState = {
