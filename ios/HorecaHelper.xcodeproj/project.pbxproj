@@ -11,13 +11,15 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		29F08732A05C4B96951F369D /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 98295AD2BB58460FA474DE3F /* Montserrat-SemiBold.ttf */; };
+		5080E120781044CDAE571C63 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4345C15E15EC466D87AF76CD /* Roboto-Medium.ttf */; };
+		53858CEBEA2A3C3CA35FB660 /* libPods-HorecaHelper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93251C45AB0F9666F73DB4FB /* libPods-HorecaHelper.a */; };
+		62FB05EDC6404F079B103CA9 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 040CBEA8BE1B42F4BC76CA4A /* Roboto-Regular.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A80FD52E24E04ED8B4E70879 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8ECA0F2201FF45538DDE4AEA /* Roboto-Bold.ttf */; };
 		D12EDC01161849018BFEB38D /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73E6C79AF3B944AEB7997F55 /* Montserrat-Medium.ttf */; };
 		EAC5186A260E44089197DE7D /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9F7462C513C45F6BA8934FC /* Montserrat-Regular.ttf */; };
-		29F08732A05C4B96951F369D /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 98295AD2BB58460FA474DE3F /* Montserrat-SemiBold.ttf */; };
-		A80FD52E24E04ED8B4E70879 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8ECA0F2201FF45538DDE4AEA /* Roboto-Bold.ttf */; };
-		5080E120781044CDAE571C63 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4345C15E15EC466D87AF76CD /* Roboto-Medium.ttf */; };
-		62FB05EDC6404F079B103CA9 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 040CBEA8BE1B42F4BC76CA4A /* Roboto-Regular.ttf */; };
+		F31773BDC038FCA2A7CF5C58 /* libPods-HorecaHelper-HorecaHelperTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F01D0EBF1269C8AECC396B /* libPods-HorecaHelper-HorecaHelperTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,20 +36,26 @@
 		00E356EE1AD99517003FC87E /* HorecaHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HorecaHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* HorecaHelperTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HorecaHelperTests.m; sourceTree = "<group>"; };
+		040CBEA8BE1B42F4BC76CA4A /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		0E00786D24D71FB6EF204C3F /* Pods-HorecaHelper-HorecaHelperTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HorecaHelper-HorecaHelperTests.release.xcconfig"; path = "Target Support Files/Pods-HorecaHelper-HorecaHelperTests/Pods-HorecaHelper-HorecaHelperTests.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* HorecaHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HorecaHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = HorecaHelper/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = HorecaHelper/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = HorecaHelper/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = HorecaHelper/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = HorecaHelper/main.m; sourceTree = "<group>"; };
+		4345C15E15EC466D87AF76CD /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		73E6C79AF3B944AEB7997F55 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Medium.ttf"; path = "../src/assets/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = HorecaHelper/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		886A6DCB550422FA965F0BF0 /* Pods-HorecaHelper-HorecaHelperTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HorecaHelper-HorecaHelperTests.debug.xcconfig"; path = "Target Support Files/Pods-HorecaHelper-HorecaHelperTests/Pods-HorecaHelper-HorecaHelperTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8DA9F9E99E960478648D6E12 /* Pods-HorecaHelper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HorecaHelper.debug.xcconfig"; path = "Target Support Files/Pods-HorecaHelper/Pods-HorecaHelper.debug.xcconfig"; sourceTree = "<group>"; };
+		8ECA0F2201FF45538DDE4AEA /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../src/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		93251C45AB0F9666F73DB4FB /* libPods-HorecaHelper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HorecaHelper.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		98295AD2BB58460FA474DE3F /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../src/assets/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		AC8DD1E9F4B8B583E0A32929 /* Pods-HorecaHelper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HorecaHelper.release.xcconfig"; path = "Target Support Files/Pods-HorecaHelper/Pods-HorecaHelper.release.xcconfig"; sourceTree = "<group>"; };
+		D9F7462C513C45F6BA8934FC /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../src/assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		73E6C79AF3B944AEB7997F55 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; name = "Montserrat-Medium.ttf"; path = "../src/assets/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D9F7462C513C45F6BA8934FC /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; name = "Montserrat-Regular.ttf"; path = "../src/assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		98295AD2BB58460FA474DE3F /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; name = "Montserrat-SemiBold.ttf"; path = "../src/assets/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		8ECA0F2201FF45538DDE4AEA /* Roboto-Bold.ttf */ = {isa = PBXFileReference; name = "Roboto-Bold.ttf"; path = "../src/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4345C15E15EC466D87AF76CD /* Roboto-Medium.ttf */ = {isa = PBXFileReference; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		040CBEA8BE1B42F4BC76CA4A /* Roboto-Regular.ttf */ = {isa = PBXFileReference; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F7F01D0EBF1269C8AECC396B /* libPods-HorecaHelper-HorecaHelperTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HorecaHelper-HorecaHelperTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F31773BDC038FCA2A7CF5C58 /* libPods-HorecaHelper-HorecaHelperTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53858CEBEA2A3C3CA35FB660 /* libPods-HorecaHelper.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,8 +112,22 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
+				93251C45AB0F9666F73DB4FB /* libPods-HorecaHelper.a */,
+				F7F01D0EBF1269C8AECC396B /* libPods-HorecaHelper-HorecaHelperTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7A25F79B270CD879CC53A0A3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8DA9F9E99E960478648D6E12 /* Pods-HorecaHelper.debug.xcconfig */,
+				AC8DD1E9F4B8B583E0A32929 /* Pods-HorecaHelper.release.xcconfig */,
+				886A6DCB550422FA965F0BF0 /* Pods-HorecaHelper-HorecaHelperTests.debug.xcconfig */,
+				0E00786D24D71FB6EF204C3F /* Pods-HorecaHelper-HorecaHelperTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -122,6 +146,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				9F57F0F9B0104C18A70D13D2 /* Resources */,
+				7A25F79B270CD879CC53A0A3 /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -138,7 +163,7 @@
 			sourceTree = "<group>";
 		};
 		9F57F0F9B0104C18A70D13D2 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				73E6C79AF3B944AEB7997F55 /* Montserrat-Medium.ttf */,
 				D9F7462C513C45F6BA8934FC /* Montserrat-Regular.ttf */,
@@ -148,8 +173,8 @@
 				040CBEA8BE1B42F4BC76CA4A /* Roboto-Regular.ttf */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
 			path = "";
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -158,9 +183,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "HorecaHelperTests" */;
 			buildPhases = (
+				EF325E89FAC37728987BA799 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
+				F149A7AC2C6D539B6EA26C16 /* [CP] Embed Pods Frameworks */,
+				970CA7E463A645E8CECECB8F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -176,11 +204,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "HorecaHelper" */;
 			buildPhases = (
+				5428196A4FF5CD2DD0882456 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				B9C51E8F709D0B4E38025BF9 /* [CP] Embed Pods Frameworks */,
+				0EEC3FF9D30A534948FF3098 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -267,6 +298,118 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
+		0EEC3FF9D30A534948FF3098 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HorecaHelper/Pods-HorecaHelper-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HorecaHelper/Pods-HorecaHelper-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HorecaHelper/Pods-HorecaHelper-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5428196A4FF5CD2DD0882456 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HorecaHelper-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		970CA7E463A645E8CECECB8F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HorecaHelper-HorecaHelperTests/Pods-HorecaHelper-HorecaHelperTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HorecaHelper-HorecaHelperTests/Pods-HorecaHelper-HorecaHelperTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HorecaHelper-HorecaHelperTests/Pods-HorecaHelper-HorecaHelperTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B9C51E8F709D0B4E38025BF9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HorecaHelper/Pods-HorecaHelper-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HorecaHelper/Pods-HorecaHelper-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HorecaHelper/Pods-HorecaHelper-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EF325E89FAC37728987BA799 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HorecaHelper-HorecaHelperTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F149A7AC2C6D539B6EA26C16 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HorecaHelper-HorecaHelperTests/Pods-HorecaHelper-HorecaHelperTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HorecaHelper-HorecaHelperTests/Pods-HorecaHelper-HorecaHelperTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HorecaHelper-HorecaHelperTests/Pods-HorecaHelper-HorecaHelperTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -319,6 +462,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 886A6DCB550422FA965F0BF0 /* Pods-HorecaHelper-HorecaHelperTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -337,7 +481,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "kz.horecahelper.er";
+				PRODUCT_BUNDLE_IDENTIFIER = kz.horecahelper.er;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HorecaHelper.app/HorecaHelper";
 			};
@@ -345,6 +489,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0E00786D24D71FB6EF204C3F /* Pods-HorecaHelper-HorecaHelperTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -360,7 +505,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "kz.horecahelper.er";
+				PRODUCT_BUNDLE_IDENTIFIER = kz.horecahelper.er;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HorecaHelper.app/HorecaHelper";
 			};
@@ -368,6 +513,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8DA9F9E99E960478648D6E12 /* Pods-HorecaHelper.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -383,7 +529,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "kz.horecahelper.er";
+				PRODUCT_BUNDLE_IDENTIFIER = kz.horecahelper.er;
 				PRODUCT_NAME = HorecaHelper;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -393,6 +539,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AC8DD1E9F4B8B583E0A32929 /* Pods-HorecaHelper.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -407,7 +554,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "kz.horecahelper.er";
+				PRODUCT_BUNDLE_IDENTIFIER = kz.horecahelper.er;
 				PRODUCT_NAME = HorecaHelper;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -447,6 +594,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -511,6 +659,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
