@@ -9,7 +9,9 @@
 git clone git@gitlab.com:altyn-jazba/horeca-helper/horeca-helper-er.git
 cd horeca-helper-er
 npm install
-react-native link
+npx react-native link
+# for ios:
+cd ios && pod install && cd ../
 ```
 ## Run project with emulator
 ```bash
@@ -17,8 +19,8 @@ npm run android
 ```
 ### or
 ```
-react-native run-android
-react-native run-ios
+npx react-native run-android
+npx react-native run-ios
 ```
 
 ## Run project on android device
