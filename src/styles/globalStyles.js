@@ -8,7 +8,12 @@ export const globalStyles = StyleSheet.create({
   label: {
     marginBottom: 8,
     fontFamily: 'Roboto-Medium',
-    fontSize: 16
+    fontSize: 16,
+  },
+  positionTitle: {
+    marginBottom: 8,
+    fontFamily: 'Roboto-Bold',
+    fontSize: 18,
   },
   primaryInput: {
     marginBottom: 16,
@@ -19,7 +24,7 @@ export const globalStyles = StyleSheet.create({
     color: '#000000',
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#CCCCCC'
+    borderColor: '#CCCCCC',
   },
   select: {
     marginBottom: 16,
@@ -30,6 +35,28 @@ export const globalStyles = StyleSheet.create({
     color: '#000000',
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#CCCCCC'
-  }
+    borderColor: '#CCCCCC',
+  },
+
+  // --- start of Filters TopBar --- //
+  topBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    backgroundColor: '#F6F6F6',
+  },
+  filterBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  filterBtnRightText: {
+    marginLeft: 6,
+    fontSize: 14,
+  },
+  filterBtnLeftText: {
+    marginRight: 4,
+    fontSize: 14,
+  },
+  // --- end of Filters TopBar --- //
 });

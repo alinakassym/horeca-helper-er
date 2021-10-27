@@ -7,6 +7,8 @@ import {AuthContext} from './src/store/context';
 import {RootStackScreen} from './src/screens/RootStackScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Navigator} from './src/navigation/Navigator';
+import store from './src/store/index';
+import {Provider} from 'react-redux';
 
 import {
   NavigationContainer,
@@ -21,8 +23,6 @@ import {
 } from 'react-native-paper';
 
 const App = () => {
-  // AsyncStorage.removeItem('userToken');
-
   const [isDarkTheme, setIsDarkTheme] = React.useState(false);
 
   const initialLoginState = {
@@ -95,10 +95,7 @@ const App = () => {
   const authContext = React.useMemo(
     () => ({
       signIn: async foundUser => {
-        // setUserToken('fgkj');
-        // setIsLoading(false);
         const userToken = String(foundUser[0].userToken);
-        const hhToken = String(foundUser[0].hhToken);
         const userName = foundUser[0].username;
 
         try {
@@ -152,13 +149,15 @@ const App = () => {
     );
   }
   return (
-    <PaperProvider theme={theme}>
-      <AuthContext.Provider value={authContext}>
-        <NavigationContainer theme={theme}>
-          {loginState.userToken !== null ? <Navigator /> : <RootStackScreen />}
-        </NavigationContainer>
-      </AuthContext.Provider>
-    </PaperProvider>
+    <Provider store={store}>
+      <PaperProvider theme={theme}>
+        <AuthContext.Provider value={authContext}>
+          <NavigationContainer theme={theme}>
+            {loginState.userToken !== null ? <Navigator /> : <RootStackScreen />}
+          </NavigationContainer>
+        </AuthContext.Provider>
+      </PaperProvider>
+    </Provider>
   );
 };
 

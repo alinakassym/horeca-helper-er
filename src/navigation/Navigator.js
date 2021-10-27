@@ -1,30 +1,40 @@
 import React from 'react';
+import {StyleSheet} from 'react-native';
+
 import {JobsScreen} from '../screens/jobs/JobsScreen';
 import {JobsPostScreen} from '../screens/jobs/JobsPostScreen';
 import {JobEditScreen} from '../screens/jobs/JobEditScreen';
-import {WalletScreen} from '../screens/wallet/WalletScreen';
-import {RatingScreen} from '../screens/rating/RatingScreen';
+import {SearchScreen} from '../screens/search/SearchScreen';
 import {MessagesScreen} from '../screens/messages/MessagesScreen';
 import {ProfileScreen} from '../screens/profile/ProfileScreen';
 import {ProfileEditScreen} from '../screens/profile/ProfileEditScreen';
-import {SignInScreen} from '../screens/SignInScreen';
-import {SignUpScreen} from '../screens/SignUpScreen';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {FilterScreen} from '../screens/search/FilterScreen';
+
 import {IconVacancies} from '../assets/icons/tabs/IconVacancies';
-import {IconRating} from '../assets/icons/tabs/IconRating';
+import {IconSearch} from '../assets/icons/tabs/IconSearch';
 import {IconNotifications} from '../assets/icons/tabs/IconNotifications';
 import {IconProfile} from '../assets/icons/tabs/IconProfile';
-import {StyleSheet} from 'react-native';
+
+import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
+import {useSelector} from 'react-redux';
 
 export const Navigator = () => {
+  useSelector(state => state.employees.filter);
+
   const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();
 
   const TabStack = () => {
     return (
       <Tab.Navigator
-        initialRouteName="Jobs"
+        initialRouteName="Search"
+        screenListeners={{
+          state: e => {
+            console.log('state changed', e.data.state.history);
+          },
+        }}
         screenOptions={{
           headerShown: false,
           tabBarLabelStyle: {
@@ -50,12 +60,12 @@ export const Navigator = () => {
           }}
         />
         <Tab.Screen
-          name="Rating"
-          component={RatingScreen}
+          name="Search"
+          component={SearchScreen}
           options={{
-            tabBarLabel: 'Rating',
+            tabBarLabel: 'Search',
             tabBarIcon: ({focused, color}) => {
-              return <IconRating color={color} size={28} width={1.5} />;
+              return <IconSearch color={color} size={28} width={1.5} />;
             },
           }}
         />
@@ -84,29 +94,44 @@ export const Navigator = () => {
     );
   };
   return (
-    <Stack.Navigator
-      initialRouteName="App">
-      <Stack.Group screenOptions={{
-        headerShown: false,
-      }}>
+    <Stack.Navigator initialRouteName="App">
+      <Stack.Group
+        screenOptions={{
+          headerShown: false,
+        }}>
         <Stack.Screen name="Tab" component={TabStack} />
+      </Stack.Group>
+      <Stack.Group>
+        <Stack.Screen
+          options={{
+            headerTitle: 'Filters',
+          }}
+          name="FilterScreen"
+          component={FilterScreen}
+        />
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen
           options={{
             headerTitle: 'Post a job',
           }}
-          name="JobsPostScreen" component={JobsPostScreen} />
+          name="JobsPostScreen"
+          component={JobsPostScreen}
+        />
         <Stack.Screen
           options={{
             headerTitle: 'Edit job',
           }}
-          name="JobEditScreen" component={JobEditScreen} />
+          name="JobEditScreen"
+          component={JobEditScreen}
+        />
         <Stack.Screen
           options={{
             headerTitle: 'Profile',
           }}
-          name="ProfileEditScreen" component={ProfileEditScreen} />
+          name="ProfileEditScreen"
+          component={ProfileEditScreen}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );
