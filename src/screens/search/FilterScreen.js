@@ -40,7 +40,7 @@ export const FilterScreen = ({navigation}) => {
 
   useEffect(() => {
     function fetchData() {
-      const unsubscribe = navigation.addListener('focus', async () => {
+      return navigation.addListener('focus', async () => {
         getData()
           .then(([citiesData, positionsData, gendersData, schedulesData]) => {
             setPositions(positionsData);
@@ -52,7 +52,6 @@ export const FilterScreen = ({navigation}) => {
             console.log(err);
           });
       });
-      return unsubscribe;
     }
     fetchData();
   }, [navigation]);
@@ -93,7 +92,10 @@ export const FilterScreen = ({navigation}) => {
               keyboardType={'number-pad'}
               style={globalStyles.primaryInput}
               onChangeText={val => {
-                setFilters({...filters, salaryMin: val});
+                setFilters({
+                  ...filters,
+                  salaryMin: val.length > 0 ? Number(val) : null,
+                });
               }}
               value={filters.salaryMin ? filters.salaryMin.toString() : null}
             />
@@ -104,7 +106,10 @@ export const FilterScreen = ({navigation}) => {
               keyboardType={'number-pad'}
               style={globalStyles.primaryInput}
               onChangeText={val => {
-                setFilters({...filters, salaryMax: val});
+                setFilters({
+                  ...filters,
+                  salaryMax: val.length > 0 ? Number(val) : null,
+                });
               }}
               value={filters.salaryMax ? filters.salaryMax.toString() : null}
             />
@@ -134,7 +139,10 @@ export const FilterScreen = ({navigation}) => {
               keyboardType={'number-pad'}
               style={globalStyles.primaryInput}
               onChangeText={val => {
-                setFilters({...filters, ageMin: val});
+                setFilters({
+                  ...filters,
+                  ageMin: val.length > 0 ? Number(val) : null,
+                });
               }}
               value={filters.ageMin ? filters.ageMin.toString() : null}
             />
@@ -145,7 +153,10 @@ export const FilterScreen = ({navigation}) => {
               keyboardType={'number-pad'}
               style={globalStyles.primaryInput}
               onChangeText={val => {
-                setFilters({...filters, ageMax: val});
+                setFilters({
+                  ...filters,
+                  ageMax: val.length > 0 ? Number(val) : null,
+                });
               }}
               value={filters.ageMax ? filters.ageMax.toString() : null}
             />
@@ -175,7 +186,10 @@ export const FilterScreen = ({navigation}) => {
               keyboardType={'number-pad'}
               style={globalStyles.primaryInput}
               onChangeText={val => {
-                setFilters({...filters, experienceMin: val});
+                setFilters({
+                  ...filters,
+                  experienceMin: val.length > 0 ? Number(val) : null,
+                });
               }}
               value={
                 filters.experienceMin ? filters.experienceMin.toString() : null
@@ -188,7 +202,10 @@ export const FilterScreen = ({navigation}) => {
               keyboardType={'number-pad'}
               style={globalStyles.primaryInput}
               onChangeText={val => {
-                setFilters({...filters, experienceMax: val});
+                setFilters({
+                  ...filters,
+                  experienceMax: val.length > 0 ? Number(val) : null,
+                });
               }}
               value={
                 filters.experienceMax ? filters.experienceMax.toString() : null
