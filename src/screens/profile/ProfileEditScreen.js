@@ -28,7 +28,7 @@ export const ProfileEditScreen = ({route, navigation}) => {
     <ScrollView style={styles.container}>
       <View style={styles.profilePhoto}>
         <View style={styles.imageWrapper}>
-          <Image style={styles.image} source={{uri: company.photo}} />
+          <Image style={styles.image} source={{uri: company.photoUrl}} />
         </View>
       </View>
 

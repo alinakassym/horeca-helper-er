@@ -18,7 +18,7 @@ export const ResumeCard = ({item}) => {
       </View>
       <View style={[styles.col, styles.floatLeftTop]}>
         <View style={styles.imageWrapper}>
-          <Image style={styles.img} source={{uri: item.photo}} />
+          <Image style={styles.img} source={{uri: item.photoUrl}} />
         </View>
       </View>
       {/*<View style={styles.col}>
