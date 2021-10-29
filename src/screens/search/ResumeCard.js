@@ -8,11 +8,11 @@ export const ResumeCard = ({item}) => {
     <View style={[styles.row, styles.divider]}>
       <View style={styles.col}>
         <View>
-          <Text style={globalStyles.positionTitle}>{item.position.title}</Text>
+          <Text style={globalStyles.positionTitle}>{item.position?.title}</Text>
           <Text style={globalStyles.title}>
             {item.firstName} {item.lastName}
           </Text>
-          <Text style={globalStyles.caption}>{item.city.title}</Text>
+          <Text style={globalStyles.caption}>{item.city?.title}</Text>
           {/*<Text style={globalStyles.caption}>{item}</Text>*/}
         </View>
       </View>
