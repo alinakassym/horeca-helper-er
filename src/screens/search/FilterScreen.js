@@ -26,7 +26,7 @@ export const FilterScreen = ({navigation}) => {
 
   const apply = async () => {
     await dispatch(setEmployeesFilter(filters));
-    navigation.navigate('Jobs');
+    navigation.navigate('Search');
   };
   const getData = async () => {
     const hhToken = await AsyncStorage.getItem('hhToken');
@@ -216,7 +216,7 @@ export const FilterScreen = ({navigation}) => {
       </View>
 
       <View style={styles.btn}>
-        <PrimaryButton label={'Save'} onPress={() => apply()} />
+        <PrimaryButton label={'Apply'} onPress={() => apply()} />
       </View>
     </ScrollView>
   );

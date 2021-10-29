@@ -1,10 +1,13 @@
 import React from 'react';
 import {Text, View, Pressable, StyleSheet} from 'react-native';
+import PlainButton from '../buttons/PlainButton';
+import {IconSearch} from '../../assets/icons/tabs/IconSearch';
 
-export const JobCard = ({item, onPress}) => {
+export const JobCard = ({item, onPress, findRelevant}) => {
   return (
-    <Pressable style={styles.card} onPress={onPress}>
-      <View style={styles.row}>
+    <View style={styles.card} onPress={onPress}>
+
+      <Pressable style={[styles.row]} onPress={onPress}>
         <View style={styles.col}>
           <Text style={styles.positionTitle}>
             {item.position.title} {item.schedule && `(${item.schedule.title})`}
@@ -23,8 +26,16 @@ export const JobCard = ({item, onPress}) => {
           <Text style={styles.description}>{item.description}</Text>
           <Text style={styles.createdAt}>{item.createdAt}</Text>
         </View>
+      </Pressable>
+
+      <View style={[styles.row, styles.alignCenter]}>
+        <View style={styles.iconWrapper}>
+          <IconSearch color={'#185AB7'} size={24} width={2} />
+        </View>
+        <PlainButton label={'Find relevant'} onPress={findRelevant} />
       </View>
-    </Pressable>
+
+    </View>
   );
 };
 
@@ -38,10 +49,12 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   col: {
     flexDirection: 'column',
+  },
+  alignCenter: {
+    alignItems: 'center',
   },
   positionTitle: {
     marginBottom: 8,
@@ -62,6 +75,14 @@ const styles = StyleSheet.create({
     color: '#666666',
   },
   createdAt: {
+    marginBottom: 16,
     color: '#666666',
+  },
+  iconWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 8,
+    height: 30,
+    width: 30,
   },
 });

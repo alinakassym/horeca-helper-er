@@ -5,26 +5,53 @@ import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {getJobs} from '../../services/JobsService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {JobCard} from '../../components/jobs/JobCard';
+import {useDispatch} from 'react-redux';
+import {setEmployeesFilter} from '../../store/slices/employees';
 
 export const JobsScreen = ({navigation}) => {
   const [jobs, setJobs] = useState([]);
 
-  useEffect(async () => {
-    const unsubscribe = navigation.addListener('focus', async() => {
+  const dispatch = useDispatch();
+
+  const apply = async job => {
+    await dispatch(
+      setEmployeesFilter({
+        positionId: job.position ? job.position.id : null,
+        position: job.position,
+        cityId: job.city ? job.city.id : null,
+        city: job.city,
+        ageMin: job.ageMin,
+        ageMax: job.ageMax,
+        genderId: job.gender ? job.gender.id : null,
+        gender: job.gender,
+        experienceMin: job.experienceMin,
+        experienceMax: job.experienceMax,
+        scheduleId: job.schedule ? job.schedule.id : null,
+        schedule: job.schedule,
+        salaryMin: job.salaryMin,
+        salaryMax: job.salaryMax,
+        sortBy: 'relevance',
+        sortOrder: 'DESC',
+        pageSize: 10,
+        pageNum: 1,
+      }),
+    );
+    navigation.navigate('Search');
+  };
+
+  useEffect(() => {
+    return navigation.addListener('focus', async () => {
       // The screen is focused
-      const hhToken = await AsyncStorage.getItem('hhToken')
+      const hhToken = await AsyncStorage.getItem('hhToken');
       getJobs(hhToken)
         .then(result => {
           // console.log('jobs: ', result.data);
           setJobs(result.data);
         })
         .catch(e => {
-          console.log('getJobs err:', e)
-        })
+          console.log('getJobs err:', e);
+        });
     });
-
-    // Return the function to unsubscribe from the event so it gets removed on unmount
-    return unsubscribe;
   }, [navigation]);
 
   return (
@@ -37,11 +64,26 @@ export const JobsScreen = ({navigation}) => {
       {/*<Text>{jobs.toString()}</Text>*/}
       <ScrollView>
         <View style={styles.section}>
-          {jobs && jobs.map((item, index) => (
-            <JobCard key={index} item={item} onPress={() => navigation.navigate('JobEditScreen', { id: item.id })}/>
-          ))}
+          {jobs &&
+            jobs.map((item, index) => (
+              <JobCard
+                key={index}
+                item={item}
+                onPress={() =>
+                  navigation.navigate('JobEditScreen', {id: item.id})
+                }
+                findRelevant={() =>
+                  apply(item).then(() => {
+                    navigation.navigate('Search');
+                  })
+                }
+              />
+            ))}
           <View style={styles.btn}>
-            <PrimaryButton onPress={() => navigation.navigate('JobsPostScreen')} label={'Post a job'} />
+            <PrimaryButton
+              onPress={() => navigation.navigate('JobsPostScreen')}
+              label={'Post a job'}
+            />
           </View>
         </View>
       </ScrollView>
@@ -56,18 +98,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderBottomColor: '#CCCCCC'
+    borderBottomColor: '#CCCCCC',
   },
   title: {
     fontFamily: 'Roboto-Medium',
-    fontSize: 18
+    fontSize: 18,
   },
   section: {
     paddingTop: 14,
     paddingLeft: 14,
-    paddingRight: 14
+    paddingRight: 14,
   },
   btn: {
-    marginBottom: 16
-  }
+    marginBottom: 16,
+  },
 });
