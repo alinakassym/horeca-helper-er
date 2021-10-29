@@ -10,7 +10,7 @@ import axios from 'axios';
 const baseUrl = 'https://horecahelper.kz/backend';
 
 export const getCities = async hhToken => {
-  const r = await axios.get('' + `${baseUrl}/er/dictionaries/cities`, {
+  const r = await axios.get(`${baseUrl}/er/dictionaries/cities`, {
     headers: {Authorization: `Bearer ${hhToken || ''}`},
   });
   console.log('getCities result:', r.data);
@@ -18,7 +18,7 @@ export const getCities = async hhToken => {
 };
 
 export const getGenders = async hhToken => {
-  const r = await axios.get('' + `${baseUrl}/er/dictionaries/genders`, {
+  const r = await axios.get(`${baseUrl}/er/dictionaries/genders`, {
     headers: {Authorization: `Bearer ${hhToken || ''}`},
   });
   console.log('getGenders result:', r.data);
@@ -26,7 +26,7 @@ export const getGenders = async hhToken => {
 };
 
 export const getPositions = async hhToken => {
-  const r = await axios.get('' + `${baseUrl}/er/dictionaries/positions`, {
+  const r = await axios.get(`${baseUrl}/er/dictionaries/positions`, {
     headers: {Authorization: `Bearer ${hhToken || ''}`},
   });
   console.log('getPositions result:', r.data);
@@ -34,9 +34,17 @@ export const getPositions = async hhToken => {
 };
 
 export const getSchedules = async hhToken => {
-  const r = await axios.get('' + `${baseUrl}/er/dictionaries/schedules`, {
+  const r = await axios.get(`${baseUrl}/er/dictionaries/schedules`, {
     headers: {Authorization: `Bearer ${hhToken || ''}`},
   });
   console.log('getSchedules result:', r.data);
+  return r.data;
+};
+
+export const getCategories = async hhToken => {
+  const r = await axios.get(`${baseUrl}/er/dictionaries/categories`, {
+    headers: {Authorization: `Bearer ${hhToken || ''}`},
+  });
+  console.log('getCategories result:', r.data);
   return r.data;
 };

@@ -9,29 +9,26 @@ import axios from 'axios';
 // cloud BE
 const baseUrl = 'https://horecahelper.kz/backend';
 
-export const getCompanies = async (hhToken) => {
-  const r = await axios.get('' +
-    `${baseUrl}/er/companies`, {
-    headers: {'Authorization': `Bearer ${hhToken || ''}`}
+export const getCompanies = async hhToken => {
+  const r = await axios.get(`${baseUrl}/er/companies`, {
+    headers: {Authorization: `Bearer ${hhToken || ''}`},
   });
-  console.log('res', r.data)
+  console.log('res', r.data);
   return r;
 };
 
-export const getCompany = async (hhToken) => {
-  const r = await axios.get('' +
-    `${baseUrl}/er/companies/me`, {
-    headers: {'Authorization': `Bearer ${hhToken || ''}`}
+export const getCompany = async hhToken => {
+  const r = await axios.get(`${baseUrl}/er/companies/me`, {
+    headers: {Authorization: `Bearer ${hhToken || ''}`},
   });
-  console.log('Company Service getCompany result:', r.data)
+  console.log('Company Service getCompany result:', r.data);
   return r;
 };
 
 export const updateCompany = async (data, hhToken) => {
-  const r = await axios.patch('' +
-    `${baseUrl}/er/companies/me`, data, {
-    headers: {'Authorization': `Bearer ${hhToken || ''}`}
+  const r = await axios.patch(`${baseUrl}/er/companies/me`, data, {
+    headers: {Authorization: `Bearer ${hhToken || ''}`},
   });
-  console.log('Company Service updateCompany result:', r.data)
+  console.log('Company Service updateCompany result:', r.data);
   return r;
 };

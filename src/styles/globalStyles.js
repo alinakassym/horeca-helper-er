@@ -26,6 +26,10 @@ export const globalStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#CCCCCC',
   },
+  multiline: {
+    height: 100,
+    textAlignVertical: 'top',
+  },
   select: {
     marginBottom: 16,
     paddingVertical: 12,
