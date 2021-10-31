@@ -1,11 +1,11 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, Text, View, Pressable, StyleSheet} from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
 import {IconStar} from '../../assets/icons/main/IconStar';
 
-export const ResumeCard = ({item}) => {
+export const ResumeCard = ({item, onPress}) => {
   return (
-    <View style={[styles.row, styles.divider]}>
+    <Pressable onPress={onPress} style={[styles.row, styles.divider]}>
       <View style={styles.col}>
         <View>
           <Text style={globalStyles.positionTitle}>{item.position?.title}</Text>
@@ -25,7 +25,7 @@ export const ResumeCard = ({item}) => {
         <Text style={[globalStyles.text, {marginRight: 8}]}>5</Text>
         <IconStar color={'#F1C40F'} fillColor={'#F1C40F'} />
       </View>*/}
-    </View>
+    </Pressable>
   );
 };
 

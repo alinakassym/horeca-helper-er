@@ -74,7 +74,13 @@ export const SearchScreen = ({navigation}) => {
       <ScrollView>
         {employees &&
           employees.map((item, index) => (
-            <ResumeCard key={index} item={item} />
+            <ResumeCard
+              onPress={() =>
+                navigation.navigate('EmployeeScreen', {id: item.id})
+              }
+              key={index}
+              item={item}
+            />
           ))}
       </ScrollView>
     </View>

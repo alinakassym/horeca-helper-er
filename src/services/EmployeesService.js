@@ -19,6 +19,14 @@ export const searchEmployees = async (data, hhToken) => {
   return r;
 };
 
+export const getEmployeeById = async (id, hhToken) => {
+  const r = await axios.get(`${baseUrl}/er/employees/${id}`, {
+    headers: {Authorization: `Bearer ${hhToken || ''}`},
+  });
+  console.log('Employees Service getEmployeeById result:', r.data);
+  return r;
+};
+
 export const updateEmployee = async (data, hhToken) => {
   const r = await axios.patch(`${baseUrl}/ee/employees/me`, data, {
     headers: {Authorization: `Bearer ${hhToken || ''}`},

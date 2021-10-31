@@ -9,6 +9,7 @@ import {MessagesScreen} from '../screens/messages/MessagesScreen';
 import {ProfileScreen} from '../screens/profile/ProfileScreen';
 import {ProfileEditScreen} from '../screens/profile/ProfileEditScreen';
 import {FilterScreen} from '../screens/search/FilterScreen';
+import {EmployeeScreen} from '../screens/search/EmployeeScreen';
 
 import {IconVacancies} from '../assets/icons/tabs/IconVacancies';
 import {IconSearch} from '../assets/icons/tabs/IconSearch';
@@ -111,6 +112,13 @@ export const Navigator = () => {
           }}
           name="FilterScreen"
           component={FilterScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerTitle: 'Profile Information',
+          }}
+          name="EmployeeScreen"
+          component={EmployeeScreen}
         />
       </Stack.Group>
       <Stack.Group>
