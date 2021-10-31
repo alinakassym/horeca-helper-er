@@ -78,6 +78,11 @@ export const Navigator = () => {
           component={MessagesScreen}
           options={{
             tabBarLabel: 'Messages',
+            tabBarBadgeStyle: {
+              top: 8,
+              left: 0,
+              backgroundColor: '#E74C3C',
+            },
             tabBarBadge: 10,
             tabBarIcon: ({focused, color}) => {
               return <IconNotifications color={color} size={28} width={1.5} />;
@@ -98,7 +103,16 @@ export const Navigator = () => {
     );
   };
   return (
-    <Stack.Navigator initialRouteName="App">
+    <Stack.Navigator
+      initialRouteName="App"
+      screenListeners={{
+        state: e => {
+          console.log('state changed', e.data.state.history);
+        },
+        blur: e => {
+          console.log('blur: ', e);
+        },
+      }}>
       <Stack.Group
         screenOptions={{
           headerShown: false,

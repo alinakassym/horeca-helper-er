@@ -15,7 +15,7 @@ export const searchEmployees = async (data, hhToken) => {
   const r = await axios.post(`${baseUrl}/er/employees/search`, data, {
     headers: {Authorization: `Bearer ${hhToken || ''}`},
   });
-  console.log('Employees Service searchEmployees result:', r.data);
+  // console.log('Employees Service searchEmployees result:', r.data);
   return r;
 };
 

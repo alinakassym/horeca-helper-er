@@ -10,11 +10,18 @@ import {
 import {ModalSelect} from '../../components/selects/ModalSelect';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {useSelector, useDispatch} from 'react-redux';
-import {setEmployeesFilter} from '../../store/slices/employees';
+import {
+  setEmployeesFilter,
+  setFilterApplied,
+} from '../../store/slices/employees';
 import {globalStyles} from '../../styles/globalStyles';
+import PlainButton from '../../components/buttons/PlainButton';
 
 export const FilterScreen = ({navigation}) => {
   const filterState = useSelector(state => state.employees.filter);
+  const filterReset = useSelector(state => state.employees.filterReset);
+  const sortBy = useSelector(state => state.employees.sortBy);
+
   const dispatch = useDispatch();
 
   const [filters, setFilters] = useState({...filterState});
@@ -23,11 +30,20 @@ export const FilterScreen = ({navigation}) => {
   const [cities, setCities] = useState([]);
   const [genders, setGenders] = useState([]);
   const [schedules, setSchedules] = useState([]);
+  const [listSortBy, setSortBy] = useState(sortBy);
+
+  const resetFilter = async () => {
+    await dispatch(setEmployeesFilter(filterReset));
+    await dispatch(setFilterApplied(false));
+    navigation.navigate('Search');
+  };
 
   const apply = async () => {
     await dispatch(setEmployeesFilter(filters));
+    await dispatch(setFilterApplied(true));
     navigation.navigate('Search');
   };
+
   const getData = async () => {
     const hhToken = await AsyncStorage.getItem('hhToken');
     return Promise.all([
@@ -58,6 +74,17 @@ export const FilterScreen = ({navigation}) => {
 
   return (
     <ScrollView style={styles.container}>
+      {/*sortBy*/}
+      <ModalSelect
+        onChangeText={val => {
+          setFilters({...filters, orderBy: val});
+        }}
+        label={'Sort by'}
+        value={filters}
+        valueKey={'orderBy'}
+        items={listSortBy}
+        itemTitle={'title'}
+      />
       {/*City*/}
       <ModalSelect
         onChangeText={val => {
@@ -215,8 +242,11 @@ export const FilterScreen = ({navigation}) => {
         </View>
       </View>
 
-      <View style={styles.btn}>
-        <PrimaryButton label={'Apply'} onPress={() => apply()} />
+      <View style={styles.btnSection}>
+        <View style={styles.btn}>
+          <PrimaryButton label={'Apply'} onPress={() => apply()} />
+        </View>
+        <PlainButton label={'Reset filters'} onPress={() => resetFilter()} />
       </View>
     </ScrollView>
   );
@@ -237,7 +267,10 @@ const styles = StyleSheet.create({
     marginRight: 5,
     flex: 1,
   },
-  btn: {
+  btnSection: {
     marginBottom: 42,
+  },
+  btn: {
+    marginBottom: 16,
   },
 });

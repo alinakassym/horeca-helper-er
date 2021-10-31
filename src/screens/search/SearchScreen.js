@@ -5,7 +5,9 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
+  Modal,
   StyleSheet,
+  Pressable,
 } from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,12 +19,19 @@ import {ResumeCard} from './ResumeCard';
 
 export const SearchScreen = ({navigation}) => {
   const filterState = useSelector(state => state.employees.filter);
+  const isFilterApplied = useSelector(state => state.employees.isFilterApplied);
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const sortBy = {
+    updatedAt: 'date',
+    relevance: 'relevance',
+    salary: 'salary',
+  };
+
   useEffect(() => {
     function fetchData() {
-      const unsubscribe = navigation.addListener('focus', async () => {
+      return navigation.addListener('focus', async () => {
         // The screen is focused
         const hhToken = await AsyncStorage.getItem('hhToken');
         searchEmployees(filterState, hhToken)
@@ -34,9 +43,6 @@ export const SearchScreen = ({navigation}) => {
             console.log('searchEmployees err:', e);
           });
       });
-
-      // Return the function to unsubscribe from the event so it gets removed on unmount
-      return unsubscribe;
     }
     fetchData();
   }, [filterState, navigation]);
@@ -62,13 +68,15 @@ export const SearchScreen = ({navigation}) => {
             navigation.navigate('FilterScreen');
           }}>
           <IconFilter color={'#185AB7'} size={32} width={1.5} />
+          {isFilterApplied && <View style={globalStyles.filterApplied} />}
           <Text style={globalStyles.filterBtnRightText}>Filters</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={globalStyles.filterBtn}>
-          <Text style={globalStyles.filterBtnLeftText}>Order by rating</Text>
-          <IconArrowDown color={'#767676'} size={24} width={1.5} />
-        </TouchableOpacity>
+        <View style={globalStyles.filterBtn}>
+          <Text style={globalStyles.filterBtnLeftText}>
+            Order by {sortBy[filterState.sortBy]}
+          </Text>
+        </View>
       </View>
 
       <ScrollView>
@@ -108,5 +116,22 @@ const styles = StyleSheet.create({
   },
   btn: {
     marginBottom: 16,
+  },
+  overlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.2)',
+  },
+  wrap: {
+    padding: 16,
+    width: '80%',
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
+  },
+  item: {
+    padding: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
