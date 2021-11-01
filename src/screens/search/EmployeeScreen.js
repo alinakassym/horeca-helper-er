@@ -85,7 +85,7 @@ export const EmployeeScreen = ({route, navigation}) => {
                 )}
                 {item.birthDate && (
                   <Text style={styles.caption}>
-                    {getAge(item.birthDate)} years
+                    {getAge(item.birthDate)} y.o.
                   </Text>
                 )}
               </View>

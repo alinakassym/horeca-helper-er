@@ -28,7 +28,7 @@ export const ResumeCard = ({item, onPress}) => {
           )}
           <Text style={globalStyles.title}>
             {item.firstName} {item.lastName}
-            {item.birthDate && <Text>, {getAge(item.birthDate)} years</Text>}
+            {item.birthDate && <Text>, {getAge(item.birthDate)} y.o.</Text>}
           </Text>
           <Text style={styles.city}>{item.city?.title}</Text>
           {!!item.description && (
