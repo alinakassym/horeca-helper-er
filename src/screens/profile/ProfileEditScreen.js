@@ -22,17 +22,17 @@ export const ProfileEditScreen = ({route, navigation}) => {
 
   const save = async () => {
     const hhToken = await AsyncStorage.getItem('hhToken');
-    updateCompany(company, hhToken).then(() => {
-      const data = {
-        title: company.title,
-        description: company.description,
-        email: company.email,
-        photoFilename: company.photoFilename,
-        googleId: company.googleId,
-        contactInfo: company.contactInfo,
-        address: company.address,
-        categoryId: company.category ? company.category.id : null,
-      };
+    const data = {
+      title: company.title,
+      description: company.description,
+      email: company.email,
+      photoFilename: company.photoFilename,
+      googleId: company.googleId,
+      contactInfo: company.contactInfo,
+      address: company.address,
+      categoryId: company.category ? company.category.id : null,
+    };
+    updateCompany(data, hhToken).then(() => {
       navigation.navigate('Profile', {
         value: data,
       });
@@ -72,7 +72,7 @@ export const ProfileEditScreen = ({route, navigation}) => {
       />
 
       <ModalSelect
-        label={'Gender'}
+        label={'Category'}
         onChangeText={val => {
           setCompany({...company, category: val});
         }}
