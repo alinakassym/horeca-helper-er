@@ -9,48 +9,43 @@ import axios from 'axios';
 // cloud BE
 const baseUrl = 'https://horecahelper.kz/backend';
 
-export const getJobs = async (hhToken) => {
-  const r = await axios.get('' +
-    `${baseUrl}/er/jobs/my`, {
-    headers: {'Authorization': `Bearer ${hhToken || ''}`}
+export const getJobs = async hhToken => {
+  const r = await axios.get('' + `${baseUrl}/er/jobs/my`, {
+    headers: {Authorization: `Bearer ${hhToken || ''}`},
   });
   // console.log('getJobs result: ', r.data)
   return r;
 };
 
 export const getJobById = async (id, hhToken) => {
-  const r = await axios.get('' +
-    `${baseUrl}/er/jobs/${id}`, {
-    headers: {'Authorization': `Bearer ${hhToken || ''}`}
+  const r = await axios.get('' + `${baseUrl}/er/jobs/${id}`, {
+    headers: {Authorization: `Bearer ${hhToken || ''}`},
   });
-  console.log('getJobById result: ', r.data)
+  console.log('getJobById result: ', r.data);
   return r;
 };
 
 export const updateJobById = async (id, data, hhToken) => {
-  const r = await axios.patch('' +
-    `${baseUrl}/er/jobs/${id}`, data, {
-    headers: {'Authorization': `Bearer ${hhToken || ''}`}
+  const r = await axios.patch('' + `${baseUrl}/er/jobs/${id}`, data, {
+    headers: {Authorization: `Bearer ${hhToken || ''}`},
   });
-  console.log('updateJobById result: ', r.data)
+  console.log('updateJobById result: ', r.data);
   return r;
 };
 
 export const postJob = async (data, hhToken) => {
   console.log('job item : ', data);
-  const r = await axios.post('' +
-    `${baseUrl}/er/jobs`, data, {
-    headers: {'Authorization': `Bearer ${hhToken || ''}`}
+  const r = await axios.post('' + `${baseUrl}/er/jobs`, data, {
+    headers: {Authorization: `Bearer ${hhToken || ''}`},
   });
-  console.log('postJob result: ', r)
+  console.log('postJob result: ', r);
   return r;
 };
 
 export const deleteJobById = async (id, hhToken) => {
-  const r = await axios.delete(
-    `${baseUrl}/er/jobs/${id}`, {
-    headers: {'Authorization': `Bearer ${hhToken || ''}`}
+  const r = await axios.delete(`${baseUrl}/er/jobs/${id}`, {
+    headers: {Authorization: `Bearer ${hhToken || ''}`},
   });
-  console.log('deleteJobById result: ', r)
+  console.log('deleteJobById result: ', r);
   return r;
 };

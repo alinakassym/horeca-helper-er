@@ -37,6 +37,14 @@ export const JobEditScreen = ({route, navigation}) => {
   const [positions, setPositions] = useState([]);
   const [schedules, setSchedules] = useState([]);
 
+  const getNumber = val => {
+    return val.length > 0 ? Number(val) : null;
+  };
+
+  const getString = val => {
+    return val ? val.toString() : null;
+  };
+
   useEffect(() => {
     return navigation.addListener('focus', async () => {
       // The screen is focused
@@ -103,15 +111,15 @@ export const JobEditScreen = ({route, navigation}) => {
   const update = async () => {
     const hhToken = await AsyncStorage.getItem('hhToken');
     const jobItem = {
-      positionId: job.position.id,
+      positionId: job.position?.id,
       description: job.description,
-      cityId: job.city.id,
+      cityId: job.city?.id,
       ageMin: job.ageMin,
       ageMax: job.ageMax,
-      genderId: job.gender.id,
+      genderId: job.gender?.id,
       experienceMin: job.experienceMin,
       experienceMax: job.experienceMax,
-      scheduleId: job.schedule.id,
+      scheduleId: job.schedule?.id,
       salaryMin: job.salaryMin,
       salaryMax: job.salaryMax,
     };
@@ -177,9 +185,9 @@ export const JobEditScreen = ({route, navigation}) => {
               keyboardType={'number-pad'}
               style={globalStyles.primaryInput}
               onChangeText={val => {
-                onChange({...job, ageMin: val});
+                onChange({...job, ageMin: getNumber(val)});
               }}
-              value={job.ageMin.toString()}
+              value={getString(job.ageMin)}
             />
           </View>
           <View style={styles.col}>
@@ -188,9 +196,9 @@ export const JobEditScreen = ({route, navigation}) => {
               keyboardType={'number-pad'}
               style={globalStyles.primaryInput}
               onChangeText={val => {
-                onChange({...job, ageMax: val});
+                onChange({...job, ageMax: getNumber(val)});
               }}
-              value={job.ageMax.toString()}
+              value={getString(job.ageMax)}
             />
           </View>
         </View>
@@ -240,9 +248,9 @@ export const JobEditScreen = ({route, navigation}) => {
             keyboardType={'number-pad'}
             style={globalStyles.primaryInput}
             onChangeText={val => {
-              onChange({...job, experienceMin: val});
+              onChange({...job, experienceMin: getNumber(val)});
             }}
-            value={job.experienceMin.toString()}
+            value={getString(job.experienceMin)}
           />
         </View>
         <View style={styles.col}>
@@ -251,9 +259,9 @@ export const JobEditScreen = ({route, navigation}) => {
             keyboardType={'number-pad'}
             style={globalStyles.primaryInput}
             onChangeText={val => {
-              onChange({...job, experienceMax: val});
+              onChange({...job, experienceMax: getNumber(val)});
             }}
-            value={job.experienceMax?.toString()}
+            value={getString(job.experienceMax)}
           />
         </View>
       </View>
@@ -269,7 +277,7 @@ export const JobEditScreen = ({route, navigation}) => {
       />
 
       {/*Salary*/}
-      <Text style={globalStyles.label}>Salary (USD)</Text>
+      <Text style={globalStyles.label}>Salary (KZT)</Text>
       <View style={styles.row}>
         <View style={styles.col}>
           <Text>From</Text>
@@ -277,9 +285,9 @@ export const JobEditScreen = ({route, navigation}) => {
             keyboardType={'number-pad'}
             style={globalStyles.primaryInput}
             onChangeText={val => {
-              onChange({...job, salaryMin: val});
+              onChange({...job, salaryMin: getNumber(val)});
             }}
-            value={job.salaryMin.toString()}
+            value={getString(job.salaryMin)}
           />
         </View>
         <View style={styles.col}>
@@ -288,9 +296,9 @@ export const JobEditScreen = ({route, navigation}) => {
             keyboardType={'number-pad'}
             style={globalStyles.primaryInput}
             onChangeText={val => {
-              onChange({...job, salaryMax: val});
+              onChange({...job, salaryMax: getNumber(val)});
             }}
-            value={job.salaryMax.toString()}
+            value={getString(job.salaryMax)}
           />
         </View>
       </View>

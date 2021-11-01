@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Dimensions, TextInput, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Dimensions,
+  TextInput,
+  StyleSheet,
+  Alert,
+} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {ModalSelect} from '../../components/selects/ModalSelect';
@@ -73,30 +80,38 @@ export const JobsPostScreen = ({navigation}) => {
     experienceMin: 0,
     experienceMax: 2,
     schedule: null,
-    salaryMin: 100,
-    salaryMax: 500,
+    salaryMin: 200000,
+    salaryMax: 300000,
     description: '',
   });
-  const values = [18, 30];
+  const values = [18, 32];
 
   const save = async () => {
-    const hhToken = await AsyncStorage.getItem('hhToken');
-    const jobItem = {
-      positionId: job.position?.id,
-      description: job.description,
-      cityId: job.city?.id,
-      ageMin: job.ageMin,
-      ageMax: job.ageMax,
-      genderId: job.gender?.id,
-      experienceMin: job.experienceMin,
-      experienceMax: job.experienceMax,
-      scheduleId: job.schedule?.id,
-      salaryMin: job.salaryMin,
-      salaryMax: job.salaryMax,
-    };
-    postJob(jobItem, hhToken).then(() => {
-      navigation.navigate('Jobs');
-    });
+    const isValid = job.position && job.city && job.schedule;
+    if (isValid) {
+      const hhToken = await AsyncStorage.getItem('hhToken');
+      const jobItem = {
+        positionId: job.position?.id,
+        description: job.description,
+        cityId: job.city?.id,
+        ageMin: job.ageMin,
+        ageMax: job.ageMax,
+        genderId: job.gender?.id,
+        experienceMin: job.experienceMin,
+        experienceMax: job.experienceMax,
+        scheduleId: job.schedule?.id,
+        salaryMin: job.salaryMin,
+        salaryMax: job.salaryMax,
+      };
+      postJob(jobItem, hhToken).then(() => {
+        navigation.navigate('Jobs');
+      });
+    } else {
+      Alert.alert(
+        'Warning',
+        'Position, location & schedule should not be empty',
+      );
+    }
   };
   return (
     <KeyboardAwareScrollView
@@ -104,6 +119,7 @@ export const JobsPostScreen = ({navigation}) => {
       enableResetScrollToCoords={false}>
       {/*Position*/}
       <ModalSelect
+        required={true}
         label={'Position'}
         onChange={onChange}
         value={job}
@@ -114,6 +130,7 @@ export const JobsPostScreen = ({navigation}) => {
 
       {/*Job location*/}
       <ModalSelect
+        required={true}
         label={'Location'}
         onChange={onChange}
         value={job}
@@ -221,6 +238,7 @@ export const JobsPostScreen = ({navigation}) => {
 
       {/*Schedule*/}
       <ModalSelect
+        required={true}
         label={'Schedule'}
         onChange={onChange}
         value={job}
@@ -230,7 +248,7 @@ export const JobsPostScreen = ({navigation}) => {
       />
 
       {/*Salary*/}
-      <Text style={globalStyles.label}>Salary (USD)</Text>
+      <Text style={globalStyles.label}>Salary (KZT)</Text>
       <View style={styles.row}>
         <View style={styles.col}>
           <Text>From</Text>

@@ -5,6 +5,11 @@ import {IconSearch} from '../../assets/icons/tabs/IconSearch';
 import moment from 'moment';
 
 export const JobCard = ({item, onPress, findRelevant}) => {
+  const numberWithSpaces = val => {
+    let parts = val.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return parts.join('.');
+  };
   return (
     <View style={styles.card} onPress={onPress}>
       <Pressable style={[styles.row]} onPress={onPress}>
@@ -14,18 +19,27 @@ export const JobCard = ({item, onPress, findRelevant}) => {
           </Text>
           {item.salaryMin && item.salaryMax ? (
             <Text style={styles.salary}>
-              {item.salaryMin} - {item.salaryMax} KZT
+              {numberWithSpaces(item.salaryMin)} -{' '}
+              {numberWithSpaces(item.salaryMax)} KZT
             </Text>
           ) : item.salaryMin ? (
-            <Text style={styles.salary}>From {item.salaryMin} KZT</Text>
+            <Text style={styles.salary}>
+              From {numberWithSpaces(item.salaryMin)} KZT
+            </Text>
+          ) : item.salaryMax ? (
+            <Text style={styles.salary}>
+              To {numberWithSpaces(item.salaryMax)} KZT
+            </Text>
           ) : (
-            <Text style={styles.salary}>To {item.salaryMax} KZT</Text>
+            false
           )}
           {item.city && <Text style={styles.cityTitle}>{item.city.title}</Text>}
 
-          <Text style={styles.description}>{item.description}</Text>
+          {!!item.description && (
+            <Text style={styles.description}>{item.description}</Text>
+          )}
           <Text style={styles.createdAt}>
-            Created at: {moment(item.createdAt).format('MMM YYYY')}
+            Created at: {moment(item.createdAt).format('DD MMM YYYY')}
           </Text>
         </View>
       </Pressable>
@@ -72,10 +86,12 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   description: {
+    marginTop: 4,
     marginBottom: 8,
     color: '#666666',
   },
   createdAt: {
+    marginTop: 4,
     marginBottom: 16,
     color: '#666666',
   },
