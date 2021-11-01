@@ -30,7 +30,7 @@ export const Navigator = () => {
   const TabStack = () => {
     return (
       <Tab.Navigator
-        initialRouteName="Search"
+        initialRouteName="Profile"
         screenListeners={{
           state: e => {
             console.log('state changed', e.data.state.history);
