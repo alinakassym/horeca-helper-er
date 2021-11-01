@@ -77,12 +77,12 @@ export const FilterScreen = ({navigation}) => {
     <KeyboardAwareScrollView
       style={styles.container}
       enableResetScrollToCoords={false}>
-      {/*sortBy*/}
+      {/*Order by*/}
       <ModalSelect
         onChangeText={val => {
           setFilters({...filters, orderBy: val});
         }}
-        label={'Sort by'}
+        label={'Order by'}
         value={filters}
         valueKey={'orderBy'}
         items={listSortBy}
