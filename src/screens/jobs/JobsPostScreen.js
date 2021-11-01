@@ -1,12 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  Dimensions,
-  TextInput,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, Dimensions, TextInput, StyleSheet} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {ModalSelect} from '../../components/selects/ModalSelect';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
@@ -88,15 +82,15 @@ export const JobsPostScreen = ({navigation}) => {
   const save = async () => {
     const hhToken = await AsyncStorage.getItem('hhToken');
     const jobItem = {
-      positionId: job.position.id,
+      positionId: job.position?.id,
       description: job.description,
-      cityId: job.city.id,
+      cityId: job.city?.id,
       ageMin: job.ageMin,
       ageMax: job.ageMax,
-      genderId: job.gender.id,
+      genderId: job.gender?.id,
       experienceMin: job.experienceMin,
       experienceMax: job.experienceMax,
-      scheduleId: job.schedule.id,
+      scheduleId: job.schedule?.id,
       salaryMin: job.salaryMin,
       salaryMax: job.salaryMax,
     };
@@ -105,7 +99,9 @@ export const JobsPostScreen = ({navigation}) => {
     });
   };
   return (
-    <ScrollView style={styles.container}>
+    <KeyboardAwareScrollView
+      style={styles.container}
+      enableResetScrollToCoords={false}>
       {/*Position*/}
       <ModalSelect
         label={'Position'}
@@ -279,7 +275,7 @@ export const JobsPostScreen = ({navigation}) => {
       <View style={styles.btn}>
         <PrimaryButton label={'Post'} onPress={() => save()} />
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 

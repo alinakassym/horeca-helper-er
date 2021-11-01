@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {ScrollView, View, Text, StyleSheet, TextInput} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   getPositions,
@@ -73,7 +74,9 @@ export const FilterScreen = ({navigation}) => {
   }, [navigation]);
 
   return (
-    <ScrollView style={styles.container}>
+    <KeyboardAwareScrollView
+      style={styles.container}
+      enableResetScrollToCoords={false}>
       {/*sortBy*/}
       <ModalSelect
         onChangeText={val => {
@@ -248,7 +251,7 @@ export const FilterScreen = ({navigation}) => {
         </View>
         <PlainButton label={'Reset filters'} onPress={() => resetFilter()} />
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 
