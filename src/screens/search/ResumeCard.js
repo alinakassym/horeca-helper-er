@@ -14,8 +14,10 @@ export const ResumeCard = ({item, onPress}) => {
   };
 
   return (
-    <Pressable onPress={onPress} style={[styles.row, styles.divider]}>
-      <View style={styles.col}>
+    <Pressable
+      onPress={onPress}
+      style={[styles.row, styles.divider, {width: '100%'}]}>
+      <View style={[styles.col, {width: '82%'}]}>
         <View>
           <Text style={globalStyles.positionTitle}>{item.position?.title}</Text>
 
@@ -30,7 +32,9 @@ export const ResumeCard = ({item, onPress}) => {
           </Text>
           <Text style={styles.city}>{item.city?.title}</Text>
           {!!item.description && (
-            <Text style={globalStyles.caption}>{item.description}</Text>
+            <Text numberOfLines={1} style={globalStyles.caption}>
+              {item.description}
+            </Text>
           )}
         </View>
       </View>

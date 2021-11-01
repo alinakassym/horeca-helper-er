@@ -2,11 +2,11 @@ import React from 'react';
 import {Text, View, Pressable, StyleSheet} from 'react-native';
 import PlainButton from '../buttons/PlainButton';
 import {IconSearch} from '../../assets/icons/tabs/IconSearch';
+import moment from 'moment';
 
 export const JobCard = ({item, onPress, findRelevant}) => {
   return (
     <View style={styles.card} onPress={onPress}>
-
       <Pressable style={[styles.row]} onPress={onPress}>
         <View style={styles.col}>
           <Text style={styles.positionTitle}>
@@ -24,7 +24,9 @@ export const JobCard = ({item, onPress, findRelevant}) => {
           {item.city && <Text style={styles.cityTitle}>{item.city.title}</Text>}
 
           <Text style={styles.description}>{item.description}</Text>
-          <Text style={styles.createdAt}>{item.createdAt}</Text>
+          <Text style={styles.createdAt}>
+            Created at: {moment(item.createdAt).format('MMM YYYY')}
+          </Text>
         </View>
       </Pressable>
 
@@ -34,7 +36,6 @@ export const JobCard = ({item, onPress, findRelevant}) => {
         </View>
         <PlainButton label={'Find relevant'} onPress={findRelevant} />
       </View>
-
     </View>
   );
 };
