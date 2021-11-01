@@ -39,7 +39,7 @@ export const JobCard = ({item, onPress, findRelevant}) => {
             <Text style={styles.description}>{item.description}</Text>
           )}
           <Text style={styles.createdAt}>
-            Created at: {moment(item.createdAt).format('DD MMM YYYY')}
+            Last updated on: {moment(item.updatedAt).format('DD MMM YYYY')}
           </Text>
         </View>
       </Pressable>

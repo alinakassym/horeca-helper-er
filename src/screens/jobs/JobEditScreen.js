@@ -94,16 +94,16 @@ export const JobEditScreen = ({route, navigation}) => {
   }, [jobId, navigation]);
 
   const [job, onChange] = React.useState({
-    position: {id: 1, title: 'Waiter', title_ru: 'Официант'},
-    city: {id: 1, title: 'Astana', title_ru: 'Астана'},
+    position: null,
+    city: null,
     ageMin: 18,
     ageMax: 32,
-    gender: {id: 1, title: 'Female', title_ru: 'Женский'},
+    gender: null,
     experienceMin: 0,
     experienceMax: 2,
-    schedule: {id: 1, title: 'Full-time', title_ru: 'Полный день'},
-    salaryMin: 100,
-    salaryMax: 500,
+    schedule: null,
+    salaryMin: 200000,
+    salaryMax: 300000,
     description: '',
   });
   const values = [18, 32];
