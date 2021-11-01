@@ -57,7 +57,7 @@ export const Navigator = () => {
           name="Jobs"
           component={JobsScreen}
           options={{
-            tabBarLabel: 'Jobs',
+            tabBarLabel: 'My jobs',
             tabBarIcon: ({focused, color}) => {
               return <IconVacancies color={color} size={28} width={1.5} />;
             },
