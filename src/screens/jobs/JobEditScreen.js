@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
-  ScrollView,
   View,
   Text,
   Dimensions,
   TextInput,
   StyleSheet,
 } from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {ModalSelect} from '../../components/selects/ModalSelect';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
@@ -144,7 +144,9 @@ export const JobEditScreen = ({route, navigation}) => {
     );
   }
   return (
-    <ScrollView style={styles.container}>
+    <KeyboardAwareScrollView
+      style={styles.container}
+      enableResetScrollToCoords={false}>
       {/*Position*/}
       <ModalSelect
         label={'Position'}
@@ -251,7 +253,7 @@ export const JobEditScreen = ({route, navigation}) => {
             onChangeText={val => {
               onChange({...job, experienceMax: val});
             }}
-            value={job.experienceMax.toString()}
+            value={job.experienceMax?.toString()}
           />
         </View>
       </View>
@@ -313,7 +315,7 @@ export const JobEditScreen = ({route, navigation}) => {
           onPress={() => confirmDeletion()}
         />
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 
