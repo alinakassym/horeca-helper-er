@@ -106,7 +106,7 @@ export const JobEditScreen = ({route, navigation}) => {
     salaryMax: 500,
     description: '',
   });
-  const values = [18, 30];
+  const values = [18, 32];
 
   const update = async () => {
     const hhToken = await AsyncStorage.getItem('hhToken');
