@@ -34,7 +34,7 @@ export const JobsScreen = ({navigation}) => {
         salaryMin: job.salaryMin,
         salaryMax: job.salaryMax,
         sortBy: 'relevance',
-        orderBy: {title: 'relevance', key: 'relevance'},
+        orderBy: {title: 'Relevance', key: 'relevance'},
         sortOrder: 'DESC',
         pageSize: 10,
         pageNum: 1,

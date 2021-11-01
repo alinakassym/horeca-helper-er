@@ -7,6 +7,7 @@ import {IconPhone} from '../../assets/icons/main/IconPhone';
 import {IconAddress} from '../../assets/icons/main/IconAddress';
 import {IconMail} from '../../assets/icons/main/IconMail';
 import {IconPencil} from '../../assets/icons/main/IconPencil';
+import {IconBuilding} from '../../assets/icons/main/IconBuilding';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {getCompany} from '../../services/CompaniesService';
 
@@ -84,8 +85,11 @@ export const ProfileScreen = ({navigation}) => {
         </View>
 
         {company.category && (
-          <View style={[styles.row, styles.paddingTop0]}>
-            <Text>{company.category.title}</Text>
+          <View style={styles.row}>
+            <View style={styles.iconWrapper}>
+              <IconBuilding color={'#767676'} size={24} width={1.5} />
+            </View>
+            <Text style={styles.text}>{company.category.title || 'Is not entered'}</Text>
           </View>
         )}
 
