@@ -6,6 +6,7 @@ import {AuthContext} from '../../store/context';
 import {IconPhone} from '../../assets/icons/main/IconPhone';
 import {IconAddress} from '../../assets/icons/main/IconAddress';
 import {IconMail} from '../../assets/icons/main/IconMail';
+import {IconComment} from '../../assets/icons/main/IconComment';
 import {IconPencil} from '../../assets/icons/main/IconPencil';
 import {IconBuilding} from '../../assets/icons/main/IconBuilding';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -89,30 +90,45 @@ export const ProfileScreen = ({navigation}) => {
             <View style={styles.iconWrapper}>
               <IconBuilding color={'#767676'} size={24} width={1.5} />
             </View>
-            <Text style={styles.text}>{company.category.title || 'Is not entered'}</Text>
+            <Text style={styles.text}>{company.category.title}</Text>
           </View>
         )}
 
-        <View style={styles.row}>
-          <View style={styles.iconWrapper}>
-            <IconAddress color={'#767676'} size={24} width={1.5} />
+        {company.address && (
+          <View style={styles.row}>
+            <View style={styles.iconWrapper}>
+              <IconAddress color={'#767676'} size={24} width={1.5} />
+            </View>
+            <Text style={styles.text}>{company.address}</Text>
           </View>
-          <Text style={styles.text}>{company.address || 'Is not entered'}</Text>
-        </View>
+        )}
 
-        <View style={styles.row}>
-          <View style={styles.iconWrapper}>
-            <IconPhone color={'#767676'} size={24} width={1.5} />
+        {company.contactInfo && (
+          <View style={styles.row}>
+            <View style={styles.iconWrapper}>
+              <IconPhone color={'#767676'} size={24} width={1.5} />
+            </View>
+            <Text style={styles.text}>{company.contactInfo}</Text>
           </View>
-          <Text style={styles.text}>{company.contactInfo}</Text>
-        </View>
+        )}
 
-        <View style={styles.row}>
-          <View style={styles.iconWrapper}>
-            <IconMail color={'#767676'} size={24} width={1.5} />
+        {company.email && (
+          <View style={styles.row}>
+            <View style={styles.iconWrapper}>
+              <IconMail color={'#767676'} size={24} width={1.5} />
+            </View>
+            <Text style={styles.text}>{company.email}</Text>
           </View>
-          <Text style={styles.text}>{company.email}</Text>
-        </View>
+        )}
+
+        {!!company.description && (
+          <View style={styles.row}>
+            <View style={styles.iconWrapper}>
+              <IconComment color={'#767676'} size={24} width={1.5} />
+            </View>
+            <Text style={styles.text}>{company.description}</Text>
+          </View>
+        )}
       </View>
 
       {/*Settings*/}
