@@ -69,6 +69,10 @@ export const employeesSlice = createSlice({
   },
   reducers: {
     setEmployeesFilter: (state, action) => {
+      const sortOrder =
+        action.payload.orderBy && action.payload.orderBy.key === 'salary'
+          ? 'ASC'
+          : 'DESC';
       state.filter = {
         position: action.payload.position,
         positionId: action.payload.position ? action.payload.position.id : null,
@@ -88,7 +92,7 @@ export const employeesSlice = createSlice({
           ? action.payload.orderBy.key
           : 'updatedAt',
         orderBy: action.payload.orderBy,
-        sortOrder: 'DESC',
+        sortOrder: sortOrder,
         pageSize: 10,
         pageNum: 1,
       };

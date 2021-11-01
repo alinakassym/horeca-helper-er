@@ -1,19 +1,37 @@
 import React from 'react';
 import {Image, Text, View, Pressable, StyleSheet} from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
-import {IconStar} from '../../assets/icons/main/IconStar';
+import moment from 'moment';
 
 export const ResumeCard = ({item, onPress}) => {
+  const getAge = birthDate => {
+    return moment().diff(birthDate, 'years', false);
+  };
+  const numberWithSpaces = val => {
+    let parts = val.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return parts.join('.');
+  };
+
   return (
     <Pressable onPress={onPress} style={[styles.row, styles.divider]}>
       <View style={styles.col}>
         <View>
           <Text style={globalStyles.positionTitle}>{item.position?.title}</Text>
+
+          {item.salary && (
+            <Text style={styles.salary}>
+              {numberWithSpaces(item.salary)} KZT
+            </Text>
+          )}
           <Text style={globalStyles.title}>
             {item.firstName} {item.lastName}
+            {item.birthDate && <Text>, {getAge(item.birthDate)} years</Text>}
           </Text>
-          <Text style={globalStyles.caption}>{item.city?.title}</Text>
-          {/*<Text style={globalStyles.caption}>{item}</Text>*/}
+          <Text style={styles.city}>{item.city?.title}</Text>
+          {!!item.description && (
+            <Text style={globalStyles.caption}>{item.description}</Text>
+          )}
         </View>
       </View>
       <View style={[styles.col, styles.floatLeftTop]}>
@@ -21,10 +39,6 @@ export const ResumeCard = ({item, onPress}) => {
           <Image style={styles.img} source={{uri: item.photoUrl}} />
         </View>
       </View>
-      {/*<View style={styles.col}>
-        <Text style={[globalStyles.text, {marginRight: 8}]}>5</Text>
-        <IconStar color={'#F1C40F'} fillColor={'#F1C40F'} />
-      </View>*/}
     </Pressable>
   );
 };
@@ -57,5 +71,13 @@ const styles = StyleSheet.create({
   divider: {
     borderBottomWidth: 1,
     borderColor: '#F6F6F6',
+  },
+  salary: {
+    marginBottom: 8,
+    fontSize: 16,
+  },
+  city: {
+    marginBottom: 8,
+    color: '#555555',
   },
 });

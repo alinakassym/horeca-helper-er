@@ -12,12 +12,12 @@ export const WorkList = ({items, onPress}) => {
               <View style={styles.imageWrapper}>
                 <Image
                   style={styles.image}
-                  source={{uri: item.company.photo}}
+                  source={{uri: item.company.photoUrl}}
                 />
               </View>
             </View>
 
-            <View style={styles.column}>
+            <View style={{width: '80%'}}>
               <Text style={styles.title}>{item.position.title}</Text>
               <Text style={styles.text}>{item.company.title}</Text>
               {item.startDate && (
@@ -28,7 +28,11 @@ export const WorkList = ({items, onPress}) => {
                     : ''}
                 </Text>
               )}
-              {item.description && <Text>{item.description}</Text>}
+              {!!item.description && (
+                <View style={{width: '99%'}}>
+                  <Text textBreakStrategy={'simple'}>{item.description}</Text>
+                </View>
+              )}
             </View>
           </View>
         </View>

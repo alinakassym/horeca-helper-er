@@ -6,7 +6,10 @@ import {getJobs} from '../../services/JobsService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {JobCard} from '../../components/jobs/JobCard';
 import {useDispatch} from 'react-redux';
-import {setEmployeesFilter} from '../../store/slices/employees';
+import {
+  setEmployeesFilter,
+  setFilterApplied,
+} from '../../store/slices/employees';
 
 export const JobsScreen = ({navigation}) => {
   const [jobs, setJobs] = useState([]);
@@ -31,11 +34,13 @@ export const JobsScreen = ({navigation}) => {
         salaryMin: job.salaryMin,
         salaryMax: job.salaryMax,
         sortBy: 'relevance',
+        orderBy: {title: 'relevance', key: 'relevance'},
         sortOrder: 'DESC',
         pageSize: 10,
         pageNum: 1,
       }),
     );
+    await dispatch(setFilterApplied(true));
     navigation.navigate('Search');
   };
 

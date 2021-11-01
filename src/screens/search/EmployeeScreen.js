@@ -129,22 +129,26 @@ export const EmployeeScreen = ({route, navigation}) => {
           {item.email && (
             <View style={styles.row}>
               <Text style={[styles.text, styles.textBold]}>Email:</Text>
-              <Text style={styles.text}> {item.email} KZT</Text>
+              <Text style={styles.text}> {item.email}</Text>
             </View>
           )}
 
-          {/*{item.description && item.description.length > 3 && (
-            <View style={styles.column}>
-              <Text style={[styles.text, styles.textBold]}>About:</Text>
-              <Text style={styles.text}>{item.description}</Text>
+          {!!item.description && item.description.length > 3 && (
+            <View style={{width: '95%'}}>
+              <Text style={[styles.text, styles.textBold]}>
+                About:
+                <Text textBreakStrategy={'simple'} style={styles.text}>
+                  {' '}
+                  {item.description} Lorem ipsum dolor sit amet, consectetur
+                  adipisicing elit. Totam, veritatis?
+                </Text>
+              </Text>
             </View>
-          )}*/}
+          )}
 
           <Text style={[styles.text, styles.textBold]}>Experience: </Text>
 
-
           <WorkList items={item.works} />
-
         </View>
       </View>
     </React.Fragment>
@@ -190,12 +194,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     fontSize: 20,
   },
-  text: {
-    marginBottom: 6,
-    fontSize: 16,
-  },
   textBold: {
     fontFamily: 'Roboto-Bold',
+  },
+  text: {
+    fontFamily: 'Roboto-Regular',
+    marginBottom: 6,
+    fontSize: 16,
   },
   caption: {
     marginBottom: 12,
