@@ -79,18 +79,24 @@ export const SearchScreen = ({navigation}) => {
         </View>
       </View>
 
-      <ScrollView>
-        {employees &&
-          employees.map((item, index) => (
-            <ResumeCard
-              onPress={() =>
-                navigation.navigate('EmployeeScreen', {id: item.id})
-              }
-              key={index}
-              item={item}
-            />
-          ))}
-      </ScrollView>
+      {employees.length > 0 ? (
+        <ScrollView>
+          {employees &&
+            employees.map((item, index) => (
+              <ResumeCard
+                onPress={() =>
+                  navigation.navigate('EmployeeScreen', {id: item.id})
+                }
+                key={index}
+                item={item}
+              />
+            ))}
+        </ScrollView>
+      ) : (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={styles.text}>No matches found</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -133,5 +139,10 @@ const styles = StyleSheet.create({
     padding: 24,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  text: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 18,
+    color: '#666666',
   },
 });
