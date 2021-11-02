@@ -103,7 +103,6 @@ export const SearchScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   topSection: {
-    marginTop: 16,
     padding: 14,
     flexDirection: 'row',
     justifyContent: 'space-between',

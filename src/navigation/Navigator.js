@@ -42,11 +42,12 @@ export const Navigator = () => {
         screenOptions={{
           headerShown: false,
           tabBarLabelStyle: {
-            bottom: 12,
+            bottom: 0, // note: 0 is for iOS, Android might need 12 here
           },
           tabBarActiveTintColor: '#185AB7',
           tabBarStyle: {
-            height: 68,
+            // note: don't set height, or set screen-specific heights
+            marginBottom: 2,
           },
           tabBarBadgeStyle: {
             top: 12,
@@ -105,6 +106,12 @@ export const Navigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="App"
+      screenOptions={{
+        headerTintColor: '#185AB7',
+        headerTitleStyle: {
+          color: '#333333',
+        },
+      }}
       screenListeners={{
         state: e => {
           console.log('state changed', e.data.state.history);
@@ -117,7 +124,7 @@ export const Navigator = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="Tab" component={TabStack} />
+        <Stack.Screen name="Back" component={TabStack} />
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen
