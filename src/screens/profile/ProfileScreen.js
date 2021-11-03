@@ -126,7 +126,9 @@ export const ProfileScreen = ({navigation}) => {
             <View style={styles.iconWrapper}>
               <IconComment color={'#767676'} size={24} width={1.5} />
             </View>
-            <Text style={styles.text}>{company.description}</Text>
+            <View style={{flexBasis: '90%'}}>
+              <Text style={styles.text}>{company.description}</Text>
+            </View>
           </View>
         )}
       </View>
@@ -222,6 +224,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     flexDirection: 'row',
     alignItems: 'center',
+    alignContent: 'stretch',
   },
   paddingTop0: {
     paddingTop: 0,
