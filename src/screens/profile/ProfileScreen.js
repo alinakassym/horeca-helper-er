@@ -1,5 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, ScrollView, Image, StyleSheet, Switch} from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  Image,
+  StyleSheet,
+  Switch,
+  Pressable,
+  Modal,
+} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {globalStyles} from '../../styles/globalStyles';
 import {AuthContext} from '../../store/context';
@@ -10,20 +19,69 @@ import {IconComment} from '../../assets/icons/main/IconComment';
 import {IconPencil} from '../../assets/icons/main/IconPencil';
 import {IconBuilding} from '../../assets/icons/main/IconBuilding';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {getCompany} from '../../services/CompaniesService';
+import {getCompany, updateCompanyPhoto} from '../../services/CompaniesService';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 export const ProfileScreen = ({navigation}) => {
   const {signOut} = React.useContext(AuthContext);
 
   const [company, setCompany] = useState({});
+  const [hhToken, setToken] = useState('');
+
+  const [open, setOpen] = useState(false);
+
+  const openCamera = () => {
+    let options = {
+      storageOption: {
+        path: 'images',
+        mediaType: 'photo',
+      },
+    };
+    launchCamera(options, response => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        updateCompanyPhoto(response.assets[0], hhToken).then(r => {
+          setCompany(r.data);
+        });
+      }
+    });
+  };
+
+  const openGallery = () => {
+    let options = {
+      storageOption: {
+        path: 'images',
+        skipBackup: true,
+      },
+    };
+    launchImageLibrary(options, response => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        updateCompanyPhoto(response.assets[0], hhToken).then(r => {
+          setCompany(r.data);
+        });
+      }
+    });
+  };
 
   useEffect(() => {
     return navigation.addListener('focus', async () => {
       // The screen is focused
-      const hhToken = await AsyncStorage.getItem('hhToken');
-      getCompany(hhToken)
+      const token = await AsyncStorage.getItem('hhToken');
+      setToken(token);
+      getCompany(token)
         .then(res => {
           console.log('ProfileScreen companies/me:', res.data);
           setCompany(res.data);
@@ -64,10 +122,36 @@ export const ProfileScreen = ({navigation}) => {
 
   return (
     <ScrollView style={globalStyles.container}>
+      <Modal visible={open} animationType="slide" transparent={true}>
+        <Pressable style={styles.overlay} onPress={() => setOpen(false)}>
+          <View style={styles.wrap}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => {
+                openGallery();
+                setOpen(false);
+              }}>
+              <Text style={globalStyles.text}>Open Gallery</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => {
+                openCamera();
+                setOpen(false);
+              }}>
+              <Text style={globalStyles.text}>Open Camera</Text>
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Modal>
       <View style={styles.profilePhoto}>
-        <View style={styles.imageWrapper}>
+        <TouchableOpacity
+          onPress={() => {
+            setOpen(true);
+          }}
+          style={styles.imageWrapper}>
           <Image style={styles.image} source={{uri: company.photoUrl}} />
-        </View>
+        </TouchableOpacity>
       </View>
 
       {/*About*/}

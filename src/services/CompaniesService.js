@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {Platform} from 'react-native';
 
 // emulator
 // const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
@@ -30,5 +31,26 @@ export const updateCompany = async (data, hhToken) => {
     headers: {Authorization: `Bearer ${hhToken || ''}`},
   });
   console.log('Company Service updateCompany result:', r.data);
+  return r;
+};
+
+export const updateCompanyPhoto = async (img, hhToken) => {
+  const data = new FormData();
+  data.append('file', {
+    name: img.fileName,
+    type: img.type,
+    uri: Platform.OS === 'android' ? img.uri : img.uri.replace('file://', ''),
+  });
+
+  const url = `${baseUrl}/er/companies/me/photo`;
+
+  const r = await axios.post(url, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Accept: 'application/json',
+      Authorization: `Bearer ${hhToken || ''}`,
+    },
+  });
+  console.log('Employees Service updateCompanyPhoto result:', r.data);
   return r;
 };

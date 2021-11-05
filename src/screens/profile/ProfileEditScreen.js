@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, TextInput, Image, StyleSheet} from 'react-native';
+import {Text, View, TextInput, StyleSheet} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {globalStyles} from '../../styles/globalStyles';
@@ -52,11 +52,6 @@ export const ProfileEditScreen = ({route, navigation}) => {
     <KeyboardAwareScrollView
       style={styles.container}
       enableResetScrollToCoords={false}>
-      <View style={styles.profilePhoto}>
-        <View style={styles.imageWrapper}>
-          <Image style={styles.image} source={{uri: company.photoUrl}} />
-        </View>
-      </View>
 
       <Text style={globalStyles.label}>Name</Text>
       <TextInput
@@ -125,23 +120,6 @@ export const ProfileEditScreen = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-  },
-  profilePhoto: {
-    marginBottom: 24,
-    paddingTop: 16,
-    alignItems: 'center',
-  },
-  imageWrapper: {
-    height: 128,
-    width: 128,
-    borderRadius: 64,
-    borderWidth: 1,
-    borderColor: '#cccccc',
-    overflow: 'hidden',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
   },
   btn: {
     marginBottom: 42,
