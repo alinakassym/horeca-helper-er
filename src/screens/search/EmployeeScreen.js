@@ -75,7 +75,7 @@ export const EmployeeScreen = ({route, navigation}) => {
             <Text style={styles.title}>
               {item.firstName} {item.lastName}
             </Text>
-            {(item.gender || item.birthDate) && (
+            {/*{(item.gender || item.birthDate) && (
               <View style={styles.row}>
                 {item.gender && (
                   <Text style={styles.caption}>{item.gender.title}</Text>
@@ -88,6 +88,18 @@ export const EmployeeScreen = ({route, navigation}) => {
                     {getAge(item.birthDate)} y.o.
                   </Text>
                 )}
+              </View>
+            )}*/}
+            {item.birthDate && (
+              <View style={styles.row}>
+                <Text style={[styles.text, styles.textBold]}>Age:</Text>
+                <Text style={styles.text}> {getAge(item.birthDate)} y.o.</Text>
+              </View>
+            )}
+            {item.gender && (
+              <View style={styles.row}>
+                <Text style={[styles.text, styles.textBold]}>Gender:</Text>
+                <Text style={styles.text}> {item.gender.title}</Text>
               </View>
             )}
             {item.position && (
