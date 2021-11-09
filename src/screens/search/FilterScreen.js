@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View, Text, StyleSheet, TextInput} from 'react-native';
+import {View, Text, StyleSheet, TextInput} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -17,6 +17,7 @@ import {
 } from '../../store/slices/employees';
 import {globalStyles} from '../../styles/globalStyles';
 import PlainButton from '../../components/buttons/PlainButton';
+import {Autocomplete} from '../../components/selects/Autocomplete';
 
 export const FilterScreen = ({navigation}) => {
   const filterState = useSelector(state => state.employees.filter);
@@ -89,7 +90,7 @@ export const FilterScreen = ({navigation}) => {
         itemTitle={'title'}
       />
       {/*City*/}
-      <ModalSelect
+      <Autocomplete
         onChangeText={val => {
           setFilters({...filters, city: val});
         }}
@@ -101,7 +102,7 @@ export const FilterScreen = ({navigation}) => {
       />
 
       {/*Position*/}
-      <ModalSelect
+      <Autocomplete
         onChangeText={val => {
           setFilters({...filters, position: val});
         }}

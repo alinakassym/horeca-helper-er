@@ -21,6 +21,7 @@ import {
   getSchedules,
 } from '../../services/DictionariesService';
 import {postJob} from '../../services/JobsService';
+import {Autocomplete} from '../../components/selects/Autocomplete';
 
 const dimensions = Dimensions.get('screen');
 
@@ -118,7 +119,7 @@ export const JobsPostScreen = ({navigation}) => {
       style={styles.container}
       enableResetScrollToCoords={false}>
       {/*Position*/}
-      <ModalSelect
+      <Autocomplete
         required={true}
         label={'Position'}
         onChange={onChange}
@@ -129,7 +130,7 @@ export const JobsPostScreen = ({navigation}) => {
       />
 
       {/*Job location*/}
-      <ModalSelect
+      <Autocomplete
         required={true}
         label={'Location'}
         onChange={onChange}

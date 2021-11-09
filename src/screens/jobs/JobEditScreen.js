@@ -26,6 +26,7 @@ import {
   updateJobById,
   deleteJobById,
 } from '../../services/JobsService';
+import {Autocomplete} from '../../components/selects/Autocomplete';
 
 const dimensions = Dimensions.get('screen');
 
@@ -156,7 +157,7 @@ export const JobEditScreen = ({route, navigation}) => {
       style={styles.container}
       enableResetScrollToCoords={false}>
       {/*Position*/}
-      <ModalSelect
+      <Autocomplete
         label={'Position'}
         onChange={onChange}
         value={job}
@@ -166,7 +167,7 @@ export const JobEditScreen = ({route, navigation}) => {
       />
 
       {/*Job location*/}
-      <ModalSelect
+      <Autocomplete
         label={'Location'}
         onChange={onChange}
         value={job}
