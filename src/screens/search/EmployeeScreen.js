@@ -59,6 +59,12 @@ export const EmployeeScreen = ({route, navigation}) => {
     return moment().diff(birthDate, 'years', false);
   };
 
+  const numberWithSpaces = val => {
+    let parts = val.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return parts.join('.');
+  };
+
   if (loading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -134,7 +140,10 @@ export const EmployeeScreen = ({route, navigation}) => {
           {item.salary && (
             <View style={styles.row}>
               <Text style={[styles.text, styles.textBold]}>Salary:</Text>
-              <Text style={styles.text}> {item.salary.toString()} KZT</Text>
+              <Text style={styles.text}>
+                {' '}
+                {numberWithSpaces(item.salary)} KZT
+              </Text>
             </View>
           )}
 
@@ -151,8 +160,7 @@ export const EmployeeScreen = ({route, navigation}) => {
                 About:
                 <Text textBreakStrategy={'simple'} style={styles.text}>
                   {' '}
-                  {item.description} Lorem ipsum dolor sit amet, consectetur
-                  adipisicing elit. Totam, veritatis?
+                  {item.description}
                 </Text>
               </Text>
             </View>
