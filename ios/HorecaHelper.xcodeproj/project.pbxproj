@@ -19,6 +19,7 @@
 		A80FD52E24E04ED8B4E70879 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8ECA0F2201FF45538DDE4AEA /* Roboto-Bold.ttf */; };
 		D12EDC01161849018BFEB38D /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73E6C79AF3B944AEB7997F55 /* Montserrat-Medium.ttf */; };
 		EAC5186A260E44089197DE7D /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9F7462C513C45F6BA8934FC /* Montserrat-Regular.ttf */; };
+		F13CD535273BD4A000190396 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F13CD534273BD4A000190396 /* GoogleService-Info.plist */; };
 		F31773BDC038FCA2A7CF5C58 /* libPods-HorecaHelper-HorecaHelperTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F01D0EBF1269C8AECC396B /* libPods-HorecaHelper-HorecaHelperTests.a */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		AC8DD1E9F4B8B583E0A32929 /* Pods-HorecaHelper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HorecaHelper.release.xcconfig"; path = "Target Support Files/Pods-HorecaHelper/Pods-HorecaHelper.release.xcconfig"; sourceTree = "<group>"; };
 		D9F7462C513C45F6BA8934FC /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../src/assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F13CD534273BD4A000190396 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F7F01D0EBF1269C8AECC396B /* libPods-HorecaHelper-HorecaHelperTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HorecaHelper-HorecaHelperTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -98,6 +100,7 @@
 		13B07FAE1A68108700A75B9A /* HorecaHelper */ = {
 			isa = PBXGroup;
 			children = (
+				F13CD534273BD4A000190396 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -270,6 +273,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				F13CD535273BD4A000190396 /* GoogleService-Info.plist in Resources */,
 				D12EDC01161849018BFEB38D /* Montserrat-Medium.ttf in Resources */,
 				EAC5186A260E44089197DE7D /* Montserrat-Regular.ttf in Resources */,
 				29F08732A05C4B96951F369D /* Montserrat-SemiBold.ttf in Resources */,
