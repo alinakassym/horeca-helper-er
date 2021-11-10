@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "929223236001",
+    "project_id": "horecahelperdev",
+    "storage_bucket": "horecahelperdev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929223236001:android:57f37cf4603fa19187d3e0",
+        "android_client_info": {
+          "package_name": "kz.horecahelper.er"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "929223236001-0f2eugl3jduii93eofnfkd9b4u44td6f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kz.horecahelper.er",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "929223236001-1s68iieu6hs3i0sr29d7k113c0tm1cl4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kz.horecahelper.er",
+            "certificate_hash": "aebec4c31e29001d67de17dad2604bcaff459e91"
+          }
+        },
+        {
+          "client_id": "929223236001-j7gcagvuckretr0lp4aeq815aqir3om7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kz.horecahelper.er",
+            "certificate_hash": "ae49c3a3a85fcb5a794d9bae49263f7cd24dc0a6"
+          }
+        },
+        {
+          "client_id": "929223236001-kc9g7hdhollmdnkdjnb2eamolho6981f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kz.horecahelper.er",
+            "certificate_hash": "255592058c6a2dc41e236bbc1387ddfb1937670b"
+          }
+        },
+        {
+          "client_id": "929223236001-cn8ig9bh06moiafbop0t48afcrnraej3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq2oi8qDNasYq-fm8MzFVv_0aiXz9Idqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "929223236001-cn8ig9bh06moiafbop0t48afcrnraej3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
