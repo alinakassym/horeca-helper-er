@@ -94,7 +94,7 @@ export const Autocomplete = ({
     if (searchText && searchText.length >= 1) {
       setFilteredList(
         _.filter(items, el => {
-          return _.startsWith(el.title, searchText);
+          return _.startsWith(el.title.toLowerCase(), searchText.toLowerCase());
         }),
       );
     } else {
@@ -119,7 +119,7 @@ export const Autocomplete = ({
         {value[valueKey] ? <ValueSection /> : <PlaceHolder />}
       </View>
       <Modal visible={visible} animationType="slide" transparent={false}>
-        <View style={styles.topBar}>
+        <View style={[globalStyles.modalTopBar, styles.topBar]}>
           <Pressable
             style={styles.topBarIcon}
             onPress={() => {
