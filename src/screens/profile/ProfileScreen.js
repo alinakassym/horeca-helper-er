@@ -332,4 +332,22 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+
+  overlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.2)',
+  },
+  wrap: {
+    padding: 16,
+    width: '80%',
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
+  },
+  item: {
+    padding: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
