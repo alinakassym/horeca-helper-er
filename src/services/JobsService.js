@@ -1,51 +1,32 @@
-import axios from 'axios';
+import http from '../http-common';
 
-// emulator
-// const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
-
-// android device
-// const baseUrl = 'http://localhost:3000';
-
-// cloud BE
-const baseUrl = 'https://horecahelper.kz/backend';
-
-export const getJobs = async hhToken => {
-  const r = await axios.get('' + `${baseUrl}/er/jobs/my`, {
-    headers: {Authorization: `Bearer ${hhToken || ''}`},
-  });
-  // console.log('getJobs result: ', r.data)
+export const getJobs = async () => {
+  const r = await http.get('/er/jobs/my');
+  console.log('getJobs result: ', r.data);
   return r;
 };
 
-export const getJobById = async (id, hhToken) => {
-  const r = await axios.get('' + `${baseUrl}/er/jobs/${id}`, {
-    headers: {Authorization: `Bearer ${hhToken || ''}`},
-  });
+export const getJobById = async id => {
+  const r = await http.get(`/er/jobs/${id}`);
   console.log('getJobById result: ', r.data);
   return r;
 };
 
-export const updateJobById = async (id, data, hhToken) => {
-  const r = await axios.patch('' + `${baseUrl}/er/jobs/${id}`, data, {
-    headers: {Authorization: `Bearer ${hhToken || ''}`},
-  });
+export const updateJobById = async (id, data) => {
+  const r = await http.patch(`/er/jobs/${id}`, data);
   console.log('updateJobById result: ', r.data);
   return r;
 };
 
-export const postJob = async (data, hhToken) => {
+export const postJob = async data => {
   console.log('job item : ', data);
-  const r = await axios.post('' + `${baseUrl}/er/jobs`, data, {
-    headers: {Authorization: `Bearer ${hhToken || ''}`},
-  });
+  const r = await http.post('/er/jobs', data);
   console.log('postJob result: ', r);
   return r;
 };
 
-export const deleteJobById = async (id, hhToken) => {
-  const r = await axios.delete(`${baseUrl}/er/jobs/${id}`, {
-    headers: {Authorization: `Bearer ${hhToken || ''}`},
-  });
+export const deleteJobById = async id => {
+  const r = await http.delete(`/er/jobs/${id}`);
   console.log('deleteJobById result: ', r);
   return r;
 };
