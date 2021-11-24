@@ -1,5 +1,5 @@
-import axios from 'axios';
 import {Platform} from 'react-native';
+import http from '../http-common';
 
 // emulator
 // const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
@@ -10,31 +10,25 @@ import {Platform} from 'react-native';
 // cloud BE
 const baseUrl = 'https://horecahelper.kz/backend';
 
-export const getCompanies = async hhToken => {
-  const r = await axios.get(`${baseUrl}/er/companies`, {
-    headers: {Authorization: `Bearer ${hhToken || ''}`},
-  });
+export const getCompanies = async () => {
+  const r = await http.get(`${baseUrl}/er/companies`);
   console.log('res', r.data);
   return r;
 };
 
-export const getCompany = async hhToken => {
-  const r = await axios.get(`${baseUrl}/er/companies/me`, {
-    headers: {Authorization: `Bearer ${hhToken || ''}`},
-  });
+export const getCompany = async () => {
+  const r = await http.get(`${baseUrl}/er/companies/me`);
   console.log('Company Service getCompany result:', r.data);
   return r;
 };
 
-export const updateCompany = async (data, hhToken) => {
-  const r = await axios.patch(`${baseUrl}/er/companies/me`, data, {
-    headers: {Authorization: `Bearer ${hhToken || ''}`},
-  });
+export const updateCompany = async data => {
+  const r = await http.patch(`${baseUrl}/er/companies/me`, data);
   console.log('Company Service updateCompany result:', r.data);
   return r;
 };
 
-export const updateCompanyPhoto = async (img, hhToken) => {
+export const updateCompanyPhoto = async img => {
   const data = new FormData();
   data.append('file', {
     name: img.fileName,
@@ -44,11 +38,10 @@ export const updateCompanyPhoto = async (img, hhToken) => {
 
   const url = `${baseUrl}/er/companies/me/photo`;
 
-  const r = await axios.post(url, data, {
+  const r = await http.post(url, data, {
     headers: {
       'Content-Type': 'multipart/form-data',
       Accept: 'application/json',
-      Authorization: `Bearer ${hhToken || ''}`,
     },
   });
   console.log('Employees Service updateCompanyPhoto result:', r.data);
