@@ -18,7 +18,6 @@ import {IconMail} from '../../assets/icons/main/IconMail';
 import {IconComment} from '../../assets/icons/main/IconComment';
 import {IconPencil} from '../../assets/icons/main/IconPencil';
 import {IconBuilding} from '../../assets/icons/main/IconBuilding';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {getCompany, updateCompanyPhoto} from '../../services/CompaniesService';
 
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
@@ -84,16 +83,6 @@ export const ProfileScreen = ({navigation}) => {
       }
     });
   }, [navigation]);
-
-  const logOut = async () => {
-    console.log('AuthContext', AuthContext);
-    try {
-      await GoogleSignin.signOut();
-      signOut();
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const coffee =
     'https://img.freepik.com/free-vector/coffee-shop-badge-vintage-style_1176-95.jpg?size=626&ext=jpg';
@@ -251,7 +240,7 @@ export const ProfileScreen = ({navigation}) => {
         <View style={styles.row}>
           <TouchableOpacity
             onPress={() => {
-              logOut();
+              signOut();
             }}>
             <Text style={styles.text}>Sign Out</Text>
           </TouchableOpacity>
