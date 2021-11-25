@@ -36,14 +36,13 @@ export const EmployeeScreen = ({route, navigation}) => {
   useEffect(() => {
     function fetchData() {
       return navigation.addListener('focus', async () => {
-        getEmployeeById(employeeId)
-          .then(result => {
-            setItem(result.data);
-            setLoading(false);
-          })
-          .catch(e => {
-            console.log('searchEmployees err:', e);
-          });
+        try {
+          const result = await getEmployeeById(employeeId);
+          setItem(result.data);
+          setLoading(false);
+        } catch (e) {
+          console.log('getEmployeeById err:', e);
+        }
       });
     }
     fetchData();

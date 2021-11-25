@@ -57,16 +57,16 @@ export const FilterScreen = ({navigation}) => {
   useEffect(() => {
     function fetchData() {
       return navigation.addListener('focus', async () => {
-        getData()
-          .then(([citiesData, positionsData, gendersData, schedulesData]) => {
-            setPositions(positionsData);
-            setCities(citiesData);
-            setGenders(gendersData);
-            setSchedules(schedulesData);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        try {
+          const [citiesData, positionsData, gendersData, schedulesData] =
+            await getData();
+          setPositions(positionsData);
+          setCities(citiesData);
+          setGenders(gendersData);
+          setSchedules(schedulesData);
+        } catch (e) {
+          console.log('getData err: ', e);
+        }
       });
     }
     fetchData();

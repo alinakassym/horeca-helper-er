@@ -28,14 +28,13 @@ export const SearchScreen = ({navigation}) => {
   useEffect(() => {
     function fetchData() {
       return navigation.addListener('focus', async () => {
-        searchEmployees(filterState)
-          .then(result => {
-            setEmployees(result.data.items);
-            setLoading(false);
-          })
-          .catch(e => {
-            console.log('searchEmployees err:', e);
-          });
+        try {
+          const result = await searchEmployees(filterState);
+          setEmployees(result.data.items);
+          setLoading(false);
+        } catch (e) {
+          console.log('searchEmployees err:', e);
+        }
       });
     }
     fetchData();
