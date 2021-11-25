@@ -30,7 +30,7 @@ export const ProfileScreen = ({navigation}) => {
 
   const [open, setOpen] = useState(false);
 
-  const openCamera = () => {
+  const openCamera = async () => {
     let options = {
       storageOption: {
         path: 'images',
@@ -76,22 +76,19 @@ export const ProfileScreen = ({navigation}) => {
 
   useEffect(() => {
     return navigation.addListener('focus', async () => {
-      getCompany()
-        .then(res => {
-          console.log('ProfileScreen companies/me:', res.data);
-          setCompany(res.data);
-        })
-        .catch(err => {
-          console.error('ProfileScreen error');
-          console.log(err);
-        });
+      try {
+        const res = await getCompany();
+        setCompany(res.data);
+      } catch (e) {
+        console.error('ProfileScreen err: ', e);
+      }
     });
   }, [navigation]);
 
-  const logOut = () => {
+  const logOut = async () => {
     console.log('AuthContext', AuthContext);
     try {
-      GoogleSignin.signOut().then(() => {});
+      await GoogleSignin.signOut();
       signOut();
     } catch (error) {
       console.error(error);

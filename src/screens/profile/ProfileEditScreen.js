@@ -24,24 +24,24 @@ export const ProfileEditScreen = ({route, navigation}) => {
       address: company.address,
       categoryId: company.category ? company.category.id : null,
     };
-    updateCompany(data).then(() => {
+    try {
+      await updateCompany(data);
       navigation.navigate('Profile', {
         value: data,
       });
-    });
+    } catch (e) {
+      console.log('updateCompany err: ', e);
+    }
   };
 
   useEffect(() => {
     return navigation.addListener('focus', async () => {
-      getCategories()
-        .then(res => {
-          console.log('getCategories result:', res);
-          setCategories(res);
-        })
-        .catch(err => {
-          console.error('getCategories error');
-          console.log(err);
-        });
+      try {
+        const res = await getCategories();
+        setCategories(res);
+      } catch (e) {
+        console.log('getCategories err: ', e);
+      }
     });
   }, [navigation]);
 
