@@ -14,7 +14,6 @@ import {ModalSelect} from '../../components/selects/ModalSelect';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {globalStyles} from '../../styles/globalStyles';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   getCities,
   getGenders,
@@ -49,8 +48,7 @@ export const JobEditScreen = ({route, navigation}) => {
   useEffect(() => {
     return navigation.addListener('focus', async () => {
       // The screen is focused
-      const hhToken = await AsyncStorage.getItem('hhToken');
-      getCities(hhToken)
+      getCities()
         .then(citiesData => {
           console.log('cities: ', citiesData);
           setCities(citiesData);
@@ -59,7 +57,7 @@ export const JobEditScreen = ({route, navigation}) => {
           console.log('getCities err:', e);
         });
 
-      getGenders(hhToken)
+      getGenders()
         .then(gendersData => {
           console.log('genders: ', gendersData);
           setGenders(gendersData);
@@ -68,7 +66,7 @@ export const JobEditScreen = ({route, navigation}) => {
           console.log('getGenders err:', e);
         });
 
-      getPositions(hhToken)
+      getPositions()
         .then(positionsData => {
           console.log('positions: ', positionsData);
           setPositions(positionsData);
@@ -77,7 +75,7 @@ export const JobEditScreen = ({route, navigation}) => {
           console.log('getPositions err:', e);
         });
 
-      getSchedules(hhToken)
+      getSchedules()
         .then(schedulesData => {
           console.log('schedules', schedulesData);
           setSchedules(schedulesData);
@@ -87,7 +85,7 @@ export const JobEditScreen = ({route, navigation}) => {
         });
 
       console.log('jobId', jobId);
-      getJobById(jobId, hhToken).then(data => {
+      getJobById(jobId).then(data => {
         onChange(data.data);
         setLoading(false);
       });
@@ -110,7 +108,6 @@ export const JobEditScreen = ({route, navigation}) => {
   const values = [18, 32];
 
   const update = async () => {
-    const hhToken = await AsyncStorage.getItem('hhToken');
     const jobItem = {
       positionId: job.position?.id,
       description: job.description,
@@ -124,13 +121,12 @@ export const JobEditScreen = ({route, navigation}) => {
       salaryMin: job.salaryMin,
       salaryMax: job.salaryMax,
     };
-    updateJobById(job.id, jobItem, hhToken).then(() => {
+    updateJobById(job.id, jobItem).then(() => {
       navigation.navigate('Jobs');
     });
   };
   const removeJob = async () => {
-    const hhToken = await AsyncStorage.getItem('hhToken');
-    deleteJobById(job.id, hhToken).then(() => {
+    deleteJobById(job.id).then(() => {
       navigation.navigate('Jobs');
     });
   };

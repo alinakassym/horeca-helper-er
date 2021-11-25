@@ -47,8 +47,7 @@ export const JobsScreen = ({navigation}) => {
   useEffect(() => {
     return navigation.addListener('focus', async () => {
       // The screen is focused
-      const hhToken = await AsyncStorage.getItem('hhToken');
-      getJobs(hhToken)
+      getJobs()
         .then(result => {
           // console.log('jobs: ', result.data);
           setJobs(result.data);
