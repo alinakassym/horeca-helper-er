@@ -46,15 +46,12 @@ export const JobsScreen = ({navigation}) => {
 
   useEffect(() => {
     return navigation.addListener('focus', async () => {
-      // The screen is focused
-      getJobs()
-        .then(result => {
-          // console.log('jobs: ', result.data);
-          setJobs(result.data);
-        })
-        .catch(e => {
-          console.log('getJobs err:', e);
-        });
+      try {
+        const result = await getJobs();
+        setJobs(result.data);
+      } catch (e) {
+        console.log('getJobs err:', e);
+      }
     });
   }, [navigation]);
 

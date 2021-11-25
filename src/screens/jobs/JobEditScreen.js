@@ -45,50 +45,33 @@ export const JobEditScreen = ({route, navigation}) => {
     return val ? val.toString() : null;
   };
 
+  const getData = async () => {
+    return Promise.all([
+      getCities(),
+      getGenders(),
+      getPositions(),
+      getSchedules(),
+    ]);
+  };
+
   useEffect(() => {
     return navigation.addListener('focus', async () => {
       // The screen is focused
-      getCities()
-        .then(citiesData => {
-          console.log('cities: ', citiesData);
-          setCities(citiesData);
-        })
-        .catch(e => {
-          console.log('getCities err:', e);
-        });
+      try {
+        const [citiesData, gendersData, positionsData, schedulesData] =
+          await getData();
+        const data = await getJobById(jobId);
 
-      getGenders()
-        .then(gendersData => {
-          console.log('genders: ', gendersData);
-          setGenders(gendersData);
-        })
-        .catch(e => {
-          console.log('getGenders err:', e);
-        });
+        setCities(citiesData);
+        setGenders(gendersData);
+        setPositions(positionsData);
+        setSchedules(schedulesData);
 
-      getPositions()
-        .then(positionsData => {
-          console.log('positions: ', positionsData);
-          setPositions(positionsData);
-        })
-        .catch(e => {
-          console.log('getPositions err:', e);
-        });
-
-      getSchedules()
-        .then(schedulesData => {
-          console.log('schedules', schedulesData);
-          setSchedules(schedulesData);
-        })
-        .catch(e => {
-          console.log('getSchedules err:', e);
-        });
-
-      console.log('jobId', jobId);
-      getJobById(jobId).then(data => {
         onChange(data.data);
         setLoading(false);
-      });
+      } catch (e) {
+        console.log('err:', e);
+      }
     });
   }, [jobId, navigation]);
 
@@ -121,14 +104,20 @@ export const JobEditScreen = ({route, navigation}) => {
       salaryMin: job.salaryMin,
       salaryMax: job.salaryMax,
     };
-    updateJobById(job.id, jobItem).then(() => {
+    try {
+      await updateJobById(job.id, jobItem);
       navigation.navigate('Jobs');
-    });
+    } catch (e) {
+      console.log('updateJobById err: ', e);
+    }
   };
   const removeJob = async () => {
-    deleteJobById(job.id).then(() => {
+    try {
+      await deleteJobById(job.id);
       navigation.navigate('Jobs');
-    });
+    } catch (e) {
+      console.log('deleteJobById err: ', e);
+    }
   };
 
   const confirmDeletion = () => {
