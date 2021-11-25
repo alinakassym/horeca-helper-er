@@ -21,14 +21,12 @@ import {IconBuilding} from '../../assets/icons/main/IconBuilding';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {getCompany, updateCompanyPhoto} from '../../services/CompaniesService';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 export const ProfileScreen = ({navigation}) => {
   const {signOut} = React.useContext(AuthContext);
 
   const [company, setCompany] = useState({});
-  const [hhToken, setToken] = useState('');
 
   const [open, setOpen] = useState(false);
 
@@ -47,7 +45,7 @@ export const ProfileScreen = ({navigation}) => {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        updateCompanyPhoto(response.assets[0], hhToken).then(r => {
+        updateCompanyPhoto(response.assets[0]).then(r => {
           setCompany(r.data);
         });
       }
@@ -69,7 +67,7 @@ export const ProfileScreen = ({navigation}) => {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        updateCompanyPhoto(response.assets[0], hhToken).then(r => {
+        updateCompanyPhoto(response.assets[0]).then(r => {
           setCompany(r.data);
         });
       }
@@ -78,10 +76,7 @@ export const ProfileScreen = ({navigation}) => {
 
   useEffect(() => {
     return navigation.addListener('focus', async () => {
-      // The screen is focused
-      const token = await AsyncStorage.getItem('hhToken');
-      setToken(token);
-      getCompany(token)
+      getCompany()
         .then(res => {
           console.log('ProfileScreen companies/me:', res.data);
           setCompany(res.data);
