@@ -14,7 +14,6 @@ import {ModalSelect} from '../../components/selects/ModalSelect';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {globalStyles} from '../../styles/globalStyles';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   getCities,
   getGenders,
@@ -46,51 +45,33 @@ export const JobEditScreen = ({route, navigation}) => {
     return val ? val.toString() : null;
   };
 
+  const getData = async () => {
+    return Promise.all([
+      getCities(),
+      getGenders(),
+      getPositions(),
+      getSchedules(),
+    ]);
+  };
+
   useEffect(() => {
     return navigation.addListener('focus', async () => {
       // The screen is focused
-      const hhToken = await AsyncStorage.getItem('hhToken');
-      getCities(hhToken)
-        .then(citiesData => {
-          console.log('cities: ', citiesData);
-          setCities(citiesData);
-        })
-        .catch(e => {
-          console.log('getCities err:', e);
-        });
+      try {
+        const [citiesData, gendersData, positionsData, schedulesData] =
+          await getData();
+        const data = await getJobById(jobId);
 
-      getGenders(hhToken)
-        .then(gendersData => {
-          console.log('genders: ', gendersData);
-          setGenders(gendersData);
-        })
-        .catch(e => {
-          console.log('getGenders err:', e);
-        });
+        setCities(citiesData);
+        setGenders(gendersData);
+        setPositions(positionsData);
+        setSchedules(schedulesData);
 
-      getPositions(hhToken)
-        .then(positionsData => {
-          console.log('positions: ', positionsData);
-          setPositions(positionsData);
-        })
-        .catch(e => {
-          console.log('getPositions err:', e);
-        });
-
-      getSchedules(hhToken)
-        .then(schedulesData => {
-          console.log('schedules', schedulesData);
-          setSchedules(schedulesData);
-        })
-        .catch(e => {
-          console.log('getSchedules err:', e);
-        });
-
-      console.log('jobId', jobId);
-      getJobById(jobId, hhToken).then(data => {
         onChange(data.data);
         setLoading(false);
-      });
+      } catch (e) {
+        console.log('err:', e);
+      }
     });
   }, [jobId, navigation]);
 
@@ -110,7 +91,6 @@ export const JobEditScreen = ({route, navigation}) => {
   const values = [18, 32];
 
   const update = async () => {
-    const hhToken = await AsyncStorage.getItem('hhToken');
     const jobItem = {
       positionId: job.position?.id,
       description: job.description,
@@ -124,15 +104,20 @@ export const JobEditScreen = ({route, navigation}) => {
       salaryMin: job.salaryMin,
       salaryMax: job.salaryMax,
     };
-    updateJobById(job.id, jobItem, hhToken).then(() => {
+    try {
+      await updateJobById(job.id, jobItem);
       navigation.navigate('Jobs');
-    });
+    } catch (e) {
+      console.log('updateJobById err: ', e);
+    }
   };
   const removeJob = async () => {
-    const hhToken = await AsyncStorage.getItem('hhToken');
-    deleteJobById(job.id, hhToken).then(() => {
+    try {
+      await deleteJobById(job.id);
       navigation.navigate('Jobs');
-    });
+    } catch (e) {
+      console.log('deleteJobById err: ', e);
+    }
   };
 
   const confirmDeletion = () => {

@@ -13,7 +13,6 @@ import {ModalSelect} from '../../components/selects/ModalSelect';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {globalStyles} from '../../styles/globalStyles';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   getCities,
   getGenders,
@@ -31,44 +30,27 @@ export const JobsPostScreen = ({navigation}) => {
   const [positions, setPositions] = useState([]);
   const [schedules, setSchedules] = useState([]);
 
+  const getData = async () => {
+    return Promise.all([
+      getCities(),
+      getGenders(),
+      getPositions(),
+      getSchedules(),
+    ]);
+  };
+
   useEffect(() => {
     return navigation.addListener('focus', async () => {
-      const hhToken = await AsyncStorage.getItem('hhToken');
-      getCities(hhToken)
-        .then(citiesData => {
-          console.log('cities: ', citiesData);
-          setCities(citiesData);
-        })
-        .catch(e => {
-          console.log('getCities err:', e);
-        });
-
-      getGenders(hhToken)
-        .then(gendersData => {
-          console.log('genders: ', gendersData);
-          setGenders(gendersData);
-        })
-        .catch(e => {
-          console.log('getGenders err:', e);
-        });
-
-      getPositions(hhToken)
-        .then(positionsData => {
-          console.log('positions: ', positionsData);
-          setPositions(positionsData);
-        })
-        .catch(e => {
-          console.log('getPositions err:', e);
-        });
-
-      getSchedules(hhToken)
-        .then(schedulesData => {
-          console.log('schedules', schedulesData);
-          setSchedules(schedulesData);
-        })
-        .catch(e => {
-          console.log('getSchedules err:', e);
-        });
+      try {
+        const [citiesData, gendersData, positionsData, schedulesData] =
+          await getData();
+        setCities(citiesData);
+        setGenders(gendersData);
+        setPositions(positionsData);
+        setSchedules(schedulesData);
+      } catch (e) {
+        console.log('getData err:', e);
+      }
     });
   }, [navigation]);
 
@@ -90,7 +72,6 @@ export const JobsPostScreen = ({navigation}) => {
   const save = async () => {
     const isValid = job.position && job.city && job.schedule;
     if (isValid) {
-      const hhToken = await AsyncStorage.getItem('hhToken');
       const jobItem = {
         positionId: job.position?.id,
         description: job.description,
@@ -104,9 +85,12 @@ export const JobsPostScreen = ({navigation}) => {
         salaryMin: job.salaryMin,
         salaryMax: job.salaryMax,
       };
-      postJob(jobItem, hhToken).then(() => {
+      try {
+        await postJob(jobItem);
         navigation.navigate('Jobs');
-      });
+      } catch (e) {
+        console.log('postJob err: ', postJob);
+      }
     } else {
       Alert.alert(
         'Warning',

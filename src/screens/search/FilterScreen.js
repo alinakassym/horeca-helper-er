@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TextInput} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   getPositions,
   getCities,
@@ -47,28 +46,27 @@ export const FilterScreen = ({navigation}) => {
   };
 
   const getData = async () => {
-    const hhToken = await AsyncStorage.getItem('hhToken');
     return Promise.all([
-      getCities(hhToken),
-      getPositions(hhToken),
-      getGenders(hhToken),
-      getSchedules(hhToken),
+      getCities(),
+      getPositions(),
+      getGenders(),
+      getSchedules(),
     ]);
   };
 
   useEffect(() => {
     function fetchData() {
       return navigation.addListener('focus', async () => {
-        getData()
-          .then(([citiesData, positionsData, gendersData, schedulesData]) => {
-            setPositions(positionsData);
-            setCities(citiesData);
-            setGenders(gendersData);
-            setSchedules(schedulesData);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        try {
+          const [citiesData, positionsData, gendersData, schedulesData] =
+            await getData();
+          setPositions(positionsData);
+          setCities(citiesData);
+          setGenders(gendersData);
+          setSchedules(schedulesData);
+        } catch (e) {
+          console.log('getData err: ', e);
+        }
       });
     }
     fetchData();

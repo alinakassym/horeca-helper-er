@@ -5,14 +5,10 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
-  Modal,
   StyleSheet,
-  Pressable,
 } from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {IconFilter} from '../../assets/icons/main/IconFilter';
-import {IconArrowDown} from '../../assets/icons/main/IconArrowDown';
 import {useSelector} from 'react-redux';
 import {searchEmployees} from '../../services/EmployeesService';
 import {ResumeCard} from './ResumeCard';
@@ -32,16 +28,13 @@ export const SearchScreen = ({navigation}) => {
   useEffect(() => {
     function fetchData() {
       return navigation.addListener('focus', async () => {
-        // The screen is focused
-        const hhToken = await AsyncStorage.getItem('hhToken');
-        searchEmployees(filterState, hhToken)
-          .then(result => {
-            setEmployees(result.data.items);
-            setLoading(false);
-          })
-          .catch(e => {
-            console.log('searchEmployees err:', e);
-          });
+        try {
+          const result = await searchEmployees(filterState);
+          setEmployees(result.data.items);
+          setLoading(false);
+        } catch (e) {
+          console.log('searchEmployees err:', e);
+        }
       });
     }
     fetchData();

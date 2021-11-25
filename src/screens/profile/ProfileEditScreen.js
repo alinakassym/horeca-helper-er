@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, TextInput, StyleSheet} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {globalStyles} from '../../styles/globalStyles';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {updateCompany} from '../../services/CompaniesService';
@@ -15,7 +14,6 @@ export const ProfileEditScreen = ({route, navigation}) => {
   const [categories, setCategories] = useState([]);
 
   const save = async () => {
-    const hhToken = await AsyncStorage.getItem('hhToken');
     const data = {
       title: company.title,
       description: company.description,
@@ -26,25 +24,24 @@ export const ProfileEditScreen = ({route, navigation}) => {
       address: company.address,
       categoryId: company.category ? company.category.id : null,
     };
-    updateCompany(data, hhToken).then(() => {
+    try {
+      await updateCompany(data);
       navigation.navigate('Profile', {
         value: data,
       });
-    });
+    } catch (e) {
+      console.log('updateCompany err: ', e);
+    }
   };
 
   useEffect(() => {
     return navigation.addListener('focus', async () => {
-      const hhToken = await AsyncStorage.getItem('hhToken');
-      getCategories(hhToken)
-        .then(res => {
-          console.log('getCategories result:', res);
-          setCategories(res);
-        })
-        .catch(err => {
-          console.error('getCategories error');
-          console.log(err);
-        });
+      try {
+        const res = await getCategories();
+        setCategories(res);
+      } catch (e) {
+        console.log('getCategories err: ', e);
+      }
     });
   }, [navigation]);
 
@@ -52,7 +49,6 @@ export const ProfileEditScreen = ({route, navigation}) => {
     <KeyboardAwareScrollView
       style={styles.container}
       enableResetScrollToCoords={false}>
-
       <Text style={globalStyles.label}>Name</Text>
       <TextInput
         style={globalStyles.primaryInput}
