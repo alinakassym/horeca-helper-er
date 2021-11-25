@@ -1,12 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
-import {globalStyles} from '../../styles/globalStyles';
 import moment from 'moment';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-  getEmployeeById,
-  searchEmployees,
-} from '../../services/EmployeesService';
+import {getEmployeeById} from '../../services/EmployeesService';
 import {WorkList} from './WorkList';
 
 export const EmployeeScreen = ({route, navigation}) => {
@@ -41,8 +36,7 @@ export const EmployeeScreen = ({route, navigation}) => {
   useEffect(() => {
     function fetchData() {
       return navigation.addListener('focus', async () => {
-        const hhToken = await AsyncStorage.getItem('hhToken');
-        getEmployeeById(employeeId, hhToken)
+        getEmployeeById(employeeId)
           .then(result => {
             setItem(result.data);
             setLoading(false);
