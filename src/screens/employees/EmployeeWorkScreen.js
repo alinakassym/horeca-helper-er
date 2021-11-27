@@ -11,8 +11,8 @@ import moment from 'moment';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import PlainButton from '../../components/buttons/PlainButton';
 import {IconChecked} from '../../assets/icons/main/IconChecked';
-import { EmployeeReview } from "./EmployeeReview";
-import { EmployeeReviewForm } from "./EmployeeReviewForm";
+import {EmployeeReview} from './EmployeeReview';
+import {EmployeeReviewForm} from './EmployeeReviewForm';
 
 const dimensions = Dimensions.get('screen');
 
@@ -126,7 +126,7 @@ export const EmployeeWorkScreen = ({route, navigation}) => {
       {item.employeeReview ? (
         <EmployeeReview item={item.employeeReview} />
       ) : (
-        <EmployeeReviewForm />
+        <EmployeeReviewForm workId={item.id} navigation={navigation} />
       )}
     </ScrollView>
   );

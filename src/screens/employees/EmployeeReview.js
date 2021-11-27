@@ -15,7 +15,7 @@ export const EmployeeReview = ({item}) => {
   } = item;
   return (
     <View style={[styles.section, styles.col]}>
-      <Text style={[styles.text, styles.textBold]}>Review</Text>
+      <Text style={[styles.title, styles.textBold]}>Rating</Text>
       <View style={styles.row}>
         <Text style={[styles.text, styles.textBold]}>Average score: </Text>
         <Text style={styles.text}>{avgScore}</Text>
@@ -59,6 +59,11 @@ const styles = StyleSheet.create({
   },
   col: {
     flexDirection: 'column',
+  },
+  title: {
+    marginBottom: 4,
+    fontFamily: 'Roboto-Bold',
+    fontSize: 20,
   },
   text: {
     fontFamily: 'Roboto-Regular',
