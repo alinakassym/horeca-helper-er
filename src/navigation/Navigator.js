@@ -12,6 +12,7 @@ import {ProfileEditScreen} from '../screens/profile/ProfileEditScreen';
 import {FilterScreen} from '../screens/search/FilterScreen';
 import {EmployeeScreen} from '../screens/search/EmployeeScreen';
 import {EmployeeWorkScreen} from '../screens/employees/EmployeeWorkScreen';
+import {WorkInfoScreen} from '../screens/search/WorkInfoScreen';
 
 import {IconVacancies} from '../assets/icons/tabs/IconVacancies';
 import {IconSearch} from '../assets/icons/tabs/IconSearch';
@@ -185,6 +186,19 @@ export const Navigator = () => {
           }}
           name="ProfileEditScreen"
           component={ProfileEditScreen}
+        />
+      </Stack.Group>
+
+      <Stack.Group
+        screenOptions={{
+          headerMode: 'screen',
+          presentation: 'modal',
+          headerShown: true,
+        }}>
+        <Stack.Screen
+          options={{headerTitle: 'Work Information'}}
+          name="WorkInfo"
+          component={WorkInfoScreen}
         />
       </Stack.Group>
     </Stack.Navigator>

@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   ScrollView,
-  View,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  ActivityIndicator,
-  StyleSheet,
+  View,
 } from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
 import {IconFilter} from '../../assets/icons/main/IconFilter';
@@ -14,8 +14,10 @@ import {searchEmployees} from '../../services/EmployeesService';
 import {ResumeCard} from './ResumeCard';
 
 export const SearchScreen = ({navigation}) => {
-  const filterState = useSelector(state => state.employees.filter);
-  const isFilterApplied = useSelector(state => state.employees.isFilterApplied);
+  const {filter, isFilterApplied} = useSelector(state => {
+    const {employees} = state;
+    return employees;
+  });
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +31,7 @@ export const SearchScreen = ({navigation}) => {
     function fetchData() {
       return navigation.addListener('focus', async () => {
         try {
-          const result = await searchEmployees(filterState);
+          const result = await searchEmployees(filter);
           setEmployees(result.data.items);
           setLoading(false);
         } catch (e) {
@@ -38,7 +40,7 @@ export const SearchScreen = ({navigation}) => {
       });
     }
     fetchData();
-  }, [filterState, navigation]);
+  }, [filter, navigation]);
 
   if (loading) {
     return (
@@ -67,7 +69,7 @@ export const SearchScreen = ({navigation}) => {
 
         <View style={globalStyles.filterBtn}>
           <Text style={globalStyles.filterBtnLeftText}>
-            Ordered by {sortBy[filterState.sortBy]}
+            Ordered by {sortBy[filter.sortBy]}
           </Text>
         </View>
       </View>
