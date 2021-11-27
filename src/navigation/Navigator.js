@@ -11,6 +11,7 @@ import {ProfileScreen} from '../screens/profile/ProfileScreen';
 import {ProfileEditScreen} from '../screens/profile/ProfileEditScreen';
 import {FilterScreen} from '../screens/search/FilterScreen';
 import {EmployeeScreen} from '../screens/search/EmployeeScreen';
+import {EmployeeWorkScreen} from '../screens/employees/EmployeeWorkScreen';
 
 import {IconVacancies} from '../assets/icons/tabs/IconVacancies';
 import {IconSearch} from '../assets/icons/tabs/IconSearch';
@@ -137,6 +138,15 @@ export const Navigator = () => {
           headerShown: false,
         }}>
         <Stack.Screen name="Back" component={TabStack} />
+      </Stack.Group>
+      <Stack.Group>
+        <Stack.Screen
+          options={{
+            headerTitle: 'Employee Information',
+          }}
+          name="EmployeeWorkScreen"
+          component={EmployeeWorkScreen}
+        />
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen

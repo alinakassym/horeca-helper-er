@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 
 const propTypes = {
@@ -25,6 +25,7 @@ class PlainButton extends React.PureComponent {
 const styles = StyleSheet.create({
   btn: {
     paddingVertical: 12,
+    paddingHorizontal: 16,
     borderRadius: 8,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -38,8 +39,10 @@ const styles = StyleSheet.create({
     shadowRadius: 3.5,
   },
   btnLabel: {
+    paddingVertical: 4,
+    paddingHorizontal: 16,
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 16,
     color: '#FFFFFF',
   },

@@ -6,6 +6,7 @@ import {
   ScrollView,
   Dimensions,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import {getWorksList} from '../../services/WorksService';
 import {EmployeeCard} from './EmployeeCard';
@@ -43,7 +44,7 @@ export const MyEmployeesScreen = ({navigation}) => {
           works.map((item, index) => (
             <EmployeeCard
               onPress={() =>
-                navigation.navigate('EmployeeScreen', {id: item.id})
+                navigation.navigate('EmployeeWorkScreen', {value: item})
               }
               key={index}
               item={item}
@@ -55,7 +56,8 @@ export const MyEmployeesScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  contaner: {
+  container: {
+    marginTop: Platform.OS === 'ios' ? 60 : 16,
     flex: 1,
     width: dimensions.width,
   },
