@@ -81,22 +81,16 @@ export const EmployeeWorkScreen = ({route, navigation}) => {
               <Text style={styles.text}> {item.employee.gender.title}</Text>
             </View>
           )}
-          {item.employee.position && (
+          {item.position && (
             <View style={styles.row}>
               <Text style={[styles.text, styles.textBold]}>Position:</Text>
-              <Text style={styles.text}> {item.employee.position.title}</Text>
+              <Text style={styles.text}> {item.position.title}</Text>
             </View>
           )}
-          {item.employee.city && (
+          {item.city && (
             <View style={styles.row}>
               <Text style={[styles.text, styles.textBold]}>Location:</Text>
-              <Text style={styles.text}> {item.employee.city.title}</Text>
-            </View>
-          )}
-          {item.employee.schedule && (
-            <View style={styles.row}>
-              <Text style={[styles.text, styles.textBold]}>Schedule:</Text>
-              <Text style={styles.text}> {item.employee.schedule.title}</Text>
+              <Text style={styles.text}> {item.city.title}</Text>
             </View>
           )}
         </View>

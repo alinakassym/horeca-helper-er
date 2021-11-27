@@ -42,8 +42,7 @@ export const EmployeeCard = ({item, onPress}) => {
             </Text>
           </View>
           <Text style={styles.text}>
-            {item.employee.position.title} &bull;{' '}
-            {item.employee.city.title || ''}
+            {item.position.title} &bull; {item.city.title || ''}
           </Text>
 
           <Text style={styles.dates}>
