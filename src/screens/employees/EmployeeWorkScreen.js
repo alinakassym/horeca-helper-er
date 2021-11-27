@@ -13,6 +13,7 @@ import PlainButton from '../../components/buttons/PlainButton';
 import {IconChecked} from '../../assets/icons/main/IconChecked';
 import {EmployeeReview} from './EmployeeReview';
 import {EmployeeReviewForm} from './EmployeeReviewForm';
+import {confirmWork} from '../../services/WorksService';
 
 const dimensions = Dimensions.get('screen');
 
@@ -30,14 +31,21 @@ export const EmployeeWorkScreen = ({route, navigation}) => {
     return moment().diff(birthDate, 'years', false);
   };
 
-  const numberWithSpaces = val => {
-    let parts = val.toString().split('.');
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    return parts.join('.');
-  };
-
   const getFormattedDate = date => {
     return moment(date).format('MMM YYYY');
+  };
+
+  const confirmDenyWork = async isConfirmed => {
+    try {
+      await confirmWork(item.id, {isConfirmed: isConfirmed});
+      if (isConfirmed) {
+        setItem({...item, isConfirmed: isConfirmed});
+      } else {
+        navigation.navigate('Employees');
+      }
+    } catch (e) {
+      console.log('confirmDenyWork err: ', e);
+    }
   };
 
   useEffect(() => {
@@ -108,10 +116,16 @@ export const EmployeeWorkScreen = ({route, navigation}) => {
       {!item.isConfirmed ? (
         <View style={[styles.section, styles.row]}>
           <View style={styles.col}>
-            <PrimaryButton label={'Confirm'} />
+            <PrimaryButton
+              label={'Confirm'}
+              onPress={() => confirmDenyWork(true)}
+            />
           </View>
           <View style={styles.col}>
-            <PlainButton label={'Deny'} />
+            <PlainButton
+              label={'Deny'}
+              onPress={() => confirmDenyWork(false)}
+            />
           </View>
         </View>
       ) : (
