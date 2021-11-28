@@ -39,9 +39,9 @@ export const MyEmployeesScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        {works &&
-          works.map((item, index) => (
+      {works && works.length > 0 ? (
+        <ScrollView>
+          {works.map((item, index) => (
             <EmployeeCard
               onPress={() =>
                 navigation.navigate('EmployeeWorkScreen', {value: item})
@@ -50,7 +50,12 @@ export const MyEmployeesScreen = ({navigation}) => {
               item={item}
             />
           ))}
-      </ScrollView>
+        </ScrollView>
+      ) : (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={styles.text}>No employees yet</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -60,5 +65,10 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === 'ios' ? 60 : 16,
     flex: 1,
     width: dimensions.width,
+  },
+  text: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 18,
+    color: '#666666',
   },
 });
