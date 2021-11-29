@@ -1,8 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
+import {
+  ScrollView,
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+} from 'react-native';
 import moment from 'moment';
 import {getEmployeeById} from '../../services/EmployeesService';
 import {WorkList} from './WorkList';
+import {IconStar} from '../../assets/icons/main/IconStar';
+
+const dimensions = Dimensions.get('screen');
 
 export const EmployeeScreen = ({route, navigation}) => {
   const employeeId = route.params.id;
@@ -30,6 +41,7 @@ export const EmployeeScreen = ({route, navigation}) => {
     gender: null,
     schedule: null,
     photoUrl: null,
+    avgAvgScore: undefined,
   });
   const [loading, setLoading] = useState({});
 
@@ -67,129 +79,147 @@ export const EmployeeScreen = ({route, navigation}) => {
   }
 
   return (
-    <React.Fragment>
-      <View style={[styles.row, styles.spaceBetween]}>
-        <View style={[styles.col, styles.paddingTop]}>
-          <View>
+    <ScrollView>
+      <View style={[styles.section, styles.row]}>
+        <View style={styles.leftCol}>
+          <View style={styles.row}>
             <Text style={styles.title}>
               {item.firstName} {item.lastName}
             </Text>
-            {/*{(item.gender || item.birthDate) && (
-              <View style={styles.row}>
-                {item.gender && (
-                  <Text style={styles.caption}>{item.gender.title}</Text>
-                )}
-                {item.gender && item.birthDate && (
-                  <Text style={styles.caption}>, </Text>
-                )}
-                {item.birthDate && (
-                  <Text style={styles.caption}>
-                    {getAge(item.birthDate)} y.o.
-                  </Text>
-                )}
-              </View>
-            )}*/}
-            {item.birthDate && (
-              <View style={styles.row}>
-                <Text style={[styles.text, styles.textBold]}>Age:</Text>
-                <Text style={styles.text}> {getAge(item.birthDate)} y.o.</Text>
-              </View>
-            )}
-            {item.gender && (
-              <View style={styles.row}>
-                <Text style={[styles.text, styles.textBold]}>Gender:</Text>
-                <Text style={styles.text}> {item.gender.title}</Text>
-              </View>
-            )}
-            {item.position && (
-              <View style={styles.row}>
-                <Text style={[styles.text, styles.textBold]}>Position:</Text>
-                <Text style={styles.text}> {item.position.title}</Text>
-              </View>
-            )}
-            {item.city && (
-              <View style={styles.row}>
-                <Text style={[styles.text, styles.textBold]}>Location:</Text>
-                <Text style={styles.text}> {item.city.title}</Text>
-              </View>
-            )}
-            {item.schedule && (
-              <View style={styles.row}>
-                <Text style={[styles.text, styles.textBold]}>Schedule:</Text>
-                <Text style={styles.text}> {item.schedule.title}</Text>
-              </View>
-            )}
           </View>
+
+          {item.birthDate && (
+            <View style={styles.row}>
+              <Text style={styles.text}>
+                <Text style={[styles.text, styles.textBold]}>Age: </Text>
+                {getAge(item.birthDate)} y.o.
+              </Text>
+            </View>
+          )}
+          {item.gender && (
+            <View style={styles.row}>
+              <Text style={styles.text}>
+                <Text style={[styles.text, styles.textBold]}>Gender: </Text>
+                {item.gender.title}
+              </Text>
+            </View>
+          )}
+          {item.position && (
+            <View style={styles.row}>
+              <Text style={styles.text}>
+                <Text style={[styles.text, styles.textBold]}>Position: </Text>
+                {item.position.title}
+              </Text>
+            </View>
+          )}
+          {item.city && (
+            <View style={styles.row}>
+              <Text style={styles.text}>
+                <Text style={[styles.text, styles.textBold]}>Location: </Text>
+                {item.city.title}
+              </Text>
+            </View>
+          )}
+          {item.schedule && (
+            <View style={styles.row}>
+              <Text style={styles.text}>
+                <Text style={[styles.text, styles.textBold]}>Schedule: </Text>
+                {item.schedule.title}
+              </Text>
+            </View>
+          )}
+          {item.email && (
+            <View style={[styles.row, styles.flexWrap]}>
+              <Text style={styles.text}>
+                <Text style={[styles.text, styles.textBold]}>Email: </Text>
+                {item.email}
+              </Text>
+            </View>
+          )}
         </View>
-        <View style={[styles.col, styles.paddingTop, styles.floatLeftTop]}>
+        <View style={[styles.rightCol, styles.alignCenter]}>
           <View style={styles.imageWrapper}>
             <Image style={styles.img} source={{uri: item.photoUrl}} />
           </View>
-        </View>
-      </View>
-
-      <View style={styles.row}>
-        <View style={styles.col}>
-          {item.salary && (
-            <View style={styles.row}>
-              <Text style={[styles.text, styles.textBold]}>Salary:</Text>
+          {item.avgAvgScore && (
+            <View style={[styles.row, styles.alignCenter]}>
+              <View style={styles.scoreIcon}>
+                <IconStar color={'#F1C40F'} fillColor={'#F1C40F'} size={18} />
+              </View>
               <Text style={styles.text}>
-                {' '}
-                {numberWithSpaces(item.salary)} KZT
+                {JSON.stringify(item.avgAvgScore)}{' '}
               </Text>
             </View>
           )}
-
-          {item.email && (
-            <View style={styles.row}>
-              <Text style={[styles.text, styles.textBold]}>Email:</Text>
-              <Text style={styles.text}> {item.email}</Text>
-            </View>
-          )}
-
-          {!!item.description && item.description.length > 3 && (
-            <View style={{width: '95%'}}>
-              <Text style={[styles.text, styles.textBold]}>
-                About:
-                <Text textBreakStrategy={'simple'} style={styles.text}>
-                  {' '}
-                  {item.description}
-                </Text>
-              </Text>
-            </View>
-          )}
-
-          <Text style={[styles.text, styles.textBold]}>Experience: </Text>
-
-          <WorkList items={item.works} />
         </View>
       </View>
-    </React.Fragment>
+
+      <View style={[styles.section, styles.col]}>
+        {item.salary && (
+          <View style={styles.row}>
+            <Text style={styles.text}>
+              <Text style={[styles.text, styles.textBold]}>Salary: </Text>
+              {numberWithSpaces(item.salary)} KZT
+            </Text>
+          </View>
+        )}
+
+        {!!item.description && item.description.length > 3 && (
+          <View style={styles.row}>
+            <Text textBreakStrategy={'simple'} style={styles.text}>
+              <Text style={[styles.text, styles.textBold]}>About: </Text>
+              {item.description}
+            </Text>
+          </View>
+        )}
+      </View>
+
+      <View style={[styles.section, styles.col]}>
+        <Text style={[styles.text, styles.textBold]}>Experience: </Text>
+        <WorkList items={item.works} navigation={navigation} />
+      </View>
+    </ScrollView>
   );
 };
 
+const imageSize = dimensions.width * 0.24;
+
 const styles = StyleSheet.create({
+  section: {
+    paddingTop: 16,
+    paddingHorizontal: 16,
+    width: dimensions.width,
+  },
+  leftCol: {
+    width: dimensions.width - (imageSize + 34),
+  },
+
+  rightCol: {
+    width: imageSize,
+  },
+
   row: {
     flexDirection: 'row',
   },
+  col: {
+    flexDirection: 'column',
+  },
+  flexWrap: {
+    flexWrap: 'wrap',
+  },
+
   spaceBetween: {
     justifyContent: 'space-between',
   },
-  col: {
-    flexDirection: 'column',
-    paddingHorizontal: 16,
+
+  alignCenter: {
+    alignItems: 'center',
   },
-  paddingTop: {
-    paddingTop: 16,
-  },
-  floatLeftTop: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-  },
+
   imageWrapper: {
-    marginTop: 10,
-    height: 100,
-    width: 100,
+    marginBottom: 8,
+    height: imageSize,
+    width: imageSize,
     borderRadius: 10,
     backgroundColor: '#767676',
     overflow: 'hidden',
@@ -198,12 +228,8 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  divider: {
-    borderBottomWidth: 1,
-    borderColor: '#F6F6F6',
-  },
   title: {
-    marginBottom: 4,
+    marginBottom: 16,
     fontFamily: 'Roboto-Bold',
     fontSize: 20,
   },
@@ -215,8 +241,13 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     fontSize: 16,
   },
-  caption: {
-    marginBottom: 12,
-    color: '#555555',
+  confirmedIcon: {
+    marginRight: 4,
+    marginBottom: 4,
+  },
+  scoreIcon: {
+    marginBottom: 6,
+    marginRight: 6,
+    alignItems: 'center',
   },
 });

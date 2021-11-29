@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 
 import {JobsScreen} from '../screens/jobs/JobsScreen';
+import {MyEmployeesScreen} from '../screens/employees/MyEmployeesScreen';
 import {JobsPostScreen} from '../screens/jobs/JobsPostScreen';
 import {JobEditScreen} from '../screens/jobs/JobEditScreen';
 import {SearchScreen} from '../screens/search/SearchScreen';
@@ -10,11 +11,14 @@ import {ProfileScreen} from '../screens/profile/ProfileScreen';
 import {ProfileEditScreen} from '../screens/profile/ProfileEditScreen';
 import {FilterScreen} from '../screens/search/FilterScreen';
 import {EmployeeScreen} from '../screens/search/EmployeeScreen';
+import {EmployeeWorkScreen} from '../screens/employees/EmployeeWorkScreen';
+import {WorkInfoScreen} from '../screens/search/WorkInfoScreen';
 
 import {IconVacancies} from '../assets/icons/tabs/IconVacancies';
 import {IconSearch} from '../assets/icons/tabs/IconSearch';
 import {IconNotifications} from '../assets/icons/tabs/IconNotifications';
 import {IconProfile} from '../assets/icons/tabs/IconProfile';
+import {IconFolder} from '../assets/icons/tabs/IconFolder';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -61,6 +65,16 @@ export const Navigator = () => {
             tabBarLabel: 'My jobs',
             tabBarIcon: ({focused, color}) => {
               return <IconVacancies color={color} size={28} width={1.5} />;
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Employees"
+          component={MyEmployeesScreen}
+          options={{
+            tabBarLabel: 'My employees',
+            tabBarIcon: ({focused, color}) => {
+              return <IconFolder color={color} size={28} width={1.5} />;
             },
           }}
         />
@@ -129,6 +143,15 @@ export const Navigator = () => {
       <Stack.Group>
         <Stack.Screen
           options={{
+            headerTitle: 'Employee Information',
+          }}
+          name="EmployeeWorkScreen"
+          component={EmployeeWorkScreen}
+        />
+      </Stack.Group>
+      <Stack.Group>
+        <Stack.Screen
+          options={{
             headerTitle: 'Filters',
           }}
           name="FilterScreen"
@@ -163,6 +186,19 @@ export const Navigator = () => {
           }}
           name="ProfileEditScreen"
           component={ProfileEditScreen}
+        />
+      </Stack.Group>
+
+      <Stack.Group
+        screenOptions={{
+          headerMode: 'screen',
+          presentation: 'modal',
+          headerShown: true,
+        }}>
+        <Stack.Screen
+          options={{headerTitle: 'Work Information'}}
+          name="WorkInfo"
+          component={WorkInfoScreen}
         />
       </Stack.Group>
     </Stack.Navigator>

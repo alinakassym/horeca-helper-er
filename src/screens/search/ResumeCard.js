@@ -1,7 +1,17 @@
 import React from 'react';
-import {Image, Text, View, Pressable, StyleSheet} from 'react-native';
+import {
+  Image,
+  Text,
+  View,
+  Pressable,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
 import moment from 'moment';
+import {IconStar} from '../../assets/icons/main/IconStar';
+
+const dimensions = Dimensions.get('screen');
 
 export const ResumeCard = ({item, onPress}) => {
   const getAge = birthDate => {
@@ -16,8 +26,8 @@ export const ResumeCard = ({item, onPress}) => {
   return (
     <Pressable
       onPress={onPress}
-      style={[styles.row, styles.divider, {width: '100%'}]}>
-      <View style={[styles.col, {width: '82%'}]}>
+      style={[styles.section, styles.row, styles.divider]}>
+      <View style={[styles.leftCol]}>
         <View>
           <Text style={globalStyles.positionTitle}>{item.position?.title}</Text>
 
@@ -38,33 +48,53 @@ export const ResumeCard = ({item, onPress}) => {
           )}
         </View>
       </View>
-      <View style={[styles.col, styles.floatLeftTop]}>
+      <View style={[styles.rightCol, styles.alignCenter]}>
         <View style={styles.imageWrapper}>
           <Image style={styles.img} source={{uri: item.photoUrl}} />
         </View>
+        {item.avgAvgScore && (
+          <View style={[styles.row, styles.alignCenter]}>
+            <View style={styles.scoreIcon}>
+              <IconStar color={'#F1C40F'} fillColor={'#F1C40F'} size={18} />
+            </View>
+            <Text>{item.avgAvgScore}</Text>
+          </View>
+        )}
       </View>
     </Pressable>
   );
 };
 
+const imageSize = dimensions.width * 0.16;
+
 const styles = StyleSheet.create({
+  section: {
+    padding: 16,
+    width: dimensions.width,
+  },
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
-  col: {
-    flexDirection: 'row',
+
+  alignCenter: {
     alignItems: 'center',
-    padding: 16,
   },
-  floatLeftTop: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+
+  leftCol: {
+    paddingRight: 8,
+    width: dimensions.width - imageSize - 32,
   },
+
+  rightCol: {
+    width: imageSize,
+    flexDirection: 'column',
+  },
+
   imageWrapper: {
-    height: 40,
-    width: 40,
-    borderRadius: 30,
+    marginBottom: 6,
+    height: imageSize,
+    width: imageSize,
+    borderRadius: 8,
     backgroundColor: '#767676',
     overflow: 'hidden',
   },
@@ -83,5 +113,10 @@ const styles = StyleSheet.create({
   city: {
     marginBottom: 8,
     color: '#555555',
+  },
+
+  scoreIcon: {
+    marginRight: 4,
+    alignItems: 'center',
   },
 });

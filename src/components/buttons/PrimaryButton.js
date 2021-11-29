@@ -13,7 +13,9 @@ class PrimaryButton extends React.PureComponent {
     const {label, color, onPress} = this.props;
     const btnColor = color ? color : '#185AB7';
     return (
-      <TouchableOpacity onPress={onPress} style={[styles.btn, {backgroundColor: btnColor}]}>
+      <TouchableOpacity
+        onPress={onPress}
+        style={[styles.btn, {backgroundColor: btnColor}]}>
         <Text style={styles.btnLabel}>{label}</Text>
       </TouchableOpacity>
     );
@@ -34,10 +36,13 @@ const styles = StyleSheet.create({
     shadowRadius: 3.5,
   },
   btnLabel: {
+    paddingVertical: 4,
+    paddingHorizontal: 16,
     textAlign: 'center',
     fontSize: 16,
+    lineHeight: 16,
     color: '#FFFFFF',
-  }
+  },
 });
 
 PrimaryButton.propTypes = propTypes;

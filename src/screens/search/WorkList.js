@@ -1,24 +1,55 @@
 import React from 'react';
-import {StyleSheet, Image, Text, View} from 'react-native';
+import {
+  Pressable,
+  Image,
+  Text,
+  View,
+  Dimensions,
+  StyleSheet,
+} from 'react-native';
 import moment from 'moment';
+import {IconChecked} from '../../assets/icons/main/IconChecked';
+import {IconStar} from '../../assets/icons/main/IconStar';
 
-export const WorkList = ({items, onPress}) => {
+const dimensions = Dimensions.get('screen');
+
+export const WorkList = ({items, navigation}) => {
   return (
     <View style={{width: '100%'}}>
       {items.map((item, index) => (
-        <View key={index} style={styles.divider} onPress={onPress}>
-          <View style={[styles.row]}>
-            <View style={styles.column}>
+        <Pressable
+          key={index}
+          style={styles.divider}
+          onPress={() => navigation.navigate('WorkInfo', {item: item})}>
+          <View style={[styles.section, styles.row]}>
+            <View style={styles.leftCol}>
               <View style={styles.imageWrapper}>
                 <Image
                   style={styles.image}
                   source={{uri: item.company.photoUrl}}
                 />
+                {item.isConfirmed && (
+                  <View style={styles.iconWrapper}>
+                    <IconChecked color={'#185AB7'} size={18} />
+                  </View>
+                )}
               </View>
             </View>
 
-            <View style={{width: '80%'}}>
+            <View style={styles.rightCol}>
               <Text style={styles.title}>{item.position.title}</Text>
+              {item.employeeReview && (
+                <View style={[styles.row, styles.alignCenter]}>
+                  <View style={styles.scoreIcon}>
+                    <IconStar
+                      color={'#F1C40F'}
+                      fillColor={'#F1C40F'}
+                      size={14}
+                    />
+                  </View>
+                  <Text>{item.employeeReview.avgScore}</Text>
+                </View>
+              )}
               <Text style={styles.text}>{item.company.title}</Text>
               {item.startDate && (
                 <Text>
@@ -29,26 +60,35 @@ export const WorkList = ({items, onPress}) => {
                 </Text>
               )}
               {!!item.description && (
-                <View style={{width: '99%'}}>
-                  <Text textBreakStrategy={'simple'}>{item.description}</Text>
-                </View>
+                <Text textBreakStrategy={'simple'}>{item.description}</Text>
               )}
             </View>
           </View>
-        </View>
+        </Pressable>
       ))}
     </View>
   );
 };
 
+const imageSize = dimensions.width * 0.16;
+
 const styles = StyleSheet.create({
-  row: {
+  section: {
     paddingVertical: 8,
+  },
+  row: {
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
-  column: {
+  leftCol: {
+    width: imageSize + 16,
     flexDirection: 'column',
+  },
+  rightCol: {
+    width: dimensions.width - imageSize - 50,
+  },
+  alignCenter: {
+    alignItems: 'center',
   },
   spaceBetween: {
     justifyContent: 'space-between',
@@ -64,20 +104,31 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   imageWrapper: {
+    position: 'relative',
     marginRight: 16,
-    height: 60,
-    width: 60,
-    borderRadius: 64,
-    borderWidth: 1,
-    borderColor: '#cccccc',
-    overflow: 'hidden',
+    height: imageSize,
+    width: imageSize,
   },
   image: {
     width: '100%',
     height: '100%',
+    borderRadius: imageSize,
+    borderWidth: 1,
+    borderColor: '#cccccc',
+  },
+  iconWrapper: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    borderRadius: 20,
+    backgroundColor: '#FFFFFF',
   },
   divider: {
     borderBottomWidth: 1,
     borderColor: '#F6F6F6',
+  },
+  scoreIcon: {
+    marginRight: 4,
+    alignItems: 'center',
   },
 });
