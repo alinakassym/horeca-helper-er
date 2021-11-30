@@ -1,20 +1,42 @@
 import React from 'react';
-import {View, StyleSheet, Dimensions, Image, Text} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Image,
+  Text,
+  Pressable,
+} from 'react-native';
 import {IconMessageStatus} from '../../../assets/icons/main/IconMessageStatus';
 import moment from 'moment';
 
 const dimensions = Dimensions.get('screen');
 
-export const MessagePreview = ({item, divider}) => {
+export const MessagePreview = ({item, divider, navigation}) => {
   const formatDate = date => {
-    return moment(date).format('DD/MM/YY');
+    let fromNow = moment(date).fromNow();
+    return moment(date).calendar(null, {
+      lastWeek: 'DD MMM',
+      lastDay: '[Yesterday]',
+      sameDay: 'HH:MM',
+      sameElse: function () {
+        return `[${fromNow}]`;
+      },
+    });
   };
 
   return (
-    <View style={styles.card}>
+    <Pressable
+      style={styles.card}
+      onPress={() =>
+        navigation.navigate('MessagesChatScreen', {
+          chatId: item.id,
+          user: item.employee,
+        })
+      }>
       <View style={styles.leftCol}>
         <View style={styles.imageWrapper}>
-          <Image style={styles.img} source={{uri: item.photoUrl}} />
+          <Image style={styles.img} source={{uri: item.employee.photoUrl}} />
         </View>
       </View>
       <View style={styles.rightCol}>
@@ -35,7 +57,7 @@ export const MessagePreview = ({item, divider}) => {
         </View>
         {divider && <View style={styles.divider} />}
       </View>
-    </View>
+    </Pressable>
   );
 };
 
