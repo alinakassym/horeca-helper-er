@@ -1,10 +1,15 @@
 import React from 'react';
 import {View, StyleSheet, Dimensions, Image, Text} from 'react-native';
 import {IconMessageStatus} from '../../../assets/icons/main/IconMessageStatus';
+import moment from 'moment';
 
 const dimensions = Dimensions.get('screen');
 
-export const MessagePreview = ({item}) => {
+export const MessagePreview = ({item, divider}) => {
+  const formatDate = date => {
+    return moment(date).format('DD/MM/YY');
+  };
+
   return (
     <View style={styles.card}>
       <View style={styles.leftCol}>
@@ -15,9 +20,9 @@ export const MessagePreview = ({item}) => {
       <View style={styles.rightCol}>
         <View style={styles.titleRow}>
           <Text style={styles.title} numberOfLines={1}>
-            {item.name}
+            {item.employee.firstName} {item.employee.lastName}
           </Text>
-          <Text style={styles.date}>{item.date}</Text>
+          <Text style={styles.date}>{formatDate(item.createdAt)}</Text>
         </View>
         <View style={styles.textRow}>
           <IconMessageStatus
@@ -28,7 +33,7 @@ export const MessagePreview = ({item}) => {
             {item.text}
           </Text>
         </View>
-        <View style={styles.divider} />
+        {divider && <View style={styles.divider} />}
       </View>
     </View>
   );
