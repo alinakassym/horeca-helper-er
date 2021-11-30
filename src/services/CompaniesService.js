@@ -3,19 +3,19 @@ import http from '../http-common';
 
 export const getCompanies = async () => {
   const r = await http.get('/er/companies');
-  console.log('res', r.data);
+  // console.log('res', r.data);
   return r;
 };
 
 export const getCompany = async () => {
   const r = await http.get('/er/companies/me');
-  console.log('Company Service getCompany result:', r.data);
+  // console.log('Company Service getCompany result:', r.data);
   return r;
 };
 
 export const updateCompany = async data => {
   const r = await http.patch('/er/companies/me', data);
-  console.log('Company Service updateCompany result:', r.data);
+  // console.log('Company Service updateCompany result:', r.data);
   return r;
 };
 
@@ -35,6 +35,6 @@ export const updateCompanyPhoto = async img => {
       Accept: 'application/json',
     },
   });
-  console.log('Employees Service updateCompanyPhoto result:', r.data);
+  // console.log('Employees Service updateCompanyPhoto result:', r.data);
   return r;
 };

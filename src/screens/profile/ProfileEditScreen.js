@@ -8,7 +8,7 @@ import {getCategories} from '../../services/DictionariesService';
 import {ModalSelect} from '../../components/selects/ModalSelect';
 
 export const ProfileEditScreen = ({route, navigation}) => {
-  console.log('ProfileEdit Screen params', route.params);
+  // console.log('ProfileEdit Screen params', route.params);
 
   const [company, setCompany] = useState(route.params.value);
   const [categories, setCategories] = useState([]);

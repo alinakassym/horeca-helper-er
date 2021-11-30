@@ -13,7 +13,7 @@ import {EmployeeCard} from './EmployeeCard';
 
 const dimensions = Dimensions.get('screen');
 
-export const MyEmployeesScreen = ({navigation}) => {
+export const EmployeesScreen = ({navigation}) => {
   const [works, setWorks] = useState();
   const [loading, setLoading] = useState(true);
 

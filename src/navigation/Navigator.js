@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 
+// Screens
 import {JobsScreen} from '../screens/jobs/JobsScreen';
-import {MyEmployeesScreen} from '../screens/employees/MyEmployeesScreen';
+import {EmployeesScreen} from '../screens/employees/EmployeesScreen';
 import {JobsPostScreen} from '../screens/jobs/JobsPostScreen';
 import {JobEditScreen} from '../screens/jobs/JobEditScreen';
 import {SearchScreen} from '../screens/search/SearchScreen';
@@ -14,22 +14,156 @@ import {EmployeeScreen} from '../screens/search/EmployeeScreen';
 import {EmployeeWorkScreen} from '../screens/employees/EmployeeWorkScreen';
 import {WorkInfoScreen} from '../screens/search/WorkInfoScreen';
 
+// Icons
 import {IconVacancies} from '../assets/icons/tabs/IconVacancies';
 import {IconSearch} from '../assets/icons/tabs/IconSearch';
-import {IconNotifications} from '../assets/icons/tabs/IconNotifications';
+import {IconMessages} from '../assets/icons/tabs/IconMessages';
 import {IconProfile} from '../assets/icons/tabs/IconProfile';
 import {IconFolder} from '../assets/icons/tabs/IconFolder';
 
+// Navigation
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
+// Redux
 import {useSelector} from 'react-redux';
 
 export const Navigator = () => {
-  useSelector(state => state.employees.filter);
+  useSelector(state => {
+    const {employees} = state;
+    return employees.filter;
+  });
 
   const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();
+
+  const screenOptions = {
+    headerTintColor: '#185AB7',
+    headerTitleStyle: {
+      color: '#333333',
+    },
+  };
+
+  const JobsScreensStack = () => {
+    return (
+      <Stack.Navigator
+        initialRouteName="JobsMainScreen"
+        screenOptions={{...screenOptions, headerTitle: 'My jobs'}}>
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={'JobsMainScreen'}
+          component={JobsScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerTitle: 'Post a job',
+          }}
+          name="JobsPostScreen"
+          component={JobsPostScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerTitle: 'Edit job',
+          }}
+          name="JobEditScreen"
+          component={JobEditScreen}
+        />
+      </Stack.Navigator>
+    );
+  };
+
+  const EmployeesScreensStack = () => {
+    return (
+      <Stack.Navigator
+        initialRouteName="EmployeesMainScreen"
+        screenOptions={screenOptions}>
+        <Stack.Screen
+          name={'EmployeesMainScreen'}
+          component={EmployeesScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          options={{
+            headerTitle: 'Employee Work',
+          }}
+          name="EmployeeWorkScreen"
+          component={EmployeeWorkScreen}
+        />
+      </Stack.Navigator>
+    );
+  };
+
+  const SearchScreensStack = () => {
+    return (
+      <Stack.Navigator
+        initialRouteName="SearchMainScreen"
+        screenOptions={screenOptions}>
+        <Stack.Screen
+          name={'SearchMainScreen'}
+          component={SearchScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Group>
+          <Stack.Screen
+            options={{
+              headerTitle: 'Filters',
+            }}
+            name="FilterScreen"
+            component={FilterScreen}
+          />
+          <Stack.Screen
+            options={{
+              headerTitle: 'Profile Information',
+            }}
+            name="EmployeeScreen"
+            component={EmployeeScreen}
+          />
+        </Stack.Group>
+        <Stack.Group>
+          <Stack.Screen
+            options={{headerTitle: 'Work Information', presentation: 'modal'}}
+            name="WorkInfo"
+            component={WorkInfoScreen}
+          />
+        </Stack.Group>
+      </Stack.Navigator>
+    );
+  };
+
+  const MessagesScreensStack = () => {
+    return (
+      <Stack.Navigator
+        initialRouteName="MessagesMainScreen"
+        screenOptions={screenOptions}>
+        <Stack.Screen
+          name={'MessagesMainScreen'}
+          component={MessagesScreen}
+          options={{headerTitle: 'Messages'}}
+        />
+      </Stack.Navigator>
+    );
+  };
+
+  const ProfileScreensStack = () => {
+    return (
+      <Stack.Navigator
+        initialRouteName="MessagesMainScreen"
+        screenOptions={screenOptions}>
+        <Stack.Screen
+          name={'ProfileMainScreen'}
+          component={ProfileScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          options={{
+            headerTitle: 'Edit profile',
+          }}
+          name="ProfileEditScreen"
+          component={ProfileEditScreen}
+        />
+      </Stack.Navigator>
+    );
+  };
 
   const TabStack = () => {
     return (
@@ -60,7 +194,7 @@ export const Navigator = () => {
         }}>
         <Tab.Screen
           name="Jobs"
-          component={JobsScreen}
+          component={JobsScreensStack}
           options={{
             tabBarLabel: 'My jobs',
             tabBarIcon: ({focused, color}) => {
@@ -70,7 +204,7 @@ export const Navigator = () => {
         />
         <Tab.Screen
           name="Employees"
-          component={MyEmployeesScreen}
+          component={EmployeesScreensStack}
           options={{
             tabBarLabel: 'My employees',
             tabBarIcon: ({focused, color}) => {
@@ -80,7 +214,7 @@ export const Navigator = () => {
         />
         <Tab.Screen
           name="Search"
-          component={SearchScreen}
+          component={SearchScreensStack}
           options={{
             tabBarLabel: 'Search',
             tabBarIcon: ({focused, color}) => {
@@ -90,23 +224,23 @@ export const Navigator = () => {
         />
         <Tab.Screen
           name="Messages"
-          component={MessagesScreen}
+          component={MessagesScreensStack}
           options={{
             tabBarLabel: 'Messages',
             tabBarBadgeStyle: {
-              top: 8,
+              top: 2,
               left: 0,
               backgroundColor: '#E74C3C',
             },
             tabBarBadge: 10,
             tabBarIcon: ({focused, color}) => {
-              return <IconNotifications color={color} size={28} width={1.5} />;
+              return <IconMessages color={color} size={28} width={1.5} />;
             },
           }}
         />
         <Tab.Screen
           name="Profile"
-          component={ProfileScreen}
+          component={ProfileScreensStack}
           options={{
             tabBarLabel: 'Profile',
             tabBarIcon: ({focused, color}) => {
@@ -119,13 +253,7 @@ export const Navigator = () => {
   };
   return (
     <Stack.Navigator
-      initialRouteName="App"
-      screenOptions={{
-        headerTintColor: '#185AB7',
-        headerTitleStyle: {
-          color: '#333333',
-        },
-      }}
+      initialRouteName="Tabs"
       screenListeners={{
         state: e => {
           console.log('state changed', e.data.state.history);
@@ -138,93 +266,8 @@ export const Navigator = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="Back" component={TabStack} />
-      </Stack.Group>
-      <Stack.Group>
-        <Stack.Screen
-          options={{
-            headerTitle: 'Employee Information',
-          }}
-          name="EmployeeWorkScreen"
-          component={EmployeeWorkScreen}
-        />
-      </Stack.Group>
-      <Stack.Group>
-        <Stack.Screen
-          options={{
-            headerTitle: 'Filters',
-          }}
-          name="FilterScreen"
-          component={FilterScreen}
-        />
-        <Stack.Screen
-          options={{
-            headerTitle: 'Profile Information',
-          }}
-          name="EmployeeScreen"
-          component={EmployeeScreen}
-        />
-      </Stack.Group>
-      <Stack.Group>
-        <Stack.Screen
-          options={{
-            headerTitle: 'Post a job',
-          }}
-          name="JobsPostScreen"
-          component={JobsPostScreen}
-        />
-        <Stack.Screen
-          options={{
-            headerTitle: 'Edit job',
-          }}
-          name="JobEditScreen"
-          component={JobEditScreen}
-        />
-        <Stack.Screen
-          options={{
-            headerTitle: 'Profile',
-          }}
-          name="ProfileEditScreen"
-          component={ProfileEditScreen}
-        />
-      </Stack.Group>
-
-      <Stack.Group
-        screenOptions={{
-          headerMode: 'screen',
-          presentation: 'modal',
-          headerShown: true,
-        }}>
-        <Stack.Screen
-          options={{headerTitle: 'Work Information'}}
-          name="WorkInfo"
-          component={WorkInfoScreen}
-        />
+        <Stack.Screen name="Tabs" component={TabStack} />
       </Stack.Group>
     </Stack.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  gradientButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 54,
-    width: 54,
-    borderRadius: 27,
-  },
-  shadow: {
-    shadowColor: '#777777',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.5,
-    elevation: 5,
-  },
-});
