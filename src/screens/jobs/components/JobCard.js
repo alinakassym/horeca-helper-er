@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, Pressable, StyleSheet} from 'react-native';
-import PlainButton from '../buttons/PlainButton';
-import {IconSearch} from '../../assets/icons/tabs/IconSearch';
+import PlainButton from '../../../components/buttons/PlainButton';
+import {IconSearch} from '../../../assets/icons/tabs/IconSearch';
 import moment from 'moment';
 
 export const JobCard = ({item, onPress, findRelevant}) => {
