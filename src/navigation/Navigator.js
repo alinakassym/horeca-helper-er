@@ -80,7 +80,7 @@ export const Navigator = () => {
         <Stack.Screen
           name={'EmployeesMainScreen'}
           component={EmployeesScreen}
-          options={{headerShown: false}}
+          options={{headerTitle: 'Work history'}}
         />
         <Stack.Screen
           options={{
