@@ -3,8 +3,7 @@ import {ScrollView, View, Text, StyleSheet} from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {getJobs} from '../../services/JobsService';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {JobCard} from '../../components/jobs/JobCard';
+import {JobCard} from './components/JobCard';
 import {useDispatch} from 'react-redux';
 import {
   setEmployeesFilter,
@@ -62,7 +61,6 @@ export const JobsScreen = ({navigation}) => {
         <Text style={styles.title}>123</Text>
       </View>
 
-      {/*<Text>{jobs.toString()}</Text>*/}
       <ScrollView>
         <View style={styles.section}>
           {jobs &&
