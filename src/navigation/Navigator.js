@@ -198,7 +198,7 @@ export const Navigator = () => {
           options={{
             tabBarLabel: 'My jobs',
             tabBarIcon: ({focused, color}) => {
-              return <IconVacancies color={color} size={28} width={1.5} />;
+              return <IconVacancies color={color} size={24} width={1.5} />;
             },
           }}
         />
@@ -208,7 +208,7 @@ export const Navigator = () => {
           options={{
             tabBarLabel: 'My employees',
             tabBarIcon: ({focused, color}) => {
-              return <IconFolder color={color} size={28} width={1.5} />;
+              return <IconFolder color={color} size={24} width={1.5} />;
             },
           }}
         />
@@ -218,7 +218,7 @@ export const Navigator = () => {
           options={{
             tabBarLabel: 'Search',
             tabBarIcon: ({focused, color}) => {
-              return <IconSearch color={color} size={28} width={1.5} />;
+              return <IconSearch color={color} size={24} width={1.5} />;
             },
           }}
         />
@@ -234,7 +234,7 @@ export const Navigator = () => {
             },
             tabBarBadge: 10,
             tabBarIcon: ({focused, color}) => {
-              return <IconMessages color={color} size={28} width={1.5} />;
+              return <IconMessages color={color} size={24} width={1.5} />;
             },
           }}
         />
@@ -244,7 +244,7 @@ export const Navigator = () => {
           options={{
             tabBarLabel: 'Profile',
             tabBarIcon: ({focused, color}) => {
-              return <IconProfile color={color} size={28} width={1.5} />;
+              return <IconProfile color={color} size={24} width={1.5} />;
             },
           }}
         />
