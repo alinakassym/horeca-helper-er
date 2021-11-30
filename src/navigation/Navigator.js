@@ -179,9 +179,7 @@ export const Navigator = () => {
         }}
         screenOptions={{
           headerShown: false,
-          tabBarLabelStyle: {
-            bottom: 0, // note: 0 is for iOS, Android might need 12 here
-          },
+          tabBarShowLabel: false,
           tabBarActiveTintColor: '#185AB7',
           tabBarStyle: {
             // note: don't set height, or set screen-specific heights
@@ -196,8 +194,7 @@ export const Navigator = () => {
           name="Jobs"
           component={JobsScreensStack}
           options={{
-            tabBarLabel: 'My jobs',
-            tabBarIcon: ({focused, color}) => {
+            tabBarIcon: ({color}) => {
               return <IconVacancies color={color} size={24} width={1.5} />;
             },
           }}
@@ -206,8 +203,7 @@ export const Navigator = () => {
           name="Employees"
           component={EmployeesScreensStack}
           options={{
-            tabBarLabel: 'My employees',
-            tabBarIcon: ({focused, color}) => {
+            tabBarIcon: ({color}) => {
               return <IconFolder color={color} size={24} width={1.5} />;
             },
           }}
@@ -216,8 +212,7 @@ export const Navigator = () => {
           name="Search"
           component={SearchScreensStack}
           options={{
-            tabBarLabel: 'Search',
-            tabBarIcon: ({focused, color}) => {
+            tabBarIcon: ({color}) => {
               return <IconSearch color={color} size={24} width={1.5} />;
             },
           }}
@@ -226,14 +221,13 @@ export const Navigator = () => {
           name="Messages"
           component={MessagesScreensStack}
           options={{
-            tabBarLabel: 'Messages',
             tabBarBadgeStyle: {
-              top: 2,
+              top: 4,
               left: 0,
               backgroundColor: '#E74C3C',
             },
             tabBarBadge: 10,
-            tabBarIcon: ({focused, color}) => {
+            tabBarIcon: ({color}) => {
               return <IconMessages color={color} size={24} width={1.5} />;
             },
           }}
@@ -242,8 +236,7 @@ export const Navigator = () => {
           name="Profile"
           component={ProfileScreensStack}
           options={{
-            tabBarLabel: 'Profile',
-            tabBarIcon: ({focused, color}) => {
+            tabBarIcon: ({color}) => {
               return <IconProfile color={color} size={24} width={1.5} />;
             },
           }}
