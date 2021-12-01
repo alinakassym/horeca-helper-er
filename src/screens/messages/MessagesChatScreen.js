@@ -94,7 +94,10 @@ export const MessagesChatScreen = ({route, navigation}) => {
         </View>
       </ScrollView>
       <View style={styles.inputSection}>
-        <TextInput style={styles.input} />
+        <TextInput
+          onFocus={() => scrollViewRef.current.scrollToEnd({animated: true})}
+          style={styles.input}
+        />
       </View>
     </View>
   );
