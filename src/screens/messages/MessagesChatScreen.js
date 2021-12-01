@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   ScrollView,
   View,
@@ -8,6 +8,7 @@ import {
   Image,
   Platform,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
 import {getChatById} from '../../services/ChatService';
@@ -17,12 +18,20 @@ import {MessageBubble} from './components/MessageBubble';
 const dimensions = Dimensions.get('screen');
 
 export const MessagesChatScreen = ({route, navigation}) => {
+  const scrollViewRef = useRef();
   const [user, setUser] = useState({
     photoUrl: null,
     firstName: '',
     lastName: '',
   });
+  const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState([]);
+  const [viewHeight, setHeight] = useState(0);
+
+  const getViewDimensions = layout => {
+    const {height} = layout;
+    setHeight(dimensions.height - height - 230);
+  };
 
   useEffect(() => {
     return navigation.addListener('focus', async () => {
@@ -30,11 +39,21 @@ export const MessagesChatScreen = ({route, navigation}) => {
         const res = await getChatById(route.params?.chatId);
         setMessages(res);
         setUser(route.params?.user);
+        setLoading(false);
       } catch (e) {
         console.error('MessagesChatScreen err: ', e);
       }
     });
   }, [navigation, route]);
+
+  if (loading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
   return (
     <View style={globalStyles.container}>
       <View style={styles.headerSection}>
@@ -52,15 +71,27 @@ export const MessagesChatScreen = ({route, navigation}) => {
           </View>
         </View>
       </View>
-      <ScrollView style={styles.scrollView}>
-        {messages.map((message, index) => (
-          <MessageBubble key={index} item={message} />
-        ))}
-        <MessageBubble
-          item={{
-            body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium autem consequatur dignissimos earum excepturi fugit itaque magni molestias necessitatibus, odio reiciendis reprehenderit soluta totam. Aliquid blanditiis doloremque in nulla optio?',
+      <ScrollView
+        style={styles.scrollView}
+        ref={scrollViewRef}
+        onContentSizeChange={() =>
+          scrollViewRef.current.scrollToEnd({animated: true})
+        }>
+        <View style={{height: viewHeight}} />
+        <View
+          onLayout={event => {
+            getViewDimensions(event.nativeEvent.layout);
           }}
-        />
+          style={styles.scrollViewInnerBlock}>
+          {messages.map((message, index) => (
+            <MessageBubble key={index} item={message} />
+          ))}
+          <MessageBubble
+            item={{
+              body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium autem consequatur dignissimos earum excepturi fugit itaque magni molestias necessitatibus, odio reiciendis reprehenderit soluta totam. Aliquid blanditiis doloremque in nulla optio?',
+            }}
+          />
+        </View>
       </ScrollView>
       <View style={styles.inputSection}>
         <TextInput style={styles.input} />
@@ -93,6 +124,9 @@ const styles = StyleSheet.create({
   scrollView: {
     padding: 20,
     backgroundColor: '#F5F8FE',
+  },
+  scrollViewInnerBlock: {
+    paddingBottom: 20,
   },
   headerSection: {
     paddingTop: Platform.OS === 'ios' ? 60 : 20,

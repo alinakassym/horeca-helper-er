@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E2E5E8',
   },
   er: {
+    marginBottom: 6,
     alignSelf: 'flex-end',
     borderTopLeftRadius: 20,
     borderBottomLeftRadius: 20,
