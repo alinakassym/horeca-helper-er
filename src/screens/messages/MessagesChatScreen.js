@@ -11,10 +11,11 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
-import {getChatById} from '../../services/ChatService';
+import {getChatById, postMessage} from '../../services/ChatService';
 import BackButton from '../../components/buttons/BackButton';
 import {MessageBubble} from './components/MessageBubble';
 import SendButton from '../../components/buttons/SendButton';
+import lodash from 'lodash';
 
 const dimensions = Dimensions.get('screen');
 
@@ -29,6 +30,21 @@ export const MessagesChatScreen = ({route, navigation}) => {
   const [messages, setMessages] = useState([]);
   const [viewHeight, setHeight] = useState(0);
 
+  const [message, setMessage] = useState(null);
+
+  const send = async () => {
+    try {
+      await postMessage(route.params?.chatId, {
+        body: message,
+      });
+      const res = await getChatById(route.params?.chatId);
+      setMessages(lodash.orderBy(res, 'createdAt'));
+      setMessage(null);
+    } catch (e) {
+      console.error('postMessage err: ', e);
+    }
+  };
+
   const getViewDimensions = layout => {
     const {height} = layout;
     setHeight(dimensions.height - height - 230);
@@ -38,7 +54,7 @@ export const MessagesChatScreen = ({route, navigation}) => {
     return navigation.addListener('focus', async () => {
       try {
         const res = await getChatById(route.params?.chatId);
-        setMessages(res);
+        setMessages(lodash.orderBy(res, 'createdAt'));
         setUser(route.params?.user);
         setLoading(false);
       } catch (e) {
@@ -84,22 +100,19 @@ export const MessagesChatScreen = ({route, navigation}) => {
             getViewDimensions(event.nativeEvent.layout);
           }}
           style={styles.scrollViewInnerBlock}>
-          {messages.map((message, index) => (
-            <MessageBubble key={index} item={message} />
+          {messages.map((messageItem, index) => (
+            <MessageBubble key={index} item={messageItem} />
           ))}
-          <MessageBubble
-            item={{
-              body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium autem consequatur dignissimos earum excepturi fugit itaque magni molestias necessitatibus, odio reiciendis reprehenderit soluta totam. Aliquid blanditiis doloremque in nulla optio?',
-            }}
-          />
         </View>
       </ScrollView>
       <View style={styles.inputSection}>
         <TextInput
+          value={message}
+          onChangeText={val => setMessage(val)}
           onFocus={() => scrollViewRef.current.scrollToEnd({animated: true})}
           style={styles.input}
         />
-        <SendButton />
+        <SendButton onPress={() => send()} />
       </View>
     </View>
   );
