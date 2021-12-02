@@ -14,6 +14,7 @@ import {globalStyles} from '../../styles/globalStyles';
 import {getChatById} from '../../services/ChatService';
 import BackButton from '../../components/buttons/BackButton';
 import {MessageBubble} from './components/MessageBubble';
+import SendButton from '../../components/buttons/SendButton';
 
 const dimensions = Dimensions.get('screen');
 
@@ -48,7 +49,7 @@ export const MessagesChatScreen = ({route, navigation}) => {
 
   if (loading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={globalStyles.fullScreenSection}>
         <ActivityIndicator size="large" />
       </View>
     );
@@ -74,9 +75,9 @@ export const MessagesChatScreen = ({route, navigation}) => {
       <ScrollView
         style={styles.scrollView}
         ref={scrollViewRef}
-        onContentSizeChange={() =>
-          scrollViewRef.current.scrollToEnd({animated: true})
-        }>
+        onContentSizeChange={() => {
+          scrollViewRef.current.scrollToEnd({animated: true});
+        }}>
         <View style={{height: viewHeight}} />
         <View
           onLayout={event => {
@@ -98,6 +99,7 @@ export const MessagesChatScreen = ({route, navigation}) => {
           onFocus={() => scrollViewRef.current.scrollToEnd({animated: true})}
           style={styles.input}
         />
+        <SendButton />
       </View>
     </View>
   );
@@ -114,12 +116,16 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingHorizontal: 20,
     paddingBottom: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: '#FFFFFF',
   },
   input: {
+    marginRight: 14,
     paddingHorizontal: 16,
     paddingVertical: 8,
     height: 40,
+    width: dimensions.width - 100,
     borderRadius: 20,
     borderWidth: 0.5,
     borderColor: '#8391A1',
