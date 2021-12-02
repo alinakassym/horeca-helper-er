@@ -6,8 +6,9 @@ export const getChats = async () => {
   return r.data;
 };
 
-export const getChatById = async (id, data) => {
-  const r = await http.get(`/er/chats/${id}/messages`, data);
+export const getChatById = async id => {
+  const r = await http.get(`/er/chats/${id}/messages`);
+  console.log('getChatById: ', r.data);
   return r.data;
 };
 

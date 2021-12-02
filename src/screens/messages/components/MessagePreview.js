@@ -1,23 +1,50 @@
 import React from 'react';
-import {View, StyleSheet, Dimensions, Image, Text} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Image,
+  Text,
+  Pressable,
+} from 'react-native';
 import {IconMessageStatus} from '../../../assets/icons/main/IconMessageStatus';
+import moment from 'moment';
 
 const dimensions = Dimensions.get('screen');
 
-export const MessagePreview = ({item}) => {
+export const MessagePreview = ({item, divider, navigation}) => {
+  const formatDate = date => {
+    let fromNow = moment(date).fromNow();
+    return moment(date).calendar(null, {
+      lastWeek: 'DD MMM',
+      lastDay: '[Yesterday]',
+      sameDay: 'HH:MM',
+      sameElse: function () {
+        return `[${fromNow}]`;
+      },
+    });
+  };
+
   return (
-    <View style={styles.card}>
+    <Pressable
+      style={styles.card}
+      onPress={() =>
+        navigation.navigate('MessagesChatScreen', {
+          chatId: item.id,
+          user: item.employee,
+        })
+      }>
       <View style={styles.leftCol}>
         <View style={styles.imageWrapper}>
-          <Image style={styles.img} source={{uri: item.photoUrl}} />
+          <Image style={styles.img} source={{uri: item.employee.photoUrl}} />
         </View>
       </View>
       <View style={styles.rightCol}>
         <View style={styles.titleRow}>
           <Text style={styles.title} numberOfLines={1}>
-            {item.name}
+            {item.employee.firstName} {item.employee.lastName}
           </Text>
-          <Text style={styles.date}>{item.date}</Text>
+          <Text style={styles.date}>{formatDate(item.createdAt)}</Text>
         </View>
         <View style={styles.textRow}>
           <IconMessageStatus
@@ -28,9 +55,9 @@ export const MessagePreview = ({item}) => {
             {item.text}
           </Text>
         </View>
-        <View style={styles.divider} />
+        {divider && <View style={styles.divider} />}
       </View>
-    </View>
+    </Pressable>
   );
 };
 

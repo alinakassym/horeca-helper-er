@@ -14,7 +14,10 @@ class PlainButton extends React.PureComponent {
     const children = this.props.children;
     const btnColor = color ? color : '#185AB7';
     return (
-      <TouchableOpacity onPress={onPress} style={styles.btn}>
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={onPress}
+        style={styles.btn}>
         {children}
         <Text style={[styles.btnLabel, {color: btnColor}]}>{label}</Text>
       </TouchableOpacity>
