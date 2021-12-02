@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 
 const propTypes = {
@@ -14,6 +14,7 @@ class PrimaryButton extends React.PureComponent {
     const btnColor = color ? color : '#185AB7';
     return (
       <TouchableOpacity
+        activeOpacity={0.5}
         onPress={onPress}
         style={[styles.btn, {backgroundColor: btnColor}]}>
         <Text style={styles.btnLabel}>{label}</Text>

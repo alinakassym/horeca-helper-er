@@ -10,7 +10,7 @@ const propTypes = {
 
 class SendButton extends React.PureComponent {
   render() {
-    const {label, onPress} = this.props;
+    const {onPress} = this.props;
     return (
       <TouchableOpacity
         activeOpacity={0.5}

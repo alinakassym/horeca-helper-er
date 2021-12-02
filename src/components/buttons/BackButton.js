@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import {IconLeft} from '../../assets/icons/main/IconLeft';
 
@@ -11,7 +11,10 @@ class BackButton extends React.PureComponent {
   render() {
     const {onPress} = this.props;
     return (
-      <TouchableOpacity onPress={onPress} style={styles.btn}>
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={onPress}
+        style={styles.btn}>
         <IconLeft color={'#151F47'} size={28} width={2} />
       </TouchableOpacity>
     );
