@@ -12,7 +12,7 @@ import moment from 'moment';
 
 const dimensions = Dimensions.get('screen');
 
-export const MessagePreview = ({item, divider, navigation}) => {
+export const MessagePreview = ({item, navigation}) => {
   const {id, employee, lastMessage} = item;
 
   const formatDate = date => {
