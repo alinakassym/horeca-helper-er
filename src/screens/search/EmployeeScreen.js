@@ -14,12 +14,18 @@ import {WorkList} from './components/WorkList';
 import {IconStar} from '../../assets/icons/main/IconStar';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {BottomModal} from './components/BottomModal';
+import {ModalSelect} from '../../components/selects/ModalSelect';
+import {getJobs, postJobInvite} from '../../services/JobsService';
 
 const dimensions = Dimensions.get('screen');
 
 export const EmployeeScreen = ({route, navigation}) => {
   const employeeId = route.params.id;
 
+  const [jobs, setJobs] = useState([]);
+  const [vacancy, setVacancy] = useState({
+    id: null,
+  });
   const [visible, setVisible] = useState(false);
   const [inviteMessage, setInviteMessage] = useState();
   const [item, setItem] = useState({
@@ -49,6 +55,27 @@ export const EmployeeScreen = ({route, navigation}) => {
   });
   const [loading, setLoading] = useState({});
 
+  const sendInvite = async () => {
+    console.log({
+      id: vacancy.id,
+      data: {
+        employeeId: employeeId,
+        body: inviteMessage,
+      },
+    });
+    const id = vacancy.id;
+    const data = {
+      employeeId: employeeId,
+      body: inviteMessage,
+    };
+    await postJobInvite(id, data);
+    setVisible(false);
+  };
+
+  const isValid = () => {
+    return vacancy.id && inviteMessage && inviteMessage.length > 0;
+  };
+
   useEffect(() => {
     function fetchData() {
       return navigation.addListener('focus', async () => {
@@ -56,6 +83,16 @@ export const EmployeeScreen = ({route, navigation}) => {
           const result = await getEmployeeById(employeeId);
           setItem(result.data);
           setLoading(false);
+
+          const jobsData = await getJobs();
+          setJobs(
+            jobsData.data.map(el => {
+              return {
+                ...el,
+                title: `${el.position.title} (${el.schedule.title}, ${el.city.title})`,
+              };
+            }),
+          );
         } catch (e) {
           console.log('getEmployeeById err:', e);
         }
@@ -88,7 +125,7 @@ export const EmployeeScreen = ({route, navigation}) => {
         <View style={styles.leftCol}>
           <View style={styles.row}>
             <Text style={styles.title}>
-              {item.firstName} {item.lastName} {inviteMessage}
+              {item.firstName} {item.lastName}
             </Text>
           </View>
 
@@ -193,8 +230,18 @@ export const EmployeeScreen = ({route, navigation}) => {
         visible={visible}
         onClose={() => setVisible(false)}
         text={inviteMessage}
-        onChangeText={val => setInviteMessage(val)}
-      />
+        onSend={() => sendInvite()}
+        isValid={isValid()}
+        onChangeText={val => setInviteMessage(val)}>
+        <ModalSelect
+          label={'Vacancy'}
+          value={vacancy}
+          valueKey={'id'}
+          items={jobs}
+          itemTitle={'title'}
+          onSelect={val => setVacancy(val ? val : {id: null})}
+        />
+      </BottomModal>
     </ScrollView>
   );
 };

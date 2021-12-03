@@ -18,6 +18,7 @@ export const BottomModal = ({
   text,
   onChangeText,
   children,
+  isValid,
   onClose,
   onSend,
 }) => {
@@ -34,6 +35,7 @@ export const BottomModal = ({
           <View style={styles.wrap}>
             <CloseButton onPress={onClose} />
             <Text style={styles.title}>Invite to Job</Text>
+            {children}
             <View style={styles.inputSection}>
               <TextInput
                 multiline={true}
@@ -45,9 +47,12 @@ export const BottomModal = ({
                 style={[styles.input, {height: Math.max(35, textHeight)}]}
               />
             </View>
-            {children}
             <View style={styles.btn}>
-              <PrimaryButton label={'Send'} onPress={onSend} />
+              <PrimaryButton
+                color={(!isValid && '#E2E5E8') || null}
+                label={'Send'}
+                onPress={onSend}
+              />
             </View>
           </View>
         </Pressable>
