@@ -10,14 +10,26 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import {getEmployeeById} from '../../services/EmployeesService';
-import {WorkList} from './WorkList';
+import {WorkList} from './components/WorkList';
 import {IconStar} from '../../assets/icons/main/IconStar';
+import PrimaryButton from '../../components/buttons/PrimaryButton';
+import {BottomModal} from './components/BottomModal';
+import {ModalSelect} from '../../components/selects/ModalSelect';
+import {getJobs, postJobInvite} from '../../services/JobsService';
+import {getChatsLookup} from '../../services/ChatService';
 
 const dimensions = Dimensions.get('screen');
 
 export const EmployeeScreen = ({route, navigation}) => {
   const employeeId = route.params.id;
 
+  const [chatId, setChatId] = useState(null);
+  const [jobs, setJobs] = useState([]);
+  const [vacancy, setVacancy] = useState({
+    id: null,
+  });
+  const [visible, setVisible] = useState(false);
+  const [inviteMessage, setInviteMessage] = useState();
   const [item, setItem] = useState({
     id: 9,
     firstName: null,
@@ -45,6 +57,44 @@ export const EmployeeScreen = ({route, navigation}) => {
   });
   const [loading, setLoading] = useState({});
 
+  const inviteToJob = async () => {
+    try {
+      const jobsData = await getJobs();
+      setJobs(
+        jobsData.data.map(el => {
+          return {
+            ...el,
+            title: `${el.position.title} (${el.schedule.title}, ${el.city.title})`,
+          };
+        }),
+      );
+      setVisible(true);
+    } catch (e) {
+      console.log('inviteToJob err: ', e);
+    }
+  };
+
+  const sendInvite = async () => {
+    console.log({
+      id: vacancy.id,
+      data: {
+        employeeId: employeeId,
+        body: inviteMessage,
+      },
+    });
+    const id = vacancy.id;
+    const data = {
+      employeeId: employeeId,
+      body: inviteMessage,
+    };
+    await postJobInvite(id, data);
+    setVisible(false);
+  };
+
+  const isValid = () => {
+    return vacancy.id && inviteMessage && inviteMessage.length > 0;
+  };
+
   useEffect(() => {
     function fetchData() {
       return navigation.addListener('focus', async () => {
@@ -52,6 +102,10 @@ export const EmployeeScreen = ({route, navigation}) => {
           const result = await getEmployeeById(employeeId);
           setItem(result.data);
           setLoading(false);
+
+          const chatLookup = await getChatsLookup(employeeId);
+          setChatId(chatLookup);
+          console.log('chatLookup: ', chatLookup);
         } catch (e) {
           console.log('getEmployeeById err:', e);
         }
@@ -178,6 +232,37 @@ export const EmployeeScreen = ({route, navigation}) => {
         <Text style={[styles.text, styles.textBold]}>Experience: </Text>
         <WorkList items={item.works} navigation={navigation} />
       </View>
+
+      <View style={[styles.section, styles.col]}>
+        <PrimaryButton label={'Invite to job'} onPress={() => inviteToJob()} />
+      </View>
+      <View style={[styles.section, styles.col, styles.bottomSection]}>
+        <PrimaryButton
+          label={'Open chat'}
+          onPress={() =>
+            navigation.navigate('MessagesChatScreen', {
+              chatId: chatId,
+              user: item,
+            })
+          }
+        />
+      </View>
+      <BottomModal
+        visible={visible}
+        onClose={() => setVisible(false)}
+        text={inviteMessage}
+        onSend={() => sendInvite()}
+        isValid={isValid()}
+        onChangeText={val => setInviteMessage(val)}>
+        <ModalSelect
+          label={'Vacancy'}
+          value={vacancy}
+          valueKey={'id'}
+          items={jobs}
+          itemTitle={'title'}
+          onSelect={val => setVacancy(val ? val : {id: null})}
+        />
+      </BottomModal>
     </ScrollView>
   );
 };
@@ -189,6 +274,9 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingHorizontal: 16,
     width: dimensions.width,
+  },
+  bottomSection: {
+    marginBottom: 20,
   },
   leftCol: {
     width: dimensions.width - (imageSize + 34),

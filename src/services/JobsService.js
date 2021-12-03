@@ -25,6 +25,13 @@ export const postJob = async data => {
   return r;
 };
 
+export const postJobInvite = async (id, data) => {
+  console.log('job item : ', data);
+  const r = await http.post(`/er/jobs/${id}/invite`, data);
+  // console.log('postJobInvite result: ', r);
+  return r;
+};
+
 export const deleteJobById = async id => {
   const r = await http.delete(`/er/jobs/${id}`);
   // console.log('deleteJobById result: ', r);

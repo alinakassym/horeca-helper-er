@@ -18,6 +18,7 @@ export const ModalSelect = ({
   items,
   itemTitle,
   placeholder,
+  onSelect,
 }) => {
   const [visible, setVisible] = useState(false);
   const [item, setItem] = useState(value[valueKey]);
@@ -26,13 +27,13 @@ export const ModalSelect = ({
 
   const saveHandler = selectedItem => {
     setItem(selectedItem);
-    value[valueKey] = selectedItem;
     setVisible(false);
+    onSelect(selectedItem);
   };
 
   const clearValue = val => {
     setItem(val);
-    value[valueKey] = val;
+    onSelect(val);
     setVisible(false);
   };
 
@@ -79,7 +80,7 @@ export const ModalSelect = ({
         <Text style={globalStyles.label}>{label}</Text>
         {value[valueKey] ? <ValueSection /> : <PlaceHolder />}
       </View>
-      <Modal visible={visible} animationType="slide" transparent={true}>
+      <Modal visible={visible} animationType="fade" transparent={true}>
         <Pressable style={styles.overlay} onPress={() => setVisible(false)}>
           <View style={styles.wrap}>
             {items.map((listItem, index) => (

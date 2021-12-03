@@ -6,6 +6,12 @@ export const getChats = async () => {
   return r.data;
 };
 
+export const getChatsLookup = async employeeId => {
+  const r = await http.get(`/er/chats/lookup?employeeId=${employeeId}`);
+  console.log('getChatsLookup: ', r.data);
+  return r.data;
+};
+
 export const getChatById = async id => {
   const r = await http.get(`/er/chats/${id}/messages`);
   console.log('getChatById: ', r.data);
