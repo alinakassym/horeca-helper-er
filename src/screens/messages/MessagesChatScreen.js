@@ -60,7 +60,7 @@ export const MessagesChatScreen = ({route, navigation}) => {
 
   const getViewDimensions = layout => {
     const {height} = layout;
-    setHeight(dimensions.height - height - 230);
+    setHeight(dimensions.height - height - 232);
   };
 
   const formatDate = date => {
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     borderColor: '#8391A1',
   },
   scrollView: {
-    padding: 20,
+    paddingHorizontal: 20,
     backgroundColor: '#F5F8FE',
   },
   scrollViewInnerBlock: {
