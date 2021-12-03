@@ -8,8 +8,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import moment from 'moment';
-import {IconChecked} from '../../assets/icons/main/IconChecked';
-import {IconStar} from '../../assets/icons/main/IconStar';
+import {IconChecked} from '../../../assets/icons/main/IconChecked';
+import {IconStar} from '../../../assets/icons/main/IconStar';
 
 const dimensions = Dimensions.get('screen');
 

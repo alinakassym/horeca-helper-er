@@ -7,9 +7,9 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import {globalStyles} from '../../styles/globalStyles';
+import {globalStyles} from '../../../styles/globalStyles';
 import moment from 'moment';
-import {IconStar} from '../../assets/icons/main/IconStar';
+import {IconStar} from '../../../assets/icons/main/IconStar';
 
 const dimensions = Dimensions.get('screen');
 

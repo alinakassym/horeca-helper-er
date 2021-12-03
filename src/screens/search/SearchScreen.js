@@ -11,7 +11,7 @@ import {globalStyles} from '../../styles/globalStyles';
 import {IconFilter} from '../../assets/icons/main/IconFilter';
 import {useSelector} from 'react-redux';
 import {searchEmployees} from '../../services/EmployeesService';
-import {ResumeCard} from './ResumeCard';
+import {ResumeCard} from './components/ResumeCard';
 
 export const SearchScreen = ({navigation}) => {
   const {filter, isFilterApplied} = useSelector(state => {

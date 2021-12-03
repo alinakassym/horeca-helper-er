@@ -10,14 +10,18 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import {getEmployeeById} from '../../services/EmployeesService';
-import {WorkList} from './WorkList';
+import {WorkList} from './components/WorkList';
 import {IconStar} from '../../assets/icons/main/IconStar';
+import PrimaryButton from '../../components/buttons/PrimaryButton';
+import {BottomModal} from './components/BottomModal';
 
 const dimensions = Dimensions.get('screen');
 
 export const EmployeeScreen = ({route, navigation}) => {
   const employeeId = route.params.id;
 
+  const [visible, setVisible] = useState(false);
+  const [inviteMessage, setInviteMessage] = useState();
   const [item, setItem] = useState({
     id: 9,
     firstName: null,
@@ -84,7 +88,7 @@ export const EmployeeScreen = ({route, navigation}) => {
         <View style={styles.leftCol}>
           <View style={styles.row}>
             <Text style={styles.title}>
-              {item.firstName} {item.lastName}
+              {item.firstName} {item.lastName} {inviteMessage}
             </Text>
           </View>
 
@@ -178,6 +182,19 @@ export const EmployeeScreen = ({route, navigation}) => {
         <Text style={[styles.text, styles.textBold]}>Experience: </Text>
         <WorkList items={item.works} navigation={navigation} />
       </View>
+
+      <View style={[styles.section, styles.col, styles.bottomSection]}>
+        <PrimaryButton
+          label={'Invite to job'}
+          onPress={() => setVisible(true)}
+        />
+      </View>
+      <BottomModal
+        visible={visible}
+        onClose={() => setVisible(false)}
+        text={inviteMessage}
+        onChangeText={val => setInviteMessage(val)}
+      />
     </ScrollView>
   );
 };
@@ -189,6 +206,9 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingHorizontal: 16,
     width: dimensions.width,
+  },
+  bottomSection: {
+    marginBottom: 20,
   },
   leftCol: {
     width: dimensions.width - (imageSize + 34),
