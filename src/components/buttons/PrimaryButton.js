@@ -11,7 +11,7 @@ const propTypes = {
 class PrimaryButton extends React.PureComponent {
   render() {
     const {label, color, onPress} = this.props;
-    const btnColor = color ? color : '#185AB7';
+    const btnColor = color || '#185AB7';
     return (
       <TouchableOpacity
         activeOpacity={0.5}
