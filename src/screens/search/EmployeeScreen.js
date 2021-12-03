@@ -16,12 +16,14 @@ import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {BottomModal} from './components/BottomModal';
 import {ModalSelect} from '../../components/selects/ModalSelect';
 import {getJobs, postJobInvite} from '../../services/JobsService';
+import {getChatsLookup} from '../../services/ChatService';
 
 const dimensions = Dimensions.get('screen');
 
 export const EmployeeScreen = ({route, navigation}) => {
   const employeeId = route.params.id;
 
+  const [chatId, setChatId] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [vacancy, setVacancy] = useState({
     id: null,
@@ -55,6 +57,23 @@ export const EmployeeScreen = ({route, navigation}) => {
   });
   const [loading, setLoading] = useState({});
 
+  const inviteToJob = async () => {
+    try {
+      const jobsData = await getJobs();
+      setJobs(
+        jobsData.data.map(el => {
+          return {
+            ...el,
+            title: `${el.position.title} (${el.schedule.title}, ${el.city.title})`,
+          };
+        }),
+      );
+      setVisible(true);
+    } catch (e) {
+      console.log('inviteToJob err: ', e);
+    }
+  };
+
   const sendInvite = async () => {
     console.log({
       id: vacancy.id,
@@ -84,15 +103,9 @@ export const EmployeeScreen = ({route, navigation}) => {
           setItem(result.data);
           setLoading(false);
 
-          const jobsData = await getJobs();
-          setJobs(
-            jobsData.data.map(el => {
-              return {
-                ...el,
-                title: `${el.position.title} (${el.schedule.title}, ${el.city.title})`,
-              };
-            }),
-          );
+          const chatLookup = await getChatsLookup(employeeId);
+          setChatId(chatLookup);
+          console.log('chatLookup: ', chatLookup);
         } catch (e) {
           console.log('getEmployeeById err:', e);
         }
@@ -220,10 +233,18 @@ export const EmployeeScreen = ({route, navigation}) => {
         <WorkList items={item.works} navigation={navigation} />
       </View>
 
+      <View style={[styles.section, styles.col]}>
+        <PrimaryButton label={'Invite to job'} onPress={() => inviteToJob()} />
+      </View>
       <View style={[styles.section, styles.col, styles.bottomSection]}>
         <PrimaryButton
-          label={'Invite to job'}
-          onPress={() => setVisible(true)}
+          label={'Open chat'}
+          onPress={() =>
+            navigation.navigate('MessagesChatScreen', {
+              chatId: chatId,
+              user: item,
+            })
+          }
         />
       </View>
       <BottomModal
