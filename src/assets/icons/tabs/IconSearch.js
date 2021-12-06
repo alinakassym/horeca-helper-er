@@ -1,21 +1,22 @@
 import * as React from 'react';
 import Svg, {Circle, Path} from 'react-native-svg';
 
-export const IconSearch = ({color, size, width}) => {
+export const IconSearch = ({color, width, size}) => {
   return (
     <Svg width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none">
       <Circle
-        cx={11}
-        cy={11}
-        r={7}
+        cx={10}
+        cy={10}
+        r={7.5}
         stroke={color || '#000000'}
         strokeWidth={width || 2}
       />
       <Path
-        d="M20 20l-3-3"
+        d="m21 21-5.5-5.5"
         stroke={color || '#000000'}
         strokeWidth={width || 2}
         strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </Svg>
   );

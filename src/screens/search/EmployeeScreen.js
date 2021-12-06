@@ -236,17 +236,19 @@ export const EmployeeScreen = ({route, navigation}) => {
       <View style={[styles.section, styles.col]}>
         <PrimaryButton label={'Invite to job'} onPress={() => inviteToJob()} />
       </View>
-      <View style={[styles.section, styles.col, styles.bottomSection]}>
-        <PrimaryButton
-          label={'Open chat'}
-          onPress={() =>
-            navigation.navigate('MessagesChatScreen', {
-              chatId: chatId,
-              user: item,
-            })
-          }
-        />
-      </View>
+      {!!chatId && (
+        <View style={[styles.section, styles.col, styles.bottomSection]}>
+          <PrimaryButton
+            label={'Open chat'}
+            onPress={() =>
+              navigation.navigate('MessagesChatScreen', {
+                chatId: chatId,
+                user: item,
+              })
+            }
+          />
+        </View>
+      )}
       <BottomModal
         visible={visible}
         onClose={() => setVisible(false)}

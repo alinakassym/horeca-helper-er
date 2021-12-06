@@ -64,7 +64,8 @@ export const Navigator = () => {
         }}
         screenOptions={{
           tabBarShowLabel: false,
-          tabBarActiveTintColor: '#185AB7',
+          tabBarActiveTintColor: '#151F47',
+          tabBarInactiveTintColor: '#B9C1CA',
           tabBarStyle: {
             // note: don't set height, or set screen-specific heights
             marginBottom: 2,
@@ -100,7 +101,7 @@ export const Navigator = () => {
           options={{
             headerShown: false,
             tabBarIcon: ({color}) => {
-              return <IconSearch color={color} size={24} width={1.5} />;
+              return <IconSearch color={color} size={24} width={3} />;
             },
           }}
         />
