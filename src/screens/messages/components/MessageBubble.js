@@ -13,12 +13,7 @@ export const MessageBubble = ({item, user, prev}) => {
     return moment(val).format('HH:MM');
   };
 
-  const tempMessage = () => {
-    let msg = '';
-    msg += `${job.company.title} invited ${user.firstName} to job:\n`;
-    msg += `Position: ${job.position.title}\n`;
-    msg += `Schedule: ${job}\n`;
-    msg += `${body}\n`;
+  const jobInviteMessage = () => {
     return (
       <>
         <View style={styles.article}>
@@ -57,6 +52,47 @@ export const MessageBubble = ({item, user, prev}) => {
       </>
     );
   };
+  const jobApplyMessage = () => {
+    return (
+      <>
+        <View style={styles.article}>
+          <Text style={styles.eeText}>
+            <Text style={styles.textBold}>
+              {user.firstName} {user.lastName}
+            </Text>{' '}
+            applied for job:
+          </Text>
+        </View>
+        {job.position && (
+          <View style={styles.article}>
+            <Text style={styles.eeText}>
+              <Text style={styles.textBold}>Position: </Text>
+              {job.position.title}
+            </Text>
+          </View>
+        )}
+        {job.schedule && (
+          <View style={styles.article}>
+            <Text style={styles.eeText}>
+              <Text style={styles.textBold}>Schedule: </Text>
+              {job.schedule.title}
+            </Text>
+          </View>
+        )}
+        {job.city && (
+          <View style={styles.article}>
+            <Text style={styles.eeText}>
+              <Text style={styles.textBold}>Location: </Text>
+              {job.city.title}
+            </Text>
+          </View>
+        )}
+        <View style={styles.article}>
+          <Text style={styles.eeText}>{body}</Text>
+        </View>
+      </>
+    );
+  };
 
   return (
     <View style={styles.bubbleWrapper}>
@@ -71,7 +107,11 @@ export const MessageBubble = ({item, user, prev}) => {
                 prev && prev.senderType === senderType ? 5 : 20,
             },
           ]}>
-          <Text style={styles.eeText}>{body}</Text>
+          {bodyType === 'JOB_APPLY' ? (
+            jobApplyMessage()
+          ) : (
+            <Text style={styles.eeText}>{body}</Text>
+          )}
           <View style={styles.rightBottom}>
             <Text style={styles.rightBottomTextEE}>
               {formattedTime(createdAt)}
@@ -93,7 +133,7 @@ export const MessageBubble = ({item, user, prev}) => {
             },
           ]}>
           {bodyType === 'JOB_INVITE' ? (
-            tempMessage()
+            jobInviteMessage()
           ) : (
             <Text style={styles.erText}>{body}</Text>
           )}
