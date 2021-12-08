@@ -109,7 +109,7 @@ export const Navigator = () => {
           name="Messages"
           component={MessagesScreen}
           options={{
-            headerTitle: 'Chat',
+            headerShown: false,
             tabBarBadgeStyle: {
               top: 4,
               left: 0,
