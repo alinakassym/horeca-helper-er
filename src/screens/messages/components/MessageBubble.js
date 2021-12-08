@@ -101,7 +101,7 @@ export const MessageBubble = ({item, user, prev}) => {
           style={[
             styles.bubble,
             styles.ee,
-            {marginTop: prev && prev.senderType === senderType ? 8 : 16},
+            {marginTop: prev && prev.senderType === senderType ? 4 : 16},
             {
               borderTopLeftRadius:
                 prev && prev.senderType === senderType ? 5 : 20,
@@ -126,7 +126,7 @@ export const MessageBubble = ({item, user, prev}) => {
           style={[
             styles.bubble,
             styles.er,
-            {marginTop: prev && prev.senderType === senderType ? 8 : 16},
+            {marginTop: prev && prev.senderType === senderType ? 4 : 16},
             {
               borderTopRightRadius:
                 prev && prev.senderType === senderType ? 5 : 20,
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   },
   bubble: {
     position: 'relative',
-    padding: 16,
+    padding: 12,
     maxWidth: bubbleWidth,
   },
   ee: {
@@ -184,16 +184,16 @@ const styles = StyleSheet.create({
   },
   eeText: {
     paddingRight: 44,
-    fontFamily: 'Roboto-Regular',
-    fontSize: 16,
-    lineHeight: 20,
+    fontFamily: 'Inter-Regular',
+    fontSize: 14,
+    lineHeight: 18,
     color: '#151F47',
   },
   erText: {
     paddingRight: 72,
-    fontFamily: 'Roboto-Regular',
-    fontSize: 16,
-    lineHeight: 20,
+    fontFamily: 'Inter-Regular',
+    fontSize: 14,
+    lineHeight: 18,
     color: '#FFFFFF',
   },
   textBold: {
@@ -204,17 +204,16 @@ const styles = StyleSheet.create({
     right: 8,
     bottom: 12,
     flexDirection: 'row',
-    fontSize: 15,
   },
   rightBottomTextEE: {
     marginRight: 4,
-    fontSize: 16,
-    lineHeight: 26,
+    fontSize: 13,
+    lineHeight: 20,
     color: '#8391A1',
   },
   rightBottomTextER: {
     marginRight: 4,
-    fontSize: 16,
+    fontSize: 13,
     lineHeight: 20,
     color: '#FFFFFF',
   },
