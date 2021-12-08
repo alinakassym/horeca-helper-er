@@ -82,7 +82,9 @@ const imageSize =
     : dimensions.width * 0.15 < 52
     ? 52
     : dimensions.width * 0.15;
-const leftColWidth = imageSize + 16;
+
+const pa = 20;
+const leftColWidth = imageSize + pa;
 const rightColWidth = dimensions.width - leftColWidth;
 
 const styles = StyleSheet.create({
@@ -92,12 +94,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   leftCol: {
-    paddingHorizontal: 16,
+    paddingHorizontal: pa,
     width: leftColWidth,
   },
   rightCol: {
     paddingTop: 14,
-    paddingHorizontal: 16,
+    paddingHorizontal: pa,
     width: rightColWidth,
   },
   imageWrapper: {
@@ -117,14 +119,14 @@ const styles = StyleSheet.create({
   titleRow: {
     marginTop: 4,
     marginBottom: 8,
-    width: rightColWidth - 32,
+    width: rightColWidth - pa * 2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     flexWrap: 'nowrap',
   },
   title: {
-    width: rightColWidth - 110,
+    width: rightColWidth - 126,
     fontFamily: 'Inter-SemiBold',
     fontSize: 16,
     lineHeight: 20,
@@ -154,19 +156,19 @@ const styles = StyleSheet.create({
   divider: {
     marginTop: 14,
     height: 1,
-    width: rightColWidth - 32,
+    width: rightColWidth - pa * 2,
     borderBottomWidth: 1,
     borderColor: '#E2E5E8',
   },
   unreadMessagesCount: {
     paddingHorizontal: 4,
     minWidth: 18,
-    height: 18,
+    minHeight: 18,
     fontFamily: 'Inter-Regular',
     fontSize: 13,
     lineHeight: 18,
     textAlign: 'center',
-    borderRadius: 9,
+    borderRadius: 50,
     backgroundColor: '#2A8BE4',
     color: '#FFFFFF',
   },
