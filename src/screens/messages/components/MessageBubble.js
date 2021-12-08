@@ -202,13 +202,14 @@ const styles = StyleSheet.create({
   rightBottom: {
     position: 'absolute',
     right: 8,
-    bottom: 12,
+    bottom: 10,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   rightBottomTextEE: {
     marginRight: 4,
     fontSize: 13,
-    lineHeight: 20,
+    lineHeight: 22,
     color: '#8391A1',
   },
   rightBottomTextER: {
