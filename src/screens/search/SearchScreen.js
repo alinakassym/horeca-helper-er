@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -51,7 +52,7 @@ export const SearchScreen = ({navigation}) => {
   }
 
   return (
-    <View style={globalStyles.container}>
+    <SafeAreaView style={globalStyles.container}>
       <View style={styles.topSection}>
         <Text style={styles.title}>Astana</Text>
         <Text style={styles.title}>123</Text>
@@ -92,7 +93,7 @@ export const SearchScreen = ({navigation}) => {
           <Text style={styles.text}>No matches found</Text>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

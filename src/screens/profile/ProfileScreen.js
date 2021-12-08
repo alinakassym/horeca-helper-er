@@ -8,6 +8,7 @@ import {
   Switch,
   Pressable,
   Modal,
+  SafeAreaView,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {globalStyles} from '../../styles/globalStyles';
@@ -102,151 +103,155 @@ export const ProfileScreen = ({navigation}) => {
     setIsNotification(previousNotificationState => !previousNotificationState);
 
   return (
-    <ScrollView style={globalStyles.container}>
-      <Modal visible={open} animationType="slide" transparent={true}>
-        <Pressable style={styles.overlay} onPress={() => setOpen(false)}>
-          <View style={styles.wrap}>
-            <TouchableOpacity
-              style={styles.item}
-              onPress={() => {
-                openGallery();
-                setOpen(false);
-              }}>
-              <Text style={globalStyles.text}>Open Gallery</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.item}
-              onPress={() => {
-                openCamera();
-                setOpen(false);
-              }}>
-              <Text style={globalStyles.text}>Open Camera</Text>
-            </TouchableOpacity>
-          </View>
-        </Pressable>
-      </Modal>
-      <View style={styles.profilePhoto}>
-        <TouchableOpacity
-          onPress={() => {
-            setOpen(true);
-          }}
-          style={styles.imageWrapper}>
-          <Image style={styles.image} source={{uri: company.photoUrl}} />
-        </TouchableOpacity>
-      </View>
-
-      {/*About*/}
-      <Text style={styles.label}>About</Text>
-      <View style={styles.block}>
-        <View style={[styles.row, styles.spaceBetween]}>
-          <Text style={styles.text}>{company.title || 'Is not entered'} </Text>
+    <SafeAreaView style={globalStyles.container}>
+      <ScrollView>
+        <Modal visible={open} animationType="slide" transparent={true}>
+          <Pressable style={styles.overlay} onPress={() => setOpen(false)}>
+            <View style={styles.wrap}>
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() => {
+                  openGallery();
+                  setOpen(false);
+                }}>
+                <Text style={globalStyles.text}>Open Gallery</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() => {
+                  openCamera();
+                  setOpen(false);
+                }}>
+                <Text style={globalStyles.text}>Open Camera</Text>
+              </TouchableOpacity>
+            </View>
+          </Pressable>
+        </Modal>
+        <View style={styles.profilePhoto}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('ProfileEditScreen', {
-                value: company,
-              });
-            }}>
-            <IconPencil color={'#767676'} size={24} width={1.5} />
+              setOpen(true);
+            }}
+            style={styles.imageWrapper}>
+            <Image style={styles.image} source={{uri: company.photoUrl}} />
           </TouchableOpacity>
         </View>
 
-        {company.category && (
-          <View style={styles.row}>
-            <View style={styles.iconWrapper}>
-              <IconBuilding color={'#767676'} size={24} width={1.5} />
-            </View>
-            <Text style={styles.text}>{company.category.title}</Text>
+        {/*About*/}
+        <Text style={styles.label}>About</Text>
+        <View style={styles.block}>
+          <View style={[styles.row, styles.spaceBetween]}>
+            <Text style={styles.text}>
+              {company.title || 'Is not entered'}{' '}
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ProfileEditScreen', {
+                  value: company,
+                });
+              }}>
+              <IconPencil color={'#767676'} size={24} width={1.5} />
+            </TouchableOpacity>
           </View>
-        )}
 
-        {company.address && (
-          <View style={styles.row}>
-            <View style={styles.iconWrapper}>
-              <IconAddress color={'#767676'} size={24} width={1.5} />
+          {company.category && (
+            <View style={styles.row}>
+              <View style={styles.iconWrapper}>
+                <IconBuilding color={'#767676'} size={24} width={1.5} />
+              </View>
+              <Text style={styles.text}>{company.category.title}</Text>
             </View>
-            <Text style={styles.text}>{company.address}</Text>
-          </View>
-        )}
+          )}
 
-        {company.contactInfo && (
-          <View style={styles.row}>
-            <View style={styles.iconWrapper}>
-              <IconPhone color={'#767676'} size={24} width={1.5} />
+          {company.address && (
+            <View style={styles.row}>
+              <View style={styles.iconWrapper}>
+                <IconAddress color={'#767676'} size={24} width={1.5} />
+              </View>
+              <Text style={styles.text}>{company.address}</Text>
             </View>
-            <Text style={styles.text}>{company.contactInfo}</Text>
-          </View>
-        )}
+          )}
 
-        {company.email && (
-          <View style={styles.row}>
-            <View style={styles.iconWrapper}>
-              <IconMail color={'#767676'} size={24} width={1.5} />
+          {company.contactInfo && (
+            <View style={styles.row}>
+              <View style={styles.iconWrapper}>
+                <IconPhone color={'#767676'} size={24} width={1.5} />
+              </View>
+              <Text style={styles.text}>{company.contactInfo}</Text>
             </View>
-            <Text style={styles.text}>{company.email}</Text>
-          </View>
-        )}
+          )}
 
-        {!!company.description && (
-          <View style={styles.row}>
-            <View style={styles.iconWrapper}>
-              <IconComment color={'#767676'} size={24} width={1.5} />
+          {company.email && (
+            <View style={styles.row}>
+              <View style={styles.iconWrapper}>
+                <IconMail color={'#767676'} size={24} width={1.5} />
+              </View>
+              <Text style={styles.text}>{company.email}</Text>
             </View>
-            <View style={{flexBasis: '90%'}}>
-              <Text style={styles.text}>{company.description}</Text>
+          )}
+
+          {!!company.description && (
+            <View style={styles.row}>
+              <View style={styles.iconWrapper}>
+                <IconComment color={'#767676'} size={24} width={1.5} />
+              </View>
+              <View style={{flexBasis: '90%'}}>
+                <Text style={styles.text}>{company.description}</Text>
+              </View>
             </View>
-          </View>
-        )}
-      </View>
+          )}
+        </View>
 
-      {/*Settings*/}
-      <Text style={styles.label}>Settings</Text>
+        {/*Settings*/}
+        <Text style={styles.label}>Settings</Text>
 
-      {/*Notification*/}
-      <View style={styles.block}>
-        <View style={[styles.row, styles.spaceBetween]}>
-          <Text style={styles.text}>Push notifications</Text>
-          <View>
-            <Switch
-              trackColor={{false: '#AAAAAA', true: '#4136F1'}}
-              thumbColor={isNotification ? '#f4f3f4' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleNotification}
-              value={isNotification}
-            />
+        {/*Notification*/}
+        <View style={styles.block}>
+          <View style={[styles.row, styles.spaceBetween]}>
+            <Text style={styles.text}>Push notifications</Text>
+            <View>
+              <Switch
+                trackColor={{false: '#AAAAAA', true: '#4136F1'}}
+                thumbColor={isNotification ? '#f4f3f4' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleNotification}
+                value={isNotification}
+              />
+            </View>
           </View>
         </View>
-      </View>
 
-      {/*Support*/}
-      <Text style={styles.label}>Support</Text>
+        {/*Support*/}
+        <Text style={styles.label}>Support</Text>
 
-      {/*Contact*/}
-      <View style={styles.block}>
-        <View style={[styles.row, styles.spaceBetween]}>
-          <Text style={styles.text}>Contact support</Text>
+        {/*Contact*/}
+        <View style={styles.block}>
+          <View style={[styles.row, styles.spaceBetween]}>
+            <Text style={styles.text}>Contact support</Text>
+          </View>
         </View>
-      </View>
 
-      {/*FAQ*/}
-      <View style={styles.block}>
-        <View style={[styles.row, styles.spaceBetween]}>
-          <Text style={styles.text}>FAQ</Text>
+        {/*FAQ*/}
+        <View style={styles.block}>
+          <View style={[styles.row, styles.spaceBetween]}>
+            <Text style={styles.text}>FAQ</Text>
+          </View>
         </View>
-      </View>
 
-      {/*Sign Out*/}
-      <Text style={styles.label}>Sign Out</Text>
-      <View style={styles.block}>
-        <View style={styles.row}>
-          <TouchableOpacity
-            onPress={() => {
-              signOut();
-            }}>
-            <Text style={styles.text}>Sign Out</Text>
-          </TouchableOpacity>
+        {/*Sign Out*/}
+        <Text style={styles.label}>Sign Out</Text>
+        <View style={styles.block}>
+          <View style={styles.row}>
+            <TouchableOpacity
+              onPress={() => {
+                signOut();
+              }}>
+              <Text style={styles.text}>Sign Out</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

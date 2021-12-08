@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View, Text, StyleSheet} from 'react-native';
+import {ScrollView, View, Text, StyleSheet, SafeAreaView} from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {getJobs} from '../../services/JobsService';
@@ -55,7 +55,7 @@ export const JobsScreen = ({navigation}) => {
   }, [navigation]);
 
   return (
-    <View style={globalStyles.container}>
+    <SafeAreaView style={globalStyles.container}>
       <View style={styles.topSection}>
         <Text style={styles.title}>Astana</Text>
         <Text style={styles.title}>123</Text>
@@ -86,7 +86,7 @@ export const JobsScreen = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

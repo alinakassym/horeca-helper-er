@@ -4,7 +4,6 @@ import {Platform} from 'react-native';
 export const globalStyles = StyleSheet.create({
   fullScreenSection: {flex: 1, justifyContent: 'center', alignItems: 'center'},
   container: {
-    marginTop: Platform.OS === 'ios' ? 40 : 0,
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
