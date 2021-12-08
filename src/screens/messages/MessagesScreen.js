@@ -3,6 +3,7 @@ import {ScrollView, View, SafeAreaView, StyleSheet} from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
 import {MessagePreview} from './components/MessagePreview';
 import {getChats} from '../../services/ChatService';
+import {MessageSearch} from './components/MessageSearch';
 
 export const MessagesScreen = ({navigation}) => {
   const [chats, setChats] = useState([]);
@@ -19,6 +20,7 @@ export const MessagesScreen = ({navigation}) => {
   }, [navigation]);
   return (
     <SafeAreaView style={globalStyles.container}>
+      <MessageSearch />
       <ScrollView style={styles.scrollView}>
         <View style={styles.chats}>
           {chats.map((item, index) => (
