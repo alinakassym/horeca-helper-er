@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Dimensions,
   Image,
-  Platform,
   TextInput,
   ActivityIndicator,
   SafeAreaView,
@@ -196,9 +195,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   headerSection: {
-    paddingTop: Platform.OS === 'ios' ? 60 : 20,
-    paddingBottom: 20,
-    paddingHorizontal: 20,
+    padding: 20,
     width: dimensions.width,
     flexDirection: 'row',
     alignItems: 'center',
