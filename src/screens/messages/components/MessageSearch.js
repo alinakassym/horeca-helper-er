@@ -7,8 +7,7 @@ export const MessageSearch = ({text, onChangeText, onEndEditing}) => {
   return (
     <View style={styles.search}>
       <Text style={styles.header}>
-        <Text style={styles.textBold}>Chat </Text>
-        with candidates
+        <Text style={styles.textBold}>Чат </Text>с соискателями
       </Text>
       <View style={styles.inputSection}>
         <TextInput
