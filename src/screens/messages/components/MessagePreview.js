@@ -16,14 +16,11 @@ export const MessagePreview = ({item, navigation}) => {
   const {id, employee, lastMessage, numUnread} = item;
 
   const formatDate = date => {
-    let fromNow = moment(date).fromNow();
     return moment(date).calendar(null, {
-      lastWeek: 'DD MMM',
-      lastDay: '[Yesterday]',
+      lastWeek: 'DD/MM/YYYY',
+      lastDay: '[Вчера]',
       sameDay: 'HH:MM',
-      sameElse: function () {
-        return `[${fromNow}]`;
-      },
+      sameElse: 'DD/MM/YYYY',
     });
   };
 
