@@ -1,9 +1,15 @@
 import React from 'react';
-import {View, StyleSheet, Text, TextInput} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import {IconSearch} from '../../../assets/icons/tabs/IconSearch';
 import {IconClose} from '../../../assets/icons/main/IconClose';
 
-export const MessageSearch = ({text, onChangeText, onEndEditing}) => {
+export const MessageSearch = ({text, onChangeText, onEndEditing, onClear}) => {
   return (
     <View style={styles.search}>
       <Text style={styles.header}>
@@ -23,9 +29,9 @@ export const MessageSearch = ({text, onChangeText, onEndEditing}) => {
         </View>
 
         {text.length > 0 && (
-          <View style={styles.iconClear}>
-            <IconClose size={12} color={'#8391A1'} width={2} />
-          </View>
+          <TouchableOpacity onPress={onClear} style={styles.iconClear}>
+            <IconClose size={15} color={'#8391A1'} width={2} />
+          </TouchableOpacity>
         )}
       </View>
     </View>
@@ -69,11 +75,8 @@ const styles = StyleSheet.create({
   },
   iconClear: {
     position: 'absolute',
-    top: 16,
-    right: 12,
+    top: 15,
+    right: 13,
     padding: 2,
-    borderRadius: 24,
-    borderWidth: 1,
-    borderColor: '#8391A1',
   },
 });
