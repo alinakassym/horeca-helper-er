@@ -14,7 +14,7 @@ export const ProfileInfo = ({category, address, contactInfo, email}) => {
       {category && (
         <View style={styles.row}>
           <IconBuilding size={iconSize} color={'#151F47'} />
-          <Text style={styles.text}>{category.title}</Text>
+          <Text style={styles.text}>{category?.title_ru}</Text>
         </View>
       )}
       {address && (
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: padding,
     width: width,
     flexDirection: 'column',
+    backgroundColor: '#FFFFFF',
   },
   row: {
     marginBottom: padding,

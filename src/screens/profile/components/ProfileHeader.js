@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: padding,
     width: width,
     flexDirection: 'column',
+    backgroundColor: '#FFFFFF',
   },
   row: {
     marginBottom: padding,

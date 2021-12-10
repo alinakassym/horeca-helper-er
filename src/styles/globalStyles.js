@@ -5,7 +5,7 @@ export const globalStyles = StyleSheet.create({
   fullScreenSection: {flex: 1, justifyContent: 'center', alignItems: 'center'},
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F5F8FE',
   },
   modalTopBar: {
     marginTop: Platform.OS === 'ios' ? 40 : 0,

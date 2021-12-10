@@ -5,11 +5,10 @@ import {
   ScrollView,
   StyleSheet,
   Switch,
-  Pressable,
+  TouchableOpacity,
   Modal,
   SafeAreaView,
 } from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {globalStyles} from '../../styles/globalStyles';
 import {AuthContext} from '../../store/context';
 import {getCompany, updateCompanyPhoto} from '../../services/CompaniesService';
@@ -18,6 +17,9 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {ProfileHeader} from './components/ProfileHeader';
 import {ProfileInfo} from './components/ProfileInfo';
 import LightGradientButton from '../../components/buttons/LightGradientButton';
+import {IconFire} from '../../assets/icons/main/IconFire';
+import {IconExpandRight} from '../../assets/icons/main/IconExpandRight';
+import {IconSignOut} from '../../assets/icons/main/IconSignOut';
 
 export const ProfileScreen = ({navigation}) => {
   const {signOut} = React.useContext(AuthContext);
@@ -94,7 +96,9 @@ export const ProfileScreen = ({navigation}) => {
     <SafeAreaView style={globalStyles.container}>
       <ScrollView>
         <Modal visible={open} animationType="slide" transparent={true}>
-          <Pressable style={styles.overlay} onPress={() => setOpen(false)}>
+          <TouchableOpacity
+            style={styles.overlay}
+            onPress={() => setOpen(false)}>
             <View style={styles.wrap}>
               <TouchableOpacity
                 style={styles.item}
@@ -113,7 +117,7 @@ export const ProfileScreen = ({navigation}) => {
                 <Text style={globalStyles.text}>Open Camera</Text>
               </TouchableOpacity>
             </View>
-          </Pressable>
+          </TouchableOpacity>
         </Modal>
 
         <ProfileHeader
@@ -140,122 +144,116 @@ export const ProfileScreen = ({navigation}) => {
           />
         </View>
 
-        {/*Notification*/}
-        <View style={styles.block}>
-          <View style={[styles.row, styles.spaceBetween]}>
-            <Text style={styles.text}>Push notifications</Text>
-            <View>
-              <Switch
-                trackColor={{false: '#AAAAAA', true: '#4136F1'}}
-                thumbColor={isNotification ? '#f4f3f4' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleNotification}
-                value={isNotification}
-              />
+        <View style={styles.list}>
+          <TouchableOpacity style={styles.listItem}>
+            <View style={styles.row}>
+              <IconFire />
+              <Text style={[styles.listItemTitle, styles.marginLeft]}>
+                Подписка
+              </Text>
             </View>
-          </View>
+            <IconExpandRight size={16} color={'#8391A1'} />
+          </TouchableOpacity>
         </View>
 
-        {/*Support*/}
-        <Text style={styles.label}>Support</Text>
-
-        {/*Contact*/}
-        <View style={styles.block}>
-          <View style={[styles.row, styles.spaceBetween]}>
-            <Text style={styles.text}>Contact support</Text>
-          </View>
+        <View style={styles.list}>
+          <TouchableOpacity style={[styles.listItem, styles.listItemDivider]}>
+            <Text style={styles.listItemTitle}>Мои вакансии</Text>
+            <IconExpandRight size={16} color={'#8391A1'} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.listItem}>
+            <Text style={styles.listItemTitle}>История сотрудников</Text>
+            <IconExpandRight size={16} color={'#8391A1'} />
+          </TouchableOpacity>
         </View>
 
-        {/*FAQ*/}
-        <View style={styles.block}>
-          <View style={[styles.row, styles.spaceBetween]}>
-            <Text style={styles.text}>FAQ</Text>
-          </View>
+        <View style={styles.list}>
+          <TouchableOpacity style={[styles.listItem, styles.listItemDivider]}>
+            <Text style={styles.listItemTitle}>Контактная поддержка</Text>
+            <IconExpandRight size={16} color={'#8391A1'} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.listItem}>
+            <Text style={styles.listItemTitle}>Вопросы и ответы</Text>
+            <IconExpandRight size={16} color={'#8391A1'} />
+          </TouchableOpacity>
         </View>
 
-        {/*Sign Out*/}
-        <Text style={styles.label}>Sign Out</Text>
-        <View style={styles.block}>
-          <View style={styles.row}>
-            <TouchableOpacity
-              onPress={() => {
-                signOut();
-              }}>
-              <Text style={styles.text}>Sign Out</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.list}>
+          <TouchableOpacity style={styles.listItem}>
+            <Text style={styles.listItemTitle}>Уведомления</Text>
+            <Switch
+              trackColor={{false: '#AAAAAA', true: '#4136F1'}}
+              thumbColor={isNotification ? '#f4f3f4' : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleNotification}
+              value={isNotification}
+            />
+          </TouchableOpacity>
+        </View>
+
+        <View style={[styles.list, styles.marginBottom]}>
+          <TouchableOpacity
+            onPress={() => {
+              signOut();
+            }}
+            style={styles.listItem}>
+            <View style={styles.row}>
+              <IconSignOut color={'#EC4C47'} />
+              <Text
+                style={[
+                  styles.listItemTitle,
+                  styles.marginLeft,
+                  {color: '#EC4C47'},
+                ]}>
+                Выйти
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
+const padding = 20;
+
 const styles = StyleSheet.create({
   section: {
     paddingBottom: 20,
     paddingHorizontal: 20,
-  },
-  label: {
-    paddingTop: 24,
-    paddingBottom: 8,
-    paddingHorizontal: 16,
-    color: '#767676',
-    fontSize: 14,
-  },
-  iconWrapper: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 8,
-    height: 30,
-    width: 30,
-  },
-  iconWrapperStatus: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 8,
-    height: 30,
-    width: 30,
-    borderRadius: 15,
-    backgroundColor: '#F1C40F',
-    overflow: 'hidden',
-  },
-  text: {
-    fontSize: 14,
-    fontWeight: '500',
-    lineHeight: 16,
-  },
-  block: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    backgroundColor: '#F6F6F6',
+    backgroundColor: '#FFFFFF',
   },
   row: {
-    paddingVertical: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    alignContent: 'stretch',
   },
-  paddingTop0: {
-    paddingTop: 0,
+  list: {
+    marginTop: 8,
+    paddingLeft: padding,
+    backgroundColor: '#FFFFFF',
   },
-  spaceBetween: {
+  listItem: {
+    paddingRight: padding,
+    paddingVertical: padding,
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
   },
-  profilePhoto: {
-    paddingTop: 16,
-    alignItems: 'center',
+  listItemTitle: {
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 16,
+    lineHeight: 20,
+    color: '#151F47',
   },
-  imageWrapper: {
-    height: 128,
-    width: 128,
-    borderRadius: 64,
-    borderWidth: 1,
-    borderColor: '#cccccc',
-    overflow: 'hidden',
+  listItemDivider: {
+    borderBottomWidth: 0.7,
+    borderBottomColor: '#E2E5E8',
   },
-  image: {
-    width: '100%',
-    height: '100%',
+  marginLeft: {
+    marginLeft: 8,
+  },
+  marginBottom: {
+    marginBottom: padding,
   },
 
   overlay: {
