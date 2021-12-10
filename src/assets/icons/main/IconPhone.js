@@ -1,16 +1,16 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
+import * as React from 'react';
+import Svg, {Path} from 'react-native-svg';
 
 export const IconPhone = ({color, size, width}) => {
   return (
-    <Svg
-      width={size || 24}
-      height={size || 24}
-      viewBox="0 0 24 24"
-      fill="none">
+    <Svg width={size || 24} height={size || 24} viewBox="0 0 24 24" fill="none">
       <Path
-        d="M18.997 20C10.466 20.012 3.991 13.46 4 5.003 4 4.45 4.448 4 5 4h2.64c.495 0 .916.364.989.854a12.417 12.417 0 001.015 3.397l.103.222a.707.707 0 01-.23.872c-.818.584-1.13 1.759-.493 2.675.799 1.15 1.806 2.158 2.956 2.957.917.636 2.092.324 2.675-.493a.707.707 0 01.873-.231l.221.102c1.078.5 2.222.842 3.397 1.016.49.073.854.494.854.99V19a1 1 0 01-1.001 1h-.002z"
-        fill={color || '#000000'}
+        clipRule="evenodd"
+        d="M11.532 12.472c3.989 3.988 4.894-.625 7.434 1.913 2.448 2.448 3.856 2.938.753 6.04-.388.312-2.857 4.07-11.534-4.605C-.493 7.144 3.262 4.672 3.574 4.284c3.11-3.11 3.592-1.695 6.04.753 2.54 2.54-2.071 3.447 1.918 7.435Z"
+        stroke={color || '#000000'}
+        strokeWidth={width || 2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </Svg>
   );
