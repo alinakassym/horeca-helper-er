@@ -3,7 +3,6 @@ import {
   Text,
   View,
   ScrollView,
-  Image,
   StyleSheet,
   Switch,
   Pressable,
@@ -13,20 +12,21 @@ import {
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {globalStyles} from '../../styles/globalStyles';
 import {AuthContext} from '../../store/context';
-import {IconPhone} from '../../assets/icons/main/IconPhone';
-import {IconAddress} from '../../assets/icons/main/IconAddress';
-import {IconMail} from '../../assets/icons/main/IconMail';
-import {IconComment} from '../../assets/icons/main/IconComment';
-import {IconPencil} from '../../assets/icons/main/IconPencil';
-import {IconBuilding} from '../../assets/icons/main/IconBuilding';
 import {getCompany, updateCompanyPhoto} from '../../services/CompaniesService';
 
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {ProfileHeader} from './components/ProfileHeader';
+import {ProfileInfo} from './components/ProfileInfo';
+import LightGradientButton from '../../components/buttons/LightGradientButton';
 
 export const ProfileScreen = ({navigation}) => {
   const {signOut} = React.useContext(AuthContext);
 
-  const [company, setCompany] = useState({});
+  const [company, setCompany] = useState({
+    title: null,
+    description: null,
+    photoUrl: null,
+  });
 
   const [open, setOpen] = useState(false);
 
@@ -85,18 +85,6 @@ export const ProfileScreen = ({navigation}) => {
     });
   }, [navigation]);
 
-  const coffee =
-    'https://img.freepik.com/free-vector/coffee-shop-badge-vintage-style_1176-95.jpg?size=626&ext=jpg';
-
-  // Guest
-  const [isGuest, setIsGuest] = useState(false);
-  const toggleGuest = () =>
-    setIsGuest(previousGuestState => !previousGuestState);
-
-  // Name
-  const [isName, setIsName] = useState(false);
-  const toggleName = () => setIsName(previousNameState => !previousNameState);
-
   // Notification
   const [isNotification, setIsNotification] = useState(false);
   const toggleNotification = () =>
@@ -127,83 +115,30 @@ export const ProfileScreen = ({navigation}) => {
             </View>
           </Pressable>
         </Modal>
-        <View style={styles.profilePhoto}>
-          <TouchableOpacity
+
+        <ProfileHeader
+          title={company.title}
+          description={company.description}
+          photoUrl={company.photoUrl}
+        />
+
+        <ProfileInfo
+          category={company.category}
+          address={company.address}
+          contactInfo={company.contactInfo}
+          email={company.email}
+        />
+
+        <View style={styles.section}>
+          <LightGradientButton
             onPress={() => {
-              setOpen(true);
+              navigation.navigate('ProfileEditScreen', {
+                value: company,
+              });
             }}
-            style={styles.imageWrapper}>
-            <Image style={styles.image} source={{uri: company.photoUrl}} />
-          </TouchableOpacity>
+            label={'Редактировать профиль'}
+          />
         </View>
-
-        {/*About*/}
-        <Text style={styles.label}>About</Text>
-        <View style={styles.block}>
-          <View style={[styles.row, styles.spaceBetween]}>
-            <Text style={styles.text}>
-              {company.title || 'Is not entered'}{' '}
-            </Text>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('ProfileEditScreen', {
-                  value: company,
-                });
-              }}>
-              <IconPencil color={'#767676'} size={24} width={1.5} />
-            </TouchableOpacity>
-          </View>
-
-          {company.category && (
-            <View style={styles.row}>
-              <View style={styles.iconWrapper}>
-                <IconBuilding color={'#767676'} size={24} width={1.5} />
-              </View>
-              <Text style={styles.text}>{company.category.title}</Text>
-            </View>
-          )}
-
-          {company.address && (
-            <View style={styles.row}>
-              <View style={styles.iconWrapper}>
-                <IconAddress color={'#767676'} size={24} width={1.5} />
-              </View>
-              <Text style={styles.text}>{company.address}</Text>
-            </View>
-          )}
-
-          {company.contactInfo && (
-            <View style={styles.row}>
-              <View style={styles.iconWrapper}>
-                <IconPhone color={'#767676'} size={24} width={1.5} />
-              </View>
-              <Text style={styles.text}>{company.contactInfo}</Text>
-            </View>
-          )}
-
-          {company.email && (
-            <View style={styles.row}>
-              <View style={styles.iconWrapper}>
-                <IconMail color={'#767676'} size={24} width={1.5} />
-              </View>
-              <Text style={styles.text}>{company.email}</Text>
-            </View>
-          )}
-
-          {!!company.description && (
-            <View style={styles.row}>
-              <View style={styles.iconWrapper}>
-                <IconComment color={'#767676'} size={24} width={1.5} />
-              </View>
-              <View style={{flexBasis: '90%'}}>
-                <Text style={styles.text}>{company.description}</Text>
-              </View>
-            </View>
-          )}
-        </View>
-
-        {/*Settings*/}
-        <Text style={styles.label}>Settings</Text>
 
         {/*Notification*/}
         <View style={styles.block}>
@@ -256,6 +191,10 @@ export const ProfileScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  section: {
+    paddingBottom: 20,
+    paddingHorizontal: 20,
+  },
   label: {
     paddingTop: 24,
     paddingBottom: 8,
