@@ -125,7 +125,7 @@ export const Navigator = () => {
           name="Profile"
           component={ProfileScreen}
           options={{
-            headerTitle: 'Profile',
+            headerShown: false,
             tabBarIcon: ({color}) => {
               return <IconProfile color={color} size={24} width={1.5} />;
             },
