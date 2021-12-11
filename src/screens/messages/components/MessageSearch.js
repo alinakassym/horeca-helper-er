@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   search: {
     paddingTop: 30,
     paddingHorizontal: 20,
+    backgroundColor: '#FFFFFF',
   },
   header: {
     marginBottom: 20,

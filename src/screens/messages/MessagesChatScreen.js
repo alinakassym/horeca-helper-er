@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     paddingHorizontal: 20,
-    backgroundColor: '#F5F8FE',
   },
   scrollViewInnerBlock: {
     paddingBottom: 20,
@@ -199,6 +198,7 @@ const styles = StyleSheet.create({
     width: dimensions.width,
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#FFFFFF',
   },
   leftCol: {
     width: leftColWidth,
