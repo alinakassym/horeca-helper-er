@@ -68,23 +68,15 @@ export const Navigator = () => {
           tabBarInactiveTintColor: '#B9C1CA',
           tabBarStyle: {
             // note: don't set height, or set screen-specific heights
-            marginBottom: 2,
+            borderTopWidth: 0,
+            borderBottomWidth: 0,
+            marginBottom: 0,
           },
           tabBarBadgeStyle: {
             top: 12,
             left: 0,
           },
         }}>
-        <Tab.Screen
-          name="Jobs"
-          component={JobsScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({color}) => {
-              return <IconVacancies color={color} size={24} width={1.5} />;
-            },
-          }}
-        />
         <Tab.Screen
           name="Employees"
           component={EmployeesScreen}
@@ -223,6 +215,15 @@ export const Navigator = () => {
           }}
           name="ProfileEditScreen"
           component={ProfileEditScreen}
+        />
+        <Stack.Screen
+          name="Jobs"
+          component={JobsScreen}
+          options={{
+            tabBarIcon: ({color}) => {
+              return <IconVacancies color={color} size={24} width={1.5} />;
+            },
+          }}
         />
       </Stack.Group>
     </Stack.Navigator>
