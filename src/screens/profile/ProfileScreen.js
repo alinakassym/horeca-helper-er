@@ -20,6 +20,7 @@ import LightGradientButton from '../../components/buttons/LightGradientButton';
 import {IconFire} from '../../assets/icons/main/IconFire';
 import {IconExpandRight} from '../../assets/icons/main/IconExpandRight';
 import {IconSignOut} from '../../assets/icons/main/IconSignOut';
+import {PrimaryColors, StatusesColors} from '../../styles/colors';
 
 export const ProfileScreen = ({navigation}) => {
   const {signOut} = React.useContext(AuthContext);
@@ -152,7 +153,7 @@ export const ProfileScreen = ({navigation}) => {
                 Подписка
               </Text>
             </View>
-            <IconExpandRight size={16} color={'#8391A1'} />
+            <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
         </View>
 
@@ -161,24 +162,24 @@ export const ProfileScreen = ({navigation}) => {
             onPress={() => navigation.navigate('Jobs')}
             style={[styles.listItem, styles.listItemDivider]}>
             <Text style={styles.listItemTitle}>Мои вакансии</Text>
-            <IconExpandRight size={16} color={'#8391A1'} />
+            <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('Employees')}
             style={styles.listItem}>
             <Text style={styles.listItemTitle}>История сотрудников</Text>
-            <IconExpandRight size={16} color={'#8391A1'} />
+            <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
         </View>
 
         <View style={styles.list}>
           <TouchableOpacity style={[styles.listItem, styles.listItemDivider]}>
             <Text style={styles.listItemTitle}>Контактная поддержка</Text>
-            <IconExpandRight size={16} color={'#8391A1'} />
+            <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.listItem}>
             <Text style={styles.listItemTitle}>Вопросы и ответы</Text>
-            <IconExpandRight size={16} color={'#8391A1'} />
+            <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
         </View>
 
@@ -186,9 +187,12 @@ export const ProfileScreen = ({navigation}) => {
           <TouchableOpacity style={styles.listItem}>
             <Text style={styles.listItemTitle}>Уведомления</Text>
             <Switch
-              trackColor={{false: '#AAAAAA', true: '#4136F1'}}
-              thumbColor={isNotification ? '#f4f3f4' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
+              trackColor={{
+                false: PrimaryColors.grey3,
+                true: '#5CC689',
+              }}
+              thumbColor={PrimaryColors.white}
+              ios_backgroundColor={PrimaryColors.grey3}
               onValueChange={toggleNotification}
               value={isNotification}
             />
@@ -202,12 +206,12 @@ export const ProfileScreen = ({navigation}) => {
             }}
             style={styles.listItem}>
             <View style={styles.row}>
-              <IconSignOut color={'#EC4C47'} />
+              <IconSignOut color={StatusesColors.red} />
               <Text
                 style={[
                   styles.listItemTitle,
                   styles.marginLeft,
-                  {color: '#EC4C47'},
+                  {color: StatusesColors.red},
                 ]}>
                 Выйти
               </Text>
@@ -225,7 +229,7 @@ const styles = StyleSheet.create({
   section: {
     paddingBottom: 20,
     paddingHorizontal: 20,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: PrimaryColors.white,
   },
   row: {
     flexDirection: 'row',
@@ -234,7 +238,7 @@ const styles = StyleSheet.create({
   list: {
     marginTop: 8,
     paddingLeft: padding,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: PrimaryColors.white,
   },
   listItem: {
     paddingRight: padding,
@@ -247,11 +251,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-SemiBold',
     fontSize: 16,
     lineHeight: 20,
-    color: '#151F47',
+    color: PrimaryColors.element,
   },
   listItemDivider: {
     borderBottomWidth: 0.7,
-    borderBottomColor: '#E2E5E8',
+    borderBottomColor: PrimaryColors.grey3,
   },
   marginLeft: {
     marginLeft: 8,
@@ -270,7 +274,7 @@ const styles = StyleSheet.create({
     padding: 16,
     width: '80%',
     borderRadius: 8,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: PrimaryColors.white,
   },
   item: {
     padding: 24,
