@@ -16,16 +16,17 @@ import {WorkInfoScreen} from '../screens/search/WorkInfoScreen';
 // messages screens
 import {MessagesChatScreen} from '../screens/messages/MessagesChatScreen';
 import {MessagesScreen} from '../screens/messages/MessagesScreen';
+// notifications screens
+import {NotificationsScreen} from '../screens/notifications/NotificationsScreen';
 // profile screens
 import {ProfileScreen} from '../screens/profile/ProfileScreen';
 import {ProfileEditScreen} from '../screens/profile/ProfileEditScreen';
 
 // Icons
-import {IconVacancies} from '../assets/icons/tabs/IconVacancies';
 import {IconSearch} from '../assets/icons/tabs/IconSearch';
 import {IconMessages} from '../assets/icons/tabs/IconMessages';
 import {IconProfile} from '../assets/icons/tabs/IconProfile';
-import {IconFolder} from '../assets/icons/tabs/IconFolder';
+import {IconNotifications} from '../assets/icons/tabs/IconNotifications';
 
 // Navigation
 import {createStackNavigator} from '@react-navigation/stack';
@@ -100,6 +101,16 @@ export const Navigator = () => {
             tabBarBadge: 10,
             tabBarIcon: ({color}) => {
               return <IconMessages color={color} size={24} width={1.5} />;
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Notifications"
+          component={NotificationsScreen}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({color}) => {
+              return <IconNotifications color={color} size={24} width={1.5} />;
             },
           }}
         />
@@ -206,25 +217,8 @@ export const Navigator = () => {
           name="ProfileEditScreen"
           component={ProfileEditScreen}
         />
-        <Stack.Screen
-          name="Jobs"
-          component={JobsScreen}
-          options={{
-            tabBarIcon: ({color}) => {
-              return <IconVacancies color={color} size={24} width={1.5} />;
-            },
-          }}
-        />
-        <Stack.Screen
-          name="Employees"
-          component={EmployeesScreen}
-          options={{
-            headerTitle: 'Work history',
-            tabBarIcon: ({color}) => {
-              return <IconFolder color={color} size={24} width={1.5} />;
-            },
-          }}
-        />
+        <Stack.Screen name="Jobs" component={JobsScreen} />
+        <Stack.Screen name="Employees" component={EmployeesScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
