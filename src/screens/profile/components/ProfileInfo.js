@@ -4,6 +4,7 @@ import {IconBuilding} from '../../../assets/icons/main/IconBuilding';
 import {IconAddress} from '../../../assets/icons/main/IconAddress';
 import {IconPhone} from '../../../assets/icons/main/IconPhone';
 import {IconMail} from '../../../assets/icons/main/IconMail';
+import {PrimaryColors} from '../../../styles/colors';
 
 const dimensions = Dimensions.get('screen');
 const iconSize = 24;
@@ -13,25 +14,25 @@ export const ProfileInfo = ({category, address, contactInfo, email}) => {
     <View style={styles.col}>
       {category && (
         <View style={styles.row}>
-          <IconBuilding size={iconSize} color={'#151F47'} />
+          <IconBuilding size={iconSize} color={PrimaryColors.element} />
           <Text style={styles.text}>{category?.title_ru}</Text>
         </View>
       )}
       {address && (
         <View style={styles.row}>
-          <IconAddress size={iconSize} color={'#151F47'} />
+          <IconAddress size={iconSize} color={PrimaryColors.element} />
           <Text style={styles.text}>{address}</Text>
         </View>
       )}
       {contactInfo && (
         <View style={styles.row}>
-          <IconPhone size={iconSize} color={'#151F47'} />
+          <IconPhone size={iconSize} color={PrimaryColors.element} />
           <Text style={styles.text}>{contactInfo}</Text>
         </View>
       )}
       {email && (
         <View style={styles.row}>
-          <IconMail size={iconSize} color={'#151F47'} />
+          <IconMail size={iconSize} color={PrimaryColors.element} />
           <Text style={styles.text}>{email}</Text>
         </View>
       )}
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: padding,
     width: width,
     flexDirection: 'column',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: PrimaryColors.white,
   },
   row: {
     marginBottom: padding,
@@ -60,6 +61,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-Regular',
     fontSize: 16,
     lineHeight: 20,
-    color: '#151F47',
+    color: PrimaryColors.element,
   },
 });
