@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {IconSearch} from '../../../assets/icons/tabs/IconSearch';
 import {IconClose} from '../../../assets/icons/main/IconClose';
 import Header from '../../../components/Header';
+import {PrimaryColors} from '../../../styles/colors';
 
 export const MessageSearch = ({text, onChangeText, onEndEditing, onClear}) => {
   return (
@@ -19,17 +14,17 @@ export const MessageSearch = ({text, onChangeText, onEndEditing, onClear}) => {
           value={text}
           style={styles.input}
           placeholder={'Search'}
-          placeholderTextColor={'#B9C1CA'}
+          placeholderTextColor={PrimaryColors.grey2}
           onChangeText={onChangeText}
           onEndEditing={onEndEditing}
         />
         <View style={styles.iconSearch}>
-          <IconSearch size={24} color={'#B9C1CA'} />
+          <IconSearch size={24} color={PrimaryColors.grey2} />
         </View>
 
         {text.length > 0 && (
           <TouchableOpacity onPress={onClear} style={styles.iconClear}>
-            <IconClose size={15} color={'#8391A1'} width={2} />
+            <IconClose size={15} color={PrimaryColors.grey1} width={2} />
           </TouchableOpacity>
         )}
       </View>
@@ -39,7 +34,7 @@ export const MessageSearch = ({text, onChangeText, onEndEditing, onClear}) => {
 
 const styles = StyleSheet.create({
   search: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: PrimaryColors.white,
   },
   inputSection: {
     position: 'relative',
@@ -54,8 +49,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-Regular',
     fontSize: 16,
     lineHeight: 24,
-    backgroundColor: '#F0F2F4',
-    color: '#151F47',
+    backgroundColor: PrimaryColors.grey4,
+    color: PrimaryColors.element,
   },
   iconSearch: {
     position: 'absolute',

@@ -4,6 +4,7 @@ export const PrimaryColors = {
   grey1: '#8391A1',
   grey2: '#B9C1CA',
   grey3: '#E2E5E8',
+  grey4: '#F0F2F4',
   background: '#F5F8FE',
   white: '#FFFFFF',
 };

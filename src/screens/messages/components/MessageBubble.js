@@ -3,6 +3,7 @@ import {View, StyleSheet, Dimensions, Text} from 'react-native';
 import {IconMessageStatus} from '../../../assets/icons/main/IconMessageStatus';
 import moment from 'moment';
 import LinearGradient from 'react-native-linear-gradient';
+import {PrimaryColors} from '../../../styles/colors';
 
 const dimensions = Dimensions.get('screen');
 
@@ -173,7 +174,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 20,
     borderTopRightRadius: 20,
-    backgroundColor: '#E2E5E8',
+    backgroundColor: PrimaryColors.grey3,
   },
   er: {
     alignSelf: 'flex-end',
@@ -190,14 +191,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-Regular',
     fontSize: 14,
     lineHeight: 18,
-    color: '#151F47',
+    color: PrimaryColors.element,
   },
   erText: {
     paddingRight: 72,
     fontFamily: 'Inter-Regular',
     fontSize: 14,
     lineHeight: 18,
-    color: '#FFFFFF',
+    color: PrimaryColors.white,
   },
   textBold: {
     fontFamily: 'Roboto-Bold',
@@ -213,12 +214,12 @@ const styles = StyleSheet.create({
     marginRight: 4,
     fontSize: 13,
     lineHeight: 23,
-    color: '#8391A1',
+    color: PrimaryColors.grey1,
   },
   rightBottomTextER: {
     marginRight: 4,
     fontSize: 13,
     lineHeight: 23,
-    color: '#FFFFFF',
+    color: PrimaryColors.white,
   },
 });

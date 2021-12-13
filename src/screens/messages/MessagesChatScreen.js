@@ -17,6 +17,7 @@ import {MessageBubble} from './components/MessageBubble';
 import SendButton from '../../components/buttons/SendButton';
 import lodash from 'lodash';
 import moment from 'moment';
+import {PrimaryColors} from '../../styles/colors';
 
 const dimensions = Dimensions.get('screen');
 
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: PrimaryColors.white,
   },
   input: {
     marginRight: 14,
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
     width: dimensions.width - 100,
     borderRadius: 20,
     borderWidth: 0.5,
-    borderColor: '#8391A1',
+    borderColor: PrimaryColors.grey1,
   },
   scrollView: {
     paddingHorizontal: 20,
@@ -197,14 +198,16 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     borderRadius: imageSize,
-    backgroundColor: '#767676',
+    borderWidth: 0.7,
+    borderColor: PrimaryColors.grey3,
+    backgroundColor: PrimaryColors.grey3,
   },
   userName: {
     width: rightColWidth - imageSize - 16,
     fontFamily: 'Inter-SemiBold',
     fontSize: 14,
     lineHeight: 18,
-    color: '#151F47',
+    color: PrimaryColors.element,
   },
   date: {
     flexDirection: 'row',
@@ -218,7 +221,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 18,
     borderRadius: 40,
-    backgroundColor: '#8391A1',
-    color: '#FFFFFF',
+    backgroundColor: PrimaryColors.grey1,
+    color: PrimaryColors.white,
   },
 });
