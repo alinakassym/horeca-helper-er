@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
+import {PrimaryColors} from '../../../styles/colors';
 
 const dimensions = Dimensions.get('screen');
 
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: padding,
     width: width,
     flexDirection: 'column',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: PrimaryColors.white,
   },
   row: {
     marginBottom: padding,
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-ExtraBold',
     fontSize: 24,
     lineHeight: 28,
-    color: '#151F47',
+    color: PrimaryColors.element,
   },
   imageWrapper: {
     marginLeft: padding,
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     height: imageSize,
     borderRadius: 12,
     borderWidth: 0.7,
-    borderColor: '#E2E5E8',
+    borderColor: PrimaryColors.grey3,
     overflow: 'hidden',
   },
   image: {
@@ -63,6 +64,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-Regular',
     fontSize: 14,
     lineHeight: 18,
-    color: '#8391A1',
+    color: PrimaryColors.grey1,
   },
 });
