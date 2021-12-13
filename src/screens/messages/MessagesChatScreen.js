@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
 import {getChatById, postMessage} from '../../services/ChatService';
-import BackButton from '../../components/buttons/BackButton';
+import Header from '../../components/Header';
 import {MessageBubble} from './components/MessageBubble';
 import SendButton from '../../components/buttons/SendButton';
 import lodash from 'lodash';
@@ -117,21 +117,16 @@ export const MessagesChatScreen = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <View style={styles.headerSection}>
-        <View style={styles.leftCol}>
-          <BackButton onPress={() => navigation.goBack()} />
+      <Header navigation={navigation}>
+        <View style={styles.imageWrapper}>
+          <Image style={styles.img} source={{uri: user.photoUrl}} />
         </View>
-        <View style={styles.rightCol}>
-          <View style={styles.imageWrapper}>
-            <Image style={styles.img} source={{uri: user.photoUrl}} />
-          </View>
-          <View>
-            <Text style={styles.userName} numberOfLines={1}>
-              {user.firstName} {user.lastName}
-            </Text>
-          </View>
+        <View>
+          <Text style={styles.userName} numberOfLines={1}>
+            {user.firstName} {user.lastName}
+          </Text>
         </View>
-      </View>
+      </Header>
       <ScrollView
         style={styles.scrollView}
         ref={scrollViewRef}
@@ -192,21 +187,6 @@ const styles = StyleSheet.create({
   },
   scrollViewInnerBlock: {
     paddingBottom: 20,
-  },
-  headerSection: {
-    padding: 20,
-    width: dimensions.width,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-  },
-  leftCol: {
-    width: leftColWidth,
-  },
-  rightCol: {
-    width: rightColWidth,
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   imageWrapper: {
     marginRight: 12,
