@@ -1,5 +1,6 @@
 import {Dimensions, StyleSheet} from 'react-native';
 import {Platform} from 'react-native';
+import {PrimaryColors} from './colors';
 
 const dimensions = Dimensions.get('screen');
 
@@ -7,13 +8,13 @@ export const globalStyles = StyleSheet.create({
   fullScreenSection: {flex: 1, justifyContent: 'center', alignItems: 'center'},
   container: {
     flex: 1,
-    backgroundColor: '#F5F8FE',
+    backgroundColor: PrimaryColors.background,
   },
   card: {
     marginTop: 8,
     padding: 20,
     width: dimensions.width,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: PrimaryColors.white,
   },
   modalTopBar: {
     marginTop: Platform.OS === 'ios' ? 40 : 0,
