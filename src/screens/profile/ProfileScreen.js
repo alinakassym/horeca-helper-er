@@ -163,7 +163,9 @@ export const ProfileScreen = ({navigation}) => {
             <Text style={styles.listItemTitle}>Мои вакансии</Text>
             <IconExpandRight size={16} color={'#8391A1'} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.listItem}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Employees')}
+            style={styles.listItem}>
             <Text style={styles.listItemTitle}>История сотрудников</Text>
             <IconExpandRight size={16} color={'#8391A1'} />
           </TouchableOpacity>

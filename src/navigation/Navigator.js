@@ -78,16 +78,6 @@ export const Navigator = () => {
           },
         }}>
         <Tab.Screen
-          name="Employees"
-          component={EmployeesScreen}
-          options={{
-            headerTitle: 'Work history',
-            tabBarIcon: ({color}) => {
-              return <IconFolder color={color} size={24} width={1.5} />;
-            },
-          }}
-        />
-        <Tab.Screen
           name="Search"
           component={SearchScreen}
           options={{
@@ -222,6 +212,16 @@ export const Navigator = () => {
           options={{
             tabBarIcon: ({color}) => {
               return <IconVacancies color={color} size={24} width={1.5} />;
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Employees"
+          component={EmployeesScreen}
+          options={{
+            headerTitle: 'Work history',
+            tabBarIcon: ({color}) => {
+              return <IconFolder color={color} size={24} width={1.5} />;
             },
           }}
         />
