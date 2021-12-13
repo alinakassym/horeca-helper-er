@@ -8,13 +8,12 @@ import {
 } from 'react-native';
 import {IconSearch} from '../../../assets/icons/tabs/IconSearch';
 import {IconClose} from '../../../assets/icons/main/IconClose';
+import Header from '../../../components/Header';
 
 export const MessageSearch = ({text, onChangeText, onEndEditing, onClear}) => {
   return (
     <View style={styles.search}>
-      <Text style={styles.header}>
-        <Text style={styles.textBold}>Чат </Text>с соискателями
-      </Text>
+      <Header title={'Чат'} subtitle={'с соискателями'} />
       <View style={styles.inputSection}>
         <TextInput
           value={text}
@@ -40,28 +39,17 @@ export const MessageSearch = ({text, onChangeText, onEndEditing, onClear}) => {
 
 const styles = StyleSheet.create({
   search: {
-    paddingTop: 30,
-    paddingHorizontal: 20,
     backgroundColor: '#FFFFFF',
-  },
-  header: {
-    marginBottom: 20,
-    fontFamily: 'Inter-Regular',
-    fontSize: 24,
-    lineHeight: 28,
-    color: '#151F47',
-  },
-  textBold: {
-    fontFamily: 'Inter-SemiBold',
   },
   inputSection: {
     position: 'relative',
+    paddingHorizontal: 20,
   },
   input: {
     marginBottom: 12,
     paddingHorizontal: 0,
     paddingLeft: 48,
-    paddingRight: 8,
+    paddingRight: 38,
     borderRadius: 10,
     fontFamily: 'Inter-Regular',
     fontSize: 16,
@@ -72,12 +60,12 @@ const styles = StyleSheet.create({
   iconSearch: {
     position: 'absolute',
     top: 12,
-    left: 12,
+    left: 32,
   },
   iconClear: {
     position: 'absolute',
     top: 15,
-    right: 13,
+    right: 33,
     padding: 2,
   },
 });

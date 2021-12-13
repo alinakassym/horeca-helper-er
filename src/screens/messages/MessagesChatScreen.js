@@ -117,7 +117,7 @@ export const MessagesChatScreen = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <Header navigation={navigation}>
+      <Header goBack navigation={navigation}>
         <View style={styles.imageWrapper}>
           <Image style={styles.img} source={{uri: user.photoUrl}} />
         </View>

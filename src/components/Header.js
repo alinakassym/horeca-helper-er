@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions, Text} from 'react-native';
 import BackButton from './buttons/BackButton';
 import PropTypes from 'prop-types';
 
@@ -8,17 +8,28 @@ const dimensions = Dimensions.get('screen');
 const propTypes = {
   navigation: PropTypes.object,
   children: PropTypes.array,
+  goBack: PropTypes.bool,
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
 };
 
 class Header extends React.PureComponent {
   render() {
-    const {navigation, children} = this.props;
+    const {navigation, children, goBack, title, subtitle} = this.props;
     return (
       <View style={styles.headerSection}>
-        <View style={styles.leftCol}>
-          <BackButton onPress={() => navigation.goBack()} />
-        </View>
-        <View style={styles.rightCol}>{children}</View>
+        {goBack ? (
+          <>
+            <View style={styles.leftCol}>
+              <BackButton onPress={() => navigation.goBack()} />
+            </View>
+            <View style={styles.rightCol}>{children}</View>
+          </>
+        ) : (
+          <Text style={styles.title}>
+            {title} <Text style={styles.subtitle}>{subtitle}</Text>
+          </Text>
+        )}
       </View>
     );
   }
@@ -44,6 +55,16 @@ const styles = StyleSheet.create({
     width: rightColWidth,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  title: {
+    marginTop: 10,
+    fontFamily: 'Inter-ExtraBold',
+    fontSize: 24,
+    lineHeight: 28,
+    color: '#151F47',
+  },
+  subtitle: {
+    fontFamily: 'Inter-Light',
   },
 });
 
