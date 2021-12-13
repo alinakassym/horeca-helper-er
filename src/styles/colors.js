@@ -7,3 +7,8 @@ export const PrimaryColors = {
   background: '#F5F8FE',
   white: '#FFFFFF',
 };
+
+export const StatusesColors = {
+  green: '#40C14D',
+  red: '#EC4C47',
+};
