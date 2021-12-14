@@ -13,7 +13,7 @@ export const ProfileHeader = ({title, description, photoUrl}) => {
           <Image style={styles.image} source={{uri: photoUrl}} />
         </View>
       </View>
-      {description && (
+      {description?.length && (
         <Text numberOfLines={3} style={styles.description}>
           {description}
         </Text>
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     backgroundColor: PrimaryColors.white,
   },
   row: {
-    marginBottom: padding,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -60,6 +59,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   description: {
+    marginTop: padding,
     width: width - padding * 2,
     fontFamily: 'Inter-Regular',
     fontSize: 14,
