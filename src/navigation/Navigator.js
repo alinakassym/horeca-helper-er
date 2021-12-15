@@ -34,6 +34,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 // Redux
 import {useSelector} from 'react-redux';
+import {PrimaryColors, StatusesColors} from '../styles/colors';
 
 export const Navigator = () => {
   useSelector(state => {
@@ -43,13 +44,6 @@ export const Navigator = () => {
 
   const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();
-
-  const screenOptions = {
-    headerTintColor: '#185AB7',
-    headerTitleStyle: {
-      color: '#333333',
-    },
-  };
 
   const TabStack = () => {
     return (
@@ -65,8 +59,8 @@ export const Navigator = () => {
         }}
         screenOptions={{
           tabBarShowLabel: false,
-          tabBarActiveTintColor: '#151F47',
-          tabBarInactiveTintColor: '#B9C1CA',
+          tabBarActiveTintColor: PrimaryColors.element,
+          tabBarInactiveTintColor: PrimaryColors.grey2,
           tabBarStyle: {
             // note: don't set height, or set screen-specific heights
             borderTopWidth: 0,
@@ -96,7 +90,7 @@ export const Navigator = () => {
             tabBarBadgeStyle: {
               top: 4,
               left: 0,
-              backgroundColor: '#E74C3C',
+              backgroundColor: StatusesColors.red,
             },
             tabBarBadge: 10,
             tabBarIcon: ({color}) => {
@@ -130,7 +124,6 @@ export const Navigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="Tabs"
-      screenOptions={screenOptions}
       screenListeners={{
         state: e => {
           console.log('state changed', e.data.state.history);
@@ -218,7 +211,13 @@ export const Navigator = () => {
           component={ProfileEditScreen}
         />
         <Stack.Screen name="Jobs" component={JobsScreen} />
-        <Stack.Screen name="Employees" component={EmployeesScreen} />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="Employees"
+          component={EmployeesScreen}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );
