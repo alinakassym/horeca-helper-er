@@ -8,18 +8,19 @@ const propTypes = {
   onPress: PropTypes.func,
   color: PropTypes.string,
   labelColor: PropTypes.string,
+  style: PropTypes.object,
 };
 
 class PrimaryButton extends React.PureComponent {
   render() {
-    const {label, color, labelColor, onPress} = this.props;
+    const {label, color, labelColor, onPress, style} = this.props;
     const btnColor = color || PrimaryColors.brand;
     const btnLabelColor = labelColor || PrimaryColors.white;
     return (
       <TouchableOpacity
         activeOpacity={0.5}
         onPress={onPress}
-        style={[styles.btn, {backgroundColor: btnColor}]}>
+        style={[styles.btn, {backgroundColor: btnColor}, style]}>
         <Text style={[styles.btnLabel, {color: btnLabelColor}]}>{label}</Text>
       </TouchableOpacity>
     );

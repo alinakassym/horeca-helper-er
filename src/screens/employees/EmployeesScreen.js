@@ -7,9 +7,12 @@ import {
   Dimensions,
   ActivityIndicator,
   Platform,
+  SafeAreaView,
 } from 'react-native';
 import {getWorksList} from '../../services/WorksService';
-import {EmployeeCard} from './EmployeeCard';
+import {EmployeeCard} from './components/EmployeeCard';
+import Header from '../../components/Header';
+import {globalStyles} from '../../styles/globalStyles';
 
 const dimensions = Dimensions.get('screen');
 
@@ -38,7 +41,8 @@ export const EmployeesScreen = ({navigation}) => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={globalStyles.container}>
+      <Header goBack navigation={navigation} title={'История сотрудников'} />
       {works && works.length > 0 ? (
         <ScrollView>
           {works.map((item, index) => (
@@ -52,11 +56,11 @@ export const EmployeesScreen = ({navigation}) => {
           ))}
         </ScrollView>
       ) : (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <View style={globalStyles.fullScreenSection}>
           <Text style={styles.text}>No employees yet</Text>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
