@@ -210,7 +210,13 @@ export const Navigator = () => {
           name="ProfileEditScreen"
           component={ProfileEditScreen}
         />
-        <Stack.Screen name="Jobs" component={JobsScreen} />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="Jobs"
+          component={JobsScreen}
+        />
         <Stack.Screen
           options={{
             headerShown: false,

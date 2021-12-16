@@ -9,6 +9,7 @@ import {
   setEmployeesFilter,
   setFilterApplied,
 } from '../../store/slices/employees';
+import Header from '../../components/Header';
 
 export const JobsScreen = ({navigation}) => {
   const [jobs, setJobs] = useState([]);
@@ -56,58 +57,32 @@ export const JobsScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <View style={styles.topSection}>
-        <Text style={styles.title}>Astana</Text>
-        <Text style={styles.title}>123</Text>
-      </View>
-
+      <Header navigation={navigation} goBack title={'Мои вакансии'} />
       <ScrollView>
-        <View style={styles.section}>
-          {jobs &&
-            jobs.map((item, index) => (
-              <JobCard
-                key={index}
-                item={item}
-                onPress={() =>
-                  navigation.navigate('JobEditScreen', {id: item.id})
-                }
-                findRelevant={() =>
-                  apply(item).then(() => {
-                    navigation.navigate('Search');
-                  })
-                }
-              />
-            ))}
-          <View style={styles.btn}>
-            <PrimaryButton
-              onPress={() => navigation.navigate('JobsPostScreen')}
-              label={'Post a job'}
+        {jobs &&
+          jobs.map((item, index) => (
+            <JobCard
+              key={index}
+              item={item}
+              onPress={() =>
+                navigation.navigate('JobEditScreen', {id: item.id})
+              }
+              findRelevant={() =>
+                apply(item).then(() => {
+                  navigation.navigate('Search');
+                })
+              }
             />
-          </View>
+          ))}
+        <View style={styles.btn}>
+          <PrimaryButton
+            onPress={() => navigation.navigate('JobsPostScreen')}
+            label={'Post a job'}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  topSection: {
-    padding: 14,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderBottomColor: '#CCCCCC',
-  },
-  title: {
-    fontFamily: 'Roboto-Medium',
-    fontSize: 18,
-  },
-  section: {
-    paddingTop: 14,
-    paddingLeft: 14,
-    paddingRight: 14,
-  },
-  btn: {
-    marginBottom: 16,
-  },
-});
+const styles = StyleSheet.create({});
