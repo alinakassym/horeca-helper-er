@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View, Text, StyleSheet, SafeAreaView} from 'react-native';
+import {ScrollView, View, StyleSheet, SafeAreaView} from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
-import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {getJobs} from '../../services/JobsService';
 import {JobCard} from './components/JobCard';
 import {useDispatch} from 'react-redux';
@@ -10,6 +9,9 @@ import {
   setFilterApplied,
 } from '../../store/slices/employees';
 import Header from '../../components/Header';
+import {IconAdd} from '../../assets/icons/main/IconAdd';
+import {PrimaryColors} from '../../styles/colors';
+import PlainButton from '../../components/buttons/PlainButton';
 
 export const JobsScreen = ({navigation}) => {
   const [jobs, setJobs] = useState([]);
@@ -74,15 +76,28 @@ export const JobsScreen = ({navigation}) => {
               }
             />
           ))}
-        <View style={styles.btn}>
-          <PrimaryButton
+        <View style={styles.section}>
+          <PlainButton
             onPress={() => navigation.navigate('JobsPostScreen')}
-            label={'Post a job'}
-          />
+            label={'Создать вакансию'}>
+            <View style={styles.icon}>
+              <IconAdd color={PrimaryColors.brand} size={16} width={2} />
+            </View>
+          </PlainButton>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  section: {
+    marginBottom: 24,
+    marginTop: 8,
+    padding: 18,
+    backgroundColor: PrimaryColors.white,
+  },
+  icon: {
+    marginRight: 8,
+  },
+});

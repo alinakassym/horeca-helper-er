@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
+import {PrimaryColors} from '../../styles/colors';
 
 const propTypes = {
   label: PropTypes.string,
@@ -12,7 +13,7 @@ class PlainButton extends React.PureComponent {
   render() {
     const {label, color, onPress} = this.props;
     const children = this.props.children;
-    const btnColor = color ? color : '#185AB7';
+    const btnColor = color ? color : PrimaryColors.brand;
     return (
       <TouchableOpacity
         activeOpacity={0.5}
@@ -27,27 +28,16 @@ class PlainButton extends React.PureComponent {
 
 const styles = StyleSheet.create({
   btn: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 8,
+    padding: 2,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#777777',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.5,
   },
   btnLabel: {
-    paddingVertical: 4,
-    paddingHorizontal: 16,
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 14,
+    lineHeight: 18,
     textAlign: 'center',
-    fontSize: 16,
-    lineHeight: 16,
-    color: '#FFFFFF',
   },
 });
 

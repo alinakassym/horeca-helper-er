@@ -1,8 +1,10 @@
 import React from 'react';
-import {Text, View, Pressable, StyleSheet} from 'react-native';
-import PlainButton from '../../../components/buttons/PlainButton';
-import {IconSearch} from '../../../assets/icons/tabs/IconSearch';
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {PrimaryColors} from '../../../styles/colors';
+import MenuButton from '../../../components/buttons/MenuButton';
 import moment from 'moment';
+import 'moment/locale/ru';
+import { IconSearch } from "../../../assets/icons/tabs/IconSearch";
 
 export const JobCard = ({item, onPress, findRelevant}) => {
   const numberWithSpaces = val => {
@@ -10,96 +12,112 @@ export const JobCard = ({item, onPress, findRelevant}) => {
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     return parts.join('.');
   };
+  moment.locale('ru');
+  const formattedDate = date => {
+    const fd = moment(date).format('DD MMM YYYY');
+    return fd.slice(0, 1).toUpperCase() + fd.substr(1, fd.length - 1);
+  };
+
   return (
-    <View style={styles.card} onPress={onPress}>
-      <Pressable style={[styles.row]} onPress={onPress}>
-        <View style={styles.col}>
-          <Text style={styles.positionTitle}>
-            {item.position.title} {item.schedule && `(${item.schedule.title})`}
-          </Text>
-          {item.salaryMin && item.salaryMax ? (
-            <Text style={styles.salary}>
-              {numberWithSpaces(item.salaryMin)} -{' '}
-              {numberWithSpaces(item.salaryMax)} KZT
-            </Text>
-          ) : item.salaryMin ? (
-            <Text style={styles.salary}>
-              From {numberWithSpaces(item.salaryMin)} KZT
-            </Text>
-          ) : item.salaryMax ? (
-            <Text style={styles.salary}>
-              To {numberWithSpaces(item.salaryMax)} KZT
-            </Text>
-          ) : (
-            false
-          )}
-          {item.city && <Text style={styles.cityTitle}>{item.city.title}</Text>}
-
-          {!!item.description && (
-            <Text style={styles.description}>{item.description}</Text>
-          )}
-          <Text style={styles.createdAt}>
-            Last updated on: {moment(item.updatedAt).format('DD MMM YYYY')}
-          </Text>
+    <>
+      <View style={styles.card}>
+        <View style={[styles.row, styles.spaceBetween]}>
+          <View>
+            <Text style={styles.position}>{item.position.title}</Text>
+            <Text style={styles.location}>{item.city.title_ru}</Text>
+          </View>
+          <MenuButton />
         </View>
-      </Pressable>
-
-      <View style={[styles.row, styles.alignCenter]}>
-        <View style={styles.iconWrapper}>
-          <IconSearch color={'#185AB7'} size={24} width={2} />
-        </View>
-        <PlainButton label={'Find relevant'} onPress={findRelevant} />
+        {item.salaryMin && item.salaryMax ? (
+          <Text style={styles.salary}>
+            {numberWithSpaces(item.salaryMin)} -{' '}
+            {numberWithSpaces(item.salaryMax)} KZT
+          </Text>
+        ) : item.salaryMin ? (
+          <Text style={styles.salary}>
+            от {numberWithSpaces(item.salaryMin)} KZT
+          </Text>
+        ) : item.salaryMax ? (
+          <Text style={styles.salary}>
+            до {numberWithSpaces(item.salaryMax)} KZT
+          </Text>
+        ) : (
+          false
+        )}
+        {item.description && (
+          <Text style={styles.description}>{item.description}</Text>
+        )}
+        <TouchableOpacity activeOpacity={0.7} style={styles.btn}>
+          <IconSearch size={16} width={3} color={PrimaryColors.brand} />
+          <Text style={styles.btnText}>Найти подходящих кандидатов</Text>
+        </TouchableOpacity>
       </View>
-    </View>
+      <Text style={styles.updatedAt}>
+        Обновлено {formattedDate(item.updatedAt)}
+      </Text>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    marginBottom: 16,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: '#eee',
-    borderRadius: 8,
+    marginTop: 8,
+    padding: 20,
+    backgroundColor: PrimaryColors.white,
   },
   row: {
     flexDirection: 'row',
   },
-  col: {
-    flexDirection: 'column',
+  spaceBetween: {
+    justifyContent: 'space-between',
   },
-  alignCenter: {
+  btn: {
+    marginTop: 24,
+    flexDirection: 'row',
     alignItems: 'center',
   },
-  positionTitle: {
-    marginBottom: 8,
-    fontFamily: 'Roboto-Bold',
-    fontSize: 18,
-    color: '#000000',
+  btnText: {
+    marginLeft: 8,
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 14,
+    lineHeight: 20,
+    color: PrimaryColors.brand,
+  },
+  position: {
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 16,
+    lineHeight: 20,
+    color: PrimaryColors.element,
+  },
+  location: {
+    marginTop: 4,
+    fontFamily: 'Inter-Regular',
+    fontSize: 14,
+    lineHeight: 18,
+    color: PrimaryColors.element,
   },
   salary: {
-    marginBottom: 8,
-    color: '#666666',
-  },
-  cityTitle: {
-    marginBottom: 2,
-    color: '#000000',
+    marginTop: 24,
+    fontFamily: 'Inter-Regular',
+    fontSize: 20,
+    lineHeight: 24,
+    color: PrimaryColors.element,
   },
   description: {
-    marginTop: 4,
-    marginBottom: 8,
-    color: '#666666',
+    marginTop: 8,
+    fontFamily: 'Inter-Regular',
+    fontSize: 14,
+    lineHeight: 18,
+    color: PrimaryColors.grey1,
   },
-  createdAt: {
-    marginTop: 4,
-    marginBottom: 16,
-    color: '#666666',
-  },
-  iconWrapper: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 8,
-    height: 30,
-    width: 30,
+  updatedAt: {
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    fontFamily: 'Inter-Regular',
+    fontSize: 13,
+    lineHeight: 16,
+    textAlign: 'center',
+    color: PrimaryColors.grey1,
+    backgroundColor: PrimaryColors.grey4,
   },
 });
