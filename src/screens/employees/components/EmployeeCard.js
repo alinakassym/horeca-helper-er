@@ -3,7 +3,7 @@ import {Image, Text, View, StyleSheet, Dimensions} from 'react-native';
 import moment from 'moment';
 import {PrimaryColors, StatusesColors} from '../../../styles/colors';
 import {IconDot} from '../../../assets/icons/main/IconDot';
-import RatingScale from './RatingScale';
+import RatingScale from '../../../components/RatingScale';
 import PrimaryButton from '../../../components/buttons/PrimaryButton';
 
 const dimensions = Dimensions.get('screen');

@@ -7,9 +7,11 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import {globalStyles} from '../../../styles/globalStyles';
 import moment from 'moment';
-import {IconStar} from '../../../assets/icons/main/IconStar';
+import {PrimaryColors} from '../../../styles/colors';
+import {IconDot} from '../../../assets/icons/main/IconDot';
+import RatingScale from '../../../components/RatingScale';
+import {IconExpandRight} from '../../../assets/icons/main/IconExpandRight';
 
 const dimensions = Dimensions.get('screen');
 
@@ -20,103 +22,126 @@ export const ResumeCard = ({item, onPress}) => {
   const numberWithSpaces = val => {
     let parts = val.toString().split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    return parts.join('.');
+    parts.join('.');
+    parts.push(' ₸');
+    return parts;
   };
 
   return (
-    <Pressable
-      onPress={onPress}
-      style={[styles.section, styles.row, styles.divider]}>
-      <View style={[styles.leftCol]}>
-        <View>
-          <Text style={globalStyles.positionTitle}>{item.position?.title}</Text>
-
-          {item.salary && (
-            <Text style={styles.salary}>
-              {numberWithSpaces(item.salary)} KZT
-            </Text>
-          )}
-          <Text style={globalStyles.title}>
+    <Pressable onPress={onPress} style={styles.card}>
+      <View style={styles.row}>
+        <View style={styles.leftCol}>
+          <Text style={styles.title}>
             {item.firstName} {item.lastName}
-            {item.birthDate && <Text>, {getAge(item.birthDate)} y.o.</Text>}
+            {item.birthDate && `, ${getAge(item.birthDate)}`}
           </Text>
-          <Text style={styles.city}>{item.city?.title}</Text>
-          {!!item.description && (
-            <Text numberOfLines={1} style={globalStyles.caption}>
-              {item.description}
-            </Text>
-          )}
+          <View style={[styles.row, styles.alignCenter]}>
+            {item?.position && item?.city ? (
+              <>
+                <Text style={styles.subtitle}>{item.position.title}</Text>
+                <IconDot color={PrimaryColors.grey2} />
+                <Text style={[styles.subtitle, styles.marginLeft]}>
+                  {item.city.title}
+                </Text>
+              </>
+            ) : item?.position ? (
+              <Text style={styles.subtitle}>{item.position.title}</Text>
+            ) : (
+              item.city && (
+                <Text style={[styles.subtitle]}>{item.city.title}</Text>
+              )
+            )}
+          </View>
+          <RatingScale score={item.avgAvgScore} />
+        </View>
+        <View style={styles.imageWrapper}>
+          <Image style={styles.image} source={{uri: item.photoUrl}} />
         </View>
       </View>
-      <View style={[styles.rightCol, styles.alignCenter]}>
-        <View style={styles.imageWrapper}>
-          <Image style={styles.img} source={{uri: item.photoUrl}} />
+      <View
+        style={[
+          styles.row,
+          styles.mt,
+          styles.alignCenter,
+          styles.justifySpaceBetween,
+        ]}>
+        <View style={styles.leftCol}>
+          <Text style={styles.salary}>{numberWithSpaces(item.salary)}</Text>
         </View>
-        {item.avgAvgScore && (
-          <View style={[styles.row, styles.alignCenter]}>
-            <View style={styles.scoreIcon}>
-              <IconStar color={'#F1C40F'} fillColor={'#F1C40F'} size={18} />
-            </View>
-            <Text>{item.avgAvgScore}</Text>
-          </View>
-        )}
+        <View style={styles.next}>
+          <IconExpandRight size={24} width={1.8} color={PrimaryColors.brand} />
+        </View>
       </View>
     </Pressable>
   );
 };
 
-const imageSize = dimensions.width * 0.16;
+const width = dimensions.width;
+const imageSize = 64;
+const padding = 20;
 
 const styles = StyleSheet.create({
-  section: {
-    padding: 16,
-    width: dimensions.width,
+  card: {
+    marginTop: 8,
+    padding: padding,
+    width: width,
+    backgroundColor: PrimaryColors.white,
+  },
+  mt: {
+    marginTop: 20,
   },
   row: {
     flexDirection: 'row',
   },
-
   alignCenter: {
     alignItems: 'center',
   },
-
+  justifySpaceBetween: {
+    justifyContent: 'space-between',
+  },
   leftCol: {
-    paddingRight: 8,
-    width: dimensions.width - imageSize - 32,
+    width: width - imageSize - padding * 2 - 8,
   },
-
-  rightCol: {
-    width: imageSize,
-    flexDirection: 'column',
-  },
-
   imageWrapper: {
-    marginBottom: 6,
-    height: imageSize,
+    marginLeft: 8,
     width: imageSize,
-    borderRadius: 8,
-    backgroundColor: '#767676',
+    height: imageSize,
+    borderRadius: imageSize,
+    borderWidth: 0.7,
+    borderColor: PrimaryColors.grey3,
     overflow: 'hidden',
   },
-  img: {
-    height: '100%',
+  image: {
     width: '100%',
+    height: '100%',
   },
-  divider: {
-    borderBottomWidth: 1,
-    borderColor: '#F6F6F6',
+  title: {
+    marginBottom: 4,
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 16,
+    lineHeight: 20,
+    color: PrimaryColors.element,
+  },
+  marginLeft: {
+    marginLeft: 8,
+  },
+  subtitle: {
+    marginRight: 8,
+    fontFamily: 'Inter-Regular',
+    fontSize: 14,
+    lineHeight: 18,
+    color: PrimaryColors.element,
   },
   salary: {
-    marginBottom: 8,
-    fontSize: 16,
+    fontFamily: 'Inter-Regular',
+    fontSize: 20,
+    lineHeight: 24,
+    color: PrimaryColors.element,
   },
-  city: {
-    marginBottom: 8,
-    color: '#555555',
-  },
-
-  scoreIcon: {
-    marginRight: 4,
+  next: {
+    marginLeft: 8,
+    width: imageSize,
     alignItems: 'center',
+    overflow: 'hidden',
   },
 });

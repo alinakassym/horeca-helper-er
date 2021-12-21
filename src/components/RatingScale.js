@@ -1,7 +1,7 @@
 import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
-import {IconStar} from '../../../assets/icons/main/IconStar';
-import {PrimaryColors, StatusesColors} from '../../../styles/colors';
+import {IconStar} from '../assets/icons/main/IconStar';
+import {PrimaryColors, StatusesColors} from '../styles/colors';
 import PropTypes from 'prop-types';
 
 const propTypes = {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   icon: {
-    marginRight: 8,
+    marginRight: 3.5,
   },
 });
 

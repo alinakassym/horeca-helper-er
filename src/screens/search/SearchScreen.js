@@ -5,14 +5,15 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
-import {IconFilter} from '../../assets/icons/main/IconFilter';
 import {useSelector} from 'react-redux';
 import {searchEmployees} from '../../services/EmployeesService';
 import {ResumeCard} from './components/ResumeCard';
+import Header from '../../components/Header';
+import {getPositions} from '../../services/DictionariesService';
+import HorizontalFilter from '../../components/HorizontalFilter';
 
 export const SearchScreen = ({navigation}) => {
   const {filter, isFilterApplied} = useSelector(state => {
@@ -20,6 +21,7 @@ export const SearchScreen = ({navigation}) => {
     return employees;
   });
   const [employees, setEmployees] = useState([]);
+  const [positions, setPositions] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const sortBy = {
@@ -34,6 +36,8 @@ export const SearchScreen = ({navigation}) => {
         try {
           const result = await searchEmployees(filter);
           setEmployees(result.data.items);
+          const positionsData = await getPositions();
+          setPositions(positionsData);
           setLoading(false);
         } catch (e) {
           console.log('searchEmployees err:', e);
@@ -53,28 +57,8 @@ export const SearchScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <View style={styles.topSection}>
-        <Text style={styles.title}>Astana</Text>
-        <Text style={styles.title}>123</Text>
-      </View>
-      <View style={globalStyles.topBar}>
-        <TouchableOpacity
-          style={globalStyles.filterBtn}
-          onPress={() => {
-            navigation.navigate('FilterScreen');
-          }}>
-          <IconFilter color={'#185AB7'} size={32} width={1.5} />
-          {isFilterApplied && <View style={globalStyles.filterApplied} />}
-          <Text style={globalStyles.filterBtnRightText}>Filters</Text>
-        </TouchableOpacity>
-
-        <View style={globalStyles.filterBtn}>
-          <Text style={globalStyles.filterBtnLeftText}>
-            Ordered by {sortBy[filter.sortBy]}
-          </Text>
-        </View>
-      </View>
-
+      <Header title={'Поиск'} subtitle={'соискателей'} />
+      <HorizontalFilter items={positions} />
       {employees.length > 0 ? (
         <ScrollView>
           {employees &&
@@ -97,47 +81,4 @@ export const SearchScreen = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  topSection: {
-    padding: 14,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderBottomColor: '#CCCCCC',
-  },
-  title: {
-    fontFamily: 'Roboto-Medium',
-    fontSize: 18,
-    color: '#000000',
-  },
-  section: {
-    paddingTop: 14,
-    paddingLeft: 14,
-    paddingRight: 14,
-  },
-  btn: {
-    marginBottom: 16,
-  },
-  overlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.2)',
-  },
-  wrap: {
-    padding: 16,
-    width: '80%',
-    borderRadius: 8,
-    backgroundColor: '#FFFFFF',
-  },
-  item: {
-    padding: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontFamily: 'Roboto-Medium',
-    fontSize: 18,
-    color: '#666666',
-  },
-});
+const styles = StyleSheet.create({});
