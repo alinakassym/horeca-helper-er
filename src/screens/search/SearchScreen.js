@@ -71,9 +71,7 @@ export const SearchScreen = ({navigation}) => {
           {employees &&
             employees.map((item, index) => (
               <ResumeCard
-                onPress={() =>
-                  navigation.navigate('EmployeeScreen', {id: item.id})
-                }
+                onPress={() => navigation.navigate('Employee', {id: item.id})}
                 key={index}
                 item={item}
               />

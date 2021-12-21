@@ -8,19 +8,10 @@ import PrimaryButton from '../../../components/buttons/PrimaryButton';
 
 const dimensions = Dimensions.get('screen');
 
-export const EmployeeCard = ({item, onPress}) => {
+export const EmployeeCard = ({item}) => {
   const {employee} = item;
   const getAge = birthDate => {
     return moment().diff(birthDate, 'years', false);
-  };
-  const numberWithSpaces = val => {
-    let parts = val.toString().split('.');
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    return parts.join('.');
-  };
-
-  const getFormattedDate = date => {
-    return moment(date).format('MMM YYYY');
   };
 
   return (

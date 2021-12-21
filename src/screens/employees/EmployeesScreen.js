@@ -46,13 +46,7 @@ export const EmployeesScreen = ({navigation}) => {
       {works && works.length > 0 ? (
         <ScrollView>
           {works.map((item, index) => (
-            <EmployeeCard
-              onPress={() =>
-                navigation.navigate('EmployeeWorkScreen', {value: item})
-              }
-              key={index}
-              item={item}
-            />
+            <EmployeeCard key={index} item={item} />
           ))}
         </ScrollView>
       ) : (
