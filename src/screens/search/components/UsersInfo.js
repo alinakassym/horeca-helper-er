@@ -12,7 +12,7 @@ const propTypes = {
   onPress: PropTypes.func,
 };
 
-class OnlineUsers extends React.PureComponent {
+class UsersInfo extends React.PureComponent {
   render() {
     const {usersNumber, onPress} = this.props;
     return (
@@ -59,5 +59,5 @@ const styles = StyleSheet.create({
   },
 });
 
-OnlineUsers.propTypes = propTypes;
-export default OnlineUsers;
+UsersInfo.propTypes = propTypes;
+export default UsersInfo;

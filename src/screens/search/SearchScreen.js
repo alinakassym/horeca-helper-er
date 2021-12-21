@@ -1,13 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {ActivityIndicator, SafeAreaView, ScrollView, View} from 'react-native';
 import {globalStyles} from '../../styles/globalStyles';
 import {useSelector} from 'react-redux';
 import {searchEmployees} from '../../services/EmployeesService';
@@ -16,11 +8,8 @@ import Header from '../../components/Header';
 import {getPositions} from '../../services/DictionariesService';
 import HorizontalFilter from '../../components/HorizontalFilter';
 import OptionsButton from '../../components/buttons/OptionsButton';
-import {IconDot} from '../../assets/icons/main/IconDot';
-import {PrimaryColors, StatusesColors} from '../../styles/colors';
-import {IconWarningCircle} from '../../assets/icons/main/IconWarningCircle';
 import Placeholder from '../../components/Placeholder';
-import OnlineUsers from './components/OnlineUsers';
+import UsersInfo from './components/UsersInfo';
 
 export const SearchScreen = ({navigation}) => {
   const {filter, isFilterApplied} = useSelector(state => {
@@ -66,7 +55,7 @@ export const SearchScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <OnlineUsers usersNumber={usersNumber} />
+      <UsersInfo usersNumber={usersNumber} />
       <Header options title={'Поиск'} subtitle={'соискателей'}>
         <OptionsButton
           onPress={() => {
