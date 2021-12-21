@@ -34,7 +34,7 @@ export const BottomModal = ({
         <Pressable style={styles.overlay} onPress={onClose}>
           <View style={styles.wrap}>
             <CloseButton onPress={onClose} />
-            <Text style={styles.title}>Invite to Job</Text>
+            <Text style={styles.title}>Пригласить соискателя</Text>
             {children}
             <View style={styles.inputSection}>
               <TextInput
