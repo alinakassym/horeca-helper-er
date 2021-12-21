@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {PrimaryColors} from '../../../styles/colors';
 import MenuButton from '../../../components/buttons/MenuButton';
 import moment from 'moment';
 import 'moment/locale/ru';
-import { IconSearch } from "../../../assets/icons/tabs/IconSearch";
+import {IconSearch} from '../../../assets/icons/tabs/IconSearch';
 
 export const JobCard = ({item, onPress, findRelevant}) => {
   const numberWithSpaces = val => {

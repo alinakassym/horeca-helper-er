@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -14,6 +15,12 @@ import {ResumeCard} from './components/ResumeCard';
 import Header from '../../components/Header';
 import {getPositions} from '../../services/DictionariesService';
 import HorizontalFilter from '../../components/HorizontalFilter';
+import OptionsButton from '../../components/buttons/OptionsButton';
+import {IconDot} from '../../assets/icons/main/IconDot';
+import {PrimaryColors, StatusesColors} from '../../styles/colors';
+import {IconWarningCircle} from '../../assets/icons/main/IconWarningCircle';
+import Placeholder from '../../components/Placeholder';
+import OnlineUsers from './components/OnlineUsers';
 
 export const SearchScreen = ({navigation}) => {
   const {filter, isFilterApplied} = useSelector(state => {
@@ -21,6 +28,7 @@ export const SearchScreen = ({navigation}) => {
     return employees;
   });
   const [employees, setEmployees] = useState([]);
+  const [usersNumber, setUsersNumber] = useState(0);
   const [positions, setPositions] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -36,6 +44,7 @@ export const SearchScreen = ({navigation}) => {
         try {
           const result = await searchEmployees(filter);
           setEmployees(result.data.items);
+          setUsersNumber(result.data.total);
           const positionsData = await getPositions();
           setPositions(positionsData);
           setLoading(false);
@@ -57,8 +66,17 @@ export const SearchScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <Header title={'Поиск'} subtitle={'соискателей'} />
-      <HorizontalFilter items={positions} />
+      <OnlineUsers usersNumber={usersNumber} />
+      <Header options title={'Поиск'} subtitle={'соискателей'}>
+        <OptionsButton
+          onPress={() => {
+            navigation.navigate('FilterScreen');
+          }}
+        />
+      </Header>
+      <View style={{height: 60}}>
+        <HorizontalFilter items={positions} />
+      </View>
       {employees.length > 0 ? (
         <ScrollView>
           {employees &&
@@ -73,12 +91,8 @@ export const SearchScreen = ({navigation}) => {
             ))}
         </ScrollView>
       ) : (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={styles.text}>No matches found</Text>
-        </View>
+        <Placeholder placeholderText={'Список соискателей пуст'} />
       )}
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({});
