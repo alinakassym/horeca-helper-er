@@ -6,12 +6,12 @@ import LinearGradient from 'react-native-linear-gradient';
 const propTypes = {
   label: PropTypes.string,
   onPress: PropTypes.func,
-  color: PropTypes.string,
+  style: PropTypes.object,
 };
 
 class GradientButton extends React.PureComponent {
   render() {
-    const {label, onPress} = this.props;
+    const {label, style, onPress} = this.props;
 
     const colors = ['#38B6EC', '#31A0E8', '#2A8BE4'];
     return (
@@ -20,7 +20,7 @@ class GradientButton extends React.PureComponent {
           colors={colors}
           start={{x: 0, y: 0}}
           end={{x: 1, y: 1}}
-          style={[styles.btn]}>
+          style={[styles.btn, style]}>
           <Text style={styles.btnLabel}>{label}</Text>
         </LinearGradient>
       </TouchableOpacity>
