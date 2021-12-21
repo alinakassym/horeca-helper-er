@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import moment from 'moment';
-import {PrimaryColors} from '../../../styles/colors';
+import {PrimaryColors, StatusesColors} from '../../../styles/colors';
 import {IconDot} from '../../../assets/icons/main/IconDot';
 import RatingScale from '../../../components/RatingScale';
 import {IconExpandRight} from '../../../assets/icons/main/IconExpandRight';
@@ -56,6 +56,7 @@ export const ResumeCard = ({item, onPress}) => {
         </View>
         <View style={styles.imageWrapper}>
           <Image style={styles.image} source={{uri: item.photoUrl}} />
+          {item.isActive && <View style={styles.indicator} />}
         </View>
       </View>
       <View
@@ -103,17 +104,30 @@ const styles = StyleSheet.create({
     width: width - imageSize - padding * 2 - 8,
   },
   imageWrapper: {
+    position: 'relative',
     marginLeft: 8,
     width: imageSize,
     height: imageSize,
     borderRadius: imageSize,
     borderWidth: 0.7,
     borderColor: PrimaryColors.grey3,
-    overflow: 'hidden',
   },
   image: {
     width: '100%',
     height: '100%',
+    borderRadius: imageSize,
+    overflow: 'hidden',
+  },
+  indicator: {
+    position: 'absolute',
+    right: 2,
+    bottom: 2,
+    height: 12,
+    width: 12,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: PrimaryColors.white,
+    backgroundColor: StatusesColors.green,
   },
   title: {
     marginBottom: 4,
