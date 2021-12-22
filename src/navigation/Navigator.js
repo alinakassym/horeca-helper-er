@@ -20,6 +20,8 @@ import {NotificationsScreen} from '../screens/notifications/NotificationsScreen'
 // profile screens
 import {ProfileScreen} from '../screens/profile/ProfileScreen';
 import {ProfileEditScreen} from '../screens/profile/ProfileEditScreen';
+// support screens
+import {SupportScreen} from '../screens/support/SupportScreen';
 
 // Icons
 import {IconSearch} from '../assets/icons/tabs/IconSearch';
@@ -215,6 +217,15 @@ export const Navigator = () => {
           }}
           name="Jobs"
           component={JobsScreen}
+        />
+      </Stack.Group>
+
+      {/*SUPPORT SCREENS*/}
+      <Stack.Group>
+        <Stack.Screen
+          name={'Support'}
+          component={SupportScreen}
+          options={{headerShown: false}}
         />
       </Stack.Group>
     </Stack.Navigator>
