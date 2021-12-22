@@ -14,11 +14,11 @@ import {PrimaryColors} from '../../styles/colors';
 
 const dimensions = Dimensions.get('screen');
 
-export const SupportScreen = () => {
+export const SupportScreen = ({navigation}) => {
   const phone = '+7 (747) 414-47-14';
   return (
     <SafeAreaView style={globalStyles.container}>
-      <Header goBack navigation={navigator} title={'Контактная поддержка'} />
+      <Header goBack navigation={navigation} title={'Контактная поддержка'} />
       <View style={[globalStyles.card, styles.row]}>
         <View style={styles.phone}>
           <IconWhatsApp />
