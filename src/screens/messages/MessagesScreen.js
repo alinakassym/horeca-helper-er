@@ -1,10 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, View, SafeAreaView, StyleSheet} from 'react-native';
+
+// styles
 import {globalStyles} from '../../styles/globalStyles';
-import {MessagePreview} from './components/MessagePreview';
-import {getChats, getChatsSearch} from '../../services/ChatService';
-import {MessageSearch} from './components/MessageSearch';
 import {PrimaryColors} from '../../styles/colors';
+
+// components
+import MessagePreview from './components/MessagePreview';
+import {MessageSearch} from './components/MessageSearch';
+
+// services
+import {getChats, getChatsSearch} from '../../services/ChatService';
 
 export const MessagesScreen = ({navigation}) => {
   const [chats, setChats] = useState([]);
@@ -50,7 +56,16 @@ export const MessagesScreen = ({navigation}) => {
       <ScrollView>
         <View style={styles.chats}>
           {chats.map((item, index) => (
-            <MessagePreview key={index} item={item} navigation={navigation} />
+            <MessagePreview
+              key={index}
+              item={item}
+              onPress={() =>
+                navigation.navigate('MessagesChat', {
+                  chatId: item.id,
+                  user: item.employee,
+                })
+              }
+            />
           ))}
         </View>
       </ScrollView>

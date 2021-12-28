@@ -1,80 +1,89 @@
 import React from 'react';
 import {
   View,
-  StyleSheet,
-  Dimensions,
   Image,
   Text,
   Pressable,
+  StyleSheet,
+  Dimensions,
 } from 'react-native';
-import {IconMessageStatus} from '../../../assets/icons/main/IconMessageStatus';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+
+// styles
 import {PrimaryColors} from '../../../styles/colors';
+
+// icons
+import {IconMessageStatus} from '../../../assets/icons/main/IconMessageStatus';
 
 const dimensions = Dimensions.get('screen');
 
-export const MessagePreview = ({item, navigation}) => {
-  const {id, employee, lastMessage, numUnread} = item;
+const propTypes = {
+  item: PropTypes.object,
+  onPress: PropTypes.func,
+};
 
-  const formatDate = date => {
-    return moment(date).calendar(null, {
-      lastWeek: 'DD/MM/YYYY',
-      lastDay: '[Вчера]',
-      sameDay: 'HH:MM',
-      sameElse: 'DD/MM/YYYY',
-    });
-  };
+class MessagePreview extends React.PureComponent {
+  render() {
+    const {item, onPress} = this.props;
+    const {employee, lastMessage, numUnread} = item;
+    const {lastMsgSenderType} = lastMessage;
 
-  const UnreadMessagesCount = () => {
-    return <Text style={styles.unreadMessagesCount}>{numUnread}</Text>;
-  };
+    const formatDate = date => {
+      return moment(date).calendar(null, {
+        lastWeek: 'DD/MM/YYYY',
+        lastDay: '[Вчера]',
+        sameDay: 'HH:MM',
+        sameElse: 'DD/MM/YYYY',
+      });
+    };
 
-  return (
-    <Pressable
-      style={styles.card}
-      onPress={() =>
-        navigation.navigate('MessagesChatScreen', {
-          chatId: id,
-          user: employee,
-        })
-      }>
-      <View style={styles.leftCol}>
-        <View style={styles.imageWrapper}>
-          <Image style={styles.img} source={{uri: employee.photoUrl}} />
+    const UnreadMessagesCount = () => {
+      return <Text style={styles.unreadMessagesCount}>{numUnread}</Text>;
+    };
+
+    return (
+      <Pressable style={styles.card} onPress={onPress}>
+        <View style={styles.leftCol}>
+          <View style={styles.imageWrapper}>
+            <Image style={styles.img} source={{uri: employee.photoUrl}} />
+          </View>
         </View>
-      </View>
-      <View style={styles.rightCol}>
-        <View style={styles.titleRow}>
-          <Text style={styles.title} numberOfLines={1}>
-            {employee.firstName} {employee.lastName}
-          </Text>
-          <Text style={styles.date}>{formatDate(lastMessage.createdAt)}</Text>
-        </View>
-        <View style={[styles.row, styles.spaceBetween]}>
-          {lastMessage.senderType === 'er' ? (
-            <View style={styles.row}>
-              <IconMessageStatus
-                color={
-                  lastMessage.isRead ? PrimaryColors.brand : PrimaryColors.grey1
-                }
-                size={20}
-              />
+        <View style={styles.rightCol}>
+          <View style={styles.titleRow}>
+            <Text style={styles.title} numberOfLines={1}>
+              {employee.firstName} {employee.lastName}
+            </Text>
+            <Text style={styles.date}>{formatDate(lastMessage.createdAt)}</Text>
+          </View>
+          <View style={[styles.row, styles.spaceBetween]}>
+            {lastMsgSenderType === 'er' ? (
+              <View style={styles.row}>
+                <IconMessageStatus
+                  color={
+                    lastMessage.isRead
+                      ? PrimaryColors.brand
+                      : PrimaryColors.grey1
+                  }
+                  size={20}
+                />
+                <Text style={styles.text} numberOfLines={1}>
+                  {lastMessage.body}
+                </Text>
+              </View>
+            ) : (
               <Text style={styles.text} numberOfLines={1}>
                 {lastMessage.body}
               </Text>
-            </View>
-          ) : (
-            <Text style={styles.text} numberOfLines={1}>
-              {lastMessage.body}
-            </Text>
-          )}
-          {numUnread > 0 && <UnreadMessagesCount />}
+            )}
+            {numUnread > 0 && <UnreadMessagesCount />}
+          </View>
+          <View style={styles.divider} />
         </View>
-        <View style={styles.divider} />
-      </View>
-    </Pressable>
-  );
-};
+      </Pressable>
+    );
+  }
+}
 
 const imageSize =
   dimensions.width * 0.15 > 60
@@ -173,3 +182,6 @@ const styles = StyleSheet.create({
     color: PrimaryColors.white,
   },
 });
+
+MessagePreview.propTypes = propTypes;
+export default MessagePreview;

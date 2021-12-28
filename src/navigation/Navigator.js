@@ -196,7 +196,7 @@ export const Navigator = () => {
       {/*MESSAGES SCREENS*/}
       <Stack.Group>
         <Stack.Screen
-          name={'MessagesChatScreen'}
+          name={'MessagesChat'}
           component={MessagesChatScreen}
           options={{headerShown: false}}
         />

@@ -1,10 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView, View, Text, StyleSheet} from 'react-native';
-import Header from '../../components/Header';
+
+// styles
 import {globalStyles} from '../../styles/globalStyles';
-import {getNotifications} from '../../services/NotificationsService';
+
+// components
+import Header from '../../components/Header';
 import ConfirmationRequest from './components/ConfirmationRequest';
 import JobApply from './components/JobApply';
+
+// services
+import {getNotifications} from '../../services/NotificationsService';
 import {confirmWork} from '../../services/WorksService';
 import {getChatsLookup} from '../../services/ChatService';
 
@@ -35,7 +41,7 @@ export const NotificationsScreen = ({navigation}) => {
     console.log(employee.id);
     try {
       const chatId = await getChatsLookup(employee.id);
-      navigation.navigate('MessagesChatScreen', {
+      navigation.navigate('MessagesChat', {
         chatId: chatId,
         user: employee,
       });
@@ -55,11 +61,12 @@ export const NotificationsScreen = ({navigation}) => {
       {notifications && notifications.length > 0 ? (
         <ScrollView>
           {notifications.map((item, index) => {
+            const {work} = item;
             if (item.type === 'WORK_CREATE') {
               return (
                 <ConfirmationRequest
-                  onConfirm={() => confirmDenyWork(item.work.id, true)}
-                  onDeny={() => confirmDenyWork(item.work.id, false)}
+                  onConfirm={() => confirmDenyWork(work.id, true)}
+                  onDeny={() => confirmDenyWork(work.id, false)}
                   key={index}
                   item={item}
                 />

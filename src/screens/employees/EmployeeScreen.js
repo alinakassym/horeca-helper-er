@@ -1,31 +1,39 @@
 import React, {useEffect, useState} from 'react';
 import {
+  SafeAreaView,
   ScrollView,
   ActivityIndicator,
-  StyleSheet,
   Text,
   View,
+  StyleSheet,
   Dimensions,
-  SafeAreaView,
 } from 'react-native';
 import moment from 'moment';
-import {getEmployeeById} from '../../services/EmployeesService';
-import {BottomModal} from './components/BottomModal';
-import {ModalSelect} from '../../components/selects/ModalSelect';
-import {getJobs, postJobInvite} from '../../services/JobsService';
-import {getChatsLookup} from '../../services/ChatService';
+
+// styles
 import {globalStyles} from '../../styles/globalStyles';
+import {PrimaryColors, StatusesColors} from '../../styles/colors';
+
+// icons
+import {IconPhone} from '../../assets/icons/main/IconPhone';
+import {IconMessages} from '../../assets/icons/tabs/IconMessages';
+
+// components
 import Header from '../../components/Header';
 import UserCard from './components/UserCard';
 import Tabs from '../../components/Tabs';
 import EmployeeInfo from './components/EmployeeInfo';
-import {PrimaryColors, StatusesColors} from '../../styles/colors';
-import {WorkList} from './components/WorkList';
-import LinearGradient from 'react-native-linear-gradient';
 import GradientButton from '../../components/buttons/GradientButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
-import {IconPhone} from '../../assets/icons/main/IconPhone';
-import {IconMessages} from '../../assets/icons/tabs/IconMessages';
+import {BottomModal} from './components/BottomModal';
+import {ModalSelect} from '../../components/selects/ModalSelect';
+import {WorkList} from './components/WorkList';
+import LinearGradient from 'react-native-linear-gradient';
+
+// services
+import {getEmployeeById} from '../../services/EmployeesService';
+import {getJobs, postJobInvite} from '../../services/JobsService';
+import {getChatsLookup} from '../../services/ChatService';
 
 const dimensions = Dimensions.get('screen');
 
@@ -139,7 +147,11 @@ export const EmployeeScreen = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <Header goBack navigation={navigation} title={'Подробная информация'} />
+      <Header
+        goBack
+        onClose={() => navigation.goBack()}
+        title={'Подробная информация'}
+      />
       <UserCard
         photoUrl={item.photoUrl}
         firstName={item.firstName}
@@ -230,7 +242,7 @@ export const EmployeeScreen = ({route, navigation}) => {
                 label={'Перейти в чат'}
                 color={PrimaryColors.element}
                 onPress={() =>
-                  navigation.navigate('MessagesChatScreen', {
+                  navigation.navigate('MessagesChat', {
                     chatId: chatId,
                     user: item,
                   })

@@ -134,7 +134,10 @@ export const EmployeeWorkScreen = ({route, navigation}) => {
       {item.employeeReview ? (
         <EmployeeReview item={item.employeeReview} />
       ) : (
-        <EmployeeReviewForm workId={item.id} navigation={navigation} />
+        <EmployeeReviewForm
+          workId={item.id}
+          onClose={() => navigation.goBack()}
+        />
       )}
     </ScrollView>
   );

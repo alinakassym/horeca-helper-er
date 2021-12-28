@@ -3,21 +3,27 @@ import {
   ScrollView,
   View,
   Text,
-  StyleSheet,
-  Dimensions,
   Image,
   TextInput,
   ActivityIndicator,
   SafeAreaView,
+  StyleSheet,
+  Dimensions,
 } from 'react-native';
-import {globalStyles} from '../../styles/globalStyles';
-import {getChatById, postMessage} from '../../services/ChatService';
-import Header from '../../components/Header';
-import {MessageBubble} from './components/MessageBubble';
-import SendButton from '../../components/buttons/SendButton';
 import lodash from 'lodash';
 import moment from 'moment';
+
+// styles
+import {globalStyles} from '../../styles/globalStyles';
 import {PrimaryColors} from '../../styles/colors';
+
+// components
+import Header from '../../components/Header';
+import SendButton from '../../components/buttons/SendButton';
+import {MessageBubble} from './components/MessageBubble';
+
+// services
+import {getChatById, postMessage} from '../../services/ChatService';
 
 const dimensions = Dimensions.get('screen');
 
@@ -118,15 +124,17 @@ export const MessagesChatScreen = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <Header goBack navigation={navigation}>
-        <View style={styles.imageWrapper}>
-          <Image style={styles.img} source={{uri: user.photoUrl}} />
-        </View>
-        <View>
-          <Text style={styles.userName} numberOfLines={1}>
-            {user.firstName} {user.lastName}
-          </Text>
-        </View>
+      <Header goBack onClose={() => navigation.goBack()}>
+        <>
+          <View style={styles.imageWrapper}>
+            <Image style={styles.img} source={{uri: user.photoUrl}} />
+          </View>
+          <View>
+            <Text style={styles.userName} numberOfLines={1}>
+              {user.firstName} {user.lastName}
+            </Text>
+          </View>
+        </>
       </Header>
       <ScrollView
         style={styles.scrollView}
@@ -190,6 +198,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   imageWrapper: {
+    marginLeft: 16,
     marginRight: 12,
     height: imageSize,
     width: imageSize,

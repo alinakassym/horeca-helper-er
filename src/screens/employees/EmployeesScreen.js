@@ -1,20 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import {
+  SafeAreaView,
   View,
   Text,
-  StyleSheet,
   ScrollView,
-  Dimensions,
   ActivityIndicator,
-  Platform,
-  SafeAreaView,
+  StyleSheet,
 } from 'react-native';
-import {getWorksList} from '../../services/WorksService';
-import {EmployeeCard} from './components/EmployeeCard';
-import Header from '../../components/Header';
+
+// styles
 import {globalStyles} from '../../styles/globalStyles';
 
-const dimensions = Dimensions.get('screen');
+// components
+import Header from '../../components/Header';
+import {EmployeeCard} from './components/EmployeeCard';
+
+// services
+import {getWorksList} from '../../services/WorksService';
 
 export const EmployeesScreen = ({navigation}) => {
   const [works, setWorks] = useState();
@@ -34,7 +36,7 @@ export const EmployeesScreen = ({navigation}) => {
 
   if (loading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={globalStyles.fullScreenSection}>
         <ActivityIndicator size="large" />
       </View>
     );
@@ -42,7 +44,11 @@ export const EmployeesScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <Header goBack navigation={navigation} title={'История сотрудников'} />
+      <Header
+        goBack
+        onClose={() => navigation.goBack()}
+        title={'История сотрудников'}
+      />
       {works && works.length > 0 ? (
         <ScrollView>
           {works.map((item, index) => (
@@ -59,11 +65,6 @@ export const EmployeesScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: Platform.OS === 'ios' ? 60 : 16,
-    flex: 1,
-    width: dimensions.width,
-  },
   text: {
     fontFamily: 'Roboto-Medium',
     fontSize: 18,

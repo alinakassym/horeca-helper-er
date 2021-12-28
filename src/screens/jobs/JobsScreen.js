@@ -1,17 +1,27 @@
 import React, {useState, useEffect} from 'react';
 import {ScrollView, View, StyleSheet, SafeAreaView} from 'react-native';
+
+// styles
 import {globalStyles} from '../../styles/globalStyles';
-import {getJobs} from '../../services/JobsService';
+import {PrimaryColors} from '../../styles/colors';
+
+// icons
+import {IconAdd} from '../../assets/icons/main/IconAdd';
+
+// components
+import Header from '../../components/Header';
+import PlainButton from '../../components/buttons/PlainButton';
 import {JobCard} from './components/JobCard';
+
+// services
+import {getJobs} from '../../services/JobsService';
+
+// store
 import {useDispatch} from 'react-redux';
 import {
   setEmployeesFilter,
   setFilterApplied,
 } from '../../store/slices/employees';
-import Header from '../../components/Header';
-import {IconAdd} from '../../assets/icons/main/IconAdd';
-import {PrimaryColors} from '../../styles/colors';
-import PlainButton from '../../components/buttons/PlainButton';
 
 export const JobsScreen = ({navigation}) => {
   const [jobs, setJobs] = useState([]);
@@ -59,7 +69,11 @@ export const JobsScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <Header navigation={navigation} goBack title={'Мои вакансии'} />
+      <Header
+        onClose={() => navigation.goBack()}
+        goBack
+        title={'Мои вакансии'}
+      />
       <ScrollView>
         {jobs &&
           jobs.map((item, index) => (
