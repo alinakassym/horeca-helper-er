@@ -9,18 +9,27 @@ import {
   Modal,
   SafeAreaView,
 } from 'react-native';
-import {globalStyles} from '../../styles/globalStyles';
-import {AuthContext} from '../../store/context';
-import {getCompany, updateCompanyPhoto} from '../../services/CompaniesService';
 
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+// styles
+import {globalStyles} from '../../styles/globalStyles';
+import {PrimaryColors, StatusesColors} from '../../styles/colors';
+
+// icons
+import {IconExpandRight} from '../../assets/icons/main/IconExpandRight';
+import {IconSignOut} from '../../assets/icons/main/IconSignOut';
+import {IconFire} from '../../assets/icons/main/IconFire';
+
+// components
 import {ProfileHeader} from './components/ProfileHeader';
 import {ProfileInfo} from './components/ProfileInfo';
 import LightGradientButton from '../../components/buttons/LightGradientButton';
-import {IconFire} from '../../assets/icons/main/IconFire';
-import {IconExpandRight} from '../../assets/icons/main/IconExpandRight';
-import {IconSignOut} from '../../assets/icons/main/IconSignOut';
-import {PrimaryColors, StatusesColors} from '../../styles/colors';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
+// store
+import {AuthContext} from '../../store/context';
+
+// services
+import {getCompany, updateCompanyPhoto} from '../../services/CompaniesService';
 
 export const ProfileScreen = ({navigation}) => {
   const {signOut} = React.useContext(AuthContext);
@@ -179,7 +188,9 @@ export const ProfileScreen = ({navigation}) => {
             <Text style={styles.listItemTitle}>Контактная поддержка</Text>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.listItem}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('FAQ')}
+            style={styles.listItem}>
             <Text style={styles.listItemTitle}>Вопросы и ответы</Text>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
