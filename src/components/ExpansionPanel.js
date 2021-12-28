@@ -27,9 +27,8 @@ class ExpansionPanel extends React.PureComponent {
     return (
       <React.Fragment>
         {items.map((item, index) => (
-          <>
+          <React.Fragment key={index}>
             <Pressable
-              key={index}
               style={styles.panelHeader}
               onPress={() => {
                 if (index === currentItem) {
@@ -39,17 +38,17 @@ class ExpansionPanel extends React.PureComponent {
                 }
               }}>
               <Text style={styles.title}>{item.title}</Text>
-              {index == currentItem ? (
+              {index === currentItem ? (
                 <IconExpandUp size={16} color={PrimaryColors.element} />
               ) : (
                 <IconExpandDown size={16} color={PrimaryColors.element} />
               )}
             </Pressable>
-            {index == currentItem && (
+            {index === currentItem && (
               <Text style={styles.body}>{item.body}</Text>
             )}
             {index < items.length && <View style={styles.divider} />}
-          </>
+          </React.Fragment>
         ))}
       </React.Fragment>
     );
