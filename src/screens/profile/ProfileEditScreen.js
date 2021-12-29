@@ -1,15 +1,26 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, TextInput, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
+// styles
 import {globalStyles} from '../../styles/globalStyles';
-import PrimaryButton from '../../components/buttons/PrimaryButton';
+import {PrimaryColors} from '../../styles/colors';
+
+// components
+import Header from '../../components/Header';
+import Input from '../../components/Input';
+import ProfilePhotoPlaceholder from './components/ProfilePhotoPlaceholder';
+import ModalSelect from '../../components/selects/ModalSelect';
+import MultilineInput from '../../components/MultilineInput';
+import GradientButton from '../../components/buttons/GradientButton';
+import LinearGradient from 'react-native-linear-gradient';
+
+// services
 import {updateCompany} from '../../services/CompaniesService';
 import {getCategories} from '../../services/DictionariesService';
-import {ModalSelect} from '../../components/selects/ModalSelect';
 
 export const ProfileEditScreen = ({route, navigation}) => {
-  // console.log('ProfileEdit Screen params', route.params);
-
+  const [isFocused, setIsFocused] = useState(false);
   const [company, setCompany] = useState(route.params.value);
   const [categories, setCategories] = useState([]);
 
@@ -46,78 +57,108 @@ export const ProfileEditScreen = ({route, navigation}) => {
   }, [navigation]);
 
   return (
-    <KeyboardAwareScrollView
-      style={styles.container}
-      enableResetScrollToCoords={false}>
-      <Text style={globalStyles.label}>Name</Text>
-      <TextInput
-        style={globalStyles.primaryInput}
-        onChangeText={val => {
-          setCompany({...company, title: val});
-        }}
-        value={company.title}
+    <SafeAreaView style={globalStyles.container}>
+      <Header
+        goBack
+        onClose={() => navigation.goBack()}
+        title={'Профильные данные'}
       />
+      <KeyboardAwareScrollView
+        style={styles.container}
+        enableResetScrollToCoords={false}>
+        <ProfilePhotoPlaceholder />
 
-      <ModalSelect
-        label={'Category'}
-        onChangeText={val => {
-          setCompany({...company, category: val});
-        }}
-        value={company}
-        valueKey={'category'}
-        items={categories}
-        itemTitle={'title'}
-      />
+        {/*Название заведения*/}
+        <Input
+          label={'Название заведения'}
+          onChangeText={val => {
+            setCompany({...company, title: val});
+          }}
+          value={company.title}
+          onFocus={val => setIsFocused(val)}
+          onBlur={val => setIsFocused(val)}
+        />
 
-      <Text style={globalStyles.label}>Address</Text>
-      <TextInput
-        style={globalStyles.primaryInput}
-        onChangeText={val => {
-          setCompany({...company, address: val});
-        }}
-        value={company.address}
-      />
+        {/*Категория*/}
+        <ModalSelect
+          modalTitle={'Выбор категории'}
+          label={'Категория'}
+          value={company.category}
+          items={categories}
+          itemText={'title_ru'}
+          onSaveSelection={val => setCompany({...company, category: val})}
+        />
 
-      <Text style={globalStyles.label}>Contact info</Text>
-      <TextInput
-        style={globalStyles.primaryInput}
-        onChangeText={val => {
-          setCompany({...company, contactInfo: val});
-        }}
-        value={company.contactInfo}
-      />
+        {/*Адрес*/}
+        <Input
+          label={'Адрес'}
+          onChangeText={val => {
+            setCompany({...company, address: val});
+          }}
+          value={company.address}
+          onFocus={val => setIsFocused(val)}
+          onBlur={val => setIsFocused(val)}
+        />
 
-      <Text style={globalStyles.label}>E-mail</Text>
-      <TextInput
-        style={globalStyles.primaryInput}
-        onChangeText={val => {
-          setCompany({...company, email: val});
-        }}
-        value={company.email}
-      />
+        {/*Номер телефона*/}
+        <Input
+          label={'Номер телефона'}
+          onChangeText={val => {
+            setCompany({...company, contactInfo: val});
+          }}
+          value={company.contactInfo}
+          onFocus={val => setIsFocused(val)}
+          onBlur={val => setIsFocused(val)}
+        />
 
-      <Text style={globalStyles.label}>Description</Text>
-      <TextInput
-        multiline={true}
-        style={[globalStyles.primaryInput, globalStyles.multiline]}
-        onChangeText={val => {
-          setCompany({...company, description: val});
-        }}
-        value={company.description}
-      />
+        {/*Электронная почта*/}
+        <Input
+          label={'Электронная почта'}
+          onChangeText={val => {
+            setCompany({...company, email: val});
+          }}
+          value={company.email}
+          onFocus={val => setIsFocused(val)}
+          onBlur={val => setIsFocused(val)}
+        />
 
-      <View style={styles.btn}>
-        <PrimaryButton label={'Save'} onPress={() => save()} />
-      </View>
-    </KeyboardAwareScrollView>
+        {/*Описание*/}
+        <MultilineInput
+          label={'Описание'}
+          value={company.description}
+          onChangeText={val => {
+            setCompany({...company, description: val});
+          }}
+          marginBottom={100}
+          onInputFocus={val => {
+            setIsFocused(val);
+          }}
+        />
+      </KeyboardAwareScrollView>
+      {!isFocused && (
+        <LinearGradient
+          colors={[
+            'rgba(255, 255, 255, 0.2)',
+            'rgba(255, 255, 255, 0.9)',
+            'rgba(255, 255, 255, 1)',
+          ]}
+          style={styles.btn}>
+          <GradientButton label={'Save'} onPress={() => save()} />
+        </LinearGradient>
+      )}
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    paddingHorizontal: 20,
+    backgroundColor: PrimaryColors.white,
   },
   btn: {
-    marginBottom: 42,
+    position: 'absolute',
+    bottom: 0,
+    padding: 20,
+    width: '100%',
   },
 });

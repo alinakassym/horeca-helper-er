@@ -57,7 +57,7 @@ class ModalSelect extends React.PureComponent {
             <Text style={styles.valueText}>{value[itemText]}</Text>
           </Pressable>
           <Pressable onPress={onClear} style={styles.clearBtn}>
-            <IconClose size={20} color={PrimaryColors.grey1} />
+            <IconClose size={16} color={PrimaryColors.grey1} />
           </Pressable>
         </View>
       );
@@ -169,8 +169,8 @@ const styles = StyleSheet.create({
   },
   clearBtn: {
     position: 'absolute',
-    right: 0,
-    bottom: 10,
+    right: 4,
+    top: 22,
   },
   blockPlaceholder: {
     marginBottom: 20,

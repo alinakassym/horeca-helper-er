@@ -146,7 +146,7 @@ export const ProfileScreen = ({navigation}) => {
         <View style={styles.section}>
           <LightGradientButton
             onPress={() => {
-              navigation.navigate('ProfileEditScreen', {
+              navigation.navigate('ProfileEdit', {
                 value: company,
               });
             }}

@@ -45,10 +45,10 @@ class Header extends React.PureComponent {
         ) : options ? (
           <View
             style={[styles.headerSection, styles.optionsHeaderSection, style]}>
-            <Text style={[styles.optionsRightCol, styles.title]}>
+            <Text style={[styles.optionsLeftCol, styles.title]}>
               {title} <Text style={styles.subtitle}>{subtitle}</Text>
             </Text>
-            <View style={styles.optionsLeftCol}>{children}</View>
+            <View style={styles.optionsRightCol}>{children}</View>
           </View>
         ) : modal ? (
           <View style={[styles.modalHeaderSection, style]}>
@@ -112,13 +112,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  optionsRightCol: {
-    width: rightColWidth - 48,
+  optionsLeftCol: {
+    width: rightColWidth,
     flexDirection: 'row',
     alignItems: 'center',
   },
-  optionsLeftCol: {
-    width: leftColWidth + 40,
+  optionsRightCol: {
+    width: leftColWidth - 8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
