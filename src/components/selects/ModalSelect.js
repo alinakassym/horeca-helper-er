@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Pressable,
   TouchableOpacity,
@@ -6,124 +6,213 @@ import {
   View,
   Modal,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
-import {globalStyles} from '../../styles/globalStyles';
+import PropTypes from 'prop-types';
+import {PrimaryColors} from '../../styles/colors';
 import {IconClose} from '../../assets/icons/main/IconClose';
+import Header from '../Header';
+import GradientButton from '../buttons/GradientButton';
 
-export const ModalSelect = ({
-  required,
-  label,
-  value,
-  valueKey,
-  items,
-  itemTitle,
-  placeholder,
-  onSelect,
-}) => {
-  const [visible, setVisible] = useState(false);
-  const [item, setItem] = useState(value[valueKey]);
-
-  const placeholderText = placeholder ? placeholder : 'Select';
-
-  const saveHandler = selectedItem => {
-    setItem(selectedItem);
-    setVisible(false);
-    onSelect(selectedItem);
-  };
-
-  const clearValue = val => {
-    setItem(val);
-    onSelect(val);
-    setVisible(false);
-  };
-
-  const ValueSection = () => {
-    return (
-      <View style={styles.valueSection}>
-        <Pressable
-          onPress={() => {
-            setVisible(true);
-          }}>
-          <Text style={globalStyles.select}>{item[itemTitle]}</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            clearValue(null);
-          }}
-          style={styles.clearBtn}>
-          <IconClose color={'#898989'} />
-        </Pressable>
-      </View>
-    );
-  };
-
-  const PlaceHolder = () => {
-    return (
-      <Pressable
-        onPress={() => {
-          setVisible(true);
-        }}>
-        {required ? (
-          <Text style={[globalStyles.select, {color: '#E74C3C'}]}>
-            {placeholderText}
-          </Text>
-        ) : (
-          <Text style={globalStyles.select}>{placeholderText}</Text>
-        )}
-      </Pressable>
-    );
-  };
-
-  return (
-    <React.Fragment>
-      <View>
-        <Text style={globalStyles.label}>{label}</Text>
-        {value[valueKey] ? <ValueSection /> : <PlaceHolder />}
-      </View>
-      <Modal visible={visible} animationType="fade" transparent={true}>
-        <Pressable style={styles.overlay} onPress={() => setVisible(false)}>
-          <View style={styles.wrap}>
-            {items.map((listItem, index) => (
-              <TouchableOpacity
-                style={styles.item}
-                key={index}
-                onPress={() => {
-                  saveHandler(listItem);
-                }}>
-                <Text style={globalStyles.text}>{listItem[itemTitle]}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </Pressable>
-      </Modal>
-    </React.Fragment>
-  );
+const propTypes = {
+  label: PropTypes.string,
+  modalTitle: PropTypes.string,
+  value: PropTypes.object,
+  itemText: PropTypes.string,
+  items: PropTypes.array,
+  onSaveSelection: PropTypes.func,
+  onClear: PropTypes.func,
 };
+
+const dimensions = Dimensions.get('screen');
+
+class ModalSelect extends React.PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      modal: false,
+      activeItem: null,
+    };
+  }
+  render() {
+    const {
+      label,
+      modalTitle,
+      value,
+      itemText,
+      items,
+      onSaveSelection,
+      onClear,
+    } = this.props;
+    const {modal, activeItem} = this.state;
+
+    const ValueSection = () => {
+      return (
+        <View style={styles.block}>
+          <Text style={styles.label}>{label}</Text>
+          <Pressable
+            onPress={() => {
+              this.setState({...this.state, modal: true, activeItem: value});
+            }}>
+            <Text style={styles.valueText}>{value[itemText]}</Text>
+          </Pressable>
+          <Pressable onPress={onClear} style={styles.clearBtn}>
+            <IconClose size={20} color={PrimaryColors.grey1} />
+          </Pressable>
+        </View>
+      );
+    };
+
+    const PlaceHolder = () => {
+      return (
+        <View style={styles.blockPlaceholder}>
+          <Pressable
+            onPress={() => {
+              this.setState({...this.state, modal: true});
+            }}>
+            <Text style={styles.placeholderText}>{label}</Text>
+          </Pressable>
+        </View>
+      );
+    };
+
+    return (
+      <React.Fragment>
+        {value[itemText] ? <ValueSection /> : <PlaceHolder />}
+        <Modal visible={modal} animationType="fade" transparent={true}>
+          <Pressable
+            style={styles.overlay}
+            onPress={() => {
+              this.setState({...this.state, modal: false});
+            }}>
+            <View style={styles.wrap}>
+              <Header
+                onClose={() => this.setState({...this.state, modal: false})}
+                modal
+                title={modalTitle}
+              />
+              <View style={styles.itemsBlock}>
+                {items.map((listItem, index) => (
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    style={styles.item}
+                    key={index}
+                    onPress={() =>
+                      this.setState({...this.state, activeItem: listItem})
+                    }>
+                    {activeItem?.id === listItem?.id ? (
+                      <View style={styles.radioBtnActive} />
+                    ) : (
+                      <View style={styles.radioBtn} />
+                    )}
+                    <Text style={styles.itemText}>{listItem[itemText]}</Text>
+                  </TouchableOpacity>
+                ))}
+                <GradientButton
+                  onPress={() => {
+                    onSaveSelection(activeItem);
+                    this.setState({...this.state, modal: false});
+                  }}
+                  label={'Сохранить'}
+                />
+              </View>
+            </View>
+          </Pressable>
+        </Modal>
+      </React.Fragment>
+    );
+  }
+}
+
+const width = dimensions.width;
 
 const styles = StyleSheet.create({
   overlay: {
+    position: 'relative',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.2)',
   },
   wrap: {
-    padding: 16,
-    width: '80%',
-    borderRadius: 8,
-    backgroundColor: '#FFFFFF',
+    position: 'absolute',
+    bottom: 0,
+    width: width,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    backgroundColor: PrimaryColors.white,
+    overflow: 'hidden',
   },
-  item: {
-    padding: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
+  itemsBlock: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
   },
-  valueSection: {
+  block: {
     position: 'relative',
+    marginBottom: 20,
+    borderBottomWidth: 1.5,
+    borderBottomColor: PrimaryColors.element,
+  },
+  label: {
+    marginBottom: 6,
+    fontFamily: 'Inter-Regular',
+    fontSize: 12,
+    lineHeight: 14,
+    color: PrimaryColors.grey1,
+  },
+  valueText: {
+    marginBottom: 10,
+    fontFamily: 'Inter-Regular',
+    fontSize: 16,
+    lineHeight: 20,
+    color: PrimaryColors.element,
   },
   clearBtn: {
     position: 'absolute',
-    right: 11,
-    top: 12.5,
+    right: 0,
+    bottom: 10,
+  },
+  blockPlaceholder: {
+    marginBottom: 20,
+    borderBottomWidth: 1.5,
+    borderBottomColor: PrimaryColors.grey3,
+  },
+  placeholderText: {
+    marginTop: 20,
+    marginBottom: 10,
+    fontFamily: 'Inter-Regular',
+    fontSize: 16,
+    lineHeight: 20,
+    color: PrimaryColors.grey2,
+  },
+  item: {
+    marginBottom: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  radioBtn: {
+    marginRight: 8,
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    borderColor: PrimaryColors.grey2,
+    borderWidth: 1,
+  },
+  radioBtnActive: {
+    marginRight: 8,
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    borderColor: PrimaryColors.brand,
+    borderWidth: 6,
+  },
+  itemText: {
+    fontFamily: 'Inter-Medium',
+    fontSize: 14,
+    lineHeight: 18,
+    color: PrimaryColors.element,
   },
 });
+
+ModalSelect.propTypes = propTypes;
+export default ModalSelect;
