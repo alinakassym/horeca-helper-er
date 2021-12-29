@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {
+  Modal,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 // styles
@@ -15,11 +22,17 @@ import MultilineInput from '../../components/MultilineInput';
 import GradientButton from '../../components/buttons/GradientButton';
 import LinearGradient from 'react-native-linear-gradient';
 
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 // services
-import {updateCompany} from '../../services/CompaniesService';
+import {
+  updateCompany,
+  updateCompanyPhoto,
+} from '../../services/CompaniesService';
 import {getCategories} from '../../services/DictionariesService';
+import ProfilePhoto from './components/ProfilePhoto';
 
 export const ProfileEditScreen = ({route, navigation}) => {
+  const [open, setOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [company, setCompany] = useState(route.params.value);
   const [categories, setCategories] = useState([]);
@@ -45,6 +58,50 @@ export const ProfileEditScreen = ({route, navigation}) => {
     }
   };
 
+  const openCamera = async () => {
+    let options = {
+      storageOption: {
+        path: 'images',
+        mediaType: 'photo',
+      },
+    };
+    launchCamera(options, response => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        updateCompanyPhoto(response.assets[0]).then(r => {
+          setCompany(r.data);
+        });
+      }
+    });
+  };
+
+  const openGallery = () => {
+    let options = {
+      storageOption: {
+        path: 'images',
+        skipBackup: true,
+      },
+    };
+    launchImageLibrary(options, response => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        updateCompanyPhoto(response.assets[0]).then(r => {
+          setCompany(r.data);
+        });
+      }
+    });
+  };
+
   useEffect(() => {
     return navigation.addListener('focus', async () => {
       try {
@@ -58,6 +115,28 @@ export const ProfileEditScreen = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
+      <Modal visible={open} animationType="slide" transparent={true}>
+        <TouchableOpacity style={styles.overlay} onPress={() => setOpen(false)}>
+          <View style={styles.wrap}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => {
+                openGallery();
+                setOpen(false);
+              }}>
+              <Text style={globalStyles.text}>Open Gallery</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => {
+                openCamera();
+                setOpen(false);
+              }}>
+              <Text style={globalStyles.text}>Open Camera</Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+      </Modal>
       <Header
         goBack
         onClose={() => navigation.goBack()}
@@ -66,7 +145,14 @@ export const ProfileEditScreen = ({route, navigation}) => {
       <KeyboardAwareScrollView
         style={styles.container}
         enableResetScrollToCoords={false}>
-        <ProfilePhotoPlaceholder />
+        {company.photoUrl ? (
+          <ProfilePhoto
+            onPress={() => setOpen(true)}
+            photoUrl={company.photoUrl}
+          />
+        ) : (
+          <ProfilePhotoPlaceholder onPress={() => setOpen(true)} />
+        )}
 
         {/*Название заведения*/}
         <Input
@@ -160,5 +246,23 @@ const styles = StyleSheet.create({
     bottom: 0,
     padding: 20,
     width: '100%',
+  },
+
+  overlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.2)',
+  },
+  wrap: {
+    padding: 16,
+    width: '80%',
+    borderRadius: 8,
+    backgroundColor: PrimaryColors.white,
+  },
+  item: {
+    padding: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

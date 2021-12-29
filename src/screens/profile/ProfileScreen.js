@@ -2,12 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
+  Switch,
+  SafeAreaView,
+  TouchableOpacity,
   ScrollView,
   StyleSheet,
-  Switch,
-  TouchableOpacity,
-  Modal,
-  SafeAreaView,
 } from 'react-native';
 
 // styles
@@ -23,13 +22,12 @@ import {IconFire} from '../../assets/icons/main/IconFire';
 import {ProfileHeader} from './components/ProfileHeader';
 import {ProfileInfo} from './components/ProfileInfo';
 import LightGradientButton from '../../components/buttons/LightGradientButton';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 // store
 import {AuthContext} from '../../store/context';
 
 // services
-import {getCompany, updateCompanyPhoto} from '../../services/CompaniesService';
+import {getCompany} from '../../services/CompaniesService';
 
 export const ProfileScreen = ({navigation}) => {
   const {signOut} = React.useContext(AuthContext);
@@ -39,52 +37,6 @@ export const ProfileScreen = ({navigation}) => {
     description: null,
     photoUrl: null,
   });
-
-  const [open, setOpen] = useState(false);
-
-  const openCamera = async () => {
-    let options = {
-      storageOption: {
-        path: 'images',
-        mediaType: 'photo',
-      },
-    };
-    launchCamera(options, response => {
-      console.log('Response = ', response);
-
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else {
-        updateCompanyPhoto(response.assets[0]).then(r => {
-          setCompany(r.data);
-        });
-      }
-    });
-  };
-
-  const openGallery = () => {
-    let options = {
-      storageOption: {
-        path: 'images',
-        skipBackup: true,
-      },
-    };
-    launchImageLibrary(options, response => {
-      console.log('Response = ', response);
-
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else {
-        updateCompanyPhoto(response.assets[0]).then(r => {
-          setCompany(r.data);
-        });
-      }
-    });
-  };
 
   useEffect(() => {
     return navigation.addListener('focus', async () => {
@@ -105,31 +57,6 @@ export const ProfileScreen = ({navigation}) => {
   return (
     <SafeAreaView style={globalStyles.container}>
       <ScrollView>
-        <Modal visible={open} animationType="slide" transparent={true}>
-          <TouchableOpacity
-            style={styles.overlay}
-            onPress={() => setOpen(false)}>
-            <View style={styles.wrap}>
-              <TouchableOpacity
-                style={styles.item}
-                onPress={() => {
-                  openGallery();
-                  setOpen(false);
-                }}>
-                <Text style={globalStyles.text}>Open Gallery</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.item}
-                onPress={() => {
-                  openCamera();
-                  setOpen(false);
-                }}>
-                <Text style={globalStyles.text}>Open Camera</Text>
-              </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
-        </Modal>
-
         <ProfileHeader
           title={company.title}
           description={company.description}
@@ -275,23 +202,5 @@ const styles = StyleSheet.create({
   },
   marginBottom: {
     marginBottom: padding,
-  },
-
-  overlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.2)',
-  },
-  wrap: {
-    padding: 16,
-    width: '80%',
-    borderRadius: 8,
-    backgroundColor: PrimaryColors.white,
-  },
-  item: {
-    padding: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
