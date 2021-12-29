@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
 import {PrimaryColors} from '../../../styles/colors';
+import {IconChecked} from '../../../assets/icons/main/IconChecked';
 
 const dimensions = Dimensions.get('screen');
 
@@ -11,6 +12,7 @@ export const ProfileHeader = ({title, description, photoUrl}) => {
         <Text style={styles.title}>{title}</Text>
         <View style={styles.imageWrapper}>
           <Image style={styles.image} source={{uri: photoUrl}} />
+          <IconChecked style={styles.icon} />
         </View>
       </View>
       {description?.length && (
@@ -49,14 +51,19 @@ const styles = StyleSheet.create({
     marginLeft: padding,
     width: imageSize,
     height: imageSize,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
     borderRadius: 12,
     borderWidth: 0.7,
     borderColor: PrimaryColors.grey3,
     overflow: 'hidden',
   },
-  image: {
-    width: '100%',
-    height: '100%',
+  icon: {
+    position: 'absolute',
+    top: -8,
+    right: -8,
   },
   description: {
     marginTop: padding,

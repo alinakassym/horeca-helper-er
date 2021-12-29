@@ -8,18 +8,28 @@ import {globalStyles} from '../../styles/globalStyles';
 import Header from '../../components/Header';
 import ConfirmationRequest from './components/ConfirmationRequest';
 import JobApply from './components/JobApply';
+import CompanyVerification from './components/CompanyVerification';
 
 // services
 import {getNotifications} from '../../services/NotificationsService';
 import {confirmWork} from '../../services/WorksService';
 import {getChatsLookup} from '../../services/ChatService';
+import {getCompany} from '../../services/CompaniesService';
 
 export const NotificationsScreen = ({navigation}) => {
+  const [company, setCompany] = useState({
+    title: null,
+    description: null,
+    photoUrl: null,
+  });
   const [notifications, setNotifications] = useState();
   const getNotificationsData = async () => {
     try {
       const data = await getNotifications();
       setNotifications(data);
+
+      const res = await getCompany();
+      setCompany(res.data);
     } catch (e) {
       console.log('getNotificationsData err: ', e);
     }
@@ -81,6 +91,11 @@ export const NotificationsScreen = ({navigation}) => {
               );
             }
           })}
+          <CompanyVerification
+            title={'Успешная модерация!'}
+            text={'Ваш профиль промодерирован, и являеться верифицированным'}
+            photoUrl={company.photoUrl}
+          />
         </ScrollView>
       ) : (
         <View style={globalStyles.fullScreenSection}>
