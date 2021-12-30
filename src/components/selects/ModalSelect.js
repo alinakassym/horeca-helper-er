@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Pressable,
   TouchableOpacity,
@@ -8,9 +9,9 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import PropTypes from 'prop-types';
 import {PrimaryColors} from '../../styles/colors';
 import {IconClose} from '../../assets/icons/main/IconClose';
+import {IconCheck} from '../../assets/icons/main/IconCheck';
 import Header from '../Header';
 import GradientButton from '../buttons/GradientButton';
 
@@ -22,6 +23,7 @@ const propTypes = {
   items: PropTypes.array,
   onSaveSelection: PropTypes.func,
   onClear: PropTypes.func,
+  validIcon: PropTypes.object,
 };
 
 const dimensions = Dimensions.get('screen');
@@ -43,6 +45,7 @@ class ModalSelect extends React.PureComponent {
       items,
       onSaveSelection,
       onClear,
+      validIcon,
     } = this.props;
     const {modal, activeItem} = this.state;
 
@@ -57,7 +60,14 @@ class ModalSelect extends React.PureComponent {
             <Text style={styles.valueText}>{value[itemText]}</Text>
           </Pressable>
           <Pressable onPress={onClear} style={styles.clearBtn}>
-            <IconClose size={16} color={PrimaryColors.grey1} />
+            <IconClose
+              style={styles.icon}
+              size={16}
+              color={PrimaryColors.grey1}
+            />
+            {validIcon || (
+              <IconCheck size={16} color={PrimaryColors.brand} width={2} />
+            )}
           </Pressable>
         </View>
       );
@@ -78,7 +88,7 @@ class ModalSelect extends React.PureComponent {
 
     return (
       <React.Fragment>
-        {value[itemText] ? <ValueSection /> : <PlaceHolder />}
+        {value ? <ValueSection /> : <PlaceHolder />}
         <Modal visible={modal} animationType="fade" transparent={true}>
           <Pressable
             style={styles.overlay}
@@ -171,6 +181,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 4,
     top: 22,
+    flexDirection: 'row',
+  },
+  icon: {
+    marginRight: 4,
   },
   blockPlaceholder: {
     marginBottom: 20,
