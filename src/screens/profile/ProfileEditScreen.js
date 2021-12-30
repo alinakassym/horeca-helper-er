@@ -117,7 +117,7 @@ export const ProfileEditScreen = ({route, navigation}) => {
     <SafeAreaView style={globalStyles.container}>
       <BottomModal visible={open} onCancel={() => setOpen(false)}>
         <ModalButton
-          style={styles.divider}
+          divide
           label={'Открыть галерею'}
           onPress={() => {
             openGallery();
@@ -125,7 +125,7 @@ export const ProfileEditScreen = ({route, navigation}) => {
           }}
         />
         <ModalButton
-          style={styles.divider}
+          divide
           label={'Сделать снимок'}
           onPress={() => {
             openCamera();
@@ -273,9 +273,5 @@ const styles = StyleSheet.create({
     padding: 24,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  divider: {
-    borderBottomWidth: 0.7,
-    borderBottomColor: PrimaryColors.grey3,
   },
 });

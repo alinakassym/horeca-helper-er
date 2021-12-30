@@ -6,19 +6,26 @@ import {PrimaryColors} from '../../styles/colors';
 const propTypes = {
   label: PropTypes.string,
   labelColor: PropTypes.string,
+  divide: PropTypes.bool,
   onPress: PropTypes.func,
   style: PropTypes.object,
 };
 
 class ModalButton extends React.PureComponent {
   render() {
-    const {label, labelColor, onPress, style} = this.props;
+    const {label, labelColor, divide, onPress, style} = this.props;
     const labelColorStyle = {color: labelColor || PrimaryColors.brand};
+    const divider = divide
+      ? {
+          borderBottomWidth: 0.7,
+          borderBottomColor: PrimaryColors.grey3,
+        }
+      : {};
     return (
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={onPress}
-        style={[styles.btn, style]}>
+        style={[styles.btn, style, divider]}>
         <Text style={[styles.label, labelColorStyle]}>{label}</Text>
       </TouchableOpacity>
     );
