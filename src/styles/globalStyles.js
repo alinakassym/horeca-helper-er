@@ -16,6 +16,22 @@ export const globalStyles = StyleSheet.create({
     width: dimensions.width,
     backgroundColor: PrimaryColors.white,
   },
+
+  // flex
+  row: {
+    flexDirection: 'row',
+  },
+  alignCenter: {
+    alignItems: 'center',
+  },
+  spaceBetween: {
+    justifyContent: 'space-between',
+  },
+  alignSelfStart: {
+    alignSelf: 'flex-start',
+  },
+
+  // inputs
   inputLabel: {
     fontFamily: 'Inter-Regular',
     fontSize: 12,
