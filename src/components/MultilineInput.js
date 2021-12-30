@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
-import {globalStyles} from '../styles/globalStyles';
 import {PrimaryColors} from '../styles/colors';
 
 const propTypes = {
@@ -38,12 +37,9 @@ class MultilineInput extends React.PureComponent {
           {marginBottom: marginBottom || 20},
           style,
         ]}>
-        {((!!label && focused) || (!!label && !!value)) && (
-          <Text style={globalStyles.inputLabel}>{label}</Text>
-        )}
-        {!!label && !focused && !value && (
-          <Text style={globalStyles.placeholderText}>{label}</Text>
-        )}
+        <Text style={styles.label}>
+          {((!!label && focused) || (!!label && !!value)) && `${label}`}
+        </Text>
         <TextInput
           multiline={true}
           value={value}
@@ -59,11 +55,13 @@ class MultilineInput extends React.PureComponent {
             onInputFocus(false);
           }}
           onChangeText={val => onChangeText(val)}
+          placeholder={focused ? '' : label}
+          placeholderTextColor={PrimaryColors.grey2}
           style={[
             styles.input,
             styles.borderBottom,
             {
-              height: Math.max(32, height),
+              minHeight: Math.max(32, height),
               borderBottomColor: focused
                 ? PrimaryColors.brand
                 : !focused && !!value
@@ -84,8 +82,15 @@ const styles = StyleSheet.create({
   borderBottom: {
     borderBottomWidth: 1.5,
   },
+  label: {
+    marginBottom: 4,
+    height: 14,
+    fontFamily: 'Inter-Regular',
+    fontSize: 12,
+    lineHeight: 14,
+    color: PrimaryColors.grey1,
+  },
   input: {
-    marginTop: 4,
     marginBottom: 20,
     paddingTop: 0,
     paddingBottom: 10,

@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {PrimaryColors} from '../styles/colors';
 import {IconClose} from '../assets/icons/main/IconClose';
+import {IconCheck} from '../assets/icons/main/IconCheck';
 
 const propTypes = {
   label: PropTypes.string,
@@ -18,6 +19,7 @@ const propTypes = {
   onClear: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
+  validIcon: PropTypes.object,
 };
 
 class Input extends React.PureComponent {
@@ -28,7 +30,8 @@ class Input extends React.PureComponent {
     };
   }
   render() {
-    const {label, value, onChangeText, onFocus, onBlur, onClear} = this.props;
+    const {label, value, onChangeText, onFocus, onBlur, onClear, validIcon} =
+      this.props;
     const {focused} = this.state;
     return (
       <View style={styles.inputSection}>
@@ -40,9 +43,10 @@ class Input extends React.PureComponent {
           style={[
             styles.input,
             {
-              borderBottomColor: focused
-                ? PrimaryColors.element
-                : PrimaryColors.grey3,
+              borderBottomColor:
+                focused || !!value
+                  ? PrimaryColors.element
+                  : PrimaryColors.grey3,
             },
           ]}
           placeholder={focused ? '' : label}
@@ -62,12 +66,20 @@ class Input extends React.PureComponent {
           onEndEditing={() => this.setState({...this.state, focused: false})}
         />
 
-        {value.length > 0 && (
+        {!!value && value.length > 0 && (
           <TouchableOpacity
             onPress={onClear}
             activeOpacity={0.7}
             style={styles.iconClear}>
-            <IconClose size={16} color={PrimaryColors.grey1} width={2} />
+            <IconClose
+              style={styles.icon}
+              size={16}
+              color={PrimaryColors.grey1}
+              width={2}
+            />
+            {validIcon || (
+              <IconCheck size={16} color={PrimaryColors.brand} width={2} />
+            )}
           </TouchableOpacity>
         )}
       </View>
@@ -92,6 +104,7 @@ const styles = StyleSheet.create({
     paddingTop: 0,
     paddingBottom: 10,
     paddingLeft: 0,
+    paddingRight: 48,
     fontFamily: 'Inter-Regular',
     fontSize: 16,
     lineHeight: 20,
@@ -104,6 +117,10 @@ const styles = StyleSheet.create({
     top: 22,
     right: 4,
     padding: 2,
+    flexDirection: 'row',
+  },
+  icon: {
+    marginRight: 4,
   },
 });
 
