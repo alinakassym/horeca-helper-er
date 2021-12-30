@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 16,
-    width: width - iconSize - padding * 2,
+    width: width - iconSize - padding * 3,
     fontFamily: 'Inter-Regular',
     fontSize: 16,
     lineHeight: 20,

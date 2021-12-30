@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, Pressable, StyleSheet, Image} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import {PrimaryColors} from '../../../styles/colors';
-import PlainButton from '../../../components/buttons/PlainButton';
+import ModalButton from '../../../components/buttons/ModalButton';
 
 const propTypes = {
   photoUrl: PropTypes.string,
@@ -13,16 +13,16 @@ class ProfilePhoto extends React.PureComponent {
   render() {
     const {photoUrl, onPress} = this.props;
     return (
-      <Pressable onPress={onPress} style={styles.section}>
-        <View style={styles.imageWrapper}>
+      <View style={styles.section}>
+        <TouchableOpacity onPress={onPress} style={styles.imageWrapper}>
           <Image style={styles.image} source={{uri: photoUrl}} />
-        </View>
-        <PlainButton
+        </TouchableOpacity>
+        <ModalButton
           onPress={onPress}
           style={styles.btn}
           label={'Изменить фото'}
         />
-      </Pressable>
+      </View>
     );
   }
 }

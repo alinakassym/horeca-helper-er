@@ -1,17 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Modal,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 // styles
 import {globalStyles} from '../../styles/globalStyles';
-import {PrimaryColors} from '../../styles/colors';
+import {PrimaryColors, StatusesColors} from '../../styles/colors';
+
+// icons
+import {IconLocation} from '../../assets/icons/main/IconLocation';
 
 // components
 import Header from '../../components/Header';
@@ -20,16 +16,18 @@ import ProfilePhotoPlaceholder from './components/ProfilePhotoPlaceholder';
 import ModalSelect from '../../components/selects/ModalSelect';
 import MultilineInput from '../../components/MultilineInput';
 import GradientButton from '../../components/buttons/GradientButton';
+import BottomModal from '../../components/BottomModal';
+import ModalButton from '../../components/buttons/ModalButton';
+import ProfilePhoto from './components/ProfilePhoto';
 import LinearGradient from 'react-native-linear-gradient';
-
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
 // services
 import {
   updateCompany,
   updateCompanyPhoto,
 } from '../../services/CompaniesService';
 import {getCategories} from '../../services/DictionariesService';
-import ProfilePhoto from './components/ProfilePhoto';
 
 export const ProfileEditScreen = ({route, navigation}) => {
   const [open, setOpen] = useState(false);
@@ -58,7 +56,7 @@ export const ProfileEditScreen = ({route, navigation}) => {
     }
   };
 
-  const openCamera = async () => {
+  const openCamera = () => {
     let options = {
       storageOption: {
         path: 'images',
@@ -66,12 +64,13 @@ export const ProfileEditScreen = ({route, navigation}) => {
       },
     };
     launchCamera(options, response => {
+      const {error} = response;
       console.log('Response = ', response);
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+      } else if (error) {
+        console.log('ImagePicker Error: ', error);
       } else {
         updateCompanyPhoto(response.assets[0]).then(r => {
           setCompany(r.data);
@@ -88,12 +87,13 @@ export const ProfileEditScreen = ({route, navigation}) => {
       },
     };
     launchImageLibrary(options, response => {
+      const {error} = response;
       console.log('Response = ', response);
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+      } else if (error) {
+        console.log('ImagePicker Error: ', error);
       } else {
         updateCompanyPhoto(response.assets[0]).then(r => {
           setCompany(r.data);
@@ -115,28 +115,31 @@ export const ProfileEditScreen = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <Modal visible={open} animationType="slide" transparent={true}>
-        <TouchableOpacity style={styles.overlay} onPress={() => setOpen(false)}>
-          <View style={styles.wrap}>
-            <TouchableOpacity
-              style={styles.item}
-              onPress={() => {
-                openGallery();
-                setOpen(false);
-              }}>
-              <Text style={globalStyles.text}>Open Gallery</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.item}
-              onPress={() => {
-                openCamera();
-                setOpen(false);
-              }}>
-              <Text style={globalStyles.text}>Open Camera</Text>
-            </TouchableOpacity>
-          </View>
-        </TouchableOpacity>
-      </Modal>
+      <BottomModal visible={open} onCancel={() => setOpen(false)}>
+        <ModalButton
+          style={styles.divider}
+          label={'Открыть галерею'}
+          onPress={() => {
+            openGallery();
+            setOpen(false);
+          }}
+        />
+        <ModalButton
+          style={styles.divider}
+          label={'Сделать снимок'}
+          onPress={() => {
+            openCamera();
+            setOpen(false);
+          }}
+        />
+        <ModalButton
+          label={'Удалить фото'}
+          labelColor={StatusesColors.red}
+          onPress={() => {
+            setOpen(false);
+          }}
+        />
+      </BottomModal>
       <Header
         goBack
         onClose={() => navigation.goBack()}
@@ -160,6 +163,7 @@ export const ProfileEditScreen = ({route, navigation}) => {
           onChangeText={val => {
             setCompany({...company, title: val});
           }}
+          onClear={() => setCompany({...company, title: null})}
           value={company.title}
           onFocus={val => setIsFocused(val)}
           onBlur={val => setIsFocused(val)}
@@ -172,6 +176,7 @@ export const ProfileEditScreen = ({route, navigation}) => {
           value={company.category}
           items={categories}
           itemText={'title_ru'}
+          onClear={() => setCompany({...company, category: null})}
           onSaveSelection={val => setCompany({...company, category: val})}
         />
 
@@ -181,9 +186,11 @@ export const ProfileEditScreen = ({route, navigation}) => {
           onChangeText={val => {
             setCompany({...company, address: val});
           }}
+          onClear={() => setCompany({...company, address: null})}
           value={company.address}
           onFocus={val => setIsFocused(val)}
           onBlur={val => setIsFocused(val)}
+          validIcon={<IconLocation size={16} color={PrimaryColors.brand} />}
         />
 
         {/*Номер телефона*/}
@@ -192,6 +199,7 @@ export const ProfileEditScreen = ({route, navigation}) => {
           onChangeText={val => {
             setCompany({...company, contactInfo: val});
           }}
+          onClear={() => setCompany({...company, contactInfo: null})}
           value={company.contactInfo}
           onFocus={val => setIsFocused(val)}
           onBlur={val => setIsFocused(val)}
@@ -203,6 +211,7 @@ export const ProfileEditScreen = ({route, navigation}) => {
           onChangeText={val => {
             setCompany({...company, email: val});
           }}
+          onClear={() => setCompany({...company, email: null})}
           value={company.email}
           onFocus={val => setIsFocused(val)}
           onBlur={val => setIsFocused(val)}
@@ -215,7 +224,7 @@ export const ProfileEditScreen = ({route, navigation}) => {
           onChangeText={val => {
             setCompany({...company, description: val});
           }}
-          marginBottom={100}
+          marginBottom={70}
           onInputFocus={val => {
             setIsFocused(val);
           }}
@@ -264,5 +273,9 @@ const styles = StyleSheet.create({
     padding: 24,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  divider: {
+    borderBottomWidth: 0.7,
+    borderBottomColor: PrimaryColors.grey3,
   },
 });
