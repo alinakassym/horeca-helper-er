@@ -184,7 +184,7 @@ export const Navigator = () => {
           options={{
             headerTitle: 'Filters',
           }}
-          name="FilterScreen"
+          name="Filter"
           component={FilterScreen}
         />
         <Stack.Screen

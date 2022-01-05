@@ -1,15 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, SafeAreaView, ScrollView, View} from 'react-native';
+
+// styles
 import {globalStyles} from '../../styles/globalStyles';
-import {useSelector} from 'react-redux';
-import {searchEmployees} from '../../services/EmployeesService';
-import {ResumeCard} from './components/ResumeCard';
+
+// components
 import Header from '../../components/Header';
-import {getPositions} from '../../services/DictionariesService';
 import HorizontalFilter from '../../components/HorizontalFilter';
 import OptionsButton from '../../components/buttons/OptionsButton';
 import Placeholder from '../../components/Placeholder';
 import UsersInfo from './components/UsersInfo';
+import ResumeCard from './components/ResumeCard';
+
+// store
+import {useSelector} from 'react-redux';
+
+// services
+import {searchEmployees} from '../../services/EmployeesService';
+import {getPositions} from '../../services/DictionariesService';
 
 export const SearchScreen = ({navigation}) => {
   const {filter, isFilterApplied} = useSelector(state => {
@@ -59,7 +67,7 @@ export const SearchScreen = ({navigation}) => {
       <Header options title={'Поиск'} subtitle={'соискателей'}>
         <OptionsButton
           onPress={() => {
-            navigation.navigate('FilterScreen');
+            navigation.navigate('Filter');
           }}
         />
       </Header>
