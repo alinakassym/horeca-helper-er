@@ -1,27 +1,36 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TextInput} from 'react-native';
+
+// styles
+import {globalStyles} from '../../styles/globalStyles';
+
+// components
+import ModalSelect from '../../components/selects/ModalSelect';
+import PrimaryButton from '../../components/buttons/PrimaryButton';
+import PlainButton from '../../components/buttons/PlainButton';
+import {Autocomplete} from '../../components/selects/Autocomplete';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
+// store
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  setEmployeesFilter,
+  setFilterApplied,
+} from '../../store/slices/employees';
+
+// services
 import {
   getPositions,
   getCities,
   getGenders,
   getSchedules,
 } from '../../services/DictionariesService';
-import {ModalSelect} from '../../components/selects/ModalSelect';
-import PrimaryButton from '../../components/buttons/PrimaryButton';
-import {useSelector, useDispatch} from 'react-redux';
-import {
-  setEmployeesFilter,
-  setFilterApplied,
-} from '../../store/slices/employees';
-import {globalStyles} from '../../styles/globalStyles';
-import PlainButton from '../../components/buttons/PlainButton';
-import {Autocomplete} from '../../components/selects/Autocomplete';
 
 export const FilterScreen = ({navigation}) => {
-  const filterState = useSelector(state => state.employees.filter);
-  const filterReset = useSelector(state => state.employees.filterReset);
-  const sortBy = useSelector(state => state.employees.sortBy);
+  const {employees} = useSelector(state => state);
+  const filterState = employees.filter;
+  const filterReset = employees.filterReset;
+  const sortBy = employees.sortBy;
 
   const dispatch = useDispatch();
 

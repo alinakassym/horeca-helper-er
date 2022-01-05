@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
-import {ModalSelect} from '../../components/selects/ModalSelect';
+import ModalSelect from '../../components/selects/ModalSelect';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {globalStyles} from '../../styles/globalStyles';
 

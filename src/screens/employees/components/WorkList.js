@@ -1,10 +1,17 @@
 import React from 'react';
-import {Text, View, Dimensions, StyleSheet, Image} from 'react-native';
+import {
+  Text,
+  View,
+  Dimensions,
+  StyleSheet,
+  Image,
+  ScrollView,
+} from 'react-native';
+import moment from 'moment';
+import 'moment/locale/ru';
 import {PrimaryColors} from '../../../styles/colors';
 import {IconBuilding} from '../../../assets/icons/main/IconBuilding';
 import {IconCalendar} from '../../../assets/icons/main/IconCalendar';
-import moment from 'moment';
-import 'moment/locale/ru';
 
 const dimensions = Dimensions.get('screen');
 moment.locale('ru');
@@ -15,7 +22,7 @@ const formattedDate = date => {
 
 export const WorkList = ({items}) => {
   return (
-    <View style={styles.col}>
+    <ScrollView style={styles.col}>
       {items.map((item, index) => (
         <React.Fragment key={index}>
           <View style={styles.row}>
@@ -49,7 +56,7 @@ export const WorkList = ({items}) => {
           {index < items.length - 1 && <View style={styles.divider} />}
         </React.Fragment>
       ))}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -60,6 +67,7 @@ const imageSize = 80;
 const styles = StyleSheet.create({
   col: {
     marginTop: 8,
+    marginBottom: 130,
     padding: padding,
     width: width,
     backgroundColor: PrimaryColors.white,

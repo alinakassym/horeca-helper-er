@@ -26,7 +26,7 @@ import EmployeeInfo from './components/EmployeeInfo';
 import GradientButton from '../../components/buttons/GradientButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import {BottomModal} from './components/BottomModal';
-import {ModalSelect} from '../../components/selects/ModalSelect';
+import ModalSelect from '../../components/selects/ModalSelect';
 import {WorkList} from './components/WorkList';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -184,7 +184,7 @@ export const EmployeeScreen = ({route, navigation}) => {
               />
               <View style={styles.section}>
                 <Text style={styles.title}>Обо мне</Text>
-                <Text style={styles.text}>
+                <Text style={[styles.text, !!chatId && styles.textPb]}>
                   {item.description || ''}
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Assumenda ex id nemo repellendus rerum. Incidunt quam, ullam.
@@ -212,7 +212,7 @@ export const EmployeeScreen = ({route, navigation}) => {
 
       <LinearGradient
         colors={[
-          'rgba(255, 255, 255, 0.2)',
+          'rgba(255, 255, 255, 0)',
           'rgba(255, 255, 255, 0.9)',
           'rgba(255, 255, 255, 1)',
         ]}
@@ -283,8 +283,9 @@ const width = dimensions.width;
 const styles = StyleSheet.create({
   section: {
     marginTop: 8,
-    marginBottom: 88,
-    padding: 20,
+    paddingTop: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 88,
     width: width,
     backgroundColor: PrimaryColors.white,
   },
@@ -310,6 +311,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     color: PrimaryColors.element,
+  },
+  textPb: {
+    paddingBottom: 52,
   },
   btnSection: {
     position: 'absolute',
