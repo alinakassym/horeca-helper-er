@@ -6,28 +6,40 @@ import {IconBuilding} from '../../../assets/icons/main/IconBuilding';
 import PlainButton from '../../../components/buttons/PlainButton';
 
 const propTypes = {
+  imageSize: PropTypes.number,
+  iconSize: PropTypes.number,
+  editable: PropTypes.bool,
   onPress: PropTypes.func,
+  style: PropTypes.object,
 };
 
 class ProfilePhotoPlaceholder extends React.PureComponent {
   render() {
-    const {onPress} = this.props;
+    const {imageSize, iconSize, editable, onPress, style} = this.props;
+    const imgSize = {
+      width: imageSize || 96,
+      height: imageSize || 96,
+    };
     return (
-      <Pressable onPress={onPress} style={styles.section}>
-        <View style={styles.imageWrapper}>
-          <IconBuilding size={36} width={1.3} color={PrimaryColors.grey2} />
+      <Pressable onPress={onPress} style={[styles.section, style]}>
+        <View style={[styles.imageWrapper, imgSize]}>
+          <IconBuilding
+            size={iconSize || 36}
+            width={1.3}
+            color={PrimaryColors.grey2}
+          />
         </View>
-        <PlainButton
-          onPress={onPress}
-          style={styles.btn}
-          label={'Добавить фото'}
-        />
+        {editable && (
+          <PlainButton
+            onPress={onPress}
+            btnStyle={styles.btn}
+            label={'Добавить фото'}
+          />
+        )}
       </Pressable>
     );
   }
 }
-
-const imageSize = 96;
 
 const styles = StyleSheet.create({
   section: {
@@ -38,8 +50,6 @@ const styles = StyleSheet.create({
     backgroundColor: PrimaryColors.white,
   },
   imageWrapper: {
-    width: imageSize,
-    height: imageSize,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 12,

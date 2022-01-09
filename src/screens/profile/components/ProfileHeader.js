@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
 import {PrimaryColors} from '../../../styles/colors';
 import {IconChecked} from '../../../assets/icons/main/IconChecked';
+import ProfilePhotoPlaceholder from './ProfilePhotoPlaceholder';
 
 const dimensions = Dimensions.get('screen');
 
@@ -11,7 +12,15 @@ export const ProfileHeader = ({title, description, photoUrl}) => {
       <View style={styles.row}>
         <Text style={styles.title}>{title}</Text>
         <View style={styles.imageWrapper}>
-          <Image style={styles.image} source={{uri: photoUrl}} />
+          {!!photoUrl ? (
+            <Image style={styles.image} source={{uri: photoUrl}} />
+          ) : (
+            <ProfilePhotoPlaceholder
+              imageSize={64}
+              iconSize={28}
+              style={styles.imagePlaceholder}
+            />
+          )}
           <IconChecked style={styles.icon} />
         </View>
       </View>
@@ -47,17 +56,21 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     color: PrimaryColors.element,
   },
+  imagePlaceholder: {
+    paddingVertical: 0,
+  },
   imageWrapper: {
     marginLeft: padding,
     width: imageSize,
     height: imageSize,
+    borderRadius: 12,
+    borderWidth: 0.7,
+    borderColor: PrimaryColors.grey3,
   },
   image: {
     width: '100%',
     height: '100%',
     borderRadius: 12,
-    borderWidth: 0.7,
-    borderColor: PrimaryColors.grey3,
     overflow: 'hidden',
   },
   icon: {

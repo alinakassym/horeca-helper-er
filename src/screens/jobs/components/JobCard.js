@@ -75,11 +75,11 @@ class JobCard extends React.PureComponent {
           )}
           <PlainButton
             onPress={findRelevant}
-            style={[
-              globalStyles.mt6,
-              globalStyles.row,
-              globalStyles.alignSelfStart,
-            ]}
+            btnStyle={{
+              ...globalStyles.mt6,
+              ...globalStyles.row,
+              ...globalStyles.alignSelfStart,
+            }}
             label={'Найти подходящих кандидатов'}>
             <IconSearch
               style={globalStyles.mr3}

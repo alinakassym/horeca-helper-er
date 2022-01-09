@@ -154,7 +154,7 @@ export const ProfileEditScreen = ({route, navigation}) => {
             photoUrl={company.photoUrl}
           />
         ) : (
-          <ProfilePhotoPlaceholder onPress={() => setOpen(true)} />
+          <ProfilePhotoPlaceholder editable onPress={() => setOpen(true)} />
         )}
 
         {/*Название заведения*/}
