@@ -12,7 +12,7 @@ const propTypes = {
   onClear: PropTypes.func,
 };
 
-class Input extends React.PureComponent {
+class SearchInput extends React.PureComponent {
   render() {
     const {text, onChangeText, onEndEditing, onClear} = this.props;
     return (
@@ -22,7 +22,7 @@ class Input extends React.PureComponent {
           style={styles.input}
           placeholder={'Поиск'}
           placeholderTextColor={PrimaryColors.grey2}
-          onChangeText={onChangeText}
+          onChangeText={val => onChangeText(val)}
           onEndEditing={onEndEditing}
         />
         <View style={styles.iconSearch}>
@@ -72,5 +72,5 @@ const styles = StyleSheet.create({
   },
 });
 
-Input.propTypes = propTypes;
-export default Input;
+SearchInput.propTypes = propTypes;
+export default SearchInput;
