@@ -25,8 +25,7 @@ import Tabs from '../../components/Tabs';
 import EmployeeInfo from './components/EmployeeInfo';
 import GradientButton from '../../components/buttons/GradientButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
-import {BottomModal} from './components/BottomModal';
-import ModalSelect from '../../components/selects/ModalSelect';
+import BottomModal from '../../components/BottomModal';
 import {WorkList} from './components/WorkList';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -34,6 +33,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import {getEmployeeById} from '../../services/EmployeesService';
 import {getJobs, postJobInvite} from '../../services/JobsService';
 import {getChatsLookup} from '../../services/ChatService';
+import RadioSelect from '../../components/selects/RadioSelect';
+import MultilineInput from '../../components/MultilineInput';
 
 const dimensions = Dimensions.get('screen');
 
@@ -46,6 +47,8 @@ export const EmployeeScreen = ({route, navigation}) => {
   const [jobs, setJobs] = useState([]);
   const [vacancy, setVacancy] = useState({
     id: null,
+    title: '',
+    title_ru: '',
   });
   const [visible, setVisible] = useState(false);
   const [inviteMessage, setInviteMessage] = useState();
@@ -82,8 +85,9 @@ export const EmployeeScreen = ({route, navigation}) => {
       setJobs(
         jobsData.data.map(el => {
           return {
-            ...el,
-            title: `${el.position.title} (${el.schedule.title}, ${el.city.title})`,
+            id: el.id,
+            title: el.position.title,
+            title_ru: el.position.title_ru,
           };
         }),
       );
@@ -139,9 +143,16 @@ export const EmployeeScreen = ({route, navigation}) => {
 
   if (loading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" />
-      </View>
+      <SafeAreaView style={globalStyles.container}>
+        <Header
+          goBack
+          onClose={() => navigation.goBack()}
+          title={'Подробная информация'}
+        />
+        <View style={globalStyles.fullScreenSection}>
+          <ActivityIndicator size="large" />
+        </View>
+      </SafeAreaView>
     );
   }
 
@@ -170,7 +181,7 @@ export const EmployeeScreen = ({route, navigation}) => {
             name: 'experience',
           },
         ]}>
-        <ScrollView style={{flex: 1}}>
+        <ScrollView>
           {activeTab === 'personalInfo' && (
             <>
               <EmployeeInfo
@@ -186,22 +197,6 @@ export const EmployeeScreen = ({route, navigation}) => {
                 <Text style={styles.title}>Обо мне</Text>
                 <Text style={[styles.text, !!chatId && styles.textPb]}>
                   {item.description || ''}
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Assumenda ex id nemo repellendus rerum. Incidunt quam, ullam.
-                  Aliquid asperiores, beatae, consectetur consequuntur deleniti
-                  deserunt dicta distinctio enim error eveniet laboriosam magni
-                  modi non similique, tempore. A ad alias assumenda atque autem
-                  corporis, dolorem doloribus earum esse, et exercitationem
-                  fugiat maxime odit perferendis quae, vero voluptates
-                  voluptatibus. Accusamus aut delectus illo, laboriosam
-                  laudantium maiores recusandae repellendus sit? Maiores maxime
-                  odit officia perferendis provident quia quibusdam? Amet
-                  aspernatur consequatur culpa dolorum, est impedit ipsum iste
-                  labore maiores maxime molestiae necessitatibus neque, nesciunt
-                  nisi pariatur quas quasi quibusdam reiciendis sequi unde.
-                  Iusto repudiandae tenetur ullam! Aliquam, aliquid enim error
-                  ex expedita explicabo fuga laudantium natus nobis, odio omnis
-                  perspiciatis placeat praesentium quos tempore.
                 </Text>
               </View>
             </>
@@ -219,7 +214,7 @@ export const EmployeeScreen = ({route, navigation}) => {
         style={styles.btnSection}>
         {!!chatId && (
           <GradientButton
-            style={{marginBottom: 8}}
+            style={globalStyles.mb3}
             onPress={() => inviteToJob()}
             label={'Пригласить еще раз'}
           />
@@ -259,20 +254,34 @@ export const EmployeeScreen = ({route, navigation}) => {
         </View>
       </LinearGradient>
       <BottomModal
+        title={'Пригласить соискателя'}
         visible={visible}
-        onClose={() => setVisible(false)}
-        text={inviteMessage}
-        onSend={() => sendInvite()}
-        isValid={isValid()}
-        onChangeText={val => setInviteMessage(val)}>
-        <ModalSelect
-          label={'Vacancy'}
-          value={vacancy}
-          valueKey={'id'}
+        onCancel={() => setVisible(false)}>
+        <RadioSelect
+          style={globalStyles.mb6}
+          selectedItem={vacancy}
           items={jobs}
-          itemTitle={'title'}
-          onSelect={val => setVacancy(val ? val : {id: null})}
+          itemKey={'title_ru'}
+          onSelect={val => {
+            setVacancy(val ? val : {id: null, title: '', title_ru: ''});
+            console.log({val});
+          }}
         />
+        <MultilineInput
+          value={inviteMessage}
+          label={'Сопроводительное письмо'}
+          onInputFocus={() => console.log('')}
+          onChangeText={val => setInviteMessage(val)}
+        />
+        {isValid() ? (
+          <GradientButton label={'Отправить'} onPress={() => sendInvite()} />
+        ) : (
+          <PrimaryButton
+            color={PrimaryColors.grey3}
+            labelColor={PrimaryColors.grey1}
+            label={'Отправить'}
+          />
+        )}
       </BottomModal>
     </SafeAreaView>
   );

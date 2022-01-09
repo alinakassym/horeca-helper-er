@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, StyleSheet, Dimensions, Text} from 'react-native';
+import {Text, View, StyleSheet, Dimensions} from 'react-native';
 
 // styles
 import {globalStyles} from '../styles/globalStyles';
@@ -37,6 +37,7 @@ class Header extends React.PureComponent {
             {title ? (
               <View style={styles.header}>
                 <Text style={styles.headerTitle}>{title}</Text>
+                <View style={styles.floatRightBlock}>{children}</View>
               </View>
             ) : (
               <View style={styles.rightCol}>{children}</View>
@@ -74,6 +75,7 @@ const rightColWidth =
 
 const styles = StyleSheet.create({
   headerSection: {
+    position: 'relative',
     padding: headerSectionPadding,
     width: dimensions.width,
     flexDirection: 'row',
@@ -103,6 +105,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  floatRightBlock: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
   },
   leftCol: {
     width: leftColWidth,
@@ -136,5 +143,4 @@ const styles = StyleSheet.create({
 });
 
 Header.propTypes = propTypes;
-
 export default Header;

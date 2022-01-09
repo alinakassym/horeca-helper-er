@@ -25,6 +25,7 @@ class MultilineInput extends React.PureComponent {
     const {label, value, marginBottom, onChangeText, onInputFocus, style} =
       this.props;
     const {height, focused} = this.state;
+
     const inputMaxHeight = 120;
     const setHeight = val => {
       const res = val > inputMaxHeight ? inputMaxHeight : val;
@@ -37,7 +38,11 @@ class MultilineInput extends React.PureComponent {
           {marginBottom: marginBottom || 20},
           style,
         ]}>
-        <Text style={styles.label}>
+        <Text
+          style={[
+            styles.label,
+            {color: focused ? PrimaryColors.brand : PrimaryColors.grey1},
+          ]}>
           {((!!label && focused) || (!!label && !!value)) && `${label}`}
         </Text>
         <TextInput
@@ -88,10 +93,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-Regular',
     fontSize: 12,
     lineHeight: 14,
-    color: PrimaryColors.grey1,
   },
   input: {
-    marginBottom: 20,
     paddingTop: 0,
     paddingBottom: 10,
     paddingLeft: 0,
