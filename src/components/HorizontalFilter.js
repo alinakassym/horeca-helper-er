@@ -12,9 +12,7 @@ class HorizontalFilter extends React.PureComponent {
   render() {
     const renderItem = ({item}) => (
       <View style={styles.badge}>
-        <Text style={styles.badgeTitle}>
-          {item.title_ru} Lorem
-        </Text>
+        <Text style={styles.badgeTitle}>{item.title_ru}</Text>
       </View>
     );
     const {items} = this.props;
