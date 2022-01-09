@@ -22,7 +22,7 @@ class ExpansionPanel extends React.PureComponent {
   }
 
   render() {
-    const {items} = this.props;
+    const {items, children} = this.props;
     const {currentItem} = this.state;
     return (
       <React.Fragment>
@@ -45,7 +45,7 @@ class ExpansionPanel extends React.PureComponent {
               )}
             </Pressable>
             {index === currentItem && (
-              <Text style={styles.body}>{item.body}</Text>
+              <Text style={styles.body}>{item.body || children}</Text>
             )}
             {index < items.length && <View style={styles.divider} />}
           </React.Fragment>

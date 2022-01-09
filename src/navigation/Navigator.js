@@ -181,9 +181,7 @@ export const Navigator = () => {
       {/*SEARCH SCREENS*/}
       <Stack.Group>
         <Stack.Screen
-          options={{
-            headerTitle: 'Filters',
-          }}
+          options={{headerShown: false}}
           name="Filter"
           component={FilterScreen}
         />
