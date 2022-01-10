@@ -21,6 +21,7 @@ export const employeesSlice = createSlice({
       sortBy: 'updatedAt',
       orderBy: {
         title: 'Date',
+        title_ru: 'Дате',
         key: 'updatedAt',
       },
       sortOrder: 'DESC',
@@ -45,6 +46,7 @@ export const employeesSlice = createSlice({
       sortBy: 'updatedAt',
       orderBy: {
         title: 'Date',
+        title_ru: 'Дате',
         key: 'updatedAt',
       },
       sortOrder: 'DESC',
@@ -55,15 +57,13 @@ export const employeesSlice = createSlice({
     sortBy: [
       {
         title: 'Date',
+        title_ru: 'Дате',
         key: 'updatedAt',
       },
       {
         title: 'Relevance',
+        title_ru: 'Актуальности',
         key: 'relevance',
-      },
-      {
-        title: 'Salary',
-        key: 'salary',
       },
     ],
   },
