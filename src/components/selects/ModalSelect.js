@@ -14,6 +14,7 @@ import {IconClose} from '../../assets/icons/main/IconClose';
 import {IconCheck} from '../../assets/icons/main/IconCheck';
 import Header from '../Header';
 import GradientButton from '../buttons/GradientButton';
+import RadioBtn from '../buttons/RadioBtn';
 
 const propTypes = {
   label: PropTypes.string,
@@ -103,20 +104,15 @@ class ModalSelect extends React.PureComponent {
               />
               <View style={styles.itemsBlock}>
                 {items.map((listItem, index) => (
-                  <TouchableOpacity
-                    activeOpacity={0.7}
-                    style={styles.item}
+                  <RadioBtn
                     key={index}
-                    onPress={() =>
+                    itemKey={itemText}
+                    activeItem={activeItem}
+                    item={listItem}
+                    onSelect={() =>
                       this.setState({...this.state, activeItem: listItem})
-                    }>
-                    {activeItem?.id === listItem?.id ? (
-                      <View style={styles.radioBtnActive} />
-                    ) : (
-                      <View style={styles.radioBtn} />
-                    )}
-                    <Text style={styles.itemText}>{listItem[itemText]}</Text>
-                  </TouchableOpacity>
+                    }
+                  />
                 ))}
                 <GradientButton
                   onPress={() => {
@@ -198,33 +194,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 20,
     color: PrimaryColors.grey2,
-  },
-  item: {
-    marginBottom: 24,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  radioBtn: {
-    marginRight: 8,
-    height: 20,
-    width: 20,
-    borderRadius: 10,
-    borderColor: PrimaryColors.grey2,
-    borderWidth: 1,
-  },
-  radioBtnActive: {
-    marginRight: 8,
-    height: 20,
-    width: 20,
-    borderRadius: 10,
-    borderColor: PrimaryColors.brand,
-    borderWidth: 6,
-  },
-  itemText: {
-    fontFamily: 'Inter-Medium',
-    fontSize: 14,
-    lineHeight: 18,
-    color: PrimaryColors.element,
   },
 });
 
