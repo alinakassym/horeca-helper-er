@@ -11,6 +11,8 @@ import OptionsButton from '../../components/buttons/OptionsButton';
 import Placeholder from '../../components/Placeholder';
 import UsersInfo from './components/UsersInfo';
 import ResumeCard from './components/ResumeCard';
+import BottomModal from '../../components/BottomModal';
+import StatCard from './components/StatCard';
 
 // store
 import {useSelector} from 'react-redux';
@@ -18,6 +20,7 @@ import {useSelector} from 'react-redux';
 // services
 import {searchEmployees} from '../../services/EmployeesService';
 import {getPositions} from '../../services/DictionariesService';
+import {getStats} from '../../services/UtilsService';
 
 export const SearchScreen = ({navigation}) => {
   const {filter, isFilterApplied} = useSelector(state => {
@@ -25,32 +28,27 @@ export const SearchScreen = ({navigation}) => {
     return employees;
   });
   const [employees, setEmployees] = useState([]);
-  const [usersNumber, setUsersNumber] = useState(0);
   const [positions, setPositions] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [stats, setStats] = useState();
   const [loading, setLoading] = useState(true);
 
-  const sortBy = {
-    updatedAt: 'date',
-    relevance: 'relevance',
-    salary: 'salary',
+  const getData = async () => {
+    return Promise.all([searchEmployees(), getPositions(), getStats()]);
   };
 
   useEffect(() => {
-    function fetchData() {
-      return navigation.addListener('focus', async () => {
-        try {
-          const result = await searchEmployees(filter);
-          setEmployees(result.data.items);
-          setUsersNumber(result.data.total);
-          const positionsData = await getPositions();
-          setPositions(positionsData);
-          setLoading(false);
-        } catch (e) {
-          console.log('searchEmployees err:', e);
-        }
-      });
-    }
-    fetchData();
+    return navigation.addListener('focus', async () => {
+      try {
+        const [employeesData, positionsData, statsData] = await getData();
+        setEmployees(employeesData.items);
+        setPositions(positionsData);
+        setStats(statsData);
+        setLoading(false);
+      } catch (e) {
+        console.log('searchEmployees err:', e);
+      }
+    });
   }, [filter, navigation]);
 
   if (loading) {
@@ -63,7 +61,10 @@ export const SearchScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <UsersInfo usersNumber={usersNumber} />
+      <UsersInfo
+        onPress={() => setVisible(true)}
+        usersNumber={stats ? stats.numEmployeesOnline : 0}
+      />
       <Header options title={'Поиск'} subtitle={'соискателей'}>
         <OptionsButton
           onPress={() => {
@@ -71,6 +72,12 @@ export const SearchScreen = ({navigation}) => {
           }}
         />
       </Header>
+      <BottomModal
+        onCancel={() => setVisible(false)}
+        visible={visible}
+        title={'Полезная информация'}>
+        <StatCard numUsers={stats.numEmployees} numResumes={stats.numResumes} />
+      </BottomModal>
       <View style={{height: 60}}>
         <HorizontalFilter items={positions} />
       </View>

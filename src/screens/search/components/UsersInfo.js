@@ -1,9 +1,9 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text, View, Dimensions} from 'react-native';
-import {IconDot} from '../../../assets/icons/main/IconDot';
-import {PrimaryColors, StatusesColors} from '../../../styles/colors';
-import {IconWarningCircle} from '../../../assets/icons/main/IconWarningCircle';
 import PropTypes from 'prop-types';
+import {Pressable, StyleSheet, Text, View, Dimensions} from 'react-native';
+import {PrimaryColors, StatusesColors} from '../../../styles/colors';
+import {IconDot} from '../../../assets/icons/main/IconDot';
+import {IconWarningCircle} from '../../../assets/icons/main/IconWarningCircle';
 
 const dimensions = Dimensions.get('screen');
 
@@ -19,7 +19,7 @@ class UsersInfo extends React.PureComponent {
       <View style={styles.row}>
         <View style={styles.onlineUsers}>
           <IconDot color={StatusesColors.green} size={8} />
-          <Text style={styles.text}>2{usersNumber} соискателей онлайн</Text>
+          <Text style={styles.text}>{usersNumber} соискателей онлайн</Text>
         </View>
         <Pressable style={styles.btn} onPress={onPress}>
           <IconWarningCircle color={PrimaryColors.grey1} />

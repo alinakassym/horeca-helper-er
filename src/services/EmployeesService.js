@@ -3,7 +3,7 @@ import http from '../http-common';
 export const searchEmployees = async data => {
   const r = await http.post('/er/employees/search', data);
   // console.log('Employees Service searchEmployees result:', r.data);
-  return r;
+  return r.data;
 };
 
 export const getEmployeeById = async id => {
