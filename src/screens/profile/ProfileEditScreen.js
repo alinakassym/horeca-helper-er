@@ -256,22 +256,4 @@ const styles = StyleSheet.create({
     padding: 20,
     width: '100%',
   },
-
-  overlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.2)',
-  },
-  wrap: {
-    padding: 16,
-    width: '80%',
-    borderRadius: 8,
-    backgroundColor: PrimaryColors.white,
-  },
-  item: {
-    padding: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 });
