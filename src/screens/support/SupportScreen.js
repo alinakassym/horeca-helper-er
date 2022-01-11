@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  Linking,
 } from 'react-native';
 
 // styles
@@ -18,10 +19,23 @@ import {IconWhatsApp} from '../../assets/icons/main/IconWhatsApp';
 // components
 import Header from '../../components/Header';
 
+// services
+import {getConfigs} from '../../services/UtilsService';
+
 const dimensions = Dimensions.get('screen');
 
 export const SupportScreen = ({navigation}) => {
-  const phone = '+7 (747) 414-47-14';
+  const [config, setConfig] = useState();
+  useEffect(() => {
+    return navigation.addListener('focus', async () => {
+      try {
+        const configData = await getConfigs('support');
+        setConfig(configData);
+      } catch (e) {
+        console.log('SupportScreen err: ', e);
+      }
+    });
+  }, [navigation]);
   return (
     <SafeAreaView style={globalStyles.container}>
       <Header
@@ -32,9 +46,18 @@ export const SupportScreen = ({navigation}) => {
       <View style={[globalStyles.card, styles.row]}>
         <View style={styles.phone}>
           <IconWhatsApp />
-          <Text style={styles.phoneNumber}>{phone}</Text>
+          <Text style={styles.phoneNumber}>{config?.value}</Text>
         </View>
-        <TouchableOpacity activeOpacity={0.7} style={styles.btn}>
+        <TouchableOpacity
+          onPress={() => {
+            if (config.value) {
+              Linking.openURL(
+                `https://wa.me/${config.value.substr(1, config.value.length)}`,
+              ).then(() => {});
+            }
+          }}
+          activeOpacity={0.7}
+          style={styles.btn}>
           <Text style={styles.btnText}>Перейти в чат</Text>
         </TouchableOpacity>
       </View>
