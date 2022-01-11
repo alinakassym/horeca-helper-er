@@ -16,7 +16,11 @@ import JobCard from './components/JobCard';
 import ModalButton from '../../components/buttons/ModalButton';
 
 // services
-import {deleteJobById, getJobs} from '../../services/JobsService';
+import {
+  deleteJobById,
+  getJobs,
+  putJobIsActive,
+} from '../../services/JobsService';
 
 // store
 import {useDispatch} from 'react-redux';
@@ -60,6 +64,18 @@ export const JobsScreen = ({navigation}) => {
     );
     await dispatch(setFilterApplied(true));
     navigation.navigate('Search');
+  };
+
+  const setJobActivation = async () => {
+    try {
+      await putJobIsActive(selectedJob.id, {
+        isActive: !selectedJob.isActive,
+      });
+      const result = await getJobs();
+      setJobs(result.data);
+    } catch (e) {
+      console.log('setJobActivation err: ', e);
+    }
   };
 
   const confirmDeletion = () => {
@@ -106,7 +122,17 @@ export const JobsScreen = ({navigation}) => {
       />
       <BottomModal visible={visible} onCancel={() => setVisible(false)}>
         <ModalButton divide label={'Продвигать'} />
-        <ModalButton divide label={'Деактивировать'} />
+        <ModalButton
+          divide
+          labelColor={
+            selectedJob.isActive ? StatusesColors.red : PrimaryColors.brand
+          }
+          label={selectedJob.isActive ? 'Деактивировать' : 'Активировать'}
+          onPress={() => {
+            setJobActivation().then();
+            setVisible(false);
+          }}
+        />
         <ModalButton
           divide
           label={'Редактировать'}

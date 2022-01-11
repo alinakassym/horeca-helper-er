@@ -37,3 +37,8 @@ export const deleteJobById = async id => {
   // console.log('deleteJobById result: ', r);
   return r;
 };
+
+export const putJobIsActive = async (id, data) => {
+  const r = await http.put(`/er/jobs/${id}/is-active`, data);
+  return r;
+};
