@@ -19,8 +19,8 @@ import {IconSignOut} from '../../assets/icons/main/IconSignOut';
 import {IconFire} from '../../assets/icons/main/IconFire';
 
 // components
-import {ProfileHeader} from './components/ProfileHeader';
-import {ProfileInfo} from './components/ProfileInfo';
+import ProfileHeader from './components/ProfileHeader';
+import ProfileInfo from './components/ProfileInfo';
 import LightGradientButton from '../../components/buttons/LightGradientButton';
 
 // store
@@ -61,6 +61,7 @@ export const ProfileScreen = ({navigation}) => {
           title={company.title}
           description={company.description}
           photoUrl={company.photoUrl}
+          verificationStatus={company.verificationStatus}
         />
 
         <ProfileInfo

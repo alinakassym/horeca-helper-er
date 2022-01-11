@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
 import {PrimaryColors} from '../../../styles/colors';
 import {IconChecked} from '../../../assets/icons/main/IconChecked';
@@ -6,32 +7,44 @@ import ProfilePhotoPlaceholder from './ProfilePhotoPlaceholder';
 
 const dimensions = Dimensions.get('screen');
 
-export const ProfileHeader = ({title, description, photoUrl}) => {
-  return (
-    <View style={styles.col}>
-      <View style={styles.row}>
-        <Text style={styles.title}>{title}</Text>
-        <View style={styles.imageWrapper}>
-          {!!photoUrl ? (
-            <Image style={styles.image} source={{uri: photoUrl}} />
-          ) : (
-            <ProfilePhotoPlaceholder
-              imageSize={64}
-              iconSize={28}
-              style={styles.imagePlaceholder}
-            />
-          )}
-          <IconChecked style={styles.icon} />
-        </View>
-      </View>
-      {description?.length && (
-        <Text numberOfLines={3} style={styles.description}>
-          {description}
-        </Text>
-      )}
-    </View>
-  );
+const propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  photoUrl: PropTypes.string,
+  verificationStatus: PropTypes.string,
 };
+
+class ProfileHeader extends React.PureComponent {
+  render() {
+    const {title, description, photoUrl, verificationStatus} = this.props;
+    return (
+      <View style={styles.col}>
+        <View style={styles.row}>
+          <Text style={styles.title}>{title}</Text>
+          <View style={styles.imageWrapper}>
+            {photoUrl ? (
+              <Image style={styles.image} source={{uri: photoUrl}} />
+            ) : (
+              <ProfilePhotoPlaceholder
+                imageSize={64}
+                iconSize={28}
+                style={styles.imagePlaceholder}
+              />
+            )}
+            {verificationStatus === 'VERIFIED' && (
+              <IconChecked style={styles.icon} />
+            )}
+          </View>
+        </View>
+        {description?.length && (
+          <Text numberOfLines={3} style={styles.description}>
+            {description}
+          </Text>
+        )}
+      </View>
+    );
+  }
+}
 
 const width = dimensions.width;
 const padding = 20;
@@ -87,3 +100,6 @@ const styles = StyleSheet.create({
     color: PrimaryColors.grey1,
   },
 });
+
+ProfileHeader.propTypes = propTypes;
+export default ProfileHeader;
