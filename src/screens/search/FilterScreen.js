@@ -382,10 +382,10 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     alignItems: 'center',
     zIndex: 3,
-    // backgroundColor: 'red',
   },
   btn: {
-    width: width * 0.5,
+    width: width * 0.45,
+    minWidth: 180,
   },
   resetBtn: {
     alignSelf: 'flex-end',
