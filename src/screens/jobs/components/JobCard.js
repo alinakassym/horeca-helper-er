@@ -47,7 +47,9 @@ class JobCard extends React.PureComponent {
                 <IconDot
                   size={8}
                   style={globalStyles.ml3}
-                  color={StatusesColors.green}
+                  color={
+                    item.isActive ? StatusesColors.green : StatusesColors.red
+                  }
                 />
               </View>
               <Text style={styles.location}>{item.city.title_ru}</Text>
