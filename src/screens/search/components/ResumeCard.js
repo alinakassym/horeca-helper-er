@@ -81,7 +81,9 @@ class ResumeCard extends React.PureComponent {
             styles.justifySpaceBetween,
           ]}>
           <View style={styles.leftCol}>
-            <Text style={styles.salary}>{numberWithSpaces(item.salary)}</Text>
+            <Text style={styles.salary}>
+              {item.salary ? numberWithSpaces(item.salary) : ''}
+            </Text>
           </View>
           <View style={styles.next}>
             <IconExpandRight
