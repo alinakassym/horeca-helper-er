@@ -7,17 +7,19 @@ const propTypes = {
   label: PropTypes.string,
   onPress: PropTypes.func,
   color: PropTypes.string,
+  style: PropTypes.object,
 };
 
 class OutlineButton extends React.PureComponent {
   render() {
-    const {label, color, onPress} = this.props;
+    const {label, color, style, onPress, children} = this.props;
     const btnColor = color || PrimaryColors.brand;
     return (
       <TouchableOpacity
         activeOpacity={0.5}
         onPress={onPress}
-        style={[styles.btn, {borderColor: btnColor}]}>
+        style={[styles.btn, style, {borderColor: btnColor}]}>
+        {children}
         <Text style={[styles.btnLabel, {color: btnColor}]}>{label}</Text>
       </TouchableOpacity>
     );
@@ -27,7 +29,10 @@ class OutlineButton extends React.PureComponent {
 const styles = StyleSheet.create({
   btn: {
     paddingVertical: 14,
-    paddingHorizontal: 35,
+    paddingHorizontal: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 12,
     borderWidth: 1,
     backgroundColor: 'transparent',

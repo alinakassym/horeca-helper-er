@@ -6,7 +6,9 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
+  Share,
   StyleSheet,
+  Platform,
 } from 'react-native';
 
 // styles
@@ -17,11 +19,13 @@ import {PrimaryColors, StatusesColors} from '../../styles/colors';
 import {IconExpandRight} from '../../assets/icons/main/IconExpandRight';
 import {IconSignOut} from '../../assets/icons/main/IconSignOut';
 import {IconFire} from '../../assets/icons/main/IconFire';
+import {IconShare} from '../../assets/icons/main/IconShare';
 
 // components
 import ProfileHeader from './components/ProfileHeader';
 import ProfileInfo from './components/ProfileInfo';
 import LightGradientButton from '../../components/buttons/LightGradientButton';
+import OutlineButton from '../../components/buttons/OutlineButton';
 
 // store
 import {AuthContext} from '../../store/context';
@@ -37,6 +41,19 @@ export const ProfileScreen = ({navigation}) => {
     description: null,
     photoUrl: null,
   });
+
+  const onShare = async () => {
+    try {
+      await Share.share({
+        message:
+          Platform.OS === 'android'
+            ? 'https://play.google.com/store/apps'
+            : 'https://www.appstore.com',
+      });
+    } catch (error) {
+      console.log('onShare err: ', error.message);
+    }
+  };
 
   useEffect(() => {
     return navigation.addListener('focus', async () => {
@@ -86,7 +103,7 @@ export const ProfileScreen = ({navigation}) => {
           <TouchableOpacity style={styles.listItem}>
             <View style={styles.row}>
               <IconFire />
-              <Text style={[styles.listItemTitle, styles.marginLeft]}>
+              <Text style={[styles.listItemTitle, globalStyles.ml3]}>
                 Подписка
               </Text>
             </View>
@@ -140,7 +157,25 @@ export const ProfileScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
 
-        <View style={[styles.list, styles.marginBottom]}>
+        <View
+          style={[
+            globalStyles.alignCenter,
+            globalStyles.mt6,
+            globalStyles.mb4,
+          ]}>
+          <OutlineButton
+            onPress={() => onShare()}
+            style={styles.shareButton}
+            label={'Поделиться приложением'}>
+            <IconShare
+              style={globalStyles.mr3}
+              color={PrimaryColors.brand}
+              size={16}
+            />
+          </OutlineButton>
+        </View>
+
+        <View style={[styles.list, globalStyles.mb3]}>
           <TouchableOpacity
             onPress={() => {
               signOut();
@@ -151,7 +186,7 @@ export const ProfileScreen = ({navigation}) => {
               <Text
                 style={[
                   styles.listItemTitle,
-                  styles.marginLeft,
+                  globalStyles.ml3,
                   {color: StatusesColors.red},
                 ]}>
                 Выйти
@@ -198,10 +233,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.7,
     borderBottomColor: PrimaryColors.grey3,
   },
-  marginLeft: {
-    marginLeft: 8,
-  },
-  marginBottom: {
-    marginBottom: padding,
+  shareButton: {
+    paddingVertical: 12,
+    minWidth: '60%',
+    backgroundColor: PrimaryColors.white,
   },
 });
