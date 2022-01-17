@@ -13,7 +13,7 @@ import {EmployeeReviewScreen} from '../screens/employees/EmployeeReviewScreen';
 import {EmployeeScreen} from '../screens/employees/EmployeeScreen';
 import {FilterScreen} from '../screens/search/FilterScreen';
 import {SearchScreen} from '../screens/search/SearchScreen';
-import {WorkInfoScreen} from '../screens/search/WorkInfoScreen';
+
 // messages screens
 import {MessagesChatScreen} from '../screens/messages/MessagesChatScreen';
 import {MessagesScreen} from '../screens/messages/MessagesScreen';
@@ -137,27 +137,24 @@ export const Navigator = () => {
         },
       }}>
       {/*TABS*/}
-      <Stack.Group
-        screenOptions={{
-          headerShown: false,
-        }}>
-        <Stack.Screen name="Tabs" component={TabStack} />
+      <Stack.Group>
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="Tabs"
+          component={TabStack}
+        />
       </Stack.Group>
 
       {/*JOBS SCREENS*/}
       <Stack.Group>
         <Stack.Screen
-          options={{
-            headerTitle: 'Post a job',
-          }}
-          name="JobsPostScreen"
+          options={{headerShown: false}}
+          name="JobsPost"
           component={JobsPostScreen}
         />
         <Stack.Screen
-          options={{
-            headerTitle: 'Edit job',
-          }}
-          name="JobEditScreen"
+          options={{headerShown: false}}
+          name="JobEdit"
           component={JobEditScreen}
         />
       </Stack.Group>
@@ -165,23 +162,17 @@ export const Navigator = () => {
       {/*EMPLOYEES SCREENS*/}
       <Stack.Group>
         <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
+          options={{headerShown: false}}
           name="Employees"
           component={EmployeesScreen}
         />
         <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
+          options={{headerShown: false}}
           name="Employee"
           component={EmployeeScreen}
         />
         <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
+          options={{headerShown: false}}
           name="EmployeeReview"
           component={EmployeeReviewScreen}
         />
@@ -193,11 +184,6 @@ export const Navigator = () => {
           options={{headerShown: false}}
           name="Filter"
           component={FilterScreen}
-        />
-        <Stack.Screen
-          options={{headerTitle: 'Work Information', presentation: 'modal'}}
-          name="WorkInfo"
-          component={WorkInfoScreen}
         />
       </Stack.Group>
 
@@ -218,9 +204,7 @@ export const Navigator = () => {
           component={ProfileEditScreen}
         />
         <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
+          options={{headerShown: false}}
           name="Jobs"
           component={JobsScreen}
         />
