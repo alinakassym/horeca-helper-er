@@ -30,15 +30,16 @@ class GradientButton extends React.PureComponent {
 
 const styles = StyleSheet.create({
   btn: {
-    paddingVertical: 14,
-    paddingHorizontal: 16,
+    paddingVertical: 15,
+    paddingHorizontal: 8,
+    minHeight: 48,
     borderRadius: 12,
   },
   btnLabel: {
     textAlign: 'center',
     fontFamily: 'Inter-SemiBold',
     fontSize: 14,
-    lineHeight: 20,
+    lineHeight: 16,
     color: '#FFFFFF',
   },
 });
