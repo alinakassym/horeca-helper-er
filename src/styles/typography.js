@@ -15,4 +15,8 @@ export const typography = StyleSheet.create({
     lineHeight: 18,
     color: PrimaryColors.grey1,
   },
+
+  textColorElement: {
+    color: PrimaryColors.element,
+  },
 });

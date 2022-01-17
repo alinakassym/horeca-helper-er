@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View, SafeAreaView, Alert, StyleSheet} from 'react-native';
+import {ScrollView, View, SafeAreaView, Alert} from 'react-native';
 
 // styles
 import {globalStyles} from '../../styles/globalStyles';
@@ -136,9 +136,10 @@ export const JobsScreen = ({navigation}) => {
         <ModalButton
           divide
           label={'Редактировать'}
-          onPress={() =>
-            navigation.navigate('JobEditScreen', {id: selectedJob.id})
-          }
+          onPress={() => {
+            setVisible(false);
+            navigation.navigate('JobEdit', {id: selectedJob.id});
+          }}
         />
         <ModalButton
           label={'Удалить'}
@@ -163,9 +164,11 @@ export const JobsScreen = ({navigation}) => {
               }
             />
           ))}
-        <View style={styles.section}>
+        <View
+          style={[globalStyles.section, globalStyles.mt3, globalStyles.mb5]}>
           <PlainButton
-            onPress={() => navigation.navigate('JobsPostScreen')}
+            btnStyle={{...globalStyles.mt3, ...globalStyles.mb3}}
+            onPress={() => navigation.navigate('JobsPost')}
             label={'Создать вакансию'}>
             <IconAdd
               style={globalStyles.mr3}
@@ -179,12 +182,3 @@ export const JobsScreen = ({navigation}) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  section: {
-    marginBottom: 24,
-    marginTop: 8,
-    padding: 18,
-    backgroundColor: PrimaryColors.white,
-  },
-});

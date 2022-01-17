@@ -121,7 +121,7 @@ export const SignInScreen = ({navigation}) => {
   return (
     <SafeAreaView style={globalStyles.rootStackContainer}>
       <Header goBack onClose={() => navigation.goBack()} />
-      <KeyboardAvoidingView behavior="padding">
+      <KeyboardAvoidingView behavior="position">
         <ScrollView>
           <View style={globalStyles.section}>
             <Text style={[typography.h1, globalStyles.mt6]}>
@@ -134,6 +134,7 @@ export const SignInScreen = ({navigation}) => {
               value={data.username}
               label={'Логин'}
               onChangeText={val => textInputChange(val)}
+              onClear={() => textInputChange('')}
               onEndEditing={e => handleValidUser(e.nativeEvent.text)}
             />
             <Input
@@ -141,10 +142,11 @@ export const SignInScreen = ({navigation}) => {
               label={'Пароль'}
               secureTextEntry
               onChangeText={val => handlePasswordChange(val)}
+              onClear={() => handlePasswordChange('')}
             />
           </View>
         </ScrollView>
-        <View style={globalStyles.section}>
+        <View style={globalStyles.btnSection}>
           <GradientButton
             label={'Войти'}
             onPress={() => {
