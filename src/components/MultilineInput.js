@@ -53,11 +53,11 @@ class MultilineInput extends React.PureComponent {
           }}
           onFocus={() => {
             this.setState({...this.state, focused: true});
-            onInputFocus(true);
+            onInputFocus && onInputFocus(true);
           }}
           onBlur={() => {
             this.setState({...this.state, focused: false});
-            onInputFocus(false);
+            onInputFocus && onInputFocus(false);
           }}
           onChangeText={val => onChangeText(val)}
           placeholder={focused ? '' : label}

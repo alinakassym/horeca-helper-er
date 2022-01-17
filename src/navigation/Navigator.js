@@ -7,6 +7,8 @@ import {JobsPostScreen} from '../screens/jobs/JobsPostScreen';
 import {JobsScreen} from '../screens/jobs/JobsScreen';
 // employees screens
 import {EmployeesScreen} from '../screens/employees/EmployeesScreen';
+import {EmployeeReviewScreen} from '../screens/employees/EmployeeReviewScreen';
+
 // search screens
 import {EmployeeScreen} from '../screens/employees/EmployeeScreen';
 import {FilterScreen} from '../screens/search/FilterScreen';
@@ -175,6 +177,13 @@ export const Navigator = () => {
           }}
           name="Employee"
           component={EmployeeScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="EmployeeReview"
+          component={EmployeeReviewScreen}
         />
       </Stack.Group>
 

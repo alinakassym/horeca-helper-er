@@ -5,15 +5,15 @@ import {
   Text,
   ScrollView,
   ActivityIndicator,
-  StyleSheet,
 } from 'react-native';
 
 // styles
 import {globalStyles} from '../../styles/globalStyles';
+import {typography} from '../../styles/typography';
 
 // components
 import Header from '../../components/Header';
-import {EmployeeCard} from './components/EmployeeCard';
+import EmployeeCard from './components/EmployeeCard';
 
 // services
 import {getWorksList} from '../../services/WorksService';
@@ -52,22 +52,20 @@ export const EmployeesScreen = ({navigation}) => {
       {works && works.length > 0 ? (
         <ScrollView>
           {works.map((item, index) => (
-            <EmployeeCard key={index} item={item} />
+            <EmployeeCard
+              key={index}
+              item={item}
+              onPress={() =>
+                navigation.navigate('EmployeeReview', {id: item.id})
+              }
+            />
           ))}
         </ScrollView>
       ) : (
         <View style={globalStyles.fullScreenSection}>
-          <Text style={styles.text}>No employees yet</Text>
+          <Text style={typography.text}>No employees yet</Text>
         </View>
       )}
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    fontFamily: 'Roboto-Medium',
-    fontSize: 18,
-    color: '#666666',
-  },
-});
