@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, ScrollView, View, Text, StyleSheet} from 'react-native';
+import {SafeAreaView, ScrollView} from 'react-native';
 
 // styles
 import {globalStyles} from '../../styles/globalStyles';
@@ -9,6 +9,7 @@ import Header from '../../components/Header';
 import ConfirmationRequest from './components/ConfirmationRequest';
 import JobApply from './components/JobApply';
 import CompanyVerification from './components/CompanyVerification';
+import Placeholder from '../../components/Placeholder';
 
 // services
 import {getNotifications} from '../../services/NotificationsService';
@@ -98,22 +99,8 @@ export const NotificationsScreen = ({navigation}) => {
           />
         </ScrollView>
       ) : (
-        <View style={globalStyles.fullScreenSection}>
-          <Text style={[styles.placeholderText]}>
-            Ваш список уведомлений пуст
-          </Text>
-        </View>
+        <Placeholder placeholderText={'Ваш список уведомлений пуст'} />
       )}
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  placeholderText: {
-    fontFamily: 'Inter-Regular',
-    textAlign: 'center',
-    fontSize: 14,
-    lineHeight: 18,
-    color: '#8391A1',
-  },
-});
