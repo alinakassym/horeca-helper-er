@@ -28,6 +28,7 @@ import {
   setEmployeesFilter,
   setFilterApplied,
 } from '../../store/slices/employees';
+import Toast from '../../components/notifications/Toast';
 
 export const JobsScreen = ({navigation}) => {
   const [jobs, setJobs] = useState([]);
@@ -35,6 +36,7 @@ export const JobsScreen = ({navigation}) => {
     id: 0,
   });
   const [visible, setVisible] = useState(false);
+  const [visibleToast, setVisibleToast] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -68,11 +70,15 @@ export const JobsScreen = ({navigation}) => {
 
   const setJobActivation = async () => {
     try {
+      setVisibleToast(true);
       await putJobIsActive(selectedJob.id, {
         isActive: !selectedJob.isActive,
       });
       const result = await getJobs();
       setJobs(result.data);
+      setTimeout(() => {
+        setVisibleToast(false);
+      }, 5000);
     } catch (e) {
       console.log('setJobActivation err: ', e);
     }
@@ -117,6 +123,16 @@ export const JobsScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
+      <Toast
+        visible={selectedJob && visibleToast}
+        title={'Готово!'}
+        text={
+          selectedJob.isActive
+            ? `Вакансия "${selectedJob?.position?.title_ru}" деактивирована`
+            : `Вакансия "${selectedJob?.position?.title_ru}" активирована`
+        }
+        onPress={() => setVisibleToast(false)}
+      />
       <Header
         onClose={() => navigation.goBack()}
         goBack
@@ -158,6 +174,7 @@ export const JobsScreen = ({navigation}) => {
               onPress={() => {
                 setSelectedJob(item);
                 setVisible(true);
+                setVisibleToast(false);
               }}
               findRelevant={() =>
                 apply(item).then(() => {
