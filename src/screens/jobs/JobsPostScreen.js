@@ -16,9 +16,9 @@ import {typography} from '../../styles/typography';
 // components
 import Header from '../../components/Header';
 import Autocomplete from '../../components/selects/Autocomplete';
-import NumberInput from '../../components/NumberInput';
+import NumberInput from '../../components/inputs/NumberInput';
 import ModalSelect from '../../components/selects/ModalSelect';
-import MultilineInput from '../../components/MultilineInput';
+import MultilineInput from '../../components/inputs/MultilineInput';
 import SliderLabel from '../../components/slider/SliderLabel';
 import RadioBtn from '../../components/buttons/RadioBtn';
 import GradientButton from '../../components/buttons/GradientButton';

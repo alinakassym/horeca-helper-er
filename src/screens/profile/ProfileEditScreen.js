@@ -11,10 +11,10 @@ import {IconLocation} from '../../assets/icons/main/IconLocation';
 
 // components
 import Header from '../../components/Header';
-import Input from '../../components/Input';
+import Input from '../../components/inputs/Input';
 import ProfilePhotoPlaceholder from './components/ProfilePhotoPlaceholder';
 import ModalSelect from '../../components/selects/ModalSelect';
-import MultilineInput from '../../components/MultilineInput';
+import MultilineInput from '../../components/inputs/MultilineInput';
 import GradientButton from '../../components/buttons/GradientButton';
 import BottomModal from '../../components/BottomModal';
 import ModalButton from '../../components/buttons/ModalButton';

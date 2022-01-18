@@ -9,7 +9,6 @@ import {
 
 // styles
 import {globalStyles} from '../../styles/globalStyles';
-import {typography} from '../../styles/typography';
 
 // components
 import Header from '../../components/Header';
@@ -17,6 +16,7 @@ import EmployeeCard from './components/EmployeeCard';
 
 // services
 import {getWorksList} from '../../services/WorksService';
+import Placeholder from '../../components/Placeholder';
 
 export const EmployeesScreen = ({navigation}) => {
   const [works, setWorks] = useState();
@@ -62,9 +62,7 @@ export const EmployeesScreen = ({navigation}) => {
           ))}
         </ScrollView>
       ) : (
-        <View style={globalStyles.fullScreenSection}>
-          <Text style={typography.text}>No employees yet</Text>
-        </View>
+        <Placeholder placeholderText={'Список сотрудников пуст'} />
       )}
     </SafeAreaView>
   );

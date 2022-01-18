@@ -7,6 +7,7 @@ import {
   View,
   StyleSheet,
   Dimensions,
+  Alert,
 } from 'react-native';
 import moment from 'moment';
 
@@ -28,7 +29,7 @@ import PrimaryButton from '../../components/buttons/PrimaryButton';
 import BottomModal from '../../components/BottomModal';
 import WorkList from './components/WorkList';
 import RadioSelect from '../../components/selects/RadioSelect';
-import MultilineInput from '../../components/MultilineInput';
+import MultilineInput from '../../components/inputs/MultilineInput';
 import OutlineButton from '../../components/buttons/OutlineButton';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -84,16 +85,31 @@ export const EmployeeScreen = ({route, navigation}) => {
   const inviteToJob = async () => {
     try {
       const jobsData = await getJobs();
-      setJobs(
-        jobsData.data.map(el => {
-          return {
-            id: el.id,
-            title: el.position.title,
-            title_ru: el.position.title_ru,
-          };
-        }),
-      );
-      setVisible(true);
+      if (jobsData.data && jobsData.data.length > 0) {
+        setJobs(
+          jobsData.data.map(el => {
+            return {
+              id: el.id,
+              title: el.position.title,
+              title_ru: el.position.title_ru,
+            };
+          }),
+        );
+        setVisible(true);
+      } else {
+        Alert.alert('Нет вакансий', 'На данный момент нет вакансий', [
+          {
+            text: 'Отмена',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'Создать вакансию',
+            onPress: () => navigation.navigate('Jobs'),
+            style: 'default',
+          },
+        ]);
+      }
     } catch (e) {
       console.log('inviteToJob err: ', e);
     }

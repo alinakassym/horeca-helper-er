@@ -15,7 +15,7 @@ import GroupButton from '../../components/buttons/GroupButton';
 import GradientButton from '../../components/buttons/GradientButton';
 import ExpansionPanel from '../../components/ExpansionPanel';
 import RadioBtn from '../../components/buttons/RadioBtn';
-import NumberInput from '../../components/NumberInput';
+import NumberInput from '../../components/inputs/NumberInput';
 import LinearGradient from 'react-native-linear-gradient';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
