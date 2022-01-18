@@ -26,7 +26,7 @@ import EmployeeInfo from './components/EmployeeInfo';
 import GradientButton from '../../components/buttons/GradientButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import BottomModal from '../../components/BottomModal';
-import {WorkList} from './components/WorkList';
+import WorkList from './components/WorkList';
 import RadioSelect from '../../components/selects/RadioSelect';
 import MultilineInput from '../../components/MultilineInput';
 import OutlineButton from '../../components/buttons/OutlineButton';
@@ -252,9 +252,10 @@ export const EmployeeScreen = ({route, navigation}) => {
               color={StatusesColors.green}>
               <IconPhone
                 style={globalStyles.mr3}
-                size={12.67}
+                size={16}
                 color={PrimaryColors.white}
                 fillColor={PrimaryColors.white}
+                width={0.1}
               />
             </PrimaryButton>
           </View>
