@@ -51,15 +51,18 @@ export const EmployeesScreen = ({navigation}) => {
       />
       {works && works.length > 0 ? (
         <ScrollView>
-          {works.map((item, index) => (
-            <EmployeeCard
-              key={index}
-              item={item}
-              onPress={() =>
-                navigation.navigate('EmployeeReview', {id: item.id})
-              }
-            />
-          ))}
+          {works.map(
+            (item, index) =>
+              item.isConfirmed && (
+                <EmployeeCard
+                  key={index}
+                  item={item}
+                  onPress={() =>
+                    navigation.navigate('EmployeeReview', {id: item.id})
+                  }
+                />
+              ),
+          )}
         </ScrollView>
       ) : (
         <Placeholder placeholderText={'Список сотрудников пуст'} />
