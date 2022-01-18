@@ -146,9 +146,9 @@ export const JobEditScreen = ({route, navigation}) => {
       <KeyboardAwareScrollView
         style={globalStyles.section}
         enableResetScrollToCoords={false}>
-        {/*Название вакансии*/}
+        {/*Вакансия*/}
         <Autocomplete
-          label={'Название вакансии'}
+          label={'Вакансия'}
           value={job.position}
           items={positions}
           itemKey={'title_ru'}

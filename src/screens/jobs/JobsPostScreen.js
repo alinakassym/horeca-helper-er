@@ -133,7 +133,7 @@ export const JobsPostScreen = ({navigation}) => {
         enableResetScrollToCoords={false}>
         {/*Название вакансии*/}
         <Autocomplete
-          label={'Название вакансии'}
+          label={'Вакансия'}
           value={job.position}
           items={positions}
           itemKey={'title_ru'}

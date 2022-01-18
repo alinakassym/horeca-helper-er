@@ -72,7 +72,7 @@ class JobCard extends React.PureComponent {
               </Text>
             )
           )}
-          {item.description && (
+          {!!item.description && (
             <Text style={styles.description}>{item.description}</Text>
           )}
           <PlainButton
