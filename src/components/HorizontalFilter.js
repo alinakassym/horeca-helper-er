@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FlatList, View, Text, StyleSheet} from 'react-native';
+import {FlatList, Text, StyleSheet, Pressable} from 'react-native';
 import {PrimaryColors} from '../styles/colors';
 
 const propTypes = {
@@ -10,12 +10,14 @@ const propTypes = {
 
 class HorizontalFilter extends React.PureComponent {
   render() {
+    const {items, onSelect} = this.props;
+
     const renderItem = ({item}) => (
-      <View style={styles.badge}>
+      <Pressable onPress={() => onSelect(item)} style={styles.badge}>
         <Text style={styles.badgeTitle}>{item.title_ru}</Text>
-      </View>
+      </Pressable>
     );
-    const {items} = this.props;
+
     return (
       <FlatList
         contentContainerStyle={styles.horizontalScroll}
