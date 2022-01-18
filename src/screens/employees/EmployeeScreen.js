@@ -38,6 +38,7 @@ import {getEmployeeById} from '../../services/EmployeesService';
 import {getJobs, postJobInvite} from '../../services/JobsService';
 import {getChatsLookup} from '../../services/ChatService';
 import {getConfigs} from '../../services/UtilsService';
+import Toast from '../../components/notifications/Toast';
 
 const dimensions = Dimensions.get('screen');
 
@@ -54,6 +55,7 @@ export const EmployeeScreen = ({route, navigation}) => {
     title_ru: '',
   });
   const [visible, setVisible] = useState(false);
+  const [visibleToast, setVisibleToast] = useState(false);
   const [inviteMessage, setInviteMessage] = useState();
   const [item, setItem] = useState({
     id: 0,
@@ -84,6 +86,7 @@ export const EmployeeScreen = ({route, navigation}) => {
 
   const inviteToJob = async () => {
     try {
+      setVisibleToast(false);
       const jobsData = await getJobs();
       if (jobsData.data && jobsData.data.length > 0) {
         setJobs(
@@ -134,22 +137,29 @@ export const EmployeeScreen = ({route, navigation}) => {
   };
 
   const sendInvite = async () => {
-    console.log({
-      id: vacancy.id,
-      data: {
+    try {
+      setVisible(false);
+      console.log({
+        id: vacancy.id,
+        data: {
+          employeeId: employeeId,
+          body: inviteMessage,
+        },
+      });
+      const id = vacancy.id;
+      const data = {
         employeeId: employeeId,
         body: inviteMessage,
-      },
-    });
-    const id = vacancy.id;
-    const data = {
-      employeeId: employeeId,
-      body: inviteMessage,
-    };
-    await postJobInvite(id, data);
-    await resetInviteForm();
-
-    setVisible(false);
+      };
+      await postJobInvite(id, data);
+      await resetInviteForm();
+      setVisibleToast(true);
+      setTimeout(() => {
+        setVisibleToast(false);
+      }, 5000);
+    } catch (e) {
+      console.log('sendInvite err: ', e);
+    }
   };
 
   const getCoverLetter = async () => {
@@ -200,6 +210,12 @@ export const EmployeeScreen = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
+      <Toast
+        visible={visibleToast}
+        title={'Готово!'}
+        text={'Вы успешно отправили приглашение.'}
+        onPress={() => setVisibleToast(false)}
+      />
       <Header
         goBack
         onClose={() => navigation.goBack()}
