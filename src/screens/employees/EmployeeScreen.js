@@ -27,14 +27,16 @@ import GradientButton from '../../components/buttons/GradientButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import BottomModal from '../../components/BottomModal';
 import {WorkList} from './components/WorkList';
+import RadioSelect from '../../components/selects/RadioSelect';
+import MultilineInput from '../../components/MultilineInput';
+import OutlineButton from '../../components/buttons/OutlineButton';
 import LinearGradient from 'react-native-linear-gradient';
 
 // services
 import {getEmployeeById} from '../../services/EmployeesService';
 import {getJobs, postJobInvite} from '../../services/JobsService';
 import {getChatsLookup} from '../../services/ChatService';
-import RadioSelect from '../../components/selects/RadioSelect';
-import MultilineInput from '../../components/MultilineInput';
+import {getConfigs} from '../../services/UtilsService';
 
 const dimensions = Dimensions.get('screen');
 
@@ -97,6 +99,24 @@ export const EmployeeScreen = ({route, navigation}) => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const resetInviteForm = async () => {
+    try {
+      setInviteMessage('');
+      setVacancy({
+        id: null,
+        title: '',
+        title_ru: '',
+      });
+      const chatLookup = await getChatsLookup(employeeId);
+      setChatId(chatLookup);
+      const result = await getEmployeeById(employeeId);
+      setItem(result.data);
+    } catch (e) {
+      console.log('resetInviteForm err: ', e);
+    }
+  };
+
   const sendInvite = async () => {
     console.log({
       id: vacancy.id,
@@ -111,7 +131,18 @@ export const EmployeeScreen = ({route, navigation}) => {
       body: inviteMessage,
     };
     await postJobInvite(id, data);
+    await resetInviteForm();
+
     setVisible(false);
+  };
+
+  const getCoverLetter = async () => {
+    try {
+      const letter = await getConfigs('er-cover-letter');
+      setInviteMessage(letter.value_ru);
+    } catch (e) {
+      console.log('getCoverLetter err: ', e);
+    }
   };
 
   const isValid = () => {
@@ -122,20 +153,15 @@ export const EmployeeScreen = ({route, navigation}) => {
     function fetchData() {
       return navigation.addListener('focus', async () => {
         try {
-          const result = await getEmployeeById(employeeId);
-          setItem(result.data);
+          await resetInviteForm();
           setLoading(false);
-
-          const chatLookup = await getChatsLookup(employeeId);
-          setChatId(chatLookup);
-          console.log('chatLookup: ', chatLookup);
         } catch (e) {
           console.log('getEmployeeById err:', e);
         }
       });
     }
     fetchData();
-  }, [employeeId, navigation]);
+  }, [employeeId, navigation, resetInviteForm]);
 
   const getAge = birthDate => {
     return moment().diff(birthDate, 'years', false);
@@ -243,7 +269,11 @@ export const EmployeeScreen = ({route, navigation}) => {
                     user: item,
                   })
                 }>
-                <IconMessages size={12.67} color={PrimaryColors.white} />
+                <IconMessages
+                  style={globalStyles.mr3}
+                  size={12.67}
+                  color={PrimaryColors.white}
+                />
               </PrimaryButton>
             ) : (
               <GradientButton
@@ -273,6 +303,11 @@ export const EmployeeScreen = ({route, navigation}) => {
           label={'Сопроводительное письмо'}
           onInputFocus={() => console.log('')}
           onChangeText={val => setInviteMessage(val)}
+        />
+        <OutlineButton
+          onPress={() => getCoverLetter()}
+          style={styles.coverLetterBtn}
+          label={'Вставить шаблонное письмо'}
         />
         {isValid() ? (
           <GradientButton label={'Отправить'} onPress={() => sendInvite()} />
@@ -334,5 +369,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 20,
     zIndex: 3,
+  },
+  coverLetterBtn: {
+    marginBottom: 72,
+    paddingVertical: 8,
+    minHeight: 32,
+    alignSelf: 'flex-start',
   },
 });

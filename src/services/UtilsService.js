@@ -8,7 +8,7 @@ export const getStats = async () => {
 
 export const getConfigs = async key => {
   const r = await http.get(`/er/utils/configs/${key}`);
-  console.log('getConfigs: ', r.data);
+  // console.log('getConfigs: ', r.data);
   return r.data;
 };
 
