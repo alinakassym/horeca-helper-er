@@ -96,7 +96,9 @@ export const JobsScreen = ({navigation}) => {
   const removeJob = async () => {
     try {
       await deleteJobById(selectedJob.id);
-      navigation.navigate('Jobs');
+      const result = await getJobs();
+      setJobs(result.data);
+      setVisible(false);
     } catch (e) {
       console.log('deleteJobById err: ', e);
     }
