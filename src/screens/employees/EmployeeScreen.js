@@ -225,6 +225,7 @@ export const EmployeeScreen = ({route, navigation}) => {
               label={'Номер телефона'}
               color={StatusesColors.green}>
               <IconPhone
+                style={globalStyles.mr3}
                 size={12.67}
                 color={PrimaryColors.white}
                 fillColor={PrimaryColors.white}
@@ -234,7 +235,7 @@ export const EmployeeScreen = ({route, navigation}) => {
           <View style={styles.rightCol}>
             {chatId ? (
               <PrimaryButton
-                label={'Перейти в чат'}
+                label={'Чат'}
                 color={PrimaryColors.element}
                 onPress={() =>
                   navigation.navigate('MessagesChat', {
