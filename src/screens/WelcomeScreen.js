@@ -16,6 +16,7 @@ import {typography} from '../styles/typography';
 
 // icons
 import WelcomeImage from '../assets/images/WelcomeImage';
+import {IconApple} from '../assets/icons/social/IconApple';
 import {IconGoogle} from '../assets/icons/social/IconGoogle';
 
 // components
@@ -68,6 +69,8 @@ export const WelcomeScreen = ({navigation}) => {
       // Error saving data
     }
   };
+
+  const onAppleButtonPress = async () => {};
 
   const googleSignIn = async () => {
     try {
@@ -151,6 +154,17 @@ export const WelcomeScreen = ({navigation}) => {
               labelColor={PrimaryColors.element}
               label={'Войти по логину'}
             />
+            <PrimaryButton
+              onPress={() => onAppleButtonPress()}
+              style={styles.btn}
+              color="#000000"
+              labelStyle={styles.labelStyle}
+              labelColor="#FFFFFF"
+              label={'Продолжить с Apple'}>
+              <View style={styles.appleButtonIconWrapper}>
+                <IconApple size={32} color={'#FFFFFF'} />
+              </View>
+            </PrimaryButton>
             <View style={styles.googleButtonWrapper}>
               <IconGoogle style={styles.googleButtonIcon} color={'#FFFFFF'} />
               <Text style={[styles.labelStyle, styles.googleButtonText]}>
@@ -179,6 +193,11 @@ const styles = StyleSheet.create({
   btn: {
     marginTop: 8,
     paddingVertical: 18,
+  },
+  appleButtonIconWrapper: {
+    position: 'absolute',
+    left: 12,
+    top: 10,
   },
   googleButtonWrapper: {
     position: 'relative',
