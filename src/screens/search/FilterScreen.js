@@ -326,17 +326,6 @@ export const FilterScreen = ({navigation}) => {
 const width = dimensions.width;
 
 const styles = StyleSheet.create({
-  row: {
-    marginRight: -5,
-    marginLeft: -5,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  col: {
-    marginLeft: 5,
-    marginRight: 5,
-    flex: 1,
-  },
   btnSection: {
     marginTop: -20,
     paddingTop: 22,
