@@ -146,8 +146,7 @@ export const WelcomeScreen = ({navigation}) => {
               {i18n.t('welcome')}
             </Text>
             <Text style={[typography.text, globalStyles.mb6]}>
-              Пожалуйста выберите удобный способ для входа или регистрации в
-              приложение
+              {i18n.t('choose way')}
             </Text>
             <PrimaryButton
               onPress={() => navigation.navigate('SignIn')}
@@ -155,23 +154,23 @@ export const WelcomeScreen = ({navigation}) => {
               color={PrimaryColors.grey4}
               labelStyle={styles.labelStyle}
               labelColor={PrimaryColors.element}
-              label={'Войти по логину'}
+              label={i18n.t('enter with login')}
             />
-            {isIOS && (
+            {!isIOS && (
               <PrimaryButton
                 onPress={() => onAppleButtonPress()}
                 style={styles.btn}
                 color="#000000"
                 labelStyle={styles.labelStyle}
                 labelColor="#FFFFFF"
-                label={'Продолжить с Apple'}>
+                label={`${i18n.t('continue with')} Apple`}>
                 <IconApple style={styles.appleButtonIcon} color={'#FFFFFF'} />
               </PrimaryButton>
             )}
             <View style={styles.googleButtonWrapper}>
               <IconGoogle style={styles.googleButtonIcon} color={'#FFFFFF'} />
               <Text style={[styles.labelStyle, styles.googleButtonText]}>
-                Продолжить с Google
+                {i18n.t('continue with')} Google
               </Text>
               <GoogleSigninButton
                 style={styles.googleButton}

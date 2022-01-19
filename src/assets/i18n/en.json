@@ -1,6 +1,8 @@
 {
   "translation": {
     "welcome": "Welcome to\nHoreca Helper",
-    "choose way": "Please choose a convenient way to enter or register in the application"
+    "choose way": "Please choose a convenient way to enter or register in the application",
+    "enter with login": "Enter with login",
+    "continue with": "Continue with"
   }
 }
