@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Pressable,
-  TouchableOpacity,
   Text,
   View,
   Modal,
+  Pressable,
   StyleSheet,
   Dimensions,
 } from 'react-native';
@@ -119,7 +118,7 @@ class ModalSelect extends React.PureComponent {
                     onSaveSelection(activeItem);
                     this.setState({...this.state, modal: false});
                   }}
-                  label={'Сохранить'}
+                  label={'Выбрать'}
                 />
               </View>
             </View>

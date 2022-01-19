@@ -1,31 +1,39 @@
 import React, {useEffect, useState} from 'react';
 import {
-  ActivityIndicator,
-  Alert,
-  View,
   Text,
+  View,
+  SafeAreaView,
+  ActivityIndicator,
   Dimensions,
-  TextInput,
   StyleSheet,
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import PrimaryButton from '../../components/buttons/PrimaryButton';
-import ModalSelect from '../../components/selects/ModalSelect';
-import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import {globalStyles} from '../../styles/globalStyles';
 
+// styles
+import {globalStyles} from '../../styles/globalStyles';
+import {typography} from '../../styles/typography';
+import {PrimaryColors} from '../../styles/colors';
+
+// components
+import Header from '../../components/Header';
+import ModalSelect from '../../components/selects/ModalSelect';
+import Autocomplete from '../../components/selects/Autocomplete';
+import NumberInput from '../../components/inputs/NumberInput';
+import MultilineInput from '../../components/inputs/MultilineInput';
+import RadioBtn from '../../components/buttons/RadioBtn';
+import GradientButton from '../../components/buttons/GradientButton';
+import SliderLabel from '../../components/slider/SliderLabel';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import LinearGradient from 'react-native-linear-gradient';
+
+// services
 import {
   getCities,
   getGenders,
   getPositions,
   getSchedules,
 } from '../../services/DictionariesService';
-import {
-  getJobById,
-  updateJobById,
-  deleteJobById,
-} from '../../services/JobsService';
-import {Autocomplete} from '../../components/selects/Autocomplete';
+import {getJobById, updateJobById} from '../../services/JobsService';
 
 const dimensions = Dimensions.get('screen');
 
@@ -36,6 +44,21 @@ export const JobEditScreen = ({route, navigation}) => {
   const [genders, setGenders] = useState([]);
   const [positions, setPositions] = useState([]);
   const [schedules, setSchedules] = useState([]);
+  const [focused, setFocused] = useState(false);
+
+  const [job, setJob] = React.useState({
+    position: null,
+    city: null,
+    ageMin: 18,
+    ageMax: 32,
+    gender: null,
+    experienceMin: 0,
+    experienceMax: 2,
+    schedule: null,
+    salaryMin: 200000,
+    salaryMax: 300000,
+    description: '',
+  });
 
   const getNumber = val => {
     return val.length > 0 ? Number(val) : null;
@@ -67,28 +90,13 @@ export const JobEditScreen = ({route, navigation}) => {
         setPositions(positionsData);
         setSchedules(schedulesData);
 
-        onChange(data.data);
+        setJob(data.data);
         setLoading(false);
       } catch (e) {
         console.log('err:', e);
       }
     });
   }, [jobId, navigation]);
-
-  const [job, onChange] = React.useState({
-    position: null,
-    city: null,
-    ageMin: 18,
-    ageMax: 32,
-    gender: null,
-    experienceMin: 0,
-    experienceMax: 2,
-    schedule: null,
-    salaryMin: 200000,
-    salaryMax: 300000,
-    description: '',
-  });
-  const values = [18, 32];
 
   const update = async () => {
     const jobItem = {
@@ -111,237 +119,378 @@ export const JobEditScreen = ({route, navigation}) => {
       console.log('updateJobById err: ', e);
     }
   };
-  const removeJob = async () => {
-    try {
-      await deleteJobById(job.id);
-      navigation.navigate('Jobs');
-    } catch (e) {
-      console.log('deleteJobById err: ', e);
-    }
-  };
-
-  const confirmDeletion = () => {
-    Alert.alert('Delete Job', 'Are you sure you want to delete?', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {text: 'Delete', onPress: () => removeJob(), style: 'destructive'},
-    ]);
-  };
 
   if (loading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" />
-      </View>
+      <SafeAreaView style={globalStyles.container}>
+        <Header
+          modal
+          onClose={() => navigation.goBack()}
+          title={'Основная информация'}
+        />
+        <View style={globalStyles.fullScreenSection}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      </SafeAreaView>
     );
   }
+
   return (
-    <KeyboardAwareScrollView
-      style={styles.container}
-      enableResetScrollToCoords={false}>
-      {/*Position*/}
-      <Autocomplete
-        label={'Position'}
-        onChange={onChange}
-        value={job}
-        valueKey={'position'}
-        items={positions}
-        itemTitle={'title'}
+    <SafeAreaView style={globalStyles.container}>
+      <Header
+        modal
+        onClose={() => navigation.goBack()}
+        title={'Основная информация'}
       />
 
-      {/*Job location*/}
-      <Autocomplete
-        label={'Location'}
-        onChange={onChange}
-        value={job}
-        valueKey={'city'}
-        items={cities}
-        itemTitle={'title'}
-      />
+      <KeyboardAwareScrollView
+        style={globalStyles.section}
+        enableResetScrollToCoords={false}>
+        {/*Вакансия*/}
+        <Autocomplete
+          label={'Вакансия'}
+          value={job.position}
+          items={positions}
+          itemKey={'title_ru'}
+          onSelect={val => setJob({...job, position: val})}
+          onClear={() => setJob({...job, position: null})}
+        />
 
-      {/*Age*/}
-      <View>
-        <Text style={globalStyles.label}>Age</Text>
-        <View style={styles.row}>
-          <View style={styles.col}>
-            <Text>From</Text>
-            <TextInput
-              keyboardType={'number-pad'}
-              style={globalStyles.primaryInput}
-              onChangeText={val => {
-                onChange({...job, ageMin: getNumber(val)});
-              }}
-              value={getString(job.ageMin)}
-            />
-          </View>
-          <View style={styles.col}>
-            <Text>To</Text>
-            <TextInput
-              keyboardType={'number-pad'}
-              style={globalStyles.primaryInput}
-              onChangeText={val => {
-                onChange({...job, ageMax: getNumber(val)});
-              }}
-              value={getString(job.ageMax)}
-            />
-          </View>
-        </View>
-        <Text>
-          From {job.ageMin} to {job.ageMax}
+        {/*Город*/}
+        <Autocomplete
+          label={'Город'}
+          value={job.city}
+          items={cities}
+          itemKey={'title_ru'}
+          onSelect={val => setJob({...job, city: val})}
+          onClear={() => setJob({...job, city: null})}
+        />
+
+        {/*Зарплата*/}
+        <Text style={[typography.text, typography.textColorElement]}>
+          Зарплата
         </Text>
-        <View style={styles.sliderWrapper}>
+        <View style={styles.wrapperInputs}>
+          <NumberInput
+            validIcon={<></>}
+            style={styles.numberInput}
+            label={'От'}
+            value={getString(job.salaryMin)}
+            onChangeText={val => {
+              setJob({...job, salaryMin: getNumber(val)});
+            }}
+            onClear={() => {
+              setJob({...job, salaryMin: null});
+            }}
+            onFocus={() => {
+              setFocused(true);
+            }}
+            onBlur={() => {
+              setFocused(false);
+            }}
+          />
+          <NumberInput
+            validIcon={<></>}
+            style={styles.numberInput}
+            label={'От'}
+            value={getString(job.salaryMax)}
+            onChangeText={val => {
+              setJob({...job, salaryMax: getNumber(val)});
+            }}
+            onClear={() => {
+              setJob({...job, salaryMax: null});
+            }}
+            onFocus={() => {
+              setFocused(true);
+            }}
+            onBlur={() => {
+              setFocused(false);
+            }}
+          />
+        </View>
+
+        {/*Расписание*/}
+        <ModalSelect
+          label={'Расписание'}
+          value={job.schedule}
+          items={schedules}
+          itemText={'title_ru'}
+          modalTitle={'Расписание'}
+          onSaveSelection={val => setJob({...job, schedule: val})}
+          onClear={() => setJob({...job, schedule: null})}
+        />
+
+        {/*Описание*/}
+        <MultilineInput
+          label={'Описание'}
+          value={job.description}
+          onChangeText={val => setJob({...job, description: val})}
+        />
+
+        {/*Возраст*/}
+        <Text style={[typography.text, typography.textColorElement]}>
+          Возраст
+        </Text>
+        <View style={styles.wrapperInputs}>
+          <NumberInput
+            validIcon={<></>}
+            style={styles.numberInput}
+            label={'От'}
+            value={getString(job.ageMin)}
+            onChangeText={val => {
+              setJob({...job, ageMin: getNumber(val)});
+            }}
+            onClear={() => {
+              setJob({...job, ageMin: null});
+            }}
+            onFocus={() => {
+              setFocused(true);
+            }}
+            onBlur={() => {
+              setFocused(false);
+            }}
+          />
+          <NumberInput
+            validIcon={<></>}
+            style={styles.numberInput}
+            label={'От'}
+            value={getString(job.ageMax)}
+            onChangeText={val => {
+              setJob({...job, ageMax: getNumber(val)});
+            }}
+            onClear={() => {
+              setJob({...job, ageMax: null});
+            }}
+            onFocus={() => {
+              setFocused(true);
+            }}
+            onBlur={() => {
+              setFocused(false);
+            }}
+          />
+        </View>
+        <View style={[styles.sliderWrapper, globalStyles.mb3]}>
           <MultiSlider
-            /*customLabel={(e) => {
-              return (<View><Text>{e.currentValue}</Text></View>)
-            }}*/
+            customLabel={e => {
+              return (
+                <View style={styles.labelWrapper}>
+                  <SliderLabel
+                    label={'лет'}
+                    offsetLeft={140}
+                    value={JSON.stringify(e.oneMarkerValue)}
+                    itemPosition={e.oneMarkerLeftPosition - 30}
+                  />
+                  <SliderLabel
+                    label={'лет'}
+                    offsetLeft={140}
+                    value={JSON.stringify(e.twoMarkerValue)}
+                    itemPosition={e.twoMarkerLeftPosition - 30}
+                  />
+                </View>
+              );
+            }}
+            customMarkerLeft={() => <View style={styles.point} />}
+            customMarkerRight={() => <View style={styles.point} />}
             enableLabel={true}
             isMarkersSeparated={true}
-            markerStyle={{backgroundColor: '#185AB7'}}
-            selectedStyle={{backgroundColor: '#185AB7'}}
-            sliderLength={dimensions.width - 80}
-            values={values}
+            markerStyle={{backgroundColor: PrimaryColors.element}}
+            selectedStyle={{backgroundColor: PrimaryColors.element}}
+            trackStyle={styles.trackStyle}
+            sliderLength={dimensions.width - 100}
+            values={[job.ageMin || 18, job.ageMax || 32]}
             showSteps={true}
             showStepLabels={true}
             min={18}
             max={70}
             onValuesChangeFinish={values => {
-              onChange({...job, ageMin: values[0], ageMax: values[1]});
+              setJob({...job, ageMin: values[0], ageMax: values[1]});
             }}
             valueOne={job.ageMin}
             valueTwo={job.ageMax}
           />
         </View>
-      </View>
 
-      {/*Gender*/}
-      <ModalSelect
-        label={'Gender'}
-        onChange={onChange}
-        value={job}
-        valueKey={'gender'}
-        items={genders}
-        itemTitle={'title'}
-      />
-
-      {/*Experience*/}
-      <Text style={globalStyles.label}>Experience (years)</Text>
-      <View style={styles.row}>
-        <View style={styles.col}>
-          <Text>From</Text>
-          <TextInput
-            keyboardType={'number-pad'}
-            style={globalStyles.primaryInput}
-            onChangeText={val => {
-              onChange({...job, experienceMin: getNumber(val)});
-            }}
+        {/*Опыт*/}
+        <Text style={[typography.text, typography.textColorElement]}>Опыт</Text>
+        <View style={styles.wrapperInputs}>
+          <NumberInput
+            validIcon={<></>}
+            style={styles.numberInput}
+            label={'От'}
             value={getString(job.experienceMin)}
-          />
-        </View>
-        <View style={styles.col}>
-          <Text>To</Text>
-          <TextInput
-            keyboardType={'number-pad'}
-            style={globalStyles.primaryInput}
             onChangeText={val => {
-              onChange({...job, experienceMax: getNumber(val)});
+              setJob({...job, experienceMin: getNumber(val)});
             }}
+            onClear={() => {
+              setJob({...job, experienceMin: null});
+            }}
+            onFocus={() => {
+              setFocused(true);
+            }}
+            onBlur={() => {
+              setFocused(false);
+            }}
+          />
+          <NumberInput
+            validIcon={<></>}
+            style={styles.numberInput}
+            label={'От'}
             value={getString(job.experienceMax)}
-          />
-        </View>
-      </View>
-
-      {/*Schedule*/}
-      <ModalSelect
-        label={'Schedule'}
-        onChange={onChange}
-        value={job}
-        valueKey={'schedule'}
-        items={schedules}
-        itemTitle={'title'}
-      />
-
-      {/*Salary*/}
-      <Text style={globalStyles.label}>Salary (KZT)</Text>
-      <View style={styles.row}>
-        <View style={styles.col}>
-          <Text>From</Text>
-          <TextInput
-            keyboardType={'number-pad'}
-            style={globalStyles.primaryInput}
             onChangeText={val => {
-              onChange({...job, salaryMin: getNumber(val)});
+              setJob({...job, experienceMax: getNumber(val)});
             }}
-            value={getString(job.salaryMin)}
+            onClear={() => {
+              setJob({...job, experienceMax: null});
+            }}
+            onFocus={() => {
+              setFocused(true);
+            }}
+            onBlur={() => {
+              setFocused(false);
+            }}
           />
         </View>
-        <View style={styles.col}>
-          <Text>To</Text>
-          <TextInput
-            keyboardType={'number-pad'}
-            style={globalStyles.primaryInput}
-            onChangeText={val => {
-              onChange({...job, salaryMax: getNumber(val)});
+        <View style={[styles.sliderWrapper, globalStyles.mb3]}>
+          <MultiSlider
+            customLabel={e => {
+              return (
+                <View style={styles.labelWrapper}>
+                  <SliderLabel
+                    label={'лет'}
+                    offsetLeft={140}
+                    value={JSON.stringify(e.oneMarkerValue)}
+                    itemPosition={e.oneMarkerLeftPosition - 30}
+                  />
+                  <SliderLabel
+                    label={'лет'}
+                    offsetLeft={140}
+                    value={JSON.stringify(e.twoMarkerValue)}
+                    itemPosition={e.twoMarkerLeftPosition - 30}
+                  />
+                </View>
+              );
             }}
-            value={getString(job.salaryMax)}
+            customMarkerLeft={() => <View style={styles.point} />}
+            customMarkerRight={() => <View style={styles.point} />}
+            enableLabel={true}
+            isMarkersSeparated={true}
+            markerStyle={{backgroundColor: PrimaryColors.element}}
+            selectedStyle={{backgroundColor: PrimaryColors.element}}
+            trackStyle={styles.trackStyle}
+            sliderLength={dimensions.width - 100}
+            values={[job.experienceMin || 0, job.experienceMax || 20]}
+            showSteps={true}
+            showStepLabels={true}
+            min={0}
+            max={20}
+            onValuesChangeFinish={values => {
+              setJob({
+                ...job,
+                experienceMin: values[0],
+                experienceMax: values[1],
+              });
+            }}
+            valueOne={job.experienceMin}
+            valueTwo={job.experienceMax}
           />
         </View>
-      </View>
 
-      {/*Description*/}
-      <Text style={globalStyles.label}>Description</Text>
-      <TextInput
-        multiline={true}
-        style={[globalStyles.primaryInput, styles.multiline]}
-        onChangeText={val => {
-          onChange({...job, description: val});
-        }}
-        value={job.description}
-      />
-      <View style={styles.btnSection}>
-        <View style={styles.btn}>
-          <PrimaryButton label={'Save changes'} onPress={() => update()} />
+        {/*Пол*/}
+        <Text
+          style={[
+            typography.text,
+            typography.textColorElement,
+            globalStyles.mb3,
+          ]}>
+          Пол
+        </Text>
+        <View style={[styles.wrapperRadio, globalStyles.mb5]}>
+          {genders.map((gItem, index) => (
+            <RadioBtn
+              style={styles.radioBtn2}
+              key={index}
+              item={gItem}
+              itemKey={'title_ru'}
+              activeItem={job.gender}
+              onSelect={() =>
+                setJob({
+                  ...job,
+                  gender: gItem?.id === job.gender?.id ? null : gItem,
+                })
+              }
+            />
+          ))}
         </View>
-        <PrimaryButton
-          label={'Delete job'}
-          color={'#ea0000'}
-          onPress={() => confirmDeletion()}
-        />
-      </View>
-    </KeyboardAwareScrollView>
+
+        {/*Сохранить*/}
+        {!focused && (
+          <LinearGradient
+            colors={[
+              'rgba(255, 255, 255, 0)',
+              'rgba(255, 255, 255, 0.9)',
+              'rgba(255, 255, 255, 0.9)',
+              'rgba(255, 255, 255, 1)',
+            ]}>
+            <GradientButton
+              style={globalStyles.mb5}
+              label={'Сохранить'}
+              onPress={() => update()}
+            />
+          </LinearGradient>
+        )}
+      </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
 };
 
+const width = dimensions.width;
+
 const styles = StyleSheet.create({
-  container: {
-    padding: 16,
+  wrapperInputs: {
+    marginLeft: -20,
+    paddingLeft: 20,
+    width: width + 20,
+    flexDirection: 'row',
   },
+  numberInput: {
+    marginRight: 20,
+    width: width * 0.5 - 30,
+  },
+  wrapperRadio: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  radioBtn2: {
+    width: 140,
+  },
+
   sliderWrapper: {
     paddingTop: 38,
     alignItems: 'center',
   },
-  btnSection: {
-    marginBottom: 42,
-  },
-  btn: {
-    marginBottom: 16,
-  },
-  multiline: {
-    height: 100,
-    textAlignVertical: 'top',
-  },
-  row: {
-    marginRight: -5,
-    marginLeft: -5,
+  labelWrapper: {
+    position: 'relative',
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
-  col: {
-    marginLeft: 5,
-    marginRight: 5,
-    flex: 1,
+  trackStyle: {
+    height: 4,
+    borderRadius: 2,
+  },
+
+  point: {
+    height: 28,
+    width: 28,
+    borderRadius: 28,
+    backgroundColor: PrimaryColors.white,
+    shadowColor: 'rgba(0,0,0,0.5)',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
   },
 });
 

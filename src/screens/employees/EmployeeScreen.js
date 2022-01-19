@@ -7,6 +7,7 @@ import {
   View,
   StyleSheet,
   Dimensions,
+  Alert,
 } from 'react-native';
 import moment from 'moment';
 
@@ -26,15 +27,18 @@ import EmployeeInfo from './components/EmployeeInfo';
 import GradientButton from '../../components/buttons/GradientButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import BottomModal from '../../components/BottomModal';
-import {WorkList} from './components/WorkList';
+import WorkList from './components/WorkList';
+import RadioSelect from '../../components/selects/RadioSelect';
+import MultilineInput from '../../components/inputs/MultilineInput';
+import OutlineButton from '../../components/buttons/OutlineButton';
 import LinearGradient from 'react-native-linear-gradient';
 
 // services
 import {getEmployeeById} from '../../services/EmployeesService';
 import {getJobs, postJobInvite} from '../../services/JobsService';
 import {getChatsLookup} from '../../services/ChatService';
-import RadioSelect from '../../components/selects/RadioSelect';
-import MultilineInput from '../../components/MultilineInput';
+import {getConfigs} from '../../services/UtilsService';
+import Toast from '../../components/notifications/Toast';
 
 const dimensions = Dimensions.get('screen');
 
@@ -51,6 +55,7 @@ export const EmployeeScreen = ({route, navigation}) => {
     title_ru: '',
   });
   const [visible, setVisible] = useState(false);
+  const [visibleToast, setVisibleToast] = useState(false);
   const [inviteMessage, setInviteMessage] = useState();
   const [item, setItem] = useState({
     id: 0,
@@ -81,37 +86,89 @@ export const EmployeeScreen = ({route, navigation}) => {
 
   const inviteToJob = async () => {
     try {
+      setVisibleToast(false);
       const jobsData = await getJobs();
-      setJobs(
-        jobsData.data.map(el => {
-          return {
-            id: el.id,
-            title: el.position.title,
-            title_ru: el.position.title_ru,
-          };
-        }),
-      );
-      setVisible(true);
+      if (jobsData.data && jobsData.data.length > 0) {
+        setJobs(
+          jobsData.data.map(el => {
+            return {
+              id: el.id,
+              title: el.position.title,
+              title_ru: el.position.title_ru,
+            };
+          }),
+        );
+        setVisible(true);
+      } else {
+        Alert.alert('Нет вакансий', 'На данный момент нет вакансий', [
+          {
+            text: 'Отмена',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'Создать вакансию',
+            onPress: () => navigation.navigate('Jobs'),
+            style: 'default',
+          },
+        ]);
+      }
     } catch (e) {
       console.log('inviteToJob err: ', e);
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const resetInviteForm = async () => {
+    try {
+      setInviteMessage('');
+      setVacancy({
+        id: null,
+        title: '',
+        title_ru: '',
+      });
+      const chatLookup = await getChatsLookup(employeeId);
+      setChatId(chatLookup);
+      const result = await getEmployeeById(employeeId);
+      setItem(result.data);
+    } catch (e) {
+      console.log('resetInviteForm err: ', e);
+    }
+  };
+
   const sendInvite = async () => {
-    console.log({
-      id: vacancy.id,
-      data: {
+    try {
+      setVisible(false);
+      console.log({
+        id: vacancy.id,
+        data: {
+          employeeId: employeeId,
+          body: inviteMessage,
+        },
+      });
+      const id = vacancy.id;
+      const data = {
         employeeId: employeeId,
         body: inviteMessage,
-      },
-    });
-    const id = vacancy.id;
-    const data = {
-      employeeId: employeeId,
-      body: inviteMessage,
-    };
-    await postJobInvite(id, data);
-    setVisible(false);
+      };
+      await postJobInvite(id, data);
+      await resetInviteForm();
+      setVisibleToast(true);
+      setTimeout(() => {
+        setVisibleToast(false);
+      }, 5000);
+    } catch (e) {
+      console.log('sendInvite err: ', e);
+    }
+  };
+
+  const getCoverLetter = async () => {
+    try {
+      const letter = await getConfigs('er-cover-letter');
+      setInviteMessage(letter.value_ru);
+    } catch (e) {
+      console.log('getCoverLetter err: ', e);
+    }
   };
 
   const isValid = () => {
@@ -122,20 +179,15 @@ export const EmployeeScreen = ({route, navigation}) => {
     function fetchData() {
       return navigation.addListener('focus', async () => {
         try {
-          const result = await getEmployeeById(employeeId);
-          setItem(result.data);
+          await resetInviteForm();
           setLoading(false);
-
-          const chatLookup = await getChatsLookup(employeeId);
-          setChatId(chatLookup);
-          console.log('chatLookup: ', chatLookup);
         } catch (e) {
           console.log('getEmployeeById err:', e);
         }
       });
     }
     fetchData();
-  }, [employeeId, navigation]);
+  }, [employeeId, navigation, resetInviteForm]);
 
   const getAge = birthDate => {
     return moment().diff(birthDate, 'years', false);
@@ -158,6 +210,12 @@ export const EmployeeScreen = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
+      <Toast
+        visible={visibleToast}
+        title={'Готово!'}
+        text={'Вы успешно отправили приглашение.'}
+        onPress={() => setVisibleToast(false)}
+      />
       <Header
         goBack
         onClose={() => navigation.goBack()}
@@ -225,16 +283,18 @@ export const EmployeeScreen = ({route, navigation}) => {
               label={'Номер телефона'}
               color={StatusesColors.green}>
               <IconPhone
-                size={12.67}
+                style={globalStyles.mr3}
+                size={16}
                 color={PrimaryColors.white}
                 fillColor={PrimaryColors.white}
+                width={0.1}
               />
             </PrimaryButton>
           </View>
           <View style={styles.rightCol}>
             {chatId ? (
               <PrimaryButton
-                label={'Перейти в чат'}
+                label={'Чат'}
                 color={PrimaryColors.element}
                 onPress={() =>
                   navigation.navigate('MessagesChat', {
@@ -242,7 +302,11 @@ export const EmployeeScreen = ({route, navigation}) => {
                     user: item,
                   })
                 }>
-                <IconMessages size={12.67} color={PrimaryColors.white} />
+                <IconMessages
+                  style={globalStyles.mr3}
+                  size={12.67}
+                  color={PrimaryColors.white}
+                />
               </PrimaryButton>
             ) : (
               <GradientButton
@@ -272,6 +336,11 @@ export const EmployeeScreen = ({route, navigation}) => {
           label={'Сопроводительное письмо'}
           onInputFocus={() => console.log('')}
           onChangeText={val => setInviteMessage(val)}
+        />
+        <OutlineButton
+          onPress={() => getCoverLetter()}
+          style={styles.coverLetterBtn}
+          label={'Вставить шаблонное письмо'}
         />
         {isValid() ? (
           <GradientButton label={'Отправить'} onPress={() => sendInvite()} />
@@ -333,5 +402,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 20,
     zIndex: 3,
+  },
+  coverLetterBtn: {
+    marginBottom: 72,
+    paddingVertical: 8,
+    minHeight: 32,
+    alignSelf: 'flex-start',
   },
 });

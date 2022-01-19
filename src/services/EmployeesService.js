@@ -30,8 +30,14 @@ export const updateWork = async data => {
   return r;
 };
 
-export const deleteWork = async (id, hhToken) => {
+export const deleteWork = async id => {
   const r = await http.delete(`/ee/works/${id}`);
   // console.log('Employees Service deleteWork result:', r.data);
+  return r;
+};
+
+export const putEmployeeReview = async (id, data) => {
+  const r = await http.put(`/er/works/${id}/review`, data);
+  console.log('Employees Service putEmployeeReview result:', r.data);
   return r;
 };

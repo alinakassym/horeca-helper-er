@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View, SafeAreaView, Alert, StyleSheet} from 'react-native';
+import {ScrollView, View, SafeAreaView, Alert} from 'react-native';
 
 // styles
 import {globalStyles} from '../../styles/globalStyles';
@@ -28,6 +28,7 @@ import {
   setEmployeesFilter,
   setFilterApplied,
 } from '../../store/slices/employees';
+import Toast from '../../components/notifications/Toast';
 
 export const JobsScreen = ({navigation}) => {
   const [jobs, setJobs] = useState([]);
@@ -35,6 +36,7 @@ export const JobsScreen = ({navigation}) => {
     id: 0,
   });
   const [visible, setVisible] = useState(false);
+  const [visibleToast, setVisibleToast] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -68,11 +70,15 @@ export const JobsScreen = ({navigation}) => {
 
   const setJobActivation = async () => {
     try {
+      setVisibleToast(true);
       await putJobIsActive(selectedJob.id, {
         isActive: !selectedJob.isActive,
       });
       const result = await getJobs();
       setJobs(result.data);
+      setTimeout(() => {
+        setVisibleToast(false);
+      }, 5000);
     } catch (e) {
       console.log('setJobActivation err: ', e);
     }
@@ -96,7 +102,9 @@ export const JobsScreen = ({navigation}) => {
   const removeJob = async () => {
     try {
       await deleteJobById(selectedJob.id);
-      navigation.navigate('Jobs');
+      const result = await getJobs();
+      setJobs(result.data);
+      setVisible(false);
     } catch (e) {
       console.log('deleteJobById err: ', e);
     }
@@ -115,6 +123,16 @@ export const JobsScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
+      <Toast
+        visible={selectedJob && visibleToast}
+        title={'Готово!'}
+        text={
+          selectedJob.isActive
+            ? `Вакансия "${selectedJob?.position?.title_ru}" деактивирована`
+            : `Вакансия "${selectedJob?.position?.title_ru}" активирована`
+        }
+        onPress={() => setVisibleToast(false)}
+      />
       <Header
         onClose={() => navigation.goBack()}
         goBack
@@ -136,9 +154,10 @@ export const JobsScreen = ({navigation}) => {
         <ModalButton
           divide
           label={'Редактировать'}
-          onPress={() =>
-            navigation.navigate('JobEditScreen', {id: selectedJob.id})
-          }
+          onPress={() => {
+            setVisible(false);
+            navigation.navigate('JobEdit', {id: selectedJob.id});
+          }}
         />
         <ModalButton
           label={'Удалить'}
@@ -155,6 +174,7 @@ export const JobsScreen = ({navigation}) => {
               onPress={() => {
                 setSelectedJob(item);
                 setVisible(true);
+                setVisibleToast(false);
               }}
               findRelevant={() =>
                 apply(item).then(() => {
@@ -163,9 +183,11 @@ export const JobsScreen = ({navigation}) => {
               }
             />
           ))}
-        <View style={styles.section}>
+        <View
+          style={[globalStyles.section, globalStyles.mt3, globalStyles.mb5]}>
           <PlainButton
-            onPress={() => navigation.navigate('JobsPostScreen')}
+            btnStyle={{...globalStyles.mt3, ...globalStyles.mb3}}
+            onPress={() => navigation.navigate('JobsPost')}
             label={'Создать вакансию'}>
             <IconAdd
               style={globalStyles.mr3}
@@ -179,12 +201,3 @@ export const JobsScreen = ({navigation}) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  section: {
-    marginBottom: 24,
-    marginTop: 8,
-    padding: 18,
-    backgroundColor: PrimaryColors.white,
-  },
-});

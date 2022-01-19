@@ -74,12 +74,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   phone: {
-    width: width - 140,
+    width: width - 160,
     flexDirection: 'row',
     alignItems: 'center',
   },
   btn: {
-    width: 100,
+    width: 120,
   },
   btnText: {
     fontFamily: 'Inter-Regular',

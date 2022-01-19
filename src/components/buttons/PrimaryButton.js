@@ -13,8 +13,7 @@ const propTypes = {
 
 class PrimaryButton extends React.PureComponent {
   render() {
-    const {label, color, labelColor, onPress, style, iconViewStyle, children} =
-      this.props;
+    const {label, color, labelColor, onPress, style, children} = this.props;
     const btnColor = color || PrimaryColors.brand;
     const btnLabelColor = labelColor || PrimaryColors.white;
     return (
@@ -22,9 +21,7 @@ class PrimaryButton extends React.PureComponent {
         activeOpacity={0.5}
         onPress={onPress}
         style={[styles.btn, {backgroundColor: btnColor}, style]}>
-        {children && (
-          <View style={[styles.icon, iconViewStyle]}>{children}</View>
-        )}
+        {children}
         <Text style={[styles.btnLabel, {color: btnLabelColor}]}>{label}</Text>
       </TouchableOpacity>
     );
@@ -34,7 +31,8 @@ class PrimaryButton extends React.PureComponent {
 const styles = StyleSheet.create({
   btn: {
     paddingVertical: 15,
-    paddingHorizontal: 12,
+    paddingHorizontal: 8,
+    minHeight: 48,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -44,10 +42,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Inter-SemiBold',
     fontSize: 14,
-    lineHeight: 18,
-  },
-  icon: {
-    marginRight: 6,
+    lineHeight: 16,
   },
 });
 

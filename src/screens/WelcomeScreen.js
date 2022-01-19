@@ -158,9 +158,10 @@ export const WelcomeScreen = ({navigation}) => {
               color="#000000"
               labelStyle={styles.labelStyle}
               labelColor="#FFFFFF"
-              label={'Продолжить с Apple'}
-              iconViewStyle={styles.appleButtonIconView}>
-              <IconApple size={32} color={'#FFFFFF'} />
+              label={'Продолжить с Apple'}>
+              <View style={styles.appleButtonIconWrapper}>
+                <IconApple size={32} color={'#FFFFFF'} />
+              </View>
             </PrimaryButton>
             <View style={styles.googleButtonWrapper}>
               <IconGoogle style={styles.googleButtonIcon} color={'#FFFFFF'} />
@@ -191,7 +192,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingVertical: 18,
   },
-  appleButtonIconView: {
+  appleButtonIconWrapper: {
     position: 'absolute',
     left: 12,
     top: 10,

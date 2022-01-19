@@ -27,6 +27,13 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: PrimaryColors.white,
   },
 
+  btnSection: {
+    paddingHorizontal: 20,
+    width: dimensions.width,
+    minHeight: 90,
+    backgroundColor: PrimaryColors.white,
+  },
+
   // flex
   row: {
     flexDirection: 'row',

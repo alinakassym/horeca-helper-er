@@ -5,7 +5,6 @@ import {
   Text,
   ScrollView,
   ActivityIndicator,
-  StyleSheet,
 } from 'react-native';
 
 // styles
@@ -13,10 +12,11 @@ import {globalStyles} from '../../styles/globalStyles';
 
 // components
 import Header from '../../components/Header';
-import {EmployeeCard} from './components/EmployeeCard';
+import EmployeeCard from './components/EmployeeCard';
 
 // services
 import {getWorksList} from '../../services/WorksService';
+import Placeholder from '../../components/Placeholder';
 
 export const EmployeesScreen = ({navigation}) => {
   const [works, setWorks] = useState();
@@ -51,23 +51,22 @@ export const EmployeesScreen = ({navigation}) => {
       />
       {works && works.length > 0 ? (
         <ScrollView>
-          {works.map((item, index) => (
-            <EmployeeCard key={index} item={item} />
-          ))}
+          {works.map(
+            (item, index) =>
+              item.isConfirmed && (
+                <EmployeeCard
+                  key={index}
+                  item={item}
+                  onPress={() =>
+                    navigation.navigate('EmployeeReview', {id: item.id})
+                  }
+                />
+              ),
+          )}
         </ScrollView>
       ) : (
-        <View style={globalStyles.fullScreenSection}>
-          <Text style={styles.text}>No employees yet</Text>
-        </View>
+        <Placeholder placeholderText={'Список сотрудников пуст'} />
       )}
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    fontFamily: 'Roboto-Medium',
-    fontSize: 18,
-    color: '#666666',
-  },
-});

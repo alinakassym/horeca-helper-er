@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
-import {PrimaryColors} from '../styles/colors';
+import {PrimaryColors} from '../../styles/colors';
 
 const propTypes = {
   label: PropTypes.string,
@@ -53,11 +53,11 @@ class MultilineInput extends React.PureComponent {
           }}
           onFocus={() => {
             this.setState({...this.state, focused: true});
-            onInputFocus(true);
+            onInputFocus && onInputFocus(true);
           }}
           onBlur={() => {
             this.setState({...this.state, focused: false});
-            onInputFocus(false);
+            onInputFocus && onInputFocus(false);
           }}
           onChangeText={val => onChangeText(val)}
           placeholder={focused ? '' : label}

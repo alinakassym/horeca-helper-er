@@ -34,13 +34,14 @@ export const SearchScreen = ({navigation}) => {
   const [loading, setLoading] = useState(true);
 
   const getData = async () => {
-    return Promise.all([searchEmployees(), getPositions(), getStats()]);
+    return Promise.all([getPositions(), getStats()]);
   };
 
   useEffect(() => {
     return navigation.addListener('focus', async () => {
       try {
-        const [employeesData, positionsData, statsData] = await getData();
+        const [positionsData, statsData] = await getData();
+        const employeesData = await searchEmployees(filter);
         setEmployees(employeesData.items);
         setPositions(positionsData);
         setStats(statsData);
@@ -53,7 +54,7 @@ export const SearchScreen = ({navigation}) => {
 
   if (loading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={globalStyles.fullScreenSection}>
         <ActivityIndicator size="large" />
       </View>
     );
@@ -67,6 +68,7 @@ export const SearchScreen = ({navigation}) => {
       />
       <Header options title={'Поиск'} subtitle={'соискателей'}>
         <OptionsButton
+          applied={isFilterApplied}
           onPress={() => {
             navigation.navigate('Filter');
           }}
@@ -79,7 +81,10 @@ export const SearchScreen = ({navigation}) => {
         <StatCard numUsers={stats.numEmployees} numResumes={stats.numResumes} />
       </BottomModal>
       <View style={{height: 60}}>
-        <HorizontalFilter items={positions} />
+        <HorizontalFilter
+          onSelect={val => console.log({val})}
+          items={positions}
+        />
       </View>
       {employees.length > 0 ? (
         <ScrollView>
