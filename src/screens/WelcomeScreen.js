@@ -33,6 +33,8 @@ import {AuthContext} from '../store/context';
 // services
 import {getHhToken} from '../services/AuthService';
 
+import i18n from '../assets/i18n/i18n';
+
 GoogleSignin.configure({
   // webClientId is taken from android/app/google-services.json
   webClientId:
@@ -135,7 +137,7 @@ export const WelcomeScreen = ({navigation}) => {
           <View style={styles.section}>
             <WelcomeImage size={imageSize} style={globalStyles.mb5} />
             <Text style={[typography.h1, globalStyles.mb4]}>
-              {'Добро пожаловать\nв Horeca Helper'}
+              {i18n.t('welcome')}
             </Text>
             <Text style={[typography.text, globalStyles.mb6]}>
               Пожалуйста выберите удобный способ для входа или регистрации в

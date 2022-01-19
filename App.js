@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import {View, ActivityIndicator, NativeModules, Platform} from 'react-native';
 // have to load 'react-native-gesture-handler' at the beginning
 // to avoid e.g. "unsupported top level event type onGuestureHandlerEvent" crashes
 import 'react-native-gesture-handler';
@@ -25,6 +25,9 @@ import {
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import {setToken} from './src/store/slices/auth';
+import {setLang} from './src/store/slices/locale';
+import {globalStyles} from './src/styles/globalStyles';
+import i18n from './src/assets/i18n/i18n';
 
 const App = () => {
   const [isDarkTheme, setIsDarkTheme] = React.useState(false);
@@ -121,7 +124,6 @@ const App = () => {
       },
       signUp: () => {
         // setUserToken('fgkj');
-        // setIsLoading(false);
       },
       toggleTheme: () => {
         setIsDarkTheme(isDarkTheme => !isDarkTheme);
@@ -131,24 +133,39 @@ const App = () => {
   );
 
   useEffect(() => {
-    setTimeout(async () => {
-      // setIsLoading(false);
+    const fetch = async () => {
       let hhToken;
       hhToken = null;
+      let locale;
+      let lang = val => val.substring(0, 2);
       try {
         hhToken = await AsyncStorage.getItem('hhToken');
         store.dispatch(setToken(hhToken));
+        locale = await AsyncStorage.getItem('i18n');
+        console.log({locale});
+        if (!locale) {
+          locale =
+            Platform.OS === 'android'
+              ? NativeModules.I18nManager.localeIdentifier
+              : NativeModules.SettingsManager.settings.AppleLocale ||
+                NativeModules.SettingsManager.settings.AppleLanguages[0];
+          console.log({locale});
+          await AsyncStorage.setItem('i18n', locale);
+        }
+        store.dispatch(setLang(lang(locale)));
+        await i18n.changeLanguage(lang(locale));
       } catch (e) {
         console.log(e);
       }
 
       dispatch({type: 'RETRIEVE_TOKEN', token: hhToken});
-    }, 1000);
+    };
+    fetch().then();
   }, []);
 
   if (loginState.isLoading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={globalStyles.fullScreenSection}>
         <ActivityIndicator size="large" />
       </View>
     );
