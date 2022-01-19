@@ -13,7 +13,8 @@ const propTypes = {
 
 class PrimaryButton extends React.PureComponent {
   render() {
-    const {label, color, labelColor, onPress, style, children} = this.props;
+    const {label, color, labelColor, onPress, style, iconViewStyle, children} =
+      this.props;
     const btnColor = color || PrimaryColors.brand;
     const btnLabelColor = labelColor || PrimaryColors.white;
     return (
@@ -21,7 +22,9 @@ class PrimaryButton extends React.PureComponent {
         activeOpacity={0.5}
         onPress={onPress}
         style={[styles.btn, {backgroundColor: btnColor}, style]}>
-        {children && <View style={styles.icon}>{children}</View>}
+        {children && (
+          <View style={[styles.icon, iconViewStyle]}>{children}</View>
+        )}
         <Text style={[styles.btnLabel, {color: btnLabelColor}]}>{label}</Text>
       </TouchableOpacity>
     );
