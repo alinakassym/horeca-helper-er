@@ -35,10 +35,6 @@ import {
 } from '../../services/DictionariesService';
 
 const dimensions = Dimensions.get('screen');
-const height = dimensions.height;
-const offsetTop = height * 0.15 * -1;
-console.log({height});
-console.log({offsetTop});
 
 export const FilterScreen = ({navigation}) => {
   const {employees} = useSelector(state => state);

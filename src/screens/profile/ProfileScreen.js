@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
-  Switch,
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
@@ -65,11 +64,6 @@ export const ProfileScreen = ({navigation}) => {
       }
     });
   }, [navigation]);
-
-  // Notification
-  const [isNotification, setIsNotification] = useState(false);
-  const toggleNotification = () =>
-    setIsNotification(previousNotificationState => !previousNotificationState);
 
   return (
     <SafeAreaView style={globalStyles.container}>
@@ -138,22 +132,6 @@ export const ProfileScreen = ({navigation}) => {
             style={styles.listItem}>
             <Text style={styles.listItemTitle}>Вопросы и ответы</Text>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.list}>
-          <TouchableOpacity style={styles.listItem}>
-            <Text style={styles.listItemTitle}>Уведомления</Text>
-            <Switch
-              trackColor={{
-                false: PrimaryColors.grey3,
-                true: '#5CC689',
-              }}
-              thumbColor={PrimaryColors.white}
-              ios_backgroundColor={PrimaryColors.grey3}
-              onValueChange={toggleNotification}
-              value={isNotification}
-            />
           </TouchableOpacity>
         </View>
 
