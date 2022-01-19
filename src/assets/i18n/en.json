@@ -3,6 +3,11 @@
     "welcome": "Welcome to\nHoreca Helper",
     "choose way": "Please choose a convenient way to enter or register in the application",
     "enter with login": "Enter with login",
-    "continue with": "Continue with"
+    "continue with": "Continue with",
+    "sign in": "Sign in/Sign up",
+    "enter login password": "Enter login and password to continue",
+    "login": "Login",
+    "password": "Password",
+    "enter": "Sign in"
   }
 }

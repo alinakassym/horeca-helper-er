@@ -22,6 +22,8 @@ import Users from '../model/users';
 import {AuthContext} from '../store/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import i18n from '../assets/i18n/i18n';
+
 export const SignInScreen = ({navigation}) => {
   const [data, setData] = React.useState({
     username: '',
@@ -125,21 +127,21 @@ export const SignInScreen = ({navigation}) => {
         <ScrollView>
           <View style={globalStyles.section}>
             <Text style={[typography.h1, globalStyles.mt6]}>
-              Вход и регистрация
+              {i18n.t('sign in')}
             </Text>
             <Text style={[typography.text, globalStyles.mt3, globalStyles.mb6]}>
-              Введите логин и пароль чтобы войти
+              {i18n.t('enter login password')}
             </Text>
             <Input
               value={data.username}
-              label={'Логин'}
+              label={i18n.t('login')}
               onChangeText={val => textInputChange(val)}
               onClear={() => textInputChange('')}
               onEndEditing={e => handleValidUser(e.nativeEvent.text)}
             />
             <Input
               value={data.password}
-              label={'Пароль'}
+              label={i18n.t('password')}
               secureTextEntry
               onChangeText={val => handlePasswordChange(val)}
               onClear={() => handlePasswordChange('')}
@@ -148,7 +150,7 @@ export const SignInScreen = ({navigation}) => {
         </ScrollView>
         <View style={globalStyles.btnSection}>
           <GradientButton
-            label={'Войти'}
+            label={i18n.t('enter')}
             onPress={() => {
               loginHandle(data.username, data.password);
             }}
