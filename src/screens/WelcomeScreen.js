@@ -7,6 +7,7 @@ import {
   Dimensions,
   ActivityIndicator,
   ScrollView,
+  Platform,
 } from 'react-native';
 
 // styles
@@ -47,6 +48,8 @@ const dimensions = Dimensions.get('screen');
 const width = dimensions.width;
 const imageSize = width > 340 ? 300 : width - 40;
 const paddingTop = width > 340 ? (width - imageSize - 20) / 2 : 20;
+
+const isIOS = Platform.OS === 'ios';
 
 export const WelcomeScreen = ({navigation}) => {
   const {signIn} = React.useContext(AuthContext);
@@ -154,17 +157,17 @@ export const WelcomeScreen = ({navigation}) => {
               labelColor={PrimaryColors.element}
               label={'Войти по логину'}
             />
-            <PrimaryButton
-              onPress={() => onAppleButtonPress()}
-              style={styles.btn}
-              color="#000000"
-              labelStyle={styles.labelStyle}
-              labelColor="#FFFFFF"
-              label={'Продолжить с Apple'}>
-              <View style={styles.appleButtonIconWrapper}>
-                <IconApple size={32} color={'#FFFFFF'} />
-              </View>
-            </PrimaryButton>
+            {isIOS && (
+              <PrimaryButton
+                onPress={() => onAppleButtonPress()}
+                style={styles.btn}
+                color="#000000"
+                labelStyle={styles.labelStyle}
+                labelColor="#FFFFFF"
+                label={'Продолжить с Apple'}>
+                <IconApple style={styles.appleButtonIcon} color={'#FFFFFF'} />
+              </PrimaryButton>
+            )}
             <View style={styles.googleButtonWrapper}>
               <IconGoogle style={styles.googleButtonIcon} color={'#FFFFFF'} />
               <Text style={[styles.labelStyle, styles.googleButtonText]}>
@@ -191,13 +194,9 @@ const styles = StyleSheet.create({
     width: imageSize,
   },
   btn: {
+    position: 'relative',
     marginTop: 8,
     paddingVertical: 18,
-  },
-  appleButtonIconWrapper: {
-    position: 'absolute',
-    left: 12,
-    top: 10,
   },
   googleButtonWrapper: {
     position: 'relative',
@@ -216,10 +215,18 @@ const styles = StyleSheet.create({
     left: 16,
     top: 16,
   },
+  appleButtonIcon: {
+    position: 'absolute',
+    left: 16,
+    top: 15,
+  },
   googleButtonText: {
     position: 'absolute',
     top: 18,
     width: '100%',
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 16,
+    lineHeight: 20,
     textAlign: 'center',
     color: '#FFFFFF',
   },
