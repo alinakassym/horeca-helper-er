@@ -4,6 +4,7 @@ import {View, Modal, Pressable, StyleSheet} from 'react-native';
 import {PrimaryColors} from '../styles/colors';
 import ModalButton from './buttons/ModalButton';
 import Header from './Header';
+import i18n from '../assets/i18n/i18n';
 
 const propTypes = {
   visible: PropTypes.bool,
@@ -41,7 +42,7 @@ class BottomModal extends React.PureComponent {
             </Pressable>
             {!title && (
               <Pressable onPress={onCancel} style={[styles.block, blockStyle]}>
-                <ModalButton label={'Отмена'} onPress={onCancel} />
+                <ModalButton label={i18n.t('Cancel')} onPress={onCancel} />
               </Pressable>
             )}
           </View>

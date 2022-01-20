@@ -16,15 +16,22 @@ import {IconDot} from '../../../assets/icons/main/IconDot';
 import MenuButton from '../../../components/buttons/MenuButton';
 import PlainButton from '../../../components/buttons/PlainButton';
 
+// locale
+import i18n from '../../../assets/i18n/i18n';
+
 const propTypes = {
   item: PropTypes.object,
+  titleKey: PropTypes.string,
   onPress: PropTypes.func,
   findRelevant: PropTypes.func,
 };
 
 class JobCard extends React.PureComponent {
   render() {
-    const {item, onPress, findRelevant} = this.props;
+    const {item, titleKey, onPress, findRelevant} = this.props;
+
+    const position = item.position && item.position[titleKey];
+    const city = item.city && item.city[titleKey];
 
     const numberWithSpaces = val => {
       let parts = val.toString().split('.');
@@ -43,7 +50,7 @@ class JobCard extends React.PureComponent {
           <View style={[globalStyles.row, globalStyles.spaceBetween]}>
             <View>
               <View style={[globalStyles.row, globalStyles.alignCenter]}>
-                <Text style={styles.position}>{item.position.title_ru}</Text>
+                <Text style={styles.position}>{position}</Text>
                 <IconDot
                   size={8}
                   style={globalStyles.ml3}
@@ -52,7 +59,7 @@ class JobCard extends React.PureComponent {
                   }
                 />
               </View>
-              <Text style={styles.location}>{item.city.title_ru}</Text>
+              <Text style={styles.location}>{city}</Text>
             </View>
             <MenuButton onPress={onPress} />
           </View>
@@ -82,7 +89,7 @@ class JobCard extends React.PureComponent {
               ...globalStyles.row,
               ...globalStyles.alignSelfStart,
             }}
-            label={'Найти подходящих кандидатов'}>
+            label={i18n.t('Find relevant employees')}>
             <IconSearch
               style={globalStyles.mr3}
               size={16}

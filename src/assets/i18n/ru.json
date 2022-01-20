@@ -32,6 +32,19 @@
     "Add photo": "Добавить фото",
     "Open gallery": "Открыть галерею",
     "Take a photo": "Сделать снимок",
-    "Remove photo": "Удалить фото"
+    "Remove photo": "Удалить фото",
+    "Job vacancy": "Вакансия",
+    "is deactivated": "деактивирована",
+    "is activated": "активирована",
+    "Cancel": "Отмена",
+    "Remove": "Удалить",
+    "Remove vacancy": "Удалить вакансию",
+    "Are you sure you want to remove vacancy": "Вы действительно хотите удалить вакансию",
+    "Deactivate": "Деактивировать",
+    "Activate": "Активировать",
+    "Promote": "Продвигать",
+    "Edit": "Редактировать",
+    "Create job vacancy": "Создать вакансию",
+    "Find relevant employees": "Найти подходящих кандидатов"
   }
 }

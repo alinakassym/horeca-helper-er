@@ -23,14 +23,24 @@ import {
 } from '../../services/JobsService';
 
 // store
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   setEmployeesFilter,
   setFilterApplied,
 } from '../../store/slices/employees';
 import Toast from '../../components/notifications/Toast';
 
+import i18n from '../../assets/i18n/i18n';
+
 export const JobsScreen = ({navigation}) => {
+  const suffix = useSelector(state => {
+    const {locale} = state;
+    return locale.suffix;
+  });
+  const titleKey = `title${suffix}`;
+
+  console.log({titleKey});
+
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState({
     id: 0,
@@ -86,15 +96,21 @@ export const JobsScreen = ({navigation}) => {
 
   const confirmDeletion = () => {
     Alert.alert(
-      'Удалить вакансию',
-      `Вы действительно хотите удалить вакансию "${selectedJob.position.title_ru}"?`,
+      i18n.t('Remove vacancy'),
+      `${i18n.t('Are you sure you want to remove vacancy')} "${
+        selectedJob.position && selectedJob.position[titleKey]
+      }"?`,
       [
         {
-          text: 'Отмена',
+          text: i18n.t('Cancel'),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
-        {text: 'Удалить', onPress: () => removeJob(), style: 'destructive'},
+        {
+          text: i18n.t('Remove'),
+          onPress: () => removeJob(),
+          style: 'destructive',
+        },
       ],
     );
   };
@@ -128,24 +144,30 @@ export const JobsScreen = ({navigation}) => {
         title={'Готово!'}
         text={
           selectedJob.isActive
-            ? `Вакансия "${selectedJob?.position?.title_ru}" деактивирована`
-            : `Вакансия "${selectedJob?.position?.title_ru}" активирована`
+            ? `${i18n.t('Job vacancy')} "${
+                selectedJob.position && selectedJob.position[titleKey]
+              }" ${i18n.t('is deactivated')}`
+            : `${i18n.t('Job vacancy')} "${
+                selectedJob.position && selectedJob.position[titleKey]
+              }" ${i18n.t('is activated')}`
         }
         onPress={() => setVisibleToast(false)}
       />
       <Header
         onClose={() => navigation.goBack()}
         goBack
-        title={'Мои вакансии'}
+        title={i18n.t('My job vacancies')}
       />
       <BottomModal visible={visible} onCancel={() => setVisible(false)}>
-        <ModalButton divide label={'Продвигать'} />
+        <ModalButton divide label={i18n.t('Promote')} />
         <ModalButton
           divide
           labelColor={
             selectedJob.isActive ? StatusesColors.red : PrimaryColors.brand
           }
-          label={selectedJob.isActive ? 'Деактивировать' : 'Активировать'}
+          label={
+            selectedJob.isActive ? i18n.t('Deactivate') : i18n.t('Activate')
+          }
           onPress={() => {
             setJobActivation().then();
             setVisible(false);
@@ -153,14 +175,14 @@ export const JobsScreen = ({navigation}) => {
         />
         <ModalButton
           divide
-          label={'Редактировать'}
+          label={i18n.t('Edit')}
           onPress={() => {
             setVisible(false);
             navigation.navigate('JobEdit', {id: selectedJob.id});
           }}
         />
         <ModalButton
-          label={'Удалить'}
+          label={i18n.t('Remove')}
           labelColor={StatusesColors.red}
           onPress={() => confirmDeletion()}
         />
@@ -171,6 +193,7 @@ export const JobsScreen = ({navigation}) => {
             <JobCard
               key={index}
               item={item}
+              titleKey={titleKey}
               onPress={() => {
                 setSelectedJob(item);
                 setVisible(true);
@@ -188,7 +211,7 @@ export const JobsScreen = ({navigation}) => {
           <PlainButton
             btnStyle={{...globalStyles.mt3, ...globalStyles.mb3}}
             onPress={() => navigation.navigate('JobsPost')}
-            label={'Создать вакансию'}>
+            label={i18n.t('Create job vacancy')}>
             <IconAdd
               style={globalStyles.mr3}
               color={PrimaryColors.brand}
