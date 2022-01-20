@@ -142,18 +142,18 @@ const App = () => {
         hhToken = await AsyncStorage.getItem('hhToken');
         store.dispatch(setToken(hhToken));
         locale = await AsyncStorage.getItem('i18n');
-        console.log({locale});
+        console.log('Saved locale: ', locale);
         if (!locale) {
           locale =
             Platform.OS === 'android'
               ? NativeModules.I18nManager.localeIdentifier
               : NativeModules.SettingsManager.settings.AppleLocale ||
                 NativeModules.SettingsManager.settings.AppleLanguages[0];
-          console.log({locale});
+          console.log('Device locale: ', locale);
           await AsyncStorage.setItem('i18n', locale);
         }
         store.dispatch(setLang(lang(locale)));
-        await i18n.changeLanguage(lang(locale));
+        await i18n.changeLanguage(lang(locale) === 'en' ? 'en' : 'ru');
       } catch (e) {
         console.log(e);
       }
