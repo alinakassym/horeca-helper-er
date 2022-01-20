@@ -34,10 +34,20 @@ import {
   getSchedules,
 } from '../../services/DictionariesService';
 import {postJob} from '../../services/JobsService';
+import {useSelector} from 'react-redux';
+
+// locale
+import i18n from '../../assets/i18n/i18n';
 
 const dimensions = Dimensions.get('screen');
 
 export const JobsPostScreen = ({navigation}) => {
+  const suffix = useSelector(state => {
+    const {locale} = state;
+    return locale.suffix;
+  });
+  const titleKey = `title${suffix}`;
+
   const [cities, setCities] = useState([]);
   const [genders, setGenders] = useState([]);
   const [positions, setPositions] = useState([]);
@@ -114,8 +124,8 @@ export const JobsPostScreen = ({navigation}) => {
       }
     } else {
       Alert.alert(
-        'Warning',
-        'Position, location & schedule should not be empty',
+        i18n.t('Warning'),
+        i18n.t('Please fill in all required fields'),
       );
     }
   };
@@ -125,7 +135,7 @@ export const JobsPostScreen = ({navigation}) => {
       <Header
         modal
         onClose={() => navigation.goBack()}
-        title={'Основная информация'}
+        title={i18n.t('Basic information')}
       />
 
       <KeyboardAwareScrollView
@@ -133,33 +143,35 @@ export const JobsPostScreen = ({navigation}) => {
         enableResetScrollToCoords={false}>
         {/*Название вакансии*/}
         <Autocomplete
-          label={'Вакансия'}
+          required
+          label={i18n.t('Job vacancy')}
           value={job.position}
           items={positions}
-          itemKey={'title_ru'}
+          itemKey={titleKey}
           onSelect={val => setJob({...job, position: val})}
           onClear={() => setJob({...job, position: null})}
         />
 
         {/*Город*/}
         <Autocomplete
-          label={'Город'}
+          required
+          label={i18n.t('City')}
           value={job.city}
           items={cities}
-          itemKey={'title_ru'}
+          itemKey={titleKey}
           onSelect={val => setJob({...job, city: val})}
           onClear={() => setJob({...job, city: null})}
         />
 
         {/*Зарплата*/}
         <Text style={[typography.text, typography.textColorElement]}>
-          Зарплата
+          {i18n.t('Salary')}
         </Text>
         <View style={styles.wrapperInputs}>
           <NumberInput
             validIcon={<></>}
             style={styles.numberInput}
-            label={'От'}
+            label={i18n.t('From')}
             value={getString(job.salaryMin)}
             onChangeText={val => {
               setJob({...job, salaryMin: getNumber(val)});
@@ -177,7 +189,7 @@ export const JobsPostScreen = ({navigation}) => {
           <NumberInput
             validIcon={<></>}
             style={styles.numberInput}
-            label={'От'}
+            label={i18n.t('To')}
             value={getString(job.salaryMax)}
             onChangeText={val => {
               setJob({...job, salaryMax: getNumber(val)});
@@ -196,31 +208,32 @@ export const JobsPostScreen = ({navigation}) => {
 
         {/*Расписание*/}
         <ModalSelect
-          label={'Расписание'}
+          required
+          label={i18n.t('Schedule')}
           value={job.schedule}
           items={schedules}
-          itemText={'title_ru'}
-          modalTitle={'Расписание'}
+          itemText={titleKey}
+          modalTitle={i18n.t('Schedule')}
           onSaveSelection={val => setJob({...job, schedule: val})}
           onClear={() => setJob({...job, schedule: null})}
         />
 
         {/*Описание*/}
         <MultilineInput
-          label={'Описание'}
+          label={i18n.t('Description')}
           value={job.description}
           onChangeText={val => setJob({...job, description: val})}
         />
 
         {/*Возраст*/}
         <Text style={[typography.text, typography.textColorElement]}>
-          Возраст
+          {i18n.t('Age')}
         </Text>
         <View style={styles.wrapperInputs}>
           <NumberInput
             validIcon={<></>}
             style={styles.numberInput}
-            label={'От'}
+            label={i18n.t('From')}
             value={getString(job.ageMin)}
             onChangeText={val => {
               setJob({...job, ageMin: getNumber(val)});
@@ -238,7 +251,7 @@ export const JobsPostScreen = ({navigation}) => {
           <NumberInput
             validIcon={<></>}
             style={styles.numberInput}
-            label={'От'}
+            label={i18n.t('To')}
             value={getString(job.ageMax)}
             onChangeText={val => {
               setJob({...job, ageMax: getNumber(val)});
@@ -260,13 +273,13 @@ export const JobsPostScreen = ({navigation}) => {
               return (
                 <View style={styles.labelWrapper}>
                   <SliderLabel
-                    label={'лет'}
+                    label={i18n.t('years')}
                     offsetLeft={140}
                     value={JSON.stringify(e.oneMarkerValue)}
                     itemPosition={e.oneMarkerLeftPosition - 30}
                   />
                   <SliderLabel
-                    label={'лет'}
+                    label={i18n.t('years')}
                     offsetLeft={140}
                     value={JSON.stringify(e.twoMarkerValue)}
                     itemPosition={e.twoMarkerLeftPosition - 30}
@@ -296,12 +309,14 @@ export const JobsPostScreen = ({navigation}) => {
         </View>
 
         {/*Опыт*/}
-        <Text style={[typography.text, typography.textColorElement]}>Опыт</Text>
+        <Text style={[typography.text, typography.textColorElement]}>
+          {i18n.t('Experience')}
+        </Text>
         <View style={styles.wrapperInputs}>
           <NumberInput
             validIcon={<></>}
             style={styles.numberInput}
-            label={'От'}
+            label={i18n.t('From')}
             value={getString(job.experienceMin)}
             onChangeText={val => {
               setJob({...job, experienceMin: getNumber(val)});
@@ -319,7 +334,7 @@ export const JobsPostScreen = ({navigation}) => {
           <NumberInput
             validIcon={<></>}
             style={styles.numberInput}
-            label={'До'}
+            label={i18n.t('To')}
             value={getString(job.experienceMax)}
             onChangeText={val => {
               setJob({...job, experienceMax: getNumber(val)});
@@ -341,13 +356,13 @@ export const JobsPostScreen = ({navigation}) => {
               return (
                 <View style={styles.labelWrapper}>
                   <SliderLabel
-                    label={'лет'}
+                    label={i18n.t('years')}
                     offsetLeft={140}
                     value={JSON.stringify(e.oneMarkerValue)}
                     itemPosition={e.oneMarkerLeftPosition - 30}
                   />
                   <SliderLabel
-                    label={'лет'}
+                    label={i18n.t('years')}
                     offsetLeft={140}
                     value={JSON.stringify(e.twoMarkerValue)}
                     itemPosition={e.twoMarkerLeftPosition - 30}
@@ -387,7 +402,7 @@ export const JobsPostScreen = ({navigation}) => {
             typography.textColorElement,
             globalStyles.mb3,
           ]}>
-          Пол
+          {i18n.t('Gender')}
         </Text>
         <View style={[styles.wrapperRadio, globalStyles.mb5]}>
           {genders.map((gItem, index) => (
@@ -395,7 +410,7 @@ export const JobsPostScreen = ({navigation}) => {
               style={styles.radioBtn2}
               key={index}
               item={gItem}
-              itemKey={'title_ru'}
+              itemKey={titleKey}
               activeItem={job.gender}
               onSelect={() =>
                 setJob({
@@ -418,7 +433,7 @@ export const JobsPostScreen = ({navigation}) => {
             ]}>
             <GradientButton
               style={globalStyles.mb5}
-              label={'Сохранить'}
+              label={i18n.t('Save')}
               onPress={() => save()}
             />
           </LinearGradient>

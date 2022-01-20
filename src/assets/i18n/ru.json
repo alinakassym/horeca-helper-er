@@ -45,6 +45,18 @@
     "Promote": "Продвигать",
     "Edit": "Редактировать",
     "Create job vacancy": "Создать вакансию",
-    "Find relevant employees": "Найти подходящих кандидатов"
+    "Find relevant employees": "Найти подходящих кандидатов",
+    "Basic information": "Основная информация",
+    "From": "От",
+    "To": "До",
+    "City": "Город",
+    "Salary": "Зарплата",
+    "Age": "Возраст",
+    "years": "лет",
+    "Experience": "Опыт",
+    "Schedule": "Расписание",
+    "Gender": "Пол",
+    "Warning": "Внимание",
+    "Please fill in all required fields": "Пожалуйста, заполните все обязательные поля"
   }
 }

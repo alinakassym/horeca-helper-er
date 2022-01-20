@@ -11,7 +11,7 @@ import {
 import _ from 'lodash';
 
 // styles
-import {PrimaryColors} from '../../styles/colors';
+import {PrimaryColors, StatusesColors} from '../../styles/colors';
 
 // icons
 import {IconClose} from '../../assets/icons/main/IconClose';
@@ -26,6 +26,7 @@ const propTypes = {
   value: PropTypes.object,
   items: PropTypes.array,
   itemKey: PropTypes.string,
+  required: PropTypes.bool,
   validIcon: PropTypes.object,
   onSelect: PropTypes.func,
   onClear: PropTypes.func,
@@ -42,9 +43,20 @@ class Autocomplete extends React.PureComponent {
   }
 
   render() {
-    const {label, value, items, itemKey, validIcon, onSelect, onClear} =
-      this.props;
+    const {
+      label,
+      value,
+      items,
+      itemKey,
+      required,
+      validIcon,
+      onSelect,
+      onClear,
+    } = this.props;
     const {searchText, visible, filteredList} = this.state;
+
+    const requiredLabelStyle = required && {color: StatusesColors.red};
+    const border = required && {borderBottomColor: StatusesColors.red};
 
     const saveHandler = selectedItem => {
       onSelect(selectedItem);
@@ -91,12 +103,14 @@ class Autocomplete extends React.PureComponent {
 
     const PlaceHolder = () => {
       return (
-        <View style={styles.blockPlaceholder}>
+        <View style={[styles.blockPlaceholder, border]}>
           <Pressable
             onPress={() => {
               this.setState({...this.state, visible: true});
             }}>
-            <Text style={styles.placeholderText}>{label}</Text>
+            <Text style={[styles.placeholderText, requiredLabelStyle]}>
+              {label}
+            </Text>
           </Pressable>
         </View>
       );

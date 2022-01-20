@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import {PrimaryColors} from '../../styles/colors';
+import {PrimaryColors, StatusesColors} from '../../styles/colors';
 import {IconClose} from '../../assets/icons/main/IconClose';
 import {IconCheck} from '../../assets/icons/main/IconCheck';
 import Header from '../Header';
@@ -19,6 +19,7 @@ const propTypes = {
   label: PropTypes.string,
   modalTitle: PropTypes.string,
   value: PropTypes.object,
+  required: PropTypes.bool,
   itemText: PropTypes.string,
   items: PropTypes.array,
   onSaveSelection: PropTypes.func,
@@ -41,6 +42,7 @@ class ModalSelect extends React.PureComponent {
       label,
       modalTitle,
       value,
+      required,
       itemText,
       items,
       onSaveSelection,
@@ -48,6 +50,9 @@ class ModalSelect extends React.PureComponent {
       validIcon,
     } = this.props;
     const {modal, activeItem} = this.state;
+
+    const requiredLabelStyle = required && {color: StatusesColors.red};
+    const border = required && {borderBottomColor: StatusesColors.red};
 
     const ValueSection = () => {
       return (
@@ -75,12 +80,14 @@ class ModalSelect extends React.PureComponent {
 
     const PlaceHolder = () => {
       return (
-        <View style={styles.blockPlaceholder}>
+        <View style={[styles.blockPlaceholder, border]}>
           <Pressable
             onPress={() => {
               this.setState({...this.state, modal: true});
             }}>
-            <Text style={styles.placeholderText}>{label}</Text>
+            <Text style={[styles.placeholderText, requiredLabelStyle]}>
+              {label}
+            </Text>
           </Pressable>
         </View>
       );
