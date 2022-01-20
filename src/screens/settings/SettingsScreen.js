@@ -9,7 +9,9 @@ import RadioBtn from '../../components/buttons/RadioBtn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import _ from 'lodash';
 // store
+import store from '../../store';
 import {useSelector} from 'react-redux';
+import {setLang} from '../../store/slices/locale';
 // i18n
 import i18n from '../../assets/i18n/i18n';
 
@@ -26,6 +28,7 @@ export const SettingsScreen = ({navigation}) => {
       await i18n.changeLanguage(value);
       setLanguage(value);
       await AsyncStorage.setItem('i18n', value);
+      store.dispatch(setLang(value));
     } catch (e) {
       console.log('changeLanguage err: ', e);
     }

@@ -10,6 +10,14 @@
     "password": "Password",
     "enter": "Sign in",
     "settings": "Settings",
-    "lang": "Language"
+    "lang": "Language",
+    "edit profile": "Edit profile",
+    "subscription": "Subscription",
+    "job vacancies": "My job vacancies",
+    "employee history": "Employee history",
+    "contact support": "Contact support",
+    "faq": "FAQ",
+    "share app": "Share App",
+    "quit": "Log out"
   }
 }

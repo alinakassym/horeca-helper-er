@@ -21,7 +21,7 @@ export const localeSlice = createSlice({
   reducers: {
     setLang: (state, action) => {
       state.lang = action.payload;
-      state.suffix = action.payload === 'ru' ? '_ru' : '';
+      state.suffix = action.payload === 'en' ? '' : `_${action.payload}`;
     },
   },
 });

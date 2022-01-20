@@ -15,17 +15,18 @@ const propTypes = {
   address: PropTypes.string,
   contactInfo: PropTypes.string,
   email: PropTypes.string,
+  titleKey: PropTypes.string,
 };
 
 class ProfileInfo extends React.PureComponent {
   render() {
-    const {category, address, contactInfo, email} = this.props;
+    const {category, address, contactInfo, email, titleKey} = this.props;
     return (
       <View style={styles.col}>
         {category && (
           <View style={styles.row}>
             <IconBuilding size={iconSize} color={PrimaryColors.element} />
-            <Text style={styles.text}>{category?.title_ru}</Text>
+            <Text style={styles.text}>{category[titleKey]}</Text>
           </View>
         )}
         {address && (

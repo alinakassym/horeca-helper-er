@@ -33,8 +33,14 @@ import {AuthContext} from '../../store/context';
 import {getCompany} from '../../services/CompaniesService';
 
 import i18n from '../../assets/i18n/i18n';
+import {useSelector} from 'react-redux';
 
 export const ProfileScreen = ({navigation}) => {
+  const suffix = useSelector(state => {
+    const {locale} = state;
+    return locale.suffix;
+  });
+
   const {signOut} = React.useContext(AuthContext);
 
   const [company, setCompany] = useState({
@@ -82,6 +88,7 @@ export const ProfileScreen = ({navigation}) => {
           address={company.address}
           contactInfo={company.contactInfo}
           email={company.email}
+          titleKey={`title${suffix}`}
         />
 
         <View style={styles.section}>
@@ -91,7 +98,7 @@ export const ProfileScreen = ({navigation}) => {
                 value: company,
               });
             }}
-            label={'Редактировать профиль'}
+            label={i18n.t('edit profile')}
           />
         </View>
 
@@ -100,7 +107,7 @@ export const ProfileScreen = ({navigation}) => {
             <View style={styles.row}>
               <IconFire />
               <Text style={[styles.listItemTitle, globalStyles.ml3]}>
-                Подписка
+                {i18n.t('subscription')}
               </Text>
             </View>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
@@ -111,13 +118,15 @@ export const ProfileScreen = ({navigation}) => {
           <TouchableOpacity
             onPress={() => navigation.navigate('Jobs')}
             style={[styles.listItem, styles.listItemDivider]}>
-            <Text style={styles.listItemTitle}>Мои вакансии</Text>
+            <Text style={styles.listItemTitle}>{i18n.t('job vacancies')}</Text>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('Employees')}
             style={styles.listItem}>
-            <Text style={styles.listItemTitle}>История сотрудников</Text>
+            <Text style={styles.listItemTitle}>
+              {i18n.t('employee history')}
+            </Text>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
         </View>
@@ -126,13 +135,15 @@ export const ProfileScreen = ({navigation}) => {
           <TouchableOpacity
             onPress={() => navigation.navigate('Support')}
             style={[styles.listItem, styles.listItemDivider]}>
-            <Text style={styles.listItemTitle}>Контактная поддержка</Text>
+            <Text style={styles.listItemTitle}>
+              {i18n.t('contact support')}
+            </Text>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('FAQ')}
             style={[styles.listItem, styles.listItemDivider]}>
-            <Text style={styles.listItemTitle}>Вопросы и ответы</Text>
+            <Text style={styles.listItemTitle}>{i18n.t('faq')}</Text>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
           <TouchableOpacity
@@ -152,7 +163,7 @@ export const ProfileScreen = ({navigation}) => {
           <OutlineButton
             onPress={() => onShare()}
             style={styles.shareButton}
-            label={'Поделиться приложением'}>
+            label={i18n.t('share app')}>
             <IconShare
               style={globalStyles.mr3}
               color={PrimaryColors.brand}
@@ -175,7 +186,7 @@ export const ProfileScreen = ({navigation}) => {
                   globalStyles.ml3,
                   {color: StatusesColors.red},
                 ]}>
-                Выйти
+                {i18n.t('quit')}
               </Text>
             </View>
           </TouchableOpacity>
@@ -221,7 +232,7 @@ const styles = StyleSheet.create({
   },
   shareButton: {
     paddingVertical: 12,
-    minWidth: '60%',
+    paddingHorizontal: 12,
     backgroundColor: PrimaryColors.white,
   },
 });
