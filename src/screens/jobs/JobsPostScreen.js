@@ -295,7 +295,7 @@ export const JobsPostScreen = ({navigation}) => {
             selectedStyle={{backgroundColor: PrimaryColors.element}}
             trackStyle={styles.trackStyle}
             sliderLength={dimensions.width - 100}
-            values={[job.ageMin || 18, job.ageMax || 32]}
+            values={[job.ageMin || 18, job.ageMax || 70]}
             showSteps={true}
             showStepLabels={true}
             min={18}

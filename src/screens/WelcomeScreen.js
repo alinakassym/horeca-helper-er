@@ -158,7 +158,7 @@ export const WelcomeScreen = ({navigation}) => {
               labelColor={PrimaryColors.element}
               label={i18n.t('Enter with login')}
             />
-            {!isIOS && (
+            {isIOS && (
               <PrimaryButton
                 onPress={() => onAppleButtonPress()}
                 style={styles.btn}

@@ -60,14 +60,14 @@ export const JobEditScreen = ({route, navigation}) => {
   const [job, setJob] = React.useState({
     position: null,
     city: null,
-    ageMin: 18,
-    ageMax: 32,
+    ageMin: null,
+    ageMax: null,
     gender: null,
-    experienceMin: 0,
-    experienceMax: 2,
+    experienceMin: null,
+    experienceMax: null,
     schedule: null,
-    salaryMin: 200000,
-    salaryMax: 300000,
+    salaryMin: null,
+    salaryMax: null,
     description: '',
   });
 
@@ -319,7 +319,7 @@ export const JobEditScreen = ({route, navigation}) => {
             selectedStyle={{backgroundColor: PrimaryColors.element}}
             trackStyle={styles.trackStyle}
             sliderLength={dimensions.width - 100}
-            values={[job.ageMin || 18, job.ageMax || 32]}
+            values={[job.ageMin || 18, job.ageMax || 70]}
             showSteps={true}
             showStepLabels={true}
             min={18}
