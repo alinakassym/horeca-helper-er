@@ -39,10 +39,16 @@ import {getJobs, postJobInvite} from '../../services/JobsService';
 import {getChatsLookup} from '../../services/ChatService';
 import {getConfigs} from '../../services/UtilsService';
 import Toast from '../../components/notifications/Toast';
+import {useSelector} from 'react-redux';
+
+import i18n from '../../assets/i18n/i18n';
 
 const dimensions = Dimensions.get('screen');
 
 export const EmployeeScreen = ({route, navigation}) => {
+  const {locale} = useSelector(state => state);
+  const titleKey = `title${locale.suffix}`;
+
   const employeeId = route.params.id;
 
   const [activeTab, setActiveTab] = useState('personalInfo');
@@ -100,18 +106,22 @@ export const EmployeeScreen = ({route, navigation}) => {
         );
         setVisible(true);
       } else {
-        Alert.alert('Нет вакансий', 'На данный момент нет вакансий', [
-          {
-            text: 'Отмена',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {
-            text: 'Создать вакансию',
-            onPress: () => navigation.navigate('Jobs'),
-            style: 'default',
-          },
-        ]);
+        Alert.alert(
+          i18n.t('No vacancies'),
+          i18n.t('There are currently no vacancies available'),
+          [
+            {
+              text: i18n.t('Cancel'),
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: i18n.t('Create job vacancy'),
+              onPress: () => navigation.navigate('Jobs'),
+              style: 'default',
+            },
+          ],
+        );
       }
     } catch (e) {
       console.log('inviteToJob err: ', e);
@@ -199,7 +209,7 @@ export const EmployeeScreen = ({route, navigation}) => {
         <Header
           goBack
           onClose={() => navigation.goBack()}
-          title={'Подробная информация'}
+          title={i18n.t('Detailed information')}
         />
         <View style={globalStyles.fullScreenSection}>
           <ActivityIndicator size="large" />
@@ -212,14 +222,14 @@ export const EmployeeScreen = ({route, navigation}) => {
     <SafeAreaView style={globalStyles.container}>
       <Toast
         visible={visibleToast}
-        title={'Готово!'}
-        text={'Вы успешно отправили приглашение.'}
+        title={`${i18n.t('Done')}!`}
+        text={i18n.t('Invitation successfully sent')}
         onPress={() => setVisibleToast(false)}
       />
       <Header
         goBack
         onClose={() => navigation.goBack()}
-        title={'Подробная информация'}
+        title={i18n.t('Detailed information')}
       />
       <UserCard
         photoUrl={item.photoUrl}
@@ -231,11 +241,11 @@ export const EmployeeScreen = ({route, navigation}) => {
         onSelectTab={tabName => setActiveTab(tabName)}
         tabs={[
           {
-            label: 'Личные данные',
+            label: i18n.t('Personal data'),
             name: 'personalInfo',
           },
           {
-            label: 'Опыт работы',
+            label: i18n.t('Experience'),
             name: 'experience',
           },
         ]}>
@@ -243,23 +253,30 @@ export const EmployeeScreen = ({route, navigation}) => {
           {activeTab === 'personalInfo' && (
             <>
               <EmployeeInfo
+                locale={locale.lang}
                 avgAvgScore={item.avgAvgScore}
-                position={item?.position?.title_ru}
+                position={item.position && item.position[titleKey]}
                 age={getAge(item?.birthDate)}
-                city={item?.city?.title_ru}
-                schedule={item?.schedule?.title_ru}
+                city={item.city && item.city[titleKey]}
+                schedule={item.schedule && item.schedule[titleKey]}
                 email={item.email}
                 salary={item?.salary}
               />
               <View style={styles.section}>
-                <Text style={styles.title}>Обо мне</Text>
+                <Text style={styles.title}>{i18n.t('About me')}</Text>
                 <Text style={[styles.text, !!chatId && styles.textPb]}>
                   {item.description || ''}
                 </Text>
               </View>
             </>
           )}
-          {activeTab === 'experience' && <WorkList items={item.works} />}
+          {activeTab === 'experience' && (
+            <WorkList
+              locale={locale.lang}
+              itemKey={titleKey}
+              items={item.works}
+            />
+          )}
         </ScrollView>
       </Tabs>
 
@@ -274,13 +291,13 @@ export const EmployeeScreen = ({route, navigation}) => {
           <GradientButton
             style={globalStyles.mb3}
             onPress={() => inviteToJob()}
-            label={'Пригласить еще раз'}
+            label={i18n.t('Invite again')}
           />
         )}
         <View style={styles.row}>
           <View style={styles.leftCol}>
             <PrimaryButton
-              label={'Номер телефона'}
+              label={i18n.t('Phone number')}
               color={StatusesColors.green}>
               <IconPhone
                 style={globalStyles.mr3}
@@ -294,7 +311,7 @@ export const EmployeeScreen = ({route, navigation}) => {
           <View style={styles.rightCol}>
             {chatId ? (
               <PrimaryButton
-                label={'Чат'}
+                label={i18n.t('Chat')}
                 color={PrimaryColors.element}
                 onPress={() =>
                   navigation.navigate('MessagesChat', {
@@ -311,21 +328,21 @@ export const EmployeeScreen = ({route, navigation}) => {
             ) : (
               <GradientButton
                 onPress={() => inviteToJob()}
-                label={'Пригласить'}
+                label={i18n.t('Invite')}
               />
             )}
           </View>
         </View>
       </LinearGradient>
       <BottomModal
-        title={'Пригласить соискателя'}
+        title={i18n.t('Invite an employee')}
         visible={visible}
         onCancel={() => setVisible(false)}>
         <RadioSelect
           style={globalStyles.mb6}
           selectedItem={vacancy}
           items={jobs}
-          itemKey={'title_ru'}
+          itemKey={titleKey}
           onSelect={val => {
             setVacancy(val ? val : {id: null, title: '', title_ru: ''});
             console.log({val});
@@ -333,22 +350,22 @@ export const EmployeeScreen = ({route, navigation}) => {
         />
         <MultilineInput
           value={inviteMessage}
-          label={'Сопроводительное письмо'}
+          label={i18n.t('Covering letter')}
           onInputFocus={() => console.log('')}
           onChangeText={val => setInviteMessage(val)}
         />
         <OutlineButton
           onPress={() => getCoverLetter()}
           style={styles.coverLetterBtn}
-          label={'Вставить шаблонное письмо'}
+          label={i18n.t('Use template letter')}
         />
         {isValid() ? (
-          <GradientButton label={'Отправить'} onPress={() => sendInvite()} />
+          <GradientButton label={i18n.t('Send')} onPress={() => sendInvite()} />
         ) : (
           <PrimaryButton
             color={PrimaryColors.grey3}
             labelColor={PrimaryColors.grey1}
-            label={'Отправить'}
+            label={i18n.t('Send')}
           />
         )}
       </BottomModal>

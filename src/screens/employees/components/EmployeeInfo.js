@@ -1,12 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {PrimaryColors, StatusesColors} from '../../../styles/colors';
 import {IconStar} from '../../../assets/icons/main/IconStar';
-import PropTypes from 'prop-types';
+import i18n from '../../../assets/i18n/i18n';
 
 const dimensions = Dimensions.get('screen');
 
 const propTypes = {
+  locale: PropTypes.string,
   avgAvgScore: PropTypes.number,
   position: PropTypes.string,
   contactInfo: PropTypes.string,
@@ -20,6 +22,7 @@ const propTypes = {
 class EmployeeInfo extends React.PureComponent {
   render() {
     const {
+      locale,
       avgAvgScore,
       position,
       contactInfo,
@@ -31,13 +34,16 @@ class EmployeeInfo extends React.PureComponent {
     } = this.props;
     const getAgeTextRu = () => {
       const unit = age % 10;
-      return unit === 0
-        ? 'лет'
-        : unit === 1
-        ? 'год'
-        : unit < 5
-        ? 'года'
-        : 'лет';
+      if (locale === 'ru') {
+        return unit === 0
+          ? 'лет'
+          : unit === 1
+          ? 'год'
+          : unit < 5
+          ? 'года'
+          : 'лет';
+      }
+      return 'y.o.';
     };
     const numberWithSpaces = val => {
       let parts = val.toString().split('.');
@@ -62,19 +68,19 @@ class EmployeeInfo extends React.PureComponent {
         )}
         {position && (
           <View style={styles.row}>
-            <Text style={styles.leftColText}>Телефон</Text>
+            <Text style={styles.leftColText}>{i18n.t('Phone')}</Text>
             <Text style={styles.rightColText}>{position}</Text>
           </View>
         )}
         {contactInfo && (
           <View style={styles.row}>
-            <Text style={styles.leftColText}>Телефон</Text>
+            <Text style={styles.leftColText}>{i18n.t('Phone')}</Text>
             <Text style={styles.rightColText}>{contactInfo}</Text>
           </View>
         )}
         {age && (
           <View style={styles.row}>
-            <Text style={styles.leftColText}>Возраст</Text>
+            <Text style={styles.leftColText}>{i18n.t('Age')}</Text>
             <Text style={styles.rightColText}>
               {age} {getAgeTextRu()}
             </Text>
@@ -82,25 +88,25 @@ class EmployeeInfo extends React.PureComponent {
         )}
         {city && (
           <View style={styles.row}>
-            <Text style={styles.leftColText}>Город</Text>
+            <Text style={styles.leftColText}>{i18n.t('City')}</Text>
             <Text style={styles.rightColText}>{city}</Text>
           </View>
         )}
         {schedule && (
           <View style={styles.row}>
-            <Text style={styles.leftColText}>График</Text>
+            <Text style={styles.leftColText}>{i18n.t('Schedule')}</Text>
             <Text style={styles.rightColText}>{schedule}</Text>
           </View>
         )}
         {email && (
           <View style={styles.row}>
-            <Text style={styles.leftColText}>Эл.почта</Text>
+            <Text style={styles.leftColText}>{i18n.t('Email')}</Text>
             <Text style={styles.rightColText}>{email}</Text>
           </View>
         )}
         {salary && (
           <View style={styles.row}>
-            <Text style={styles.leftColText}>Зарплата</Text>
+            <Text style={styles.leftColText}>{i18n.t('Salary')}</Text>
             <Text style={styles.rightColText}>{numberWithSpaces(salary)}</Text>
           </View>
         )}

@@ -16,19 +16,22 @@ import {IconCalendar} from '../../../assets/icons/main/IconCalendar';
 
 const dimensions = Dimensions.get('screen');
 
-moment.locale('ru');
-const formattedDate = date => {
-  const fd = moment(date).format('MMMM YYYY');
-  return fd.slice(0, 1).toUpperCase() + fd.substr(1, fd.length - 1);
-};
-
 const propTypes = {
+  locale: PropTypes.string,
+  itemKey: PropTypes.string,
   items: PropTypes.array,
 };
 
 class WorkList extends React.PureComponent {
   render() {
-    const {items} = this.props;
+    const {locale, itemKey, items} = this.props;
+
+    moment.locale(locale);
+    const formattedDate = date => {
+      const fd = moment(date).format('MMM YYYY');
+      return fd.slice(0, 1).toUpperCase() + fd.substr(1, fd.length - 1);
+    };
+
     return (
       <ScrollView style={styles.col}>
         {items.map((item, index) => (
@@ -36,13 +39,13 @@ class WorkList extends React.PureComponent {
             <View style={styles.row}>
               <View style={styles.leftCol}>
                 <Text style={styles.positionTitle}>
-                  {item?.position.title_ru}
+                  {item.position && item.position[itemKey]}
                 </Text>
                 <View style={[styles.row, styles.alignCenter]}>
                   <IconBuilding color={PrimaryColors.grey1} size={16} />
                   <Text style={styles.label}>
                     {item.company.title}
-                    {item.city && `, ${item.city.title_ru}`}
+                    {item.city && `, ${item.city[itemKey]}`}
                   </Text>
                 </View>
                 <View style={[styles.row, styles.alignCenter]}>
