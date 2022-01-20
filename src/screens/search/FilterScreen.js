@@ -34,9 +34,17 @@ import {
   getSchedules,
 } from '../../services/DictionariesService';
 
+import i18n from '../../assets/i18n/i18n';
+
 const dimensions = Dimensions.get('screen');
 
 export const FilterScreen = ({navigation}) => {
+  const suffix = useSelector(state => {
+    const {locale} = state;
+    return locale.suffix;
+  });
+  const titleKey = `title${suffix}`;
+
   const {employees} = useSelector(state => state);
   const filterState = employees.filter;
   const filterReset = employees.filterReset;
@@ -90,10 +98,13 @@ export const FilterScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <Header goBack onClose={() => navigation.goBack()} title={'Фильтр'}>
+      <Header
+        goBack
+        onClose={() => navigation.goBack()}
+        title={i18n.t('Filter')}>
         <PlainButton
           btnStyle={styles.resetBtn}
-          label={'Сбросить'}
+          label={i18n.t('Reset')}
           onPress={() => resetFilter()}>
           <IconBucket
             width={1.5}
@@ -107,10 +118,10 @@ export const FilterScreen = ({navigation}) => {
         {/*Order by*/}
         <View style={globalStyles.card}>
           <GroupButton
-            label={'Сортировать по'}
+            label={i18n.t('Sort by')}
             selectedItem={filters.orderBy}
             items={listSortBy}
-            itemKey={'title_ru'}
+            itemKey={titleKey}
             onSelect={val => {
               setFilters({...filters, orderBy: val});
             }}
@@ -119,14 +130,14 @@ export const FilterScreen = ({navigation}) => {
         <View style={[globalStyles.mt3, globalStyles.mb6]}>
           {/*Город*/}
           <ExpansionPanel
-            items={[{title: 'Город'}]}
+            items={[{title: i18n.t('City')}]}
             expandedBlockStyle={styles.wrapperRadio}>
             {cities.map((cItem, index) => (
               <RadioBtn
                 style={cities.length > 3 ? styles.radioBtn2 : styles.radioBtn1}
                 key={index}
                 item={cItem}
-                itemKey={'title_ru'}
+                itemKey={titleKey}
                 activeItem={filters.city}
                 onSelect={() =>
                   setFilters({
@@ -140,7 +151,7 @@ export const FilterScreen = ({navigation}) => {
 
           {/*Позиция*/}
           <ExpansionPanel
-            items={[{title: 'Позиция'}]}
+            items={[{title: i18n.t('Position')}]}
             expandedBlockStyle={styles.wrapperRadio}>
             {positions.map((pItem, index) => (
               <RadioBtn
@@ -149,7 +160,7 @@ export const FilterScreen = ({navigation}) => {
                 }
                 key={index}
                 item={pItem}
-                itemKey={'title_ru'}
+                itemKey={titleKey}
                 activeItem={filters.position}
                 onSelect={() =>
                   setFilters({
@@ -163,7 +174,7 @@ export const FilterScreen = ({navigation}) => {
 
           {/*Расписание*/}
           <ExpansionPanel
-            items={[{title: 'Расписание'}]}
+            items={[{title: i18n.t('Schedule')}]}
             expandedBlockStyle={styles.wrapperRadio}>
             {schedules.map((sItem, index) => (
               <RadioBtn
@@ -172,7 +183,7 @@ export const FilterScreen = ({navigation}) => {
                 }
                 key={index}
                 item={sItem}
-                itemKey={'title_ru'}
+                itemKey={titleKey}
                 activeItem={filters.schedule}
                 onSelect={() =>
                   setFilters({
@@ -186,12 +197,12 @@ export const FilterScreen = ({navigation}) => {
 
           {/*Зарплата*/}
           <ExpansionPanel
-            items={[{title: 'Зарплата'}]}
+            items={[{title: i18n.t('Salary')}]}
             expandedBlockStyle={styles.wrapperInputs}>
             <NumberInput
               validIcon={<></>}
               style={styles.numberInput}
-              label={'От'}
+              label={i18n.t('From')}
               value={filters.salaryMin ? filters.salaryMin.toString() : null}
               onChangeText={val => {
                 setFilters({...filters, salaryMin: val});
@@ -203,7 +214,7 @@ export const FilterScreen = ({navigation}) => {
             <NumberInput
               validIcon={<></>}
               style={styles.numberInput}
-              label={'До'}
+              label={i18n.t('To')}
               value={filters.salaryMax ? filters.salaryMax.toString() : null}
               onChangeText={val => {
                 setFilters({...filters, salaryMax: val});
@@ -216,12 +227,12 @@ export const FilterScreen = ({navigation}) => {
 
           {/*Возраст*/}
           <ExpansionPanel
-            items={[{title: 'Возраст'}]}
+            items={[{title: i18n.t('Age')}]}
             expandedBlockStyle={styles.wrapperInputs}>
             <NumberInput
               validIcon={<></>}
               style={styles.numberInput}
-              label={'От'}
+              label={i18n.t('From')}
               value={filters.ageMin ? filters.ageMin.toString() : null}
               onChangeText={val => {
                 setFilters({...filters, ageMin: val});
@@ -233,7 +244,7 @@ export const FilterScreen = ({navigation}) => {
             <NumberInput
               validIcon={<></>}
               style={styles.numberInput}
-              label={'До'}
+              label={i18n.t('To')}
               value={filters.ageMax ? filters.ageMax.toString() : null}
               onChangeText={val => {
                 setFilters({...filters, ageMax: val});
@@ -246,14 +257,14 @@ export const FilterScreen = ({navigation}) => {
 
           {/*Пол*/}
           <ExpansionPanel
-            items={[{title: 'Пол'}]}
+            items={[{title: i18n.t('Gender')}]}
             expandedBlockStyle={styles.wrapperRadio}>
             {genders.map((gItem, index) => (
               <RadioBtn
                 style={styles.radioBtn2}
                 key={index}
                 item={gItem}
-                itemKey={'title_ru'}
+                itemKey={titleKey}
                 activeItem={filters.gender}
                 onSelect={() =>
                   setFilters({
@@ -272,7 +283,7 @@ export const FilterScreen = ({navigation}) => {
             <NumberInput
               validIcon={<></>}
               style={styles.numberInput}
-              label={'От'}
+              label={i18n.t('From')}
               value={
                 filters.experienceMin ? filters.experienceMin.toString() : null
               }
@@ -286,7 +297,7 @@ export const FilterScreen = ({navigation}) => {
             <NumberInput
               validIcon={<></>}
               style={styles.numberInput}
-              label={'До'}
+              label={i18n.t('To')}
               value={
                 filters.experienceMax ? filters.experienceMax.toString() : null
               }
@@ -311,7 +322,7 @@ export const FilterScreen = ({navigation}) => {
         style={styles.btnSection}>
         <GradientButton
           style={styles.btn}
-          label={'Применить фильтр'}
+          label={i18n.t('Apply filter')}
           onPress={() => apply()}
         />
       </LinearGradient>

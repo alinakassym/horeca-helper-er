@@ -67,6 +67,10 @@
     "The list of employees is empty": "Список соискателей пуст",
     "Detailed information": "Подробная информация",
     "No vacancies": "Нет вакансий",
-    "There are currently no vacancies available": "На данный момент нет вакансий"
+    "There are currently no vacancies available": "На данный момент нет вакансий",
+    "Sort by": "Сортировать по",
+    "Reset": "Сбросить",
+    "Filter": "Фильтр",
+    "Apply filter": "Применить фильтр"
   }
 }

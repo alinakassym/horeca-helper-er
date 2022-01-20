@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FlatList, Text, StyleSheet, Pressable} from 'react-native';
+import {TouchableOpacity, FlatList, Text, StyleSheet} from 'react-native';
 import {PrimaryColors} from '../styles/colors';
 
 const propTypes = {
@@ -24,13 +24,14 @@ class HorizontalFilter extends React.PureComponent {
       };
 
       return (
-        <Pressable
+        <TouchableOpacity
+          activeOpacity={0.7}
           onPress={() => onSelect(item)}
           style={[styles.badge, badgeStyle]}>
           <Text style={[styles.badgeTitle, badgeTitleStyle]}>
             {item[itemKey]}
           </Text>
-        </Pressable>
+        </TouchableOpacity>
       );
     };
 
