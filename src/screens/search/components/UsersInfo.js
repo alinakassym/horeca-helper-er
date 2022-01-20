@@ -4,6 +4,7 @@ import {Pressable, StyleSheet, Text, View, Dimensions} from 'react-native';
 import {PrimaryColors, StatusesColors} from '../../../styles/colors';
 import {IconDot} from '../../../assets/icons/main/IconDot';
 import {IconWarningCircle} from '../../../assets/icons/main/IconWarningCircle';
+import i18n from '../../../assets/i18n/i18n';
 
 const dimensions = Dimensions.get('screen');
 
@@ -19,7 +20,9 @@ class UsersInfo extends React.PureComponent {
       <View style={styles.row}>
         <View style={styles.onlineUsers}>
           <IconDot color={StatusesColors.green} size={8} />
-          <Text style={styles.text}>{usersNumber} соискателей онлайн</Text>
+          <Text style={styles.text}>
+            {usersNumber} {i18n.t('employees online')}
+          </Text>
         </View>
         <Pressable style={styles.btn} onPress={onPress}>
           <IconWarningCircle color={PrimaryColors.grey1} />

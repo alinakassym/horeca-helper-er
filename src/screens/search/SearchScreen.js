@@ -21,8 +21,14 @@ import {useSelector} from 'react-redux';
 import {searchEmployees} from '../../services/EmployeesService';
 import {getPositions} from '../../services/DictionariesService';
 import {getStats} from '../../services/UtilsService';
+import i18n from '../../assets/i18n/i18n';
 
 export const SearchScreen = ({navigation}) => {
+  const suffix = useSelector(state => {
+    const {locale} = state;
+    return locale.suffix;
+  });
+  const titleKey = `title${suffix}`;
   const {filter, isFilterApplied} = useSelector(state => {
     const {employees} = state;
     return employees;
@@ -66,7 +72,10 @@ export const SearchScreen = ({navigation}) => {
         onPress={() => setVisible(true)}
         usersNumber={stats ? stats.numEmployeesOnline : 0}
       />
-      <Header options title={'Поиск'} subtitle={'соискателей'}>
+      <Header
+        options
+        title={i18n.t('Search')}
+        subtitle={i18n.t('for employees')}>
         <OptionsButton
           applied={isFilterApplied}
           onPress={() => {
@@ -77,7 +86,7 @@ export const SearchScreen = ({navigation}) => {
       <BottomModal
         onCancel={() => setVisible(false)}
         visible={visible}
-        title={'Полезная информация'}>
+        title={i18n.t('Helpful information')}>
         <StatCard numUsers={stats.numEmployees} numResumes={stats.numResumes} />
       </BottomModal>
       <View style={{height: 60}}>
@@ -94,11 +103,14 @@ export const SearchScreen = ({navigation}) => {
                 onPress={() => navigation.navigate('Employee', {id: item.id})}
                 key={index}
                 item={item}
+                itemKey={titleKey}
               />
             ))}
         </ScrollView>
       ) : (
-        <Placeholder placeholderText={'Список соискателей пуст'} />
+        <Placeholder
+          placeholderText={i18n.t('The list of employees is empty')}
+        />
       )}
     </SafeAreaView>
   );

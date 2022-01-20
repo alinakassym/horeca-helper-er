@@ -24,12 +24,13 @@ const dimensions = Dimensions.get('screen');
 
 const propTypes = {
   item: PropTypes.object,
+  itemKey: PropTypes.string,
   onPress: PropTypes.func,
 };
 
 class ResumeCard extends React.PureComponent {
   render() {
-    const {item, onPress} = this.props;
+    const {item, itemKey, onPress} = this.props;
     const getAge = birthDate => {
       return moment().diff(birthDate, 'years', false);
     };
@@ -52,17 +53,17 @@ class ResumeCard extends React.PureComponent {
             <View style={[styles.row, styles.alignCenter]}>
               {item?.position && item?.city ? (
                 <>
-                  <Text style={styles.subtitle}>{item.position.title}</Text>
+                  <Text style={styles.subtitle}>{item.position[itemKey]}</Text>
                   <IconDot color={PrimaryColors.grey2} />
                   <Text style={[styles.subtitle, styles.marginLeft]}>
-                    {item.city.title}
+                    {item.city[itemKey]}
                   </Text>
                 </>
               ) : item?.position ? (
-                <Text style={styles.subtitle}>{item.position.title}</Text>
+                <Text style={styles.subtitle}>{item.position[itemKey]}</Text>
               ) : (
                 item.city && (
-                  <Text style={[styles.subtitle]}>{item.city.title}</Text>
+                  <Text style={[styles.subtitle]}>{item.city[itemKey]}</Text>
                 )
               )}
             </View>

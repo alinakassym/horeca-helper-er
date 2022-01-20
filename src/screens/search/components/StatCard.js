@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Text, View, StyleSheet} from 'react-native';
 import {PrimaryColors} from '../../../styles/colors';
+import i18n from '../../../assets/i18n/i18n';
 
 const propTypes = {
   numUsers: PropTypes.number,
@@ -15,11 +16,11 @@ class StatCard extends React.PureComponent {
       <View style={styles.row}>
         <View style={styles.card}>
           <Text style={styles.number}>{numUsers}</Text>
-          <Text style={styles.text}>{`количество\nзарегистрированных`}</Text>
+          <Text style={styles.text}>{i18n.t('registered users')}</Text>
         </View>
         <View style={styles.card}>
           <Text style={styles.number}>{numResumes}</Text>
-          <Text style={styles.text}>{`резюме\nдобавлено`}</Text>
+          <Text style={styles.text}>{i18n.t("CV's added")}</Text>
         </View>
       </View>
     );

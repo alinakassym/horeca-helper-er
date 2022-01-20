@@ -57,6 +57,13 @@
     "Schedule": "Расписание",
     "Gender": "Пол",
     "Warning": "Внимание",
-    "Please fill in all required fields": "Пожалуйста, заполните все обязательные поля"
+    "Please fill in all required fields": "Пожалуйста, заполните все обязательные поля",
+    "Search": "Поиск",
+    "for employees": "соискателей",
+    "Helpful information": "Полезная информация",
+    "employees online": "соискателей онлайн",
+    "registered users": "количество\nзарегистрированных",
+    "CV's added": "резюме\nдобавлено",
+    "The list of employees is empty": "Список соискателей пуст"
   }
 }
