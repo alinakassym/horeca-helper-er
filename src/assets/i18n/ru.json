@@ -64,6 +64,9 @@
     "employees online": "соискателей онлайн",
     "registered users": "количество\nзарегистрированных",
     "CV's added": "резюме\nдобавлено",
-    "The list of employees is empty": "Список соискателей пуст"
+    "The list of employees is empty": "Список соискателей пуст",
+    "Detailed information": "Подробная информация",
+    "No vacancies": "Нет вакансий",
+    "There are currently no vacancies available": "На данный момент нет вакансий"
   }
 }

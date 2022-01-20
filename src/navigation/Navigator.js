@@ -43,16 +43,9 @@ import {IconNotifications} from '../assets/icons/tabs/IconNotifications';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-// Redux
-import {useSelector} from 'react-redux';
 import {PrimaryColors, StatusesColors} from '../styles/colors';
 
 export const Navigator = () => {
-  useSelector(state => {
-    const {employees} = state;
-    return employees.filter;
-  });
-
   const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();
 
@@ -60,14 +53,6 @@ export const Navigator = () => {
     return (
       <Tab.Navigator
         initialRouteName="Profile"
-        screenListeners={{
-          state: e => {
-            console.log('state changed', e.data.state.history);
-          },
-          blur: e => {
-            console.log('blur: ', e);
-          },
-        }}
         screenOptions={{
           tabBarShowLabel: false,
           tabBarActiveTintColor: PrimaryColors.element,
@@ -133,16 +118,7 @@ export const Navigator = () => {
     );
   };
   return (
-    <Stack.Navigator
-      initialRouteName="Tabs"
-      screenListeners={{
-        state: e => {
-          console.log('state changed', e.data.state.history);
-        },
-        blur: e => {
-          console.log('blur: ', e);
-        },
-      }}>
+    <Stack.Navigator initialRouteName="Tabs">
       {/*TABS*/}
       <Stack.Group>
         <Stack.Screen

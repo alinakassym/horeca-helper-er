@@ -1,8 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, SafeAreaView, ScrollView, View} from 'react-native';
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  ScrollView,
+  View,
+  StyleSheet,
+} from 'react-native';
 
 // styles
 import {globalStyles} from '../../styles/globalStyles';
+import {PrimaryColors} from '../../styles/colors';
 
 // components
 import Header from '../../components/Header';
@@ -15,7 +22,11 @@ import BottomModal from '../../components/BottomModal';
 import StatCard from './components/StatCard';
 
 // store
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  setEmployeesFilter,
+  setFilterApplied,
+} from '../../store/slices/employees';
 
 // services
 import {searchEmployees} from '../../services/EmployeesService';
@@ -35,36 +46,56 @@ export const SearchScreen = ({navigation}) => {
   });
   const [employees, setEmployees] = useState([]);
   const [positions, setPositions] = useState([]);
+  const [currentPosition, setCurrentPosition] = useState(filter.position);
   const [visible, setVisible] = useState(false);
   const [stats, setStats] = useState();
   const [loading, setLoading] = useState(true);
+
+  const dispatch = useDispatch();
+
+  const filterByPosition = async val => {
+    setLoading(true);
+    if (currentPosition?.id === val.id) {
+      await dispatch(
+        setEmployeesFilter({
+          ...filter,
+          position: null,
+        }),
+      );
+      await dispatch(setFilterApplied(false));
+      setLoading(false);
+    } else {
+      await dispatch(
+        setEmployeesFilter({
+          ...filter,
+          position: val,
+        }),
+      );
+      await dispatch(setFilterApplied(true));
+      setLoading(false);
+    }
+  };
 
   const getData = async () => {
     return Promise.all([getPositions(), getStats()]);
   };
 
   useEffect(() => {
-    return navigation.addListener('focus', async () => {
+    const fetchData = async () => {
       try {
         const [positionsData, statsData] = await getData();
         const employeesData = await searchEmployees(filter);
         setEmployees(employeesData.items);
         setPositions(positionsData);
+        setCurrentPosition(filter.position);
         setStats(statsData);
         setLoading(false);
       } catch (e) {
         console.log('searchEmployees err:', e);
       }
-    });
-  }, [filter, navigation]);
-
-  if (loading) {
-    return (
-      <View style={globalStyles.fullScreenSection}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+    };
+    fetchData().then();
+  }, [filter]);
 
   return (
     <SafeAreaView style={globalStyles.container}>
@@ -87,15 +118,26 @@ export const SearchScreen = ({navigation}) => {
         onCancel={() => setVisible(false)}
         visible={visible}
         title={i18n.t('Helpful information')}>
-        <StatCard numUsers={stats.numEmployees} numResumes={stats.numResumes} />
-      </BottomModal>
-      <View style={{height: 60}}>
-        <HorizontalFilter
-          onSelect={val => console.log({val})}
-          items={positions}
+        <StatCard
+          numUsers={stats && stats.numEmployees}
+          numResumes={stats && stats.numResumes}
         />
-      </View>
-      {employees.length > 0 ? (
+      </BottomModal>
+      {!loading && (
+        <View style={styles.horizontalFilterWrapper}>
+          <HorizontalFilter
+            activeItem={currentPosition}
+            onSelect={val => filterByPosition(val)}
+            items={positions}
+            itemKey={titleKey}
+          />
+        </View>
+      )}
+      {loading ? (
+        <View style={globalStyles.fullScreenSection}>
+          <ActivityIndicator size="large" />
+        </View>
+      ) : employees.length > 0 ? (
         <ScrollView>
           {employees &&
             employees.map((item, index) => (
@@ -115,3 +157,11 @@ export const SearchScreen = ({navigation}) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  horizontalFilterWrapper: {
+    height: 60,
+    minWidth: '100%',
+    backgroundColor: PrimaryColors.white,
+  },
+});

@@ -4,19 +4,35 @@ import {FlatList, Text, StyleSheet, Pressable} from 'react-native';
 import {PrimaryColors} from '../styles/colors';
 
 const propTypes = {
+  activeItem: PropTypes.object,
   items: PropTypes.array,
+  itemKey: PropTypes.string,
   onSelect: PropTypes.func,
 };
 
 class HorizontalFilter extends React.PureComponent {
   render() {
-    const {items, onSelect} = this.props;
+    const {activeItem, items, itemKey, onSelect} = this.props;
 
-    const renderItem = ({item}) => (
-      <Pressable onPress={() => onSelect(item)} style={styles.badge}>
-        <Text style={styles.badgeTitle}>{item.title_ru}</Text>
-      </Pressable>
-    );
+    const renderItem = ({item}) => {
+      const badgeStyle = item.id === activeItem?.id && {
+        backgroundColor: PrimaryColors.element,
+      };
+
+      const badgeTitleStyle = item.id === activeItem?.id && {
+        color: PrimaryColors.white,
+      };
+
+      return (
+        <Pressable
+          onPress={() => onSelect(item)}
+          style={[styles.badge, badgeStyle]}>
+          <Text style={[styles.badgeTitle, badgeTitleStyle]}>
+            {item[itemKey]}
+          </Text>
+        </Pressable>
+      );
+    };
 
     return (
       <FlatList
