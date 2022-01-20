@@ -5,6 +5,7 @@ import React from 'react';
 import {JobEditScreen} from '../screens/jobs/JobEditScreen';
 import {JobsPostScreen} from '../screens/jobs/JobsPostScreen';
 import {JobsScreen} from '../screens/jobs/JobsScreen';
+
 // employees screens
 import {EmployeesScreen} from '../screens/employees/EmployeesScreen';
 import {EmployeeReviewScreen} from '../screens/employees/EmployeeReviewScreen';
@@ -17,14 +18,20 @@ import {SearchScreen} from '../screens/search/SearchScreen';
 // messages screens
 import {MessagesChatScreen} from '../screens/messages/MessagesChatScreen';
 import {MessagesScreen} from '../screens/messages/MessagesScreen';
+
 // notifications screens
 import {NotificationsScreen} from '../screens/notifications/NotificationsScreen';
+
 // profile screens
 import {ProfileScreen} from '../screens/profile/ProfileScreen';
 import {ProfileEditScreen} from '../screens/profile/ProfileEditScreen';
+
 // support screens
 import {SupportScreen} from '../screens/support/SupportScreen';
 import {FAQScreen} from '../screens/support/FAQScreen';
+
+// settings screens
+import {SettingsScreen} from '../screens/settings/SettingsScreen';
 
 // Icons
 import {IconSearch} from '../assets/icons/tabs/IconSearch';
@@ -220,6 +227,15 @@ export const Navigator = () => {
         <Stack.Screen
           name={'FAQ'}
           component={FAQScreen}
+          options={{headerShown: false}}
+        />
+      </Stack.Group>
+
+      {/*SETTINGS SCREENS*/}
+      <Stack.Group>
+        <Stack.Screen
+          name={'Settings'}
+          component={SettingsScreen}
           options={{headerShown: false}}
         />
       </Stack.Group>

@@ -8,6 +8,8 @@
     "enter login password": "Enter login and password to continue",
     "login": "Login",
     "password": "Password",
-    "enter": "Sign in"
+    "enter": "Sign in",
+    "settings": "Settings",
+    "lang": "Language"
   }
 }

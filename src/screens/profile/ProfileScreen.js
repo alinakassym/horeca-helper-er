@@ -32,6 +32,8 @@ import {AuthContext} from '../../store/context';
 // services
 import {getCompany} from '../../services/CompaniesService';
 
+import i18n from '../../assets/i18n/i18n';
+
 export const ProfileScreen = ({navigation}) => {
   const {signOut} = React.useContext(AuthContext);
 
@@ -129,8 +131,14 @@ export const ProfileScreen = ({navigation}) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('FAQ')}
-            style={styles.listItem}>
+            style={[styles.listItem, styles.listItemDivider]}>
             <Text style={styles.listItemTitle}>Вопросы и ответы</Text>
+            <IconExpandRight size={16} color={PrimaryColors.grey1} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Settings')}
+            style={styles.listItem}>
+            <Text style={styles.listItemTitle}>{i18n.t('settings')}</Text>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
         </View>

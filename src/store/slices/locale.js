@@ -4,10 +4,24 @@ export const localeSlice = createSlice({
   name: 'locale',
   initialState: {
     lang: null,
+    languages: [
+      {
+        id: 'ru',
+        code: 'ru',
+        title: 'Русский',
+      },
+      {
+        id: 'en',
+        code: 'en',
+        title: 'English',
+      },
+    ],
+    suffix: '',
   },
   reducers: {
     setLang: (state, action) => {
       state.lang = action.payload;
+      state.suffix = action.payload === 'ru' ? '_ru' : '';
     },
   },
 });
