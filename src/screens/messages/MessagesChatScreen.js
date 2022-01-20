@@ -35,7 +35,7 @@ export const MessagesChatScreen = ({route, navigation}) => {
     lastName: '',
   });
   const [loading, setLoading] = useState(true);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState();
   const [groupNames, setGroupNames] = useState([]);
   const [viewHeight, setHeight] = useState(0);
 
@@ -102,14 +102,15 @@ export const MessagesChatScreen = ({route, navigation}) => {
         <View style={styles.date}>
           <Text style={styles.dateText}>{item}</Text>
         </View>
-        {messages[item].map((messageItem, index) => (
-          <MessageBubble
-            key={index}
-            item={messageItem}
-            user={user}
-            prev={index !== 0 ? messages[item][index - 1] : null}
-          />
-        ))}
+        {messages[item] &&
+          messages[item].map((messageItem, index) => (
+            <MessageBubble
+              key={index}
+              item={messageItem}
+              user={user}
+              prev={index !== 0 ? messages[item][index - 1] : null}
+            />
+          ))}
       </>
     );
   };
