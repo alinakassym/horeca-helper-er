@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, Dimensions} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 
 // styles
 import {PrimaryColors} from '../../styles/colors';
@@ -15,8 +15,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import lodash from 'lodash';
 import {putEmployeeReview} from '../../services/EmployeesService';
-
-const dimensions = Dimensions.get('screen');
+import i18n from '../../assets/i18n/i18n';
 
 export const EmployeeReviewScreen = ({route, navigation}) => {
   const employeeId = route.params.id;
@@ -52,37 +51,39 @@ export const EmployeeReviewScreen = ({route, navigation}) => {
       <Header
         modal
         onClose={() => navigation.goBack()}
-        title={'Оценка сотрудника'}
+        title={i18n.t("Employee's rating")}
       />
-      <KeyboardAwareScrollView enableResetScrollToCoords={false}>
+      <KeyboardAwareScrollView
+        style={styles.section}
+        enableResetScrollToCoords={false}>
         <RatingScale
-          title={'Дисциплина и ответственность'}
+          title={i18n.t('Discipline and responsibility')}
           score={review.disciplineScore}
           onPress={val => setReview({...review, disciplineScore: val})}
         />
         <RatingScale
-          title={'Коммуникация и грамотность'}
+          title={i18n.t('Communication and literacy')}
           score={review.communicationsScore}
           onPress={val => setReview({...review, communicationsScore: val})}
         />
         <RatingScale
-          title={'Профессионализм и опыт'}
+          title={i18n.t('Professionalism and experience')}
           score={review.professionalismScore}
           onPress={val => setReview({...review, professionalismScore: val})}
         />
         <RatingScale
-          title={'Опрятность и этикет'}
+          title={i18n.t('Neatness and etiquette')}
           score={review.neatnessScore}
           onPress={val => setReview({...review, neatnessScore: val})}
         />
         <RatingScale
-          title={'Командный игрок'}
+          title={i18n.t('Team player')}
           score={review.teamScore}
           onPress={val => setReview({...review, teamScore: val})}
         />
         <MultilineInput
           style={globalStyles.section}
-          label={'Комментарий'}
+          label={i18n.t('Comment')}
           value={comment}
           marginBottom={isFocused ? 0 : 88}
           onChangeText={val => setComment(val)}
@@ -91,7 +92,7 @@ export const EmployeeReviewScreen = ({route, navigation}) => {
           }}
         />
       </KeyboardAwareScrollView>
-      {!isFocused && !valid && (
+      {!valid ? (
         <LinearGradient
           colors={[
             'rgba(255, 255, 255, 0)',
@@ -100,10 +101,9 @@ export const EmployeeReviewScreen = ({route, navigation}) => {
             'rgba(255, 255, 255, 1)',
           ]}
           style={styles.btnSection}>
-          <DisabledButton label={'Поставить оценку'} />
+          <DisabledButton label={i18n.t('Rate2')} />
         </LinearGradient>
-      )}
-      {!isFocused && valid && (
+      ) : (
         <LinearGradient
           colors={[
             'rgba(255, 255, 255, 0)',
@@ -128,15 +128,13 @@ const styles = StyleSheet.create({
     backgroundColor: PrimaryColors.white,
     zIndex: 1,
   },
+  section: {
+    flex: 1,
+  },
   btnSection: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
     paddingTop: 20,
     paddingHorizontal: 20,
     paddingBottom: 20,
     height: 88,
-    zIndex: 3,
   },
 });

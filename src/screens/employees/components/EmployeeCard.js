@@ -1,22 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Image, Text, View, StyleSheet, Dimensions} from 'react-native';
+import {globalStyles} from '../../../styles/globalStyles';
 import {PrimaryColors, StatusesColors} from '../../../styles/colors';
 import {IconDot} from '../../../assets/icons/main/IconDot';
 import RatingScale from '../../../components/RatingScale';
 import PrimaryButton from '../../../components/buttons/PrimaryButton';
 import moment from 'moment';
+import i18n from '../../../assets/i18n/i18n';
 
 const dimensions = Dimensions.get('screen');
 
 const propTypes = {
+  itemKey: PropTypes.string,
   item: PropTypes.object,
   onPress: PropTypes.func,
 };
 
 class EmployeeCard extends React.PureComponent {
   render() {
-    const {item, onPress} = this.props;
+    const {itemKey, item, onPress} = this.props;
     const {employee} = item;
     const getAge = birthDate => {
       return moment().diff(birthDate, 'years', false);
@@ -33,17 +36,23 @@ class EmployeeCard extends React.PureComponent {
             <View style={[styles.row, styles.alignCenter]}>
               {item?.position && item?.city ? (
                 <>
-                  <Text style={styles.subtitle}>{item.position.title}</Text>
+                  <Text style={styles.subtitle}>
+                    {item.position && item.position[itemKey]}
+                  </Text>
                   <IconDot color={PrimaryColors.grey2} />
                   <Text style={[styles.subtitle, styles.marginLeft]}>
-                    {item.city.title}
+                    {item.city && item.city[itemKey]}
                   </Text>
                 </>
               ) : item?.position ? (
-                <Text style={styles.subtitle}>{item.position.title}</Text>
+                <Text style={styles.subtitle}>
+                  {item.position && item.position[itemKey]}
+                </Text>
               ) : (
                 item.city && (
-                  <Text style={[styles.subtitle]}>{item.city.title}</Text>
+                  <Text style={[styles.subtitle]}>
+                    {item.city && item.city[itemKey]}
+                  </Text>
                 )
               )}
             </View>
@@ -56,10 +65,10 @@ class EmployeeCard extends React.PureComponent {
         {!item.employeeReview && (
           <PrimaryButton
             onPress={onPress}
-            label={'Оценить'}
+            label={i18n.t('Rate')}
             color={StatusesColors.orangeOpacity}
             labelColor={StatusesColors.orange}
-            style={{marginTop: 24}}
+            style={globalStyles.mt6}
           />
         )}
       </View>

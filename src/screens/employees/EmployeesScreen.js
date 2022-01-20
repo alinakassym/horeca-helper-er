@@ -1,11 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  SafeAreaView,
-  View,
-  Text,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
+import {SafeAreaView, View, ScrollView, ActivityIndicator} from 'react-native';
 
 // styles
 import {globalStyles} from '../../styles/globalStyles';
@@ -18,7 +12,16 @@ import EmployeeCard from './components/EmployeeCard';
 import {getWorksList} from '../../services/WorksService';
 import Placeholder from '../../components/Placeholder';
 
+import {useSelector} from 'react-redux';
+
+import i18n from '../../assets/i18n/i18n';
+
 export const EmployeesScreen = ({navigation}) => {
+  const suffix = useSelector(state => {
+    const {locale} = state;
+    return locale.suffix;
+  });
+  const titleKey = `title${suffix}`;
   const [works, setWorks] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -34,27 +37,24 @@ export const EmployeesScreen = ({navigation}) => {
     });
   }, [navigation]);
 
-  if (loading) {
-    return (
-      <View style={globalStyles.fullScreenSection}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
-
   return (
     <SafeAreaView style={globalStyles.container}>
       <Header
         goBack
         onClose={() => navigation.goBack()}
-        title={'История сотрудников'}
+        title={i18n.t('Employee history')}
       />
-      {works && works.length > 0 ? (
+      {loading ? (
+        <View style={globalStyles.fullScreenSection}>
+          <ActivityIndicator size="large" />
+        </View>
+      ) : works && works.length > 0 ? (
         <ScrollView>
           {works.map(
             (item, index) =>
               item.isConfirmed && (
                 <EmployeeCard
+                  itemKey={titleKey}
                   key={index}
                   item={item}
                   onPress={() =>
@@ -65,7 +65,7 @@ export const EmployeesScreen = ({navigation}) => {
           )}
         </ScrollView>
       ) : (
-        <Placeholder placeholderText={'Список сотрудников пуст'} />
+        <Placeholder placeholderText={i18n.t("Employees' list is empty")} />
       )}
     </SafeAreaView>
   );
