@@ -127,21 +127,21 @@ export const SignInScreen = ({navigation}) => {
         <ScrollView>
           <View style={globalStyles.section}>
             <Text style={[typography.h1, globalStyles.mt6]}>
-              {i18n.t('sign in')}
+              {i18n.t('Sign in/Sign up')}
             </Text>
             <Text style={[typography.text, globalStyles.mt3, globalStyles.mb6]}>
-              {i18n.t('enter login password')}
+              {i18n.t('Enter login and password to continue')}
             </Text>
             <Input
               value={data.username}
-              label={i18n.t('login')}
+              label={i18n.t('Login')}
               onChangeText={val => textInputChange(val)}
               onClear={() => textInputChange('')}
               onEndEditing={e => handleValidUser(e.nativeEvent.text)}
             />
             <Input
               value={data.password}
-              label={i18n.t('password')}
+              label={i18n.t('Password')}
               secureTextEntry
               onChangeText={val => handlePasswordChange(val)}
               onClear={() => handlePasswordChange('')}
@@ -150,7 +150,7 @@ export const SignInScreen = ({navigation}) => {
         </ScrollView>
         <View style={globalStyles.btnSection}>
           <GradientButton
-            label={i18n.t('enter')}
+            label={i18n.t('Sign in')}
             onPress={() => {
               loginHandle(data.username, data.password);
             }}

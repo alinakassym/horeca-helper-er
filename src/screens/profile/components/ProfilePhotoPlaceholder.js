@@ -4,6 +4,7 @@ import {View, Pressable, StyleSheet} from 'react-native';
 import {PrimaryColors} from '../../../styles/colors';
 import {IconBuilding} from '../../../assets/icons/main/IconBuilding';
 import PlainButton from '../../../components/buttons/PlainButton';
+import i18n from '../../../assets/i18n/i18n';
 
 const propTypes = {
   imageSize: PropTypes.number,
@@ -33,7 +34,7 @@ class ProfilePhotoPlaceholder extends React.PureComponent {
           <PlainButton
             onPress={onPress}
             btnStyle={styles.btn}
-            label={'Добавить фото'}
+            label={i18n.t('Add photo')}
           />
         )}
       </Pressable>

@@ -143,10 +143,12 @@ export const WelcomeScreen = ({navigation}) => {
           <View style={styles.section}>
             <WelcomeImage size={imageSize} style={globalStyles.mb5} />
             <Text style={[typography.h1, globalStyles.mb4]}>
-              {i18n.t('welcome')}
+              {i18n.t('Welcome to\nHoreca Helper')}
             </Text>
             <Text style={[typography.text, globalStyles.mb6]}>
-              {i18n.t('choose way')}
+              {i18n.t(
+                'Please choose a convenient way to enter or register in the application',
+              )}
             </Text>
             <PrimaryButton
               onPress={() => navigation.navigate('SignIn')}
@@ -154,7 +156,7 @@ export const WelcomeScreen = ({navigation}) => {
               color={PrimaryColors.grey4}
               labelStyle={styles.labelStyle}
               labelColor={PrimaryColors.element}
-              label={i18n.t('enter with login')}
+              label={i18n.t('Enter with login')}
             />
             {!isIOS && (
               <PrimaryButton
@@ -163,14 +165,14 @@ export const WelcomeScreen = ({navigation}) => {
                 color="#000000"
                 labelStyle={styles.labelStyle}
                 labelColor="#FFFFFF"
-                label={`${i18n.t('continue with')} Apple`}>
+                label={`${i18n.t('Continue with')} Apple`}>
                 <IconApple style={styles.appleButtonIcon} color={'#FFFFFF'} />
               </PrimaryButton>
             )}
             <View style={styles.googleButtonWrapper}>
               <IconGoogle style={styles.googleButtonIcon} color={'#FFFFFF'} />
               <Text style={[styles.labelStyle, styles.googleButtonText]}>
-                {i18n.t('continue with')} Google
+                {i18n.t('Continue with')} Google
               </Text>
               <GoogleSigninButton
                 style={styles.googleButton}

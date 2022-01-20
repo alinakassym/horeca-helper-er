@@ -39,11 +39,11 @@ export const SettingsScreen = ({navigation}) => {
       <Header
         goBack
         onClose={() => navigation.goBack()}
-        title={i18n.t('settings')}
+        title={i18n.t('Settings')}
       />
       <View style={globalStyles.mt3}>
         <ExpansionPanel
-          items={[{title: i18n.t('lang')}]}
+          items={[{title: i18n.t('Language')}]}
           expandedBlockStyle={styles.wrapperRadio}>
           {languages.map((item, index) => (
             <RadioBtn

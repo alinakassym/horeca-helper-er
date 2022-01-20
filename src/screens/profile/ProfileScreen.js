@@ -98,7 +98,7 @@ export const ProfileScreen = ({navigation}) => {
                 value: company,
               });
             }}
-            label={i18n.t('edit profile')}
+            label={i18n.t('Edit profile')}
           />
         </View>
 
@@ -107,7 +107,7 @@ export const ProfileScreen = ({navigation}) => {
             <View style={styles.row}>
               <IconFire />
               <Text style={[styles.listItemTitle, globalStyles.ml3]}>
-                {i18n.t('subscription')}
+                {i18n.t('Subscription')}
               </Text>
             </View>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
@@ -118,14 +118,16 @@ export const ProfileScreen = ({navigation}) => {
           <TouchableOpacity
             onPress={() => navigation.navigate('Jobs')}
             style={[styles.listItem, styles.listItemDivider]}>
-            <Text style={styles.listItemTitle}>{i18n.t('job vacancies')}</Text>
+            <Text style={styles.listItemTitle}>
+              {i18n.t('My job vacancies')}
+            </Text>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('Employees')}
             style={styles.listItem}>
             <Text style={styles.listItemTitle}>
-              {i18n.t('employee history')}
+              {i18n.t('Employee history')}
             </Text>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
@@ -136,20 +138,20 @@ export const ProfileScreen = ({navigation}) => {
             onPress={() => navigation.navigate('Support')}
             style={[styles.listItem, styles.listItemDivider]}>
             <Text style={styles.listItemTitle}>
-              {i18n.t('contact support')}
+              {i18n.t('Contact support')}
             </Text>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('FAQ')}
             style={[styles.listItem, styles.listItemDivider]}>
-            <Text style={styles.listItemTitle}>{i18n.t('faq')}</Text>
+            <Text style={styles.listItemTitle}>{i18n.t('FAQ')}</Text>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('Settings')}
             style={styles.listItem}>
-            <Text style={styles.listItemTitle}>{i18n.t('settings')}</Text>
+            <Text style={styles.listItemTitle}>{i18n.t('Settings')}</Text>
             <IconExpandRight size={16} color={PrimaryColors.grey1} />
           </TouchableOpacity>
         </View>
@@ -163,7 +165,7 @@ export const ProfileScreen = ({navigation}) => {
           <OutlineButton
             onPress={() => onShare()}
             style={styles.shareButton}
-            label={i18n.t('share app')}>
+            label={i18n.t('Share app')}>
             <IconShare
               style={globalStyles.mr3}
               color={PrimaryColors.brand}
@@ -186,7 +188,7 @@ export const ProfileScreen = ({navigation}) => {
                   globalStyles.ml3,
                   {color: StatusesColors.red},
                 ]}>
-                {i18n.t('quit')}
+                {i18n.t('Log out')}
               </Text>
             </View>
           </TouchableOpacity>

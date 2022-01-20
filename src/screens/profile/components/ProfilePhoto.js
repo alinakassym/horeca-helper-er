@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import {PrimaryColors} from '../../../styles/colors';
 import ModalButton from '../../../components/buttons/ModalButton';
+import i18n from '../../../assets/i18n/i18n';
 
 const propTypes = {
   photoUrl: PropTypes.string,
@@ -20,7 +21,7 @@ class ProfilePhoto extends React.PureComponent {
         <ModalButton
           onPress={onPress}
           style={styles.btn}
-          label={'Изменить фото'}
+          label={i18n.t('Change photo')}
         />
       </View>
     );

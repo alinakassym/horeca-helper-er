@@ -28,10 +28,16 @@ import {
   updateCompanyPhoto,
 } from '../../services/CompaniesService';
 import {getCategories} from '../../services/DictionariesService';
+import {useSelector} from 'react-redux';
+
+import i18n from '../../assets/i18n/i18n';
 
 export const ProfileEditScreen = ({route, navigation}) => {
+  const suffix = useSelector(state => {
+    const {locale} = state;
+    return locale.suffix;
+  });
   const [open, setOpen] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
   const [company, setCompany] = useState(route.params.value);
   const [categories, setCategories] = useState([]);
 
@@ -118,7 +124,7 @@ export const ProfileEditScreen = ({route, navigation}) => {
       <BottomModal visible={open} onCancel={() => setOpen(false)}>
         <ModalButton
           divide
-          label={'Открыть галерею'}
+          label={i18n.t('Open gallery')}
           onPress={() => {
             openGallery();
             setOpen(false);
@@ -126,14 +132,14 @@ export const ProfileEditScreen = ({route, navigation}) => {
         />
         <ModalButton
           divide
-          label={'Сделать снимок'}
+          label={i18n.t('Take a photo')}
           onPress={() => {
             openCamera();
             setOpen(false);
           }}
         />
         <ModalButton
-          label={'Удалить фото'}
+          label={i18n.t('Remove photo')}
           labelColor={StatusesColors.red}
           onPress={() => {
             setOpen(false);
@@ -143,7 +149,7 @@ export const ProfileEditScreen = ({route, navigation}) => {
       <Header
         goBack
         onClose={() => navigation.goBack()}
-        title={'Профильные данные'}
+        title={i18n.t('Profile information')}
       />
       <KeyboardAwareScrollView
         style={styles.container}
@@ -159,88 +165,75 @@ export const ProfileEditScreen = ({route, navigation}) => {
 
         {/*Название заведения*/}
         <Input
-          label={'Название заведения'}
+          label={i18n.t('Name')}
           onChangeText={val => {
             setCompany({...company, title: val});
           }}
           onClear={() => setCompany({...company, title: null})}
           value={company.title}
-          onFocus={val => setIsFocused(val)}
-          onBlur={val => setIsFocused(val)}
         />
 
         {/*Категория*/}
         <ModalSelect
-          modalTitle={'Выбор категории'}
-          label={'Категория'}
+          modalTitle={i18n.t('Choose category')}
+          label={i18n.t('Category')}
           value={company.category}
           items={categories}
-          itemText={'title_ru'}
+          itemText={`title${suffix}`}
           onClear={() => setCompany({...company, category: null})}
           onSaveSelection={val => setCompany({...company, category: val})}
         />
 
         {/*Адрес*/}
         <Input
-          label={'Адрес'}
+          label={i18n.t('Address')}
           onChangeText={val => {
             setCompany({...company, address: val});
           }}
           onClear={() => setCompany({...company, address: null})}
           value={company.address}
-          onFocus={val => setIsFocused(val)}
-          onBlur={val => setIsFocused(val)}
           validIcon={<IconLocation size={16} color={PrimaryColors.brand} />}
         />
 
         {/*Номер телефона*/}
         <Input
-          label={'Номер телефона'}
+          label={i18n.t('Phone number')}
           onChangeText={val => {
             setCompany({...company, contactInfo: val});
           }}
           onClear={() => setCompany({...company, contactInfo: null})}
           value={company.contactInfo}
-          onFocus={val => setIsFocused(val)}
-          onBlur={val => setIsFocused(val)}
         />
 
         {/*Электронная почта*/}
         <Input
-          label={'Электронная почта'}
+          label={i18n.t('Email')}
           onChangeText={val => {
             setCompany({...company, email: val});
           }}
           onClear={() => setCompany({...company, email: null})}
           value={company.email}
-          onFocus={val => setIsFocused(val)}
-          onBlur={val => setIsFocused(val)}
         />
 
         {/*Описание*/}
         <MultilineInput
-          label={'Описание'}
+          label={i18n.t('Description')}
           value={company.description}
           onChangeText={val => {
             setCompany({...company, description: val});
           }}
           marginBottom={70}
-          onInputFocus={val => {
-            setIsFocused(val);
-          }}
         />
       </KeyboardAwareScrollView>
-      {!isFocused && (
-        <LinearGradient
-          colors={[
-            'rgba(255, 255, 255, 0.2)',
-            'rgba(255, 255, 255, 0.9)',
-            'rgba(255, 255, 255, 1)',
-          ]}
-          style={styles.btn}>
-          <GradientButton label={'Save'} onPress={() => save()} />
-        </LinearGradient>
-      )}
+      <LinearGradient
+        colors={[
+          'rgba(255, 255, 255, 0.2)',
+          'rgba(255, 255, 255, 0.9)',
+          'rgba(255, 255, 255, 1)',
+        ]}
+        style={styles.btn}>
+        <GradientButton label={i18n.t('Save')} onPress={() => save()} />
+      </LinearGradient>
     </SafeAreaView>
   );
 };
@@ -248,12 +241,11 @@ export const ProfileEditScreen = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
+    flex: 1,
     backgroundColor: PrimaryColors.white,
   },
   btn: {
-    position: 'absolute',
-    bottom: 0,
     padding: 20,
-    width: '100%',
+    backgroundColor: PrimaryColors.white,
   },
 });
