@@ -5,6 +5,7 @@ import {
   ScrollView,
   View,
   StyleSheet,
+  RefreshControl,
 } from 'react-native';
 
 // styles
@@ -50,8 +51,13 @@ export const SearchScreen = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [stats, setStats] = useState();
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(true);
 
   const dispatch = useDispatch();
+
+  const onRefresh = React.useCallback(async () => {
+    await dispatch(setEmployeesFilter(filter));
+  }, [dispatch, filter]);
 
   const filterByPosition = async val => {
     setLoading(true);
@@ -90,6 +96,7 @@ export const SearchScreen = ({navigation}) => {
         setCurrentPosition(filter.position);
         setStats(statsData);
         setLoading(false);
+        setRefreshing(false);
       } catch (e) {
         console.log('searchEmployees err:', e);
       }
@@ -138,7 +145,10 @@ export const SearchScreen = ({navigation}) => {
           <ActivityIndicator size="large" />
         </View>
       ) : employees.length > 0 ? (
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
           {employees &&
             employees.map((item, index) => (
               <ResumeCard
