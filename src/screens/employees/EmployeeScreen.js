@@ -31,6 +31,7 @@ import WorkList from './components/WorkList';
 import RadioSelect from '../../components/selects/RadioSelect';
 import MultilineInput from '../../components/inputs/MultilineInput';
 import OutlineButton from '../../components/buttons/OutlineButton';
+import Toast from '../../components/notifications/Toast';
 import LinearGradient from 'react-native-linear-gradient';
 
 // services
@@ -38,7 +39,6 @@ import {getEmployeeById} from '../../services/EmployeesService';
 import {getJobs, postJobInvite} from '../../services/JobsService';
 import {getChatsLookup} from '../../services/ChatService';
 import {getConfigs} from '../../services/UtilsService';
-import Toast from '../../components/notifications/Toast';
 import {useSelector} from 'react-redux';
 
 import i18n from '../../assets/i18n/i18n';
@@ -175,7 +175,7 @@ export const EmployeeScreen = ({route, navigation}) => {
   const getCoverLetter = async () => {
     try {
       const letter = await getConfigs('er-cover-letter');
-      setInviteMessage(letter.value_ru);
+      setInviteMessage(letter[`value${locale.suffix}`]);
     } catch (e) {
       console.log('getCoverLetter err: ', e);
     }
@@ -335,7 +335,7 @@ export const EmployeeScreen = ({route, navigation}) => {
         </View>
       </LinearGradient>
       <BottomModal
-        title={i18n.t('Invite an employee')}
+        title={`${i18n.t('Invite an employee')}`}
         visible={visible}
         onCancel={() => setVisible(false)}>
         <RadioSelect
