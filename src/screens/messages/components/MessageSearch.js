@@ -4,16 +4,19 @@ import {IconSearch} from '../../../assets/icons/tabs/IconSearch';
 import {IconClose} from '../../../assets/icons/main/IconClose';
 import Header from '../../../components/Header';
 import {PrimaryColors} from '../../../styles/colors';
+import i18n from '../../../assets/i18n/i18n';
 
 export const MessageSearch = ({text, onChangeText, onEndEditing, onClear}) => {
   return (
     <View style={styles.search}>
-      <Header title={'Чат'} subtitle={'с соискателями'} />
+      <Header title={i18n.t('Chat')} subtitle={i18n.t('with employees')} />
       <View style={styles.inputSection}>
         <TextInput
+          keyboardType={'web-search'}
+          returnKeyType={'search'}
           value={text}
           style={styles.input}
-          placeholder={'Search'}
+          placeholder={i18n.t('Search')}
           placeholderTextColor={PrimaryColors.grey2}
           onChangeText={onChangeText}
           onEndEditing={onEndEditing}

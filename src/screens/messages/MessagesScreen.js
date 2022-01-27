@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, View, SafeAreaView, StyleSheet} from 'react-native';
+import {
+  ScrollView,
+  View,
+  SafeAreaView,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 
 // styles
 import {globalStyles} from '../../styles/globalStyles';
@@ -13,6 +19,7 @@ import {MessageSearch} from './components/MessageSearch';
 import {getChats, getChatsSearch} from '../../services/ChatService';
 
 export const MessagesScreen = ({navigation}) => {
+  const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState([]);
   const [searchText, setSearchText] = useState('');
 
@@ -32,9 +39,11 @@ export const MessagesScreen = ({navigation}) => {
 
   const getAllChats = async () => {
     try {
+      setLoading(true);
       const res = await getChats();
       setChats(res);
       setSearchText('');
+      setLoading(false);
     } catch (e) {
       console.error('getAllChats err: ', e);
     }
@@ -45,6 +54,23 @@ export const MessagesScreen = ({navigation}) => {
       await getAllChats();
     });
   }, [navigation]);
+
+  if (loading) {
+    return (
+      <SafeAreaView style={globalStyles.container}>
+        <MessageSearch
+          text={searchText}
+          onChangeText={val => setSearchText(val)}
+          onEndEditing={() => searchMessage()}
+          onClear={() => getAllChats()}
+        />
+        <View style={globalStyles.fullScreenSection}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={globalStyles.container}>
       <MessageSearch

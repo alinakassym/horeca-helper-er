@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import lodash from 'lodash';
 import moment from 'moment';
+import i18n from '../../assets/i18n/i18n';
 
 // styles
 import {globalStyles} from '../../styles/globalStyles';
@@ -20,14 +21,17 @@ import {PrimaryColors} from '../../styles/colors';
 // components
 import Header from '../../components/Header';
 import SendButton from '../../components/buttons/SendButton';
-import {MessageBubble} from './components/MessageBubble';
+import MessageBubble from './components/MessageBubble';
 
 // services
 import {getChatById, postMessage} from '../../services/ChatService';
+import {useSelector} from 'react-redux';
 
 const dimensions = Dimensions.get('screen');
 
 export const MessagesChatScreen = ({route, navigation}) => {
+  const {locale} = useSelector(state => state);
+  const titleKey = `title${locale.suffix}`;
   const scrollViewRef = useRef();
   const [user, setUser] = useState({
     photoUrl: null,
@@ -75,8 +79,8 @@ export const MessagesChatScreen = ({route, navigation}) => {
   const formatDate = date => {
     return moment(date).calendar(null, {
       lastWeek: 'DD.MM.YYYY',
-      lastDay: '[Yesterday]',
-      sameDay: '[Today]',
+      lastDay: `[${i18n.t('Yesterday')}]`,
+      sameDay: `[${i18n.t('Today')}]`,
       sameElse: 'DD.MM.YYYY',
     });
   };
@@ -107,6 +111,7 @@ export const MessagesChatScreen = ({route, navigation}) => {
             <MessageBubble
               key={index}
               item={messageItem}
+              itemKey={titleKey}
               user={user}
               prev={index !== 0 ? messages[item][index - 1] : null}
             />
