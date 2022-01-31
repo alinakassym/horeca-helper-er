@@ -93,15 +93,16 @@ export const WelcomeScreen = ({navigation}) => {
         getHhToken(userInfo.idToken)
           .then(async authData => {
             console.log('SignInScreen authData:', authData);
+            const {id, email, photoUrl} = userInfo.user;
             const foundUser = [
               {
-                email: userInfo.user.email,
-                id: userInfo.user.id,
-                password: userInfo.user.id,
+                email: email,
+                id: id,
+                password: id,
                 userToken: userInfo.idToken,
                 hhToken: authData.hhToken,
-                username: userInfo.user.email,
-                photoUrl: userInfo.user.photoUrl,
+                username: email,
+                photoUrl: photoUrl,
               },
             ];
 
@@ -151,12 +152,12 @@ export const WelcomeScreen = ({navigation}) => {
               )}
             </Text>
             <PrimaryButton
-              onPress={() => navigation.navigate('SignIn')}
+              onPress={() => navigation.navigate('Registration')}
               style={styles.btn}
               color={PrimaryColors.grey4}
               labelStyle={styles.labelStyle}
               labelColor={PrimaryColors.element}
-              label={i18n.t('Enter with login')}
+              label={i18n.t('Phone or email')}
             />
             {isIOS && (
               <PrimaryButton

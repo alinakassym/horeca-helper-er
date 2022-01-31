@@ -3,6 +3,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {SignInScreen} from './SignInScreen';
 import {SignUpScreen} from './SignUpScreen';
 import {WelcomeScreen} from './WelcomeScreen';
+import {RegistrationScreen} from './RegistrationScreen';
+import {PasswordScreen} from './PasswordScreen';
 
 const RootStack = createStackNavigator();
 
@@ -12,6 +14,8 @@ export const RootStackScreen = () => (
       headerShown: false,
     }}>
     <RootStack.Screen name="Welcome" component={WelcomeScreen} />
+    <RootStack.Screen name="Registration" component={RegistrationScreen} />
+    <RootStack.Screen name="Password" component={PasswordScreen} />
     <RootStack.Screen name="SignIn" component={SignInScreen} />
     <RootStack.Screen name="SignUp" component={SignUpScreen} />
   </RootStack.Navigator>
