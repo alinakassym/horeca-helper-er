@@ -37,8 +37,8 @@ export const ConfirmationCodeScreen = ({route, navigation}) => {
   };
 
   const firstInputChanged = val => {
-    const sliced = val.slice(-1);
     if (val) {
+      const sliced = val.slice(-1);
       const arr = [...sliced, ...code.splice(1)];
       sliced && numberInputRefs.second.focus();
       codeChanged(arr);
@@ -48,8 +48,8 @@ export const ConfirmationCodeScreen = ({route, navigation}) => {
   };
 
   const secondInputChanged = val => {
-    const sliced = val.slice(-1);
     if (val) {
+      const sliced = val.slice(-1);
       const arr = [...code[0], sliced, ...code.splice(2)];
       sliced && numberInputRefs.third.focus();
       codeChanged(arr);
@@ -59,8 +59,8 @@ export const ConfirmationCodeScreen = ({route, navigation}) => {
   };
 
   const thirdInputChanged = val => {
-    const sliced = val.slice(-1);
     if (val) {
+      const sliced = val.slice(-1);
       const arr = [code[0], code[1], sliced, code[3]];
       sliced && numberInputRefs.fourth.focus();
       codeChanged(arr);
@@ -70,8 +70,8 @@ export const ConfirmationCodeScreen = ({route, navigation}) => {
   };
 
   const fourthInputChanged = val => {
-    const sliced = val.slice(-1);
     if (val) {
+      const sliced = val.slice(-1);
       const arr = [...code.slice(0, 3), ...sliced];
       codeChanged(arr);
     } else {

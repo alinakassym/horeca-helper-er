@@ -76,12 +76,14 @@ export const CreatePasswordScreen = ({route, navigation}) => {
           )}
         </KeyboardAvoidingView>
       </View>
-      <Steps
-        onPress={() => navigation.navigate('Registration')}
-        steps={'3'}
-        step={'3'}
-        progress={100}
-      />
+      {reset && (
+        <Steps
+          onPress={() => navigation.navigate('Registration')}
+          steps={'3'}
+          step={'3'}
+          progress={100}
+        />
+      )}
     </SafeAreaView>
   );
 };
