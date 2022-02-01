@@ -14,16 +14,15 @@ import {typography} from '../styles/typography';
 // components
 import Header from '../components/Header';
 import Input from '../components/inputs/Input';
-import GradientButton from '../components/buttons/GradientButton';
 
 // store
 import Users from '../model/users';
 
 // locale
 import i18n from '../assets/i18n/i18n';
-import PlainButton from '../components/buttons/PlainButton';
+import Steps from '../components/Steps';
 
-export const RegistrationScreen = ({navigation}) => {
+export const ResetPasswordScreen = ({navigation}) => {
   const [data, setData] = useState({
     username: '',
     password: '',
@@ -79,9 +78,10 @@ export const RegistrationScreen = ({navigation}) => {
       });
 
       if (foundUser.length === 0) {
-        navigation.navigate('ConfirmationCode', {phoneEmail: phoneEmail});
-      } else {
-        navigation.navigate('Password', {phoneEmail: phoneEmail});
+        navigation.navigate('ConfirmationCode', {
+          phoneEmail: phoneEmail,
+          reset: true,
+        });
       }
     } catch (e) {
       console.log('loginHandle err: ', e);
@@ -91,16 +91,18 @@ export const RegistrationScreen = ({navigation}) => {
   return (
     <SafeAreaView style={globalStyles.rootStackContainer}>
       <Header goBack onClose={() => navigation.goBack()} />
-      <View style={globalStyles.rootStackContainer}>
+      <View style={globalStyles.flex1}>
         <KeyboardAvoidingView behavior="position">
           <ScrollView>
             <View style={globalStyles.section}>
               <Text style={[typography.h1, globalStyles.mt6]}>
-                {i18n.t('Login - Registration')}
+                {i18n.t('Reset password')}
               </Text>
               <Text
                 style={[typography.text, globalStyles.mt3, globalStyles.mb6]}>
-                {i18n.t('Enter your phone number or email')}
+                {i18n.t(
+                  'When you enter your phone number, you will receive a message with a verification code',
+                )}
               </Text>
               <Input
                 value={data.username}
@@ -111,23 +113,16 @@ export const RegistrationScreen = ({navigation}) => {
               />
             </View>
           </ScrollView>
-          <View style={globalStyles.btnSection}>
-            <GradientButton
-              label={i18n.t('Continue')}
-              onPress={() => {
-                loginHandle(data.username).then();
-              }}
-            />
-          </View>
         </KeyboardAvoidingView>
       </View>
-      <View style={globalStyles.btnSection}>
-        <PlainButton
-          onPress={() => navigation.navigate('ResetPassword')}
-          btnStyle={globalStyles.mt6}
-          label={i18n.t('Forgot your password?')}
-        />
-      </View>
+      <Steps
+        onPress={() => {
+          loginHandle(data.username).then();
+        }}
+        steps={'3'}
+        step={'1'}
+        progress={33.333}
+      />
     </SafeAreaView>
   );
 };

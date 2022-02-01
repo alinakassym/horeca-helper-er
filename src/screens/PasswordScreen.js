@@ -23,6 +23,7 @@ import {AuthContext} from '../store/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import i18n from '../assets/i18n/i18n';
+import PlainButton from '../components/buttons/PlainButton';
 
 export const PasswordScreen = ({route, navigation}) => {
   const username = (route.params && route.params.phoneEmail) || '';
@@ -91,33 +92,43 @@ export const PasswordScreen = ({route, navigation}) => {
   return (
     <SafeAreaView style={globalStyles.rootStackContainer}>
       <Header goBack onClose={() => navigation.goBack()} />
-      <KeyboardAvoidingView behavior="position">
-        <ScrollView>
-          <View style={globalStyles.section}>
-            <Text style={[typography.h1, globalStyles.mt6]}>
-              {i18n.t('Enter')}
-            </Text>
-            <Text style={[typography.text, globalStyles.mt3, globalStyles.mb6]}>
-              {i18n.t('Enter your password to login')}
-            </Text>
-            <PasswordInput
-              value={data.password}
-              label={i18n.t('Password')}
-              secureTextEntry
-              onChangeText={val => handlePasswordChange(val)}
-              onClear={() => handlePasswordChange('')}
+      <View style={globalStyles.rootStackContainer}>
+        <KeyboardAvoidingView behavior="position">
+          <ScrollView>
+            <View style={globalStyles.section}>
+              <Text style={[typography.h1, globalStyles.mt6]}>
+                {i18n.t('Enter')}
+              </Text>
+              <Text
+                style={[typography.text, globalStyles.mt3, globalStyles.mb6]}>
+                {i18n.t('Enter your password to login')}
+              </Text>
+              <PasswordInput
+                value={data.password}
+                label={i18n.t('Password')}
+                secureTextEntry
+                onChangeText={val => handlePasswordChange(val)}
+                onClear={() => handlePasswordChange('')}
+              />
+            </View>
+          </ScrollView>
+          <View style={globalStyles.btnSection}>
+            <GradientButton
+              label={i18n.t('Continue')}
+              onPress={() => {
+                loginHandle(data.username, data.password);
+              }}
             />
           </View>
-        </ScrollView>
-        <View style={globalStyles.btnSection}>
-          <GradientButton
-            label={i18n.t('Continue')}
-            onPress={() => {
-              loginHandle(data.username, data.password);
-            }}
-          />
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </View>
+      <View style={globalStyles.btnSection}>
+        <PlainButton
+          onPress={() => navigation.navigate('ResetPassword')}
+          btnStyle={globalStyles.mt6}
+          label={i18n.t('Forgot your password?')}
+        />
+      </View>
     </SafeAreaView>
   );
 };

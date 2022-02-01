@@ -11,6 +11,10 @@ export const globalStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: PrimaryColors.background,
   },
+  flex1: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
   rootStackContainer: {
     flex: 1,
     backgroundColor: PrimaryColors.white,

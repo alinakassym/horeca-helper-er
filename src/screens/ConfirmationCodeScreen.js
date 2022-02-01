@@ -14,9 +14,11 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import i18n from '../assets/i18n/i18n';
 import {Trans} from 'react-i18next';
 import {PrimaryColors} from '../styles/colors';
+import Steps from '../components/Steps';
 
 export const ConfirmationCodeScreen = ({route, navigation}) => {
   const username = (route.params && route.params.phoneEmail) || '';
+  const reset = (route.params && route.params.reset) || false;
 
   let numberInputRefs = {
     first: undefined,
@@ -29,7 +31,8 @@ export const ConfirmationCodeScreen = ({route, navigation}) => {
   const [timer, setTimer] = useState(59);
 
   const codeChanged = arr => {
-    arr.every(el => el) && navigation.navigate('CreatePassword');
+    arr.every(el => el) &&
+      navigation.navigate('CreatePassword', {reset: reset});
     setCode(arr);
   };
 
@@ -183,17 +186,29 @@ export const ConfirmationCodeScreen = ({route, navigation}) => {
           </View>
         ) : (
           <PlainButton
+            btnStyle={globalStyles.mt6}
             onPress={() => setTimer(59)}
             label={i18n.t('Send new code')}
           />
         )}
       </View>
+      {reset && (
+        <Steps
+          onPress={() => {
+            navigation.navigate('CreatePassword', {reset: true});
+          }}
+          steps={'3'}
+          step={'2'}
+          progress={66.666}
+        />
+      )}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   wrapper: {
+    marginTop: 24,
     width: 182,
   },
   timerTextWrapper: {

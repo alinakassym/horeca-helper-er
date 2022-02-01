@@ -3,6 +3,7 @@
     "Rate2": "Rate",
     "Enter phone or email": "Phone or email",
     "Enter": "Login",
-    "Confirmation code was sent": "A verification code has been sent to {{phone}}"
+    "Confirmation code was sent": "A verification code has been sent to {{phone}}",
+    "Step out of": "Step {{step}} out of {{steps}}"
   }
 }
