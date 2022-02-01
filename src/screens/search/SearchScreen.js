@@ -21,6 +21,7 @@ import UsersInfo from './components/UsersInfo';
 import ResumeCard from './components/ResumeCard';
 import BottomModal from '../../components/BottomModal';
 import StatCard from './components/StatCard';
+import CustomAlert from '../../components/CustomAlert';
 
 // store
 import {useDispatch, useSelector} from 'react-redux';
@@ -33,6 +34,8 @@ import {
 import {searchEmployees} from '../../services/EmployeesService';
 import {getPositions} from '../../services/DictionariesService';
 import {getStats} from '../../services/UtilsService';
+
+// locale
 import i18n from '../../assets/i18n/i18n';
 
 export const SearchScreen = ({navigation}) => {
@@ -52,6 +55,7 @@ export const SearchScreen = ({navigation}) => {
   const [stats, setStats] = useState();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(true);
+  const [alertVisible, setAlertVisible] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -121,6 +125,12 @@ export const SearchScreen = ({navigation}) => {
           }}
         />
       </Header>
+      <CustomAlert
+        actionBtnLabel={'Перейти'}
+        visible={alertVisible}
+        text={'Lorem ipsum dolor sit amet, consectetur.'}
+        onCancel={() => setAlertVisible(false)}
+      />
       <BottomModal
         onCancel={() => setVisible(false)}
         visible={visible}
