@@ -78,7 +78,7 @@ export const RegistrationScreen = ({navigation}) => {
       });
 
       if (foundUser.length === 0) {
-        navigation.navigate('ConfirmationCode');
+        navigation.navigate('ConfirmationCode', {phoneEmail: phoneEmail});
       } else {
         navigation.navigate('Password', {phoneEmail: phoneEmail});
       }

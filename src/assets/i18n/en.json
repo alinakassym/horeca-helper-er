@@ -2,6 +2,7 @@
   "translation": {
     "Rate2": "Rate",
     "Enter phone or email": "Phone or email",
-    "Enter": "Login"
+    "Enter": "Login",
+    "Confirmation code was sent": "A verification code has been sent to {{phone}}"
   }
 }
