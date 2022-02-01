@@ -1,11 +1,5 @@
-import React, {useState} from 'react';
-import {
-  View,
-  ScrollView,
-  Text,
-  SafeAreaView,
-  KeyboardAvoidingView,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
 
 // styles
 import {globalStyles} from '../styles/globalStyles';
@@ -13,10 +7,13 @@ import {typography} from '../styles/typography';
 
 // components
 import Header from '../components/Header';
+import CodeNumberInput from '../components/inputs/CodeNumberInput';
+import PlainButton from '../components/buttons/PlainButton';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import i18n from '../assets/i18n/i18n';
 import {Trans} from 'react-i18next';
-import CodeNumberInput from '../components/inputs/CodeNumberInput';
+import {PrimaryColors} from '../styles/colors';
 
 export const ConfirmationCodeScreen = ({route, navigation}) => {
   const username = (route.params && route.params.phoneEmail) || '';
@@ -87,67 +84,119 @@ export const ConfirmationCodeScreen = ({route, navigation}) => {
   };
 
   const [code, setCode] = useState([null, null, null, null]);
+  const [timer, setTimer] = useState(59);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (timer && timer > 0) {
+        setTimer(timer - 1);
+      } else if (timer && timer === 0) {
+        setTimer(59);
+      } else {
+        setTimer(null);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [timer]);
 
   return (
     <SafeAreaView style={globalStyles.rootStackContainer}>
       <Header goBack onClose={() => navigation.goBack()} />
-      <KeyboardAvoidingView behavior="position">
-        <ScrollView>
-          <View style={globalStyles.section}>
-            <Text style={[typography.h1, globalStyles.mt6]}>
-              {i18n.t('Confirmation code')}
-            </Text>
-            <Text style={[typography.text, globalStyles.mt3, globalStyles.mb6]}>
-              <Trans
-                i18nKey="A verification code has been sent to"
-                values={{phone: username}}
-              />
-            </Text>
-            <View style={[globalStyles.row, globalStyles.mb6]}>
-              {/*FIRST NUMBER*/}
-              <CodeNumberInput
-                autoFocus
-                ref={input => {
-                  numberInputRefs.first = input;
-                }}
-                value={code[0]}
-                onChangeText={val => firstInputChanged(val)}
-              />
+      <KeyboardAwareScrollView behavior="position">
+        <View style={globalStyles.section}>
+          <Text style={[typography.h1, globalStyles.mt6]}>
+            {i18n.t('Confirmation code')}
+          </Text>
+          <Text style={[typography.text, globalStyles.mt3, globalStyles.mb6]}>
+            <Trans
+              i18nKey="A verification code has been sent to"
+              values={{phone: username}}
+            />
+          </Text>
+          <View style={[globalStyles.row, globalStyles.mb6]}>
+            {/*FIRST NUMBER*/}
+            <CodeNumberInput
+              autoFocus
+              ref={input => {
+                numberInputRefs.first = input;
+              }}
+              value={code[0]}
+              onChangeText={val => firstInputChanged(val)}
+            />
 
-              {/*SECOND NUMBER*/}
-              <CodeNumberInput
-                ref={input => {
-                  numberInputRefs.second = input;
-                }}
-                value={code[1]}
-                onChangeText={val => secondInputChanged(val)}
-                onKeyPress={() => goTo(1)}
-              />
+            {/*SECOND NUMBER*/}
+            <CodeNumberInput
+              ref={input => {
+                numberInputRefs.second = input;
+              }}
+              value={code[1]}
+              onChangeText={val => secondInputChanged(val)}
+              onKeyPress={() => goTo(1)}
+            />
 
-              {/*THIRD NUMBER*/}
-              <CodeNumberInput
-                ref={input => {
-                  numberInputRefs.third = input;
-                }}
-                value={code[2]}
-                onChangeText={val => thirdInputChanged(val)}
-                onKeyPress={() => goTo(2)}
-              />
+            {/*THIRD NUMBER*/}
+            <CodeNumberInput
+              ref={input => {
+                numberInputRefs.third = input;
+              }}
+              value={code[2]}
+              onChangeText={val => thirdInputChanged(val)}
+              onKeyPress={() => goTo(2)}
+            />
 
-              {/*FOURTH NUMBER*/}
-              <CodeNumberInput
-                ref={input => {
-                  numberInputRefs.fourth = input;
-                }}
-                value={code[3]}
-                onChangeText={val => fourthInputChanged(val)}
-                onKeyPress={() => goTo(3)}
-              />
-            </View>
+            {/*FOURTH NUMBER*/}
+            <CodeNumberInput
+              ref={input => {
+                numberInputRefs.fourth = input;
+              }}
+              value={code[3]}
+              onChangeText={val => fourthInputChanged(val)}
+              onKeyPress={() => goTo(3)}
+            />
           </View>
-        </ScrollView>
-        <View style={globalStyles.btnSection} />
-      </KeyboardAvoidingView>
+        </View>
+      </KeyboardAwareScrollView>
+      <View
+        style={[
+          globalStyles.btnSection,
+          globalStyles.contentCenter,
+          globalStyles.alignCenter,
+        ]}>
+        {timer ? (
+          <View style={styles.wrapper}>
+            <Text style={styles.timerTextWrapper}>
+              {i18n.t('Available in')}
+              <Text style={styles.timerText}>
+                {' '}
+                00:{timer < 10 ? `0${timer}` : timer}
+              </Text>
+            </Text>
+          </View>
+        ) : (
+          <PlainButton
+            onPress={() => setTimer(59)}
+            label={i18n.t('Send new code')}
+          />
+        )}
+      </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    width: 182,
+  },
+  timerTextWrapper: {
+    width: '100%',
+    fontFamily: 'Inter-Regular',
+    fontSize: 14,
+    lineHeight: 18,
+    color: PrimaryColors.grey1,
+  },
+  timerText: {
+    width: '10%',
+    fontFamily: 'Inter-Medium',
+    color: PrimaryColors.element,
+  },
+});

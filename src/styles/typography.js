@@ -16,6 +16,14 @@ export const typography = StyleSheet.create({
     color: PrimaryColors.grey1,
   },
 
+  textAlignCenter: {
+    textAlign: 'center',
+  },
+
+  textMedium: {
+    fontFamily: 'Inter-Medium',
+  },
+
   textColorElement: {
     color: PrimaryColors.element,
   },

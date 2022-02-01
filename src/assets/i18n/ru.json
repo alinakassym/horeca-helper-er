@@ -8,6 +8,8 @@
     "Confirmation code": "Код подтверждения",
     "Enter": "Вход",
     "A verification code has been sent to": "На {{phone}} был отправлен код подтверждения",
+    "Available in": "Доступно через",
+    "Send new code": "Выслать новый код",
     "Enter your password to login": "Введите пароль для входа в приложение",
     "Enter your phone number or email": "Укажите номер телефона либо эл. почту",
     "Enter phone or email": "Телефон или почта",
