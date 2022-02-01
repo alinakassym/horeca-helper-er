@@ -25,40 +25,52 @@ export const ConfirmationCodeScreen = ({route, navigation}) => {
     fourth: undefined,
   };
 
+  const [code, setCode] = useState([null, null, null, null]);
+  const [timer, setTimer] = useState(59);
+
+  const codeChanged = arr => {
+    arr.every(el => el) && navigation.navigate('CreatePassword');
+    setCode(arr);
+  };
+
   const firstInputChanged = val => {
+    const sliced = val.slice(-1);
     if (val) {
-      const sliced = val.slice(-1);
-      setCode([...sliced, ...code.splice(1)]);
+      const arr = [...sliced, ...code.splice(1)];
       sliced && numberInputRefs.second.focus();
+      codeChanged(arr);
     } else {
       setCode([null, ...code.splice(1)]);
     }
   };
 
   const secondInputChanged = val => {
+    const sliced = val.slice(-1);
     if (val) {
-      const sliced = val.slice(-1);
-      setCode([...code[0], sliced, ...code.splice(2)]);
+      const arr = [...code[0], sliced, ...code.splice(2)];
       sliced && numberInputRefs.third.focus();
+      codeChanged(arr);
     } else {
       setCode([...code[0], null, ...code.splice(2)]);
     }
   };
 
   const thirdInputChanged = val => {
+    const sliced = val.slice(-1);
     if (val) {
-      const sliced = val.slice(-1);
-      setCode([code[0], code[1], sliced, code[3]]);
+      const arr = [code[0], code[1], sliced, code[3]];
       sliced && numberInputRefs.fourth.focus();
+      codeChanged(arr);
     } else {
       setCode([code[0], code[1], null, code[3]]);
     }
   };
 
   const fourthInputChanged = val => {
+    const sliced = val.slice(-1);
     if (val) {
-      const sliced = val.slice(-1);
-      setCode([...code.slice(0, 3), ...sliced]);
+      const arr = [...code.slice(0, 3), ...sliced];
+      codeChanged(arr);
     } else {
       setCode([...code.slice(0, 3), null]);
     }
@@ -82,9 +94,6 @@ export const ConfirmationCodeScreen = ({route, navigation}) => {
       }
     }
   };
-
-  const [code, setCode] = useState([null, null, null, null]);
-  const [timer, setTimer] = useState(59);
 
   useEffect(() => {
     const interval = setInterval(() => {

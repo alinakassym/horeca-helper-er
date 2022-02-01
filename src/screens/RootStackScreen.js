@@ -6,6 +6,7 @@ import {WelcomeScreen} from './WelcomeScreen';
 import {RegistrationScreen} from './RegistrationScreen';
 import {ConfirmationCodeScreen} from './ConfirmationCodeScreen';
 import {PasswordScreen} from './PasswordScreen';
+import {CreatePasswordScreen} from './CreatePasswordScreen';
 
 const RootStack = createStackNavigator();
 
@@ -20,6 +21,7 @@ export const RootStackScreen = () => (
       name="ConfirmationCode"
       component={ConfirmationCodeScreen}
     />
+    <RootStack.Screen name="CreatePassword" component={CreatePasswordScreen} />
     <RootStack.Screen name="Password" component={PasswordScreen} />
     <RootStack.Screen name="SignIn" component={SignInScreen} />
     <RootStack.Screen name="SignUp" component={SignUpScreen} />
