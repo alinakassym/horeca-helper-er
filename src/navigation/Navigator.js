@@ -33,6 +33,9 @@ import {FAQScreen} from '../screens/support/FAQScreen';
 // settings screens
 import {SettingsScreen} from '../screens/settings/SettingsScreen';
 
+// subscription screens
+import {SubscriptionScreen} from '../screens/subscription/SubscriptionScreen';
+
 // Icons
 import {IconSearch} from '../assets/icons/tabs/IconSearch';
 import {IconMessages} from '../assets/icons/tabs/IconMessages';
@@ -118,7 +121,7 @@ export const Navigator = () => {
     );
   };
   return (
-    <Stack.Navigator initialRouteName="Tabs">
+    <Stack.Navigator initialRouteName="Subscription">
       {/*TABS*/}
       <Stack.Group>
         <Stack.Screen
@@ -212,6 +215,15 @@ export const Navigator = () => {
         <Stack.Screen
           name={'Settings'}
           component={SettingsScreen}
+          options={{headerShown: false}}
+        />
+      </Stack.Group>
+
+      {/*SUBSCRIPTION SCREENS*/}
+      <Stack.Group>
+        <Stack.Screen
+          name={'Subscription'}
+          component={SubscriptionScreen}
           options={{headerShown: false}}
         />
       </Stack.Group>

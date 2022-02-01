@@ -55,7 +55,7 @@ export const SearchScreen = ({navigation}) => {
   const [stats, setStats] = useState();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(true);
-  const [alertVisible, setAlertVisible] = useState(true);
+  const [alertVisible, setAlertVisible] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -130,6 +130,7 @@ export const SearchScreen = ({navigation}) => {
         visible={alertVisible}
         text={'Lorem ipsum dolor sit amet, consectetur.'}
         onCancel={() => setAlertVisible(false)}
+        onAction={() => navigation.navigate('Subscription')}
       />
       <BottomModal
         onCancel={() => setVisible(false)}

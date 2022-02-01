@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import {IconLeft} from '../../assets/icons/main/IconLeft';
+import {PrimaryColors} from '../../styles/colors';
 
 const propTypes = {
   onPress: PropTypes.func,
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderColor: '#E2E5E8',
     borderWidth: 0.7,
+    backgroundColor: PrimaryColors.white,
   },
 });
 
