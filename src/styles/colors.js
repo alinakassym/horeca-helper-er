@@ -8,6 +8,7 @@ export const PrimaryColors = {
   grey5: '#F5F5F5',
   background: '#F5F8FE',
   white: '#FFFFFF',
+  shadow: 'rgba(25, 1, 52, 0.2)',
 };
 
 export const StatusesColors = {

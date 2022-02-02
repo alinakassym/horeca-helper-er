@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, View, Text, StyleSheet, Dimensions} from 'react-native';
+import {SafeAreaView, View, StyleSheet, Dimensions} from 'react-native';
 
 // styles
 import {globalStyles} from '../../styles/globalStyles';
@@ -11,12 +11,9 @@ import Header from '../../components/Header';
 import Input from '../../components/inputs/Input';
 import GradientButton from '../../components/buttons/GradientButton';
 
-// utils
-import {numberWithSpaces} from '../../utils/common';
-
 // locale
 import i18n from '../../assets/i18n/i18n';
-import {typography} from '../../styles/typography';
+import TotalPrice from './components/TotalPrice';
 
 const dimensions = Dimensions.get('screen');
 const width = dimensions.width;
@@ -54,18 +51,7 @@ export const SubscriptionPaymentScreen = ({route, navigation}) => {
         </View>
       </KeyboardAwareScrollView>
       <View style={globalStyles.btnSection}>
-        <View style={styles.priceSection}>
-          <Text style={[typography.text2, typography.textColorElement]}>
-            {i18n.t('To pay')}
-          </Text>
-          {option && (
-            <Text style={styles.price}>
-              {option.price
-                ? `${numberWithSpaces(option.price)} ₸`
-                : i18n.t('Free')}
-            </Text>
-          )}
-        </View>
+        <TotalPrice price={(option && option.price) || 0} />
         <GradientButton style={globalStyles.mb5} label={i18n.t('Pay')} />
       </View>
     </SafeAreaView>

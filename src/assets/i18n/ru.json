@@ -130,6 +130,9 @@
     "Cardholder name": "Имя Фамилия",
     "Valid until": "Действует до",
     "CV-code": "CV-код",
-    "To pay": "К оплате"
+    "To pay": "К оплате",
+    "Subscription includes": "В подписку входит",
+    "Payment method": "Способ оплаты",
+    "Change card": "Изменить карту"
   }
 }

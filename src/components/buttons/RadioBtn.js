@@ -26,7 +26,9 @@ class RadioBtn extends React.PureComponent {
         ) : (
           <View style={styles.radioBtn} />
         )}
-        <Text style={[styles.itemText, labelStyle]}>{item[itemKey]}</Text>
+        {item[itemKey] && (
+          <Text style={[styles.itemText, labelStyle]}>{item[itemKey]}</Text>
+        )}
       </TouchableOpacity>
     );
   }

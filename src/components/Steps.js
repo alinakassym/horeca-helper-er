@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: width + 4,
     borderRadius: 1,
-    shadowColor: PrimaryColors.grey1,
+    shadowColor: PrimaryColors.shadow,
     shadowOffset: {
       width: 0,
       height: 1,

@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, View, Text, StyleSheet, Dimensions} from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  StyleSheet,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
 
 // styles
 import {globalStyles} from '../../styles/globalStyles';
-import {PrimaryColors} from '../../styles/colors';
-import {typography} from '../../styles/typography';
 
 //images
 import BackgroundImage from '../../assets/images/BackgroundImage';
@@ -12,18 +16,25 @@ import BackgroundImage from '../../assets/images/BackgroundImage';
 // components
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Header from '../../components/Header';
-import Point from '../../components/Point';
-import RadioBtn from '../../components/buttons/RadioBtn';
+import SubscriptionOptions from './components/SubscriptionOptions';
+import SubscriptionDescriptions from './components/SubscriptionDescriptions';
 import GradientButton from '../../components/buttons/GradientButton';
-
-// utils
-import {numberWithSpaces} from '../../utils/common';
+import CardsList from './components/CardsList';
 
 // locale
 import i18n from '../../assets/i18n/i18n';
+import BottomModal from '../../components/BottomModal';
+import PlainButton from '../../components/buttons/PlainButton';
+import TotalPrice from './components/TotalPrice';
 
 const dimensions = Dimensions.get('screen');
 const imageSize = dimensions.width;
+
+const cardsData = [
+  {id: 1, cardNumber: '************3456', type: 'mc'},
+  // {id: 2, cardNumber: '************1234', type: 'visa'},
+  // {id: 2, cardNumber: '************1234', type: 'card'},
+];
 
 const pointsData = [
   'Приглашение соискателей',
@@ -37,31 +48,53 @@ const optionsData = [
     id: 1,
     title: '3 days',
     title_ru: '3 дня',
-    price: '',
+    price: null,
     value: '3 месячная подписка активна',
   },
-  {id: 2, title: '3 month', title_ru: '3 месяца', price: '9600'},
-  {id: 3, title: '6 month', title_ru: '6 месяцев', price: '13800'},
-  {id: 4, title: '1 year', title_ru: '1 год', price: '19990'},
+  {id: 2, title: '3 month', title_ru: '3 месяца', price: 9600},
+  {id: 3, title: '6 month', title_ru: '6 месяцев', price: 13800},
+  {id: 4, title: '1 year', title_ru: '1 год', price: 19990},
 ];
 
 const activeOptionData = optionsData[0];
 
 export const SubscriptionScreen = ({navigation}) => {
+  const [cards, setCards] = useState([]);
+  const [activeCard, setActiveCard] = useState();
   const [points, setPoints] = useState([]);
   const [options, setOptions] = useState([]);
   const [activeOption, setActiveOption] = useState();
   const [selectedOption, setSelectedOption] = useState();
+  const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setCards(cardsData);
+      setActiveCard(cardsData[0]);
       setPoints(pointsData);
       setOptions(optionsData);
       setActiveOption(activeOptionData);
       setSelectedOption(activeOptionData);
+      setLoading(false);
     };
     fetchData().then();
   }, []);
+  if (loading) {
+    return (
+      <SafeAreaView style={globalStyles.container}>
+        <Header
+          style={styles.header}
+          goBack
+          onClose={() => navigation.goBack()}
+        />
+        <View style={globalStyles.fullScreenSection}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={globalStyles.container}>
       <BackgroundImage style={styles.bgImage} size={imageSize} />
@@ -70,81 +103,48 @@ export const SubscriptionScreen = ({navigation}) => {
         goBack
         onClose={() => navigation.goBack()}
       />
+      <BottomModal
+        visible={visible}
+        title={i18n.t('Payment method')}
+        onCancel={() => setVisible(false)}>
+        <CardsList items={cards} activeItem={activeCard} />
+        <PlainButton
+          btnStyle={styles.btn}
+          label={i18n.t('Change card')}
+          onPress={() => {
+            setVisible(false);
+            navigation.navigate('SubscriptionPayment', {
+              option: selectedOption,
+            });
+          }}
+        />
+        <TotalPrice price={selectedOption.price} />
+        <GradientButton
+          onPress={() => {
+            setVisible(false);
+            navigation.navigate('SubscriptionPayment', {
+              option: selectedOption,
+            });
+          }}
+          label={i18n.t('Pay')}
+        />
+      </BottomModal>
       <KeyboardAwareScrollView
         style={styles.container}
         enableResetScrollToCoords={false}>
-        <View style={styles.section}>
-          <Text style={styles.title}>В подписку входит:</Text>
-          {points.map((item, index) => (
-            <Point key={index} label={item} />
-          ))}
-        </View>
-        <View style={styles.optionSection}>
-          {options.map((item, index) => (
-            <View
-              key={index}
-              style={[
-                globalStyles.card,
-                globalStyles.row,
-                globalStyles.spaceBetween,
-                index === 0 && globalStyles.mt0,
-              ]}>
-              {item.id === activeOption.id ? (
-                <>
-                  <RadioBtn
-                    style={globalStyles.mb0}
-                    activeItem={selectedOption}
-                    labelStyle={{...styles.labelStyle, ...styles.active}}
-                    item={item}
-                    itemKey={'title_ru'}
-                    onSelect={() => setSelectedOption(item)}
-                  />
-                  <Text style={{...typography.text2, ...styles.active}}>
-                    {item.price
-                      ? `${numberWithSpaces(item.price)} ₸`
-                      : i18n.t('Free')}
-                  </Text>
-                </>
-              ) : (
-                <>
-                  <RadioBtn
-                    style={globalStyles.mb0}
-                    activeItem={selectedOption}
-                    labelStyle={styles.labelStyle}
-                    item={item}
-                    itemKey={'title_ru'}
-                    onSelect={() => setSelectedOption(item)}
-                  />
-                  <Text style={typography.text2}>
-                    {item.price
-                      ? `${numberWithSpaces(item.price)} ₸`
-                      : i18n.t('Free')}
-                  </Text>
-                </>
-              )}
-            </View>
-          ))}
-          <View
-            style={[
-              globalStyles.row,
-              globalStyles.alignCenter,
-              globalStyles.contentCenter,
-            ]}>
-            {activeOption && (
-              <Text style={[typography.text2, styles.activeOptionText]}>
-                {activeOption.value}
-              </Text>
-            )}
-          </View>
-        </View>
+        <SubscriptionDescriptions items={points} />
+        <SubscriptionOptions
+          items={options}
+          activeOption={activeOption}
+          selectedOption={selectedOption}
+          onSelect={val => setSelectedOption(val)}
+        />
       </KeyboardAwareScrollView>
       <View style={globalStyles.btnSection}>
         <GradientButton
           style={globalStyles.mt5}
           label={i18n.t('Subscribe')}
-          onPress={() =>
-            navigation.navigate('SubscriptionPayment', {option: selectedOption})
-          }
+          onPress={() => setVisible(true)}
         />
       </View>
     </SafeAreaView>
@@ -164,40 +164,9 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: 'transparent',
   },
-  section: {
-    paddingTop: 12,
-    paddingHorizontal: 20,
-  },
-  optionSection: {
-    marginTop: 16,
-    backgroundColor: PrimaryColors.background,
-  },
-  labelStyle: {
-    fontFamily: 'Inter-Bold',
-    fontSize: 14,
-    lineHeight: 18,
-    color: PrimaryColors.element,
-    textTransform: 'uppercase',
-  },
-  active: {
-    color: PrimaryColors.brand,
-  },
-  title: {
-    marginBottom: 16,
-    fontFamily: 'Inter-Bold',
-    fontSize: 26,
-    lineHeight: 32,
-    color: PrimaryColors.white,
-  },
-  activeOptionText: {
-    marginTop: 25,
+  btn: {
+    marginBottom: 32,
     paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 100,
-    borderWidth: 1.5,
-    borderStyle: 'dashed',
-    borderColor: PrimaryColors.brand,
-    color: PrimaryColors.brand,
-    textAlignVertical: 'center',
+    minHeight: 18,
   },
 });
