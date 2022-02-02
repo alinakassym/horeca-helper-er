@@ -1,8 +1,9 @@
 import * as React from 'react';
 import Svg, {Path, Rect, Defs, LinearGradient, Stop} from 'react-native-svg';
 
-const BackgroundImage = ({size}) => (
+const BackgroundImage = ({style, size}) => (
   <Svg
+    style={style}
     width={size || 375}
     height={size || 375}
     viewBox="0 0 375 375"

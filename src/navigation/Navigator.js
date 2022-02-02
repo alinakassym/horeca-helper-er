@@ -121,7 +121,7 @@ export const Navigator = () => {
     );
   };
   return (
-    <Stack.Navigator initialRouteName="Subscription">
+    <Stack.Navigator initialRouteName="Tabs">
       {/*TABS*/}
       <Stack.Group>
         <Stack.Screen

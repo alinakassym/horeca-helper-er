@@ -35,7 +35,6 @@ export const globalStyles = StyleSheet.create({
     paddingHorizontal: 20,
     width: dimensions.width,
     minHeight: 90,
-    backgroundColor: PrimaryColors.white,
   },
 
   // flex
@@ -107,6 +106,9 @@ export const globalStyles = StyleSheet.create({
   mr6: {
     marginRight: 24,
   },
+  mb0: {
+    marginBottom: 0,
+  },
   mb1: {
     marginBottom: 4,
   },
@@ -124,6 +126,9 @@ export const globalStyles = StyleSheet.create({
   },
   mb6: {
     marginBottom: 24,
+  },
+  mt0: {
+    marginTop: 0,
   },
   mt1: {
     marginTop: 4,

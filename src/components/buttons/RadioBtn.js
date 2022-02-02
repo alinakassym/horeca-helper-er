@@ -9,11 +9,12 @@ const propTypes = {
   activeItem: PropTypes.object,
   onSelect: PropTypes.func,
   style: PropTypes.object,
+  labelStyle: PropTypes.object,
 };
 
 class RadioBtn extends React.PureComponent {
   render() {
-    const {item, itemKey, activeItem, onSelect, style} = this.props;
+    const {item, itemKey, activeItem, onSelect, style, labelStyle} = this.props;
 
     return (
       <TouchableOpacity
@@ -25,7 +26,7 @@ class RadioBtn extends React.PureComponent {
         ) : (
           <View style={styles.radioBtn} />
         )}
-        <Text style={styles.itemText}>{item[itemKey]}</Text>
+        <Text style={[styles.itemText, labelStyle]}>{item[itemKey]}</Text>
       </TouchableOpacity>
     );
   }

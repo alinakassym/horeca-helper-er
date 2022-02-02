@@ -103,7 +103,9 @@ export const ProfileScreen = ({navigation}) => {
         </View>
 
         <View style={styles.list}>
-          <TouchableOpacity style={styles.listItem}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Subscription')}
+            style={styles.listItem}>
             <View style={styles.row}>
               <IconFire />
               <Text style={[styles.listItemTitle, globalStyles.ml3]}>
