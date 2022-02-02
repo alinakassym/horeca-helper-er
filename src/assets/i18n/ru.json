@@ -123,6 +123,13 @@
     "Yesterday": "Вчера",
     "Today": "Сегодня",
     "Free": "Бесплатно",
-    "Subscribe": "Приобрести подписку"
+    "Subscribe": "Приобрести подписку",
+    "Payment": "Оплата",
+    "Pay": "Оплатить",
+    "Card number": "Номер карты",
+    "Cardholder name": "Имя Фамилия",
+    "Valid until": "Действует до",
+    "CV-code": "CV-код",
+    "To pay": "К оплате"
   }
 }

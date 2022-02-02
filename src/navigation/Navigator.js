@@ -35,6 +35,7 @@ import {SettingsScreen} from '../screens/settings/SettingsScreen';
 
 // subscription screens
 import {SubscriptionScreen} from '../screens/subscription/SubscriptionScreen';
+import {SubscriptionPaymentScreen} from '../screens/subscription/SubscriptionPaymentScreen';
 
 // Icons
 import {IconSearch} from '../assets/icons/tabs/IconSearch';
@@ -224,6 +225,11 @@ export const Navigator = () => {
         <Stack.Screen
           name={'Subscription'}
           component={SubscriptionScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={'SubscriptionPayment'}
+          component={SubscriptionPaymentScreen}
           options={{headerShown: false}}
         />
       </Stack.Group>

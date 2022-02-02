@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 4,
-    height: 14,
+    height: 16,
     fontFamily: 'Inter-Regular',
     fontSize: 12,
     lineHeight: 14,

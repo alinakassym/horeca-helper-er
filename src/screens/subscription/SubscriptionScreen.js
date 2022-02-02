@@ -33,7 +33,13 @@ const pointsData = [
 ];
 
 const optionsData = [
-  {id: 1, title: '3 days', title_ru: '3 дня', price: ''},
+  {
+    id: 1,
+    title: '3 days',
+    title_ru: '3 дня',
+    price: '',
+    value: '3 месячная подписка активна',
+  },
   {id: 2, title: '3 month', title_ru: '3 месяца', price: '9600'},
   {id: 3, title: '6 month', title_ru: '6 месяцев', price: '13800'},
   {id: 4, title: '1 year', title_ru: '1 год', price: '19990'},
@@ -45,12 +51,14 @@ export const SubscriptionScreen = ({navigation}) => {
   const [points, setPoints] = useState([]);
   const [options, setOptions] = useState([]);
   const [activeOption, setActiveOption] = useState();
+  const [selectedOption, setSelectedOption] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
       setPoints(pointsData);
       setOptions(optionsData);
       setActiveOption(activeOptionData);
+      setSelectedOption(activeOptionData);
     };
     fetchData().then();
   }, []);
@@ -82,32 +90,62 @@ export const SubscriptionScreen = ({navigation}) => {
                 index === 0 && globalStyles.mt0,
               ]}>
               {item.id === activeOption.id ? (
-                <RadioBtn
-                  style={globalStyles.mb0}
-                  labelStyle={styles.labelStyle}
-                  activeItem={activeOption}
-                  item={item}
-                  itemKey={'title_ru'}
-                />
+                <>
+                  <RadioBtn
+                    style={globalStyles.mb0}
+                    activeItem={selectedOption}
+                    labelStyle={{...styles.labelStyle, ...styles.active}}
+                    item={item}
+                    itemKey={'title_ru'}
+                    onSelect={() => setSelectedOption(item)}
+                  />
+                  <Text style={{...typography.text2, ...styles.active}}>
+                    {item.price
+                      ? `${numberWithSpaces(item.price)} ₸`
+                      : i18n.t('Free')}
+                  </Text>
+                </>
               ) : (
-                <RadioBtn
-                  style={globalStyles.mb0}
-                  labelStyle={styles.labelStyle}
-                  item={item}
-                  itemKey={'title_ru'}
-                />
+                <>
+                  <RadioBtn
+                    style={globalStyles.mb0}
+                    activeItem={selectedOption}
+                    labelStyle={styles.labelStyle}
+                    item={item}
+                    itemKey={'title_ru'}
+                    onSelect={() => setSelectedOption(item)}
+                  />
+                  <Text style={typography.text2}>
+                    {item.price
+                      ? `${numberWithSpaces(item.price)} ₸`
+                      : i18n.t('Free')}
+                  </Text>
+                </>
               )}
-              <Text style={typography.text2}>
-                {item.price
-                  ? `${numberWithSpaces(item.price)} ₸`
-                  : i18n.t('Free')}
-              </Text>
             </View>
           ))}
+          <View
+            style={[
+              globalStyles.row,
+              globalStyles.alignCenter,
+              globalStyles.contentCenter,
+            ]}>
+            {activeOption && (
+              <Text style={[typography.text2, styles.activeOptionText]}>
+                {activeOption.value}
+              </Text>
+            )}
+          </View>
         </View>
       </KeyboardAwareScrollView>
       <View style={globalStyles.btnSection}>
-        <GradientButton style={globalStyles.mt5} label={i18n.t('Subscribe')} />
+        <GradientButton
+          style={globalStyles.mt5}
+          label={i18n.t('Subscribe')}
+          onPress={() =>
+            navigation.navigate('SubscriptionPayment', {option: selectedOption})
+          }
+        />
       </View>
     </SafeAreaView>
   );
@@ -141,11 +179,25 @@ const styles = StyleSheet.create({
     color: PrimaryColors.element,
     textTransform: 'uppercase',
   },
+  active: {
+    color: PrimaryColors.brand,
+  },
   title: {
     marginBottom: 16,
     fontFamily: 'Inter-Bold',
     fontSize: 26,
     lineHeight: 32,
     color: PrimaryColors.white,
+  },
+  activeOptionText: {
+    marginTop: 25,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 100,
+    borderWidth: 1.5,
+    borderStyle: 'dashed',
+    borderColor: PrimaryColors.brand,
+    color: PrimaryColors.brand,
+    textAlignVertical: 'center',
   },
 });
